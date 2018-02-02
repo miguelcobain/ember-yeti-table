@@ -7,6 +7,10 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
+  this.route('simple');
+  this.route('pagination');
+  this.route('ajax');
+  this.route('api');
 });
 
 export default Router;
