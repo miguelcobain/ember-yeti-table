@@ -3,14 +3,14 @@
 
     {{#each data as |rowData|}}
       {{yield
-        (hash row=(component "yeti-table/body/row" onClick=onRowClick))
+        (hash row=(component "yeti-table/table/body/row" onClick=onRowClick))
         rowData}}
     {{/each}}
 
   {{else}}
 
     {{#each data as |rowData|}}
-      {{#yeti-table/body/row
+      {{#yeti-table/table/body/row
         class=rowClass
         onClick=(action onRowClick rowData) as |row|}}
 
@@ -26,7 +26,7 @@
           {{/if}}
         {{/each}}
 
-      {{/yeti-table/body/row}}
+      {{/yeti-table/table/body/row}}
     {{/each}}
   {{/if}}
 </tbody>

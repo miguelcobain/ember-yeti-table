@@ -19,21 +19,23 @@
   </li>
 </ul>
 
-{{#yeti-table data=data as |table|}}
+{{#yeti-table data=data as |yeti|}}
 
-  {{#table.header as |header|}}
-    {{#header.column prop="firstName"}}
-      First name
-    {{/header.column}}
-    {{#header.column prop="lastName"}}
-      Last name
-    {{/header.column}}
-    {{#header.column prop="points"}}
-      Points
-    {{/header.column}}
-  {{/table.header}}
+  {{#yeti.table as |table|}}
+    {{#table.header as |header|}}
+      {{#header.column prop="firstName"}}
+        First name
+      {{/header.column}}
+      {{#header.column prop="lastName"}}
+        Last name
+      {{/header.column}}
+      {{#header.column prop="points"}}
+        Points
+      {{/header.column}}
+    {{/table.header}}
 
-  {{table.body}}
+    {{table.body}}
+  {{/yeti.table}}
 
 {{/yeti-table}}
 
@@ -50,32 +52,34 @@
   <li>Use row data to conditionally add classes</li>
 </ul>
 
-{{#yeti-table data=data as |table|}}
+{{#yeti-table data=data as |yeti|}}
 
-  {{#table.header as |header|}}
-    {{#header.column prop="firstName"}}
-      First name
-    {{/header.column}}
-    {{#header.column prop="lastName"}}
-      Last name
-    {{/header.column}}
-    {{#header.column prop="points"}}
-      Points
-    {{/header.column}}
-  {{/table.header}}
+  {{#yeti.table as |table|}}
+    {{#table.header as |header|}}
+      {{#header.column prop="firstName"}}
+        First name
+      {{/header.column}}
+      {{#header.column prop="lastName"}}
+        Last name
+      {{/header.column}}
+      {{#header.column prop="points"}}
+        Points
+      {{/header.column}}
+    {{/table.header}}
 
-  {{#table.body as |body person|}}
-    {{#body.row as |row|}}
-      {{#row.cell}}
-        {{person.firstName}}
-      {{/row.cell}}
-      {{#row.cell}}
-        {{person.lastName}}
-      {{/row.cell}}
-      {{#row.cell}}
-        {{person.points}}
-      {{/row.cell}}
-    {{/body.row}}
-  {{/table.body}}
+    {{#table.body as |body person|}}
+      {{#body.row as |row|}}
+        {{#row.cell}}
+          {{person.firstName}}
+        {{/row.cell}}
+        {{#row.cell}}
+          {{person.lastName}}
+        {{/row.cell}}
+        {{#row.cell}}
+          {{person.points}}
+        {{/row.cell}}
+      {{/body.row}}
+    {{/table.body}}
+  {{/yeti.table}}
 
 {{/yeti-table}}
