@@ -7,7 +7,7 @@ export default Controller.extend({
   numberOfRows: 10,
 
   data: computed('numberOfRows', function() {
-    return A(Array.from(Array(this.get('numberOfRows')), (_, i) => {
+    return A(Array.from(Array(this.get('numberOfRows')), () => {
       return {
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),

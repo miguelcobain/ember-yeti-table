@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import layout from '../templates/components/yeti-table';
-import { A } from '@ember/array';
 import { computed } from '@ember/object';
 import { sort, reads } from '@ember/object/computed';
 

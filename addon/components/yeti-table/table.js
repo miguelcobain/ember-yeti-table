@@ -19,7 +19,7 @@ export default Component.extend(ParentMixin, {
   }),
 
   onColumnClick(e) {
-    if (this.get('onColumnSort')) {
+    if (this.get('onColumnSort')) {
       let el = e.target;
       let index = [...el.parentNode.children].indexOf(el);
       let column = this.get('columns').objectAt(index);
