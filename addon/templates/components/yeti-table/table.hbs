@@ -1,4 +1,4 @@
 {{yield (hash
-  header=(component "yeti-table/table/header" _isHeader=true)
+  header=(component "yeti-table/table/header" _isHeader=true onColumnClick=(action onColumnClick))
   body=(component "yeti-table/table/body" _isBody=true columns=columns data=data)
 )}}

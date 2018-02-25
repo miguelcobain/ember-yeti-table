@@ -16,5 +16,18 @@ export default Component.extend(ParentMixin, {
 
   bodyComponent: computed('childComponents.@each._isBody', function() {
     return this.get('childComponents').findBy('_isBody');
-  })
+  }),
+
+  onColumnClick(e) {
+    if (this.get('onColumnSort')) {
+      let el = e.target;
+      let index = [...el.parentNode.children].indexOf(el);
+      let column = this.get('columns').objectAt(index);
+      let prop = column.get('prop');
+      let orderable = column.get('orderable');
+      if (orderable && prop) {
+        this.get('onColumnSort')(prop, index, column);
+      }
+    }
+  }
 });

@@ -47,12 +47,12 @@
 
 <ul>
   <li>Use any component or markup as the cell's content</li>
-  <li>Use the row data to accross multiple cells</li>
+  <li>Use the row data accross multiple cells of the same row</li>
   <li>Attach click listeners to the row or cell</li>
   <li>Use row data to conditionally add classes</li>
 </ul>
 
-{{#yeti-table data=data as |yeti|}}
+{{#yeti-table data=data sortProperty="firstName" sortDirection="desc" as |yeti|}}
 
   {{#yeti.table as |table|}}
     {{#table.header as |header|}}
@@ -83,3 +83,15 @@
   {{/yeti.table}}
 
 {{/yeti-table}}
+
+<p>
+  Yeti table columns are sortable by default. Try to click the above tables headers.
+  You can disable sorting in any column by passing <code>orderable=false</code>
+  to any column definition.
+</p>
+
+<p>
+  If you need to specify an order by default, you can pass in <code>sortProperty</code> and
+  <code>sortDirection</code>. <code>sortDirection</code> can be <code>asc</code> or
+  <code>desc</code> strings but it defaults to <code>asc</code>.
+</p>

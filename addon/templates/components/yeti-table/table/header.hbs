@@ -1,5 +1,7 @@
 <thead class={{class}}>
   <tr>
-    {{yield (hash column="yeti-table/table/header/column")}}
+    {{yield (hash
+      column=(component "yeti-table/table/header/column" onClick=onColumnClick)
+    )}}
   </tr>
 </thead>
