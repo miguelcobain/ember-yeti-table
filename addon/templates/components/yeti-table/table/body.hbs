@@ -1,10 +1,11 @@
 <tbody class={{class}}>
   {{#if hasBlock}}
 
-    {{#each data as |rowData|}}
+    {{#each data as |rowData index|}}
       {{yield
         (hash row=(component "yeti-table/table/body/row" onClick=onRowClick))
-        rowData}}
+        rowData
+        index}}
     {{/each}}
 
   {{else}}
