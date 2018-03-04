@@ -7,7 +7,8 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
-  this.route('simple');
+  this.route('general');
+  this.route('ordering');
   this.route('pagination');
   this.route('ajax');
   this.route('api');

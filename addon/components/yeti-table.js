@@ -8,15 +8,19 @@ export default Component.extend({
 
   sortProperty: null,
   sortDirection: 'asc',
-  sortDefinition: computed('sortProperty', 'sortDirection', function() {
-    let defs = [];
-    if (this.get('sortProperty')) {
-      defs.push(`${this.get('sortProperty')}:${this.get('sortDirection')}`);
+  _sortDefinition: computed('sortDefinition', 'sortProperty', 'sortDirection', function() {
+    if (this.get('sortDefinition')) {
+      return this.get('sortDefinition').split(' ');
+    } else {
+      let def = [];
+      if (this.get('sortProperty')) {
+        def.push(`${this.get('sortProperty')}:${this.get('sortDirection')}`);
+      }
+      return def;
     }
-    return defs;
   }),
 
-  orderedData: sort('data', 'sortDefinition'),
+  orderedData: sort('data', '_sortDefinition'),
   processedData: reads('orderedData'),
 
   onColumnSort(prop) {

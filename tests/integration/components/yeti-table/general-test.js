@@ -171,4 +171,54 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
     await click('tbody tr:nth-child(4)');
   });
+
+  test('onClick action is triggered on row component', async function(assert) {
+    assert.expect(2);
+
+    this.rowClicked = (p) => {
+      assert.equal(p.firstName, 'Miguel');
+    };
+
+    await render(hbs`
+      {{#yeti-table data=data as |yeti|}}
+
+        {{#yeti.table as |table|}}
+          {{#table.header as |header|}}
+            {{#header.column prop="firstName"}}
+              First name
+            {{/header.column}}
+            {{#header.column prop="lastName"}}
+              Last name
+            {{/header.column}}
+            {{#header.column prop="points"}}
+              Points
+            {{/header.column}}
+          {{/table.header}}
+
+          {{#table.body as |body person|}}
+            {{#body.row onClick=(action rowClicked person) as |row|}}
+              {{#row.cell}}
+                Custom {{person.firstName}}
+              {{/row.cell}}
+              {{#row.cell}}
+                {{person.lastName}}
+              {{/row.cell}}
+              {{#row.cell}}
+                {{person.points}}
+              {{/row.cell}}
+            {{/body.row}}
+          {{/table.body}}
+        {{/yeti.table}}
+
+      {{/yeti-table}}
+    `);
+
+    await click('tbody tr:nth-child(1)');
+
+    this.set('rowClicked', (p) => {
+      assert.equal(p.firstName, 'Tom');
+    });
+
+    await click('tbody tr:nth-child(4)');
+  });
 });
