@@ -1,17 +1,5 @@
-<nav>
-  {{#link-to "general"}}
-    General usage
-  {{/link-to}}
+{{docs-header}}
 
-  {{#link-to "ordering"}}
-    Ordering
-  {{/link-to}}
+{{outlet}}
 
-  {{#link-to "pagination"}}
-    Pagination
-  {{/link-to}}
-</nav>
-
-<section>
-  {{outlet}}
-</section>
+{{docs-keyboard-shortcuts}}
