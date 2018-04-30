@@ -2,13 +2,13 @@ import Component from '@ember/component';
 import layout from '../../templates/components/yeti-table/table';
 import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
-import { ParentMixin } from 'ember-composability-tools';
+import { ParentMixin, ChildMixin } from 'ember-composability-tools';
 
-export default Component.extend(ParentMixin, {
+export default Component.extend(ParentMixin, ChildMixin, {
   layout,
   tagName: 'table',
 
-  headerComponent: computed('childComponents.@each._isHeader', function() {
+  headerComponent: computed('childComponents.@each._isHeader', function() {debugger;
     return this.get('childComponents').findBy('_isHeader');
   }),
 

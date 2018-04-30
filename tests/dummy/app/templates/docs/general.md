@@ -9,7 +9,7 @@ You can still customize the generated rows using:
 - `rowClass` - adds a class to each `tr` element
 
 {{#docs-demo as |demo|}}
-  {{#demo.example name='general-simple.hbs'}}
+  {{#demo.example name="general-simple.hbs"}}
     {{#yeti-table data=data as |yeti|}}
 
       {{#yeti.table as |table|}}
@@ -31,7 +31,7 @@ You can still customize the generated rows using:
     {{/yeti-table}}
   {{/demo.example}}
 
-  {{demo.snippet 'general-simple.hbs'}}
+  {{demo.snippet "general-simple.hbs"}}
 {{/docs-demo}}
 
 If you need to make more advanced customizations, you will need
@@ -44,7 +44,7 @@ allows you to:
 - Use row data to conditionally add classes
 
 {{#docs-demo as |demo|}}
-  {{#demo.example name='general-simple-with-body.hbs'}}
+  {{#demo.example name="general-simple-with-body.hbs"}}
     {{#yeti-table data=data sortProperty="firstName" sortDirection="desc" as |yeti|}}
 
       {{#yeti.table as |table|}}
@@ -78,5 +78,5 @@ allows you to:
     {{/yeti-table}}
   {{/demo.example}}
 
-  {{demo.snippet 'general-simple-with-body.hbs'}}
+  {{demo.snippet "general-simple-with-body.hbs"}}
 {{/docs-demo}}
