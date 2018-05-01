@@ -1,17 +1,20 @@
 {
   "name": "ember-yeti-table",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Lightweight and flexible tables addon.",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "table",
+    "tables",
+    "yeti"
   ],
   "license": "MIT",
-  "author": "",
+  "author": "Miguel Andrade <jmandrade0@gmail.com>",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
-  "repository": "",
+  "repository": "https://github.com/miguelcobain/ember-yeti-table",
   "scripts": {
     "build": "ember build",
     "lint:js": "eslint ./*.js addon addon-test-support app blueprints config lib server test-support tests",
