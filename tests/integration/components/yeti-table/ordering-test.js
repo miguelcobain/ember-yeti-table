@@ -1,9 +1,8 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { click, render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { click } from '@ember/test-helpers';
-import wait from 'ember-test-helpers/wait';
+import '@ember/test-helpers';
 import { A } from '@ember/array';
 import { set } from '@ember/object';
 
@@ -253,7 +252,7 @@ module('Integration | Component | yeti-table (ordering)', function(hooks) {
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
 
     set(this.data.objectAt(3), 'firstName', '123');
-    await wait();
+    await settled();
 
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('123');
     assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('José');
