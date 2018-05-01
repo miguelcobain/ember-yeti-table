@@ -8,7 +8,7 @@ export default Component.extend(ParentMixin, ChildMixin, {
   layout,
   tagName: 'table',
 
-  headerComponent: computed('childComponents.@each._isHeader', function() {debugger;
+  headerComponent: computed('childComponents.@each._isHeader', function() {
     return this.get('childComponents').findBy('_isHeader');
   }),
 

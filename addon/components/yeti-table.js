@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import layout from '../templates/components/yeti-table';
-import { computed, defineProperty } from '@ember/object';
+import { computed } from '@ember/object';
 import { sort, reads } from '@ember/object/computed';
 import { ParentMixin } from 'ember-composability-tools';
 
@@ -8,7 +8,7 @@ export default Component.extend(ParentMixin, {
   layout,
 
   columns: reads('childComponents.firstObject.columns'),
-  filteredData: null,
+  filteredData: reads('data'),
 
   sortProperty: null,
   sortDirection: 'asc',
@@ -37,12 +37,5 @@ export default Component.extend(ParentMixin, {
       this.set('sortProperty', prop);
       this.set('sortDirection', 'asc');
     }
-  },
-
-  init() {
-    this._super(...arguments);
-    defineProperty(this, 'filteredData', computed('data.[]', 'columns.@each.prop', function () {
-      return this.get('data');
-    }));
   }
 });
