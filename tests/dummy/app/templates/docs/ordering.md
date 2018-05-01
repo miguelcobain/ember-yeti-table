@@ -70,11 +70,14 @@ Yeti table provides two approaches for this customization:
 
 Sometimes we have more advanced ordering requirements. Yeti table uses the `sort` macro from `@ember/object/computed` ([docs here](https://emberjs.com/api/ember/3.0/functions/@ember%2Fobject%2Fcomputed/sort)) under the hood and exposes the sort definition as the `sortDefinition` property.
 
-Let's say we way to sort by firstName ascending and then lastName descending. We could pass `sortDefinition="firstName:asc lastName:desc"` string to yeti-table. Yeti table takes care of splitting the string
+Let's say we want to sort by `firstName` ascending and then by `lastName` descending. We could pass `sortDefinition="firstName:asc lastName:desc"` string to yeti-table. 
+
+<aside>Yeti table takes care of splitting the string for you, so you don't need to pass in an array.</aside>
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="ordering-advanced.hbs"}}
-    {{#yeti-table data=advancedSortingData sortDefinition="firstName lastName:desc" as |yeti|}}
+    {{#yeti-table data=advancedSortingData
+      sortDefinition="firstName lastName:desc" as |yeti|}}
 
       {{#yeti.table as |table|}}
         {{#table.header as |header|}}

@@ -300,6 +300,53 @@ module('Integration | Component | yeti-table (ordering)', function(hooks) {
     assert.dom('tbody tr:nth-child(5) td:nth-child(2)').hasText('Pale');
   });
 
+  test('using sortDefinition and clicking header afterwards works', async function(assert) {
+    await render(hbs`
+      {{#yeti-table sortDefinition="firstName lastName" data=data as |yeti|}}
+
+        {{#yeti.table as |table|}}
+          {{#table.header as |header|}}
+            {{#header.column prop="firstName"}}
+              First name
+            {{/header.column}}
+            {{#header.column prop="lastName"}}
+              Last name
+            {{/header.column}}
+            {{#header.column prop="points"}}
+              Points
+            {{/header.column}}
+          {{/table.header}}
+
+          {{table.body}}
+        {{/yeti.table}}
+
+      {{/yeti-table}}
+    `);
+
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
+    assert.dom('tbody tr:nth-child(1) td:nth-child(2)').hasText('Baderous');
+
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Maria');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(2)').hasText('Silva');
+
+    assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Miguel');
+    assert.dom('tbody tr:nth-child(3) td:nth-child(2)').hasText('Andrade');
+
+    assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(4) td:nth-child(2)').hasText('Dale');
+
+    assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(2)').hasText('Pale');
+
+    await click('thead th:nth-child(3)');
+
+    assert.dom('tbody tr:nth-child(1) td:nth-child(3)').hasText('1');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(3)').hasText('2');
+    assert.dom('tbody tr:nth-child(3) td:nth-child(3)').hasText('3');
+    assert.dom('tbody tr:nth-child(4) td:nth-child(3)').hasText('4');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(3)').hasText('5');
+  });
+
   test('default sortProperty applies correct order class to header', async function(assert) {
     await render(hbs`
       {{#yeti-table sortProperty="firstName" data=data as |yeti|}}

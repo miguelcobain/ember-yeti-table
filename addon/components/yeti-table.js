@@ -8,7 +8,11 @@ export default Component.extend(ParentMixin, {
   layout,
 
   columns: reads('childComponents.firstObject.columns'),
-  filteredData: reads('data'),
+
+  filteredData: computed('data.[]', function() {
+    // filter logic here
+    return this.get('data');
+  }),
 
   sortProperty: null,
   sortDirection: 'asc',
@@ -25,7 +29,28 @@ export default Component.extend(ParentMixin, {
   }),
 
   orderedData: sort('filteredData', '_sortDefinition'),
+
   processedData: reads('orderedData'),
+
+  didInsertParent() {
+    this._super(...arguments);
+    let props = this.get('columns').mapBy('prop');
+    this._observerPaths = props.map((p) => `data.@each.${p}`);
+    this._observerPaths.forEach((path) => {
+      this.addObserver(path, this, 'scheduleProcessData');
+    });
+  },
+
+  willDestroyElement() {
+    this._super(...arguments);
+    this._observerPaths.forEach((path) => {
+      this.removeObserver(path, this, 'scheduleProcessData');
+    });
+  },
+
+  scheduleProcessData() {
+    this.notifyPropertyChange('filteredData');
+  },
 
   onColumnSort(prop) {
     let sortProperty = this.get('sortProperty');
@@ -37,5 +62,6 @@ export default Component.extend(ParentMixin, {
       this.set('sortProperty', prop);
       this.set('sortDirection', 'asc');
     }
+    this.set('sortDefinition', null);
   }
 });
