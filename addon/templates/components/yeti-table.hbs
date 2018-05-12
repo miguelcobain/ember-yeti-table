@@ -1,3 +1,5 @@
 {{yield (hash
-  table=(component "yeti-table/table" data=processedData onColumnSort=(action onColumnSort) sortProperty=sortProperty sortDirection=sortDirection)
+  table=(component "yeti-table/table" data=orderedData columns=_columns onColumnSort=(action onColumnSort) sortIndex=sortIndex sortDirection=sortDirection)
 )}}
+
+{{orderedData}}

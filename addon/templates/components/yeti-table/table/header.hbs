@@ -1,7 +1,15 @@
 <thead class={{class}}>
   <tr>
-    {{yield (hash
-      column=(component "yeti-table/table/header/column" onClick=onColumnClick sortProperty=sortProperty sortDirection=sortDirection)
-    )}}
+    {{#if hasBlock}}
+      {{yield (hash
+        column=(component "yeti-table/table/header/column" onClick=(action "onColumnClick") sortIndex=sortIndex sortDirection=sortDirection)
+      )}}
+    {{else}}
+      {{#each columns as |column|}}
+        {{#yeti-table/table/header/column onClick=(action "onColumnClick") sortIndex=sortIndex sortDirection=sortDirection}}
+          {{column}}
+        {{/yeti-table/table/header/column}}
+      {{/each}}
+    {{/if}}
   </tr>
 </thead>

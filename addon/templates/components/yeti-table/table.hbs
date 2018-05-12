@@ -1,4 +1,4 @@
 {{yield (hash
-  header=(component "yeti-table/table/header" _isHeader=true onColumnClick=(action onColumnClick) sortProperty=sortProperty sortDirection=sortDirection)
-  body=(component "yeti-table/table/body" _isBody=true columns=columns data=data)
+  header=(component "yeti-table/table/header" columns=columns onColumnClick=(action onColumnClick) sortIndex=sortIndex sortDirection=sortDirection)
+  body=(component "yeti-table/table/body" data=data columns=columns)
 )}}

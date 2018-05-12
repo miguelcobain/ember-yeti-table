@@ -1,30 +1,14 @@
 # General
 
-In this example, ember-yeti-tables "unrolls" the table for you if you use
+In this example, ember-yeti-tables "unrolls" the table for you if you use `{{table.header}}` and
 `{{table.body}}` in the blockless form.
-
-You can still customize the generated rows using:
-
-- `onRowClick` - adds a click action to each row, called with the clicked row's data as an argument
-- `rowClass` - adds a class to each `tr` element
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="general-simple.hbs"}}
-    {{#yeti-table data=data as |yeti|}}
+    {{#yeti-table data=data columns="firstName lastName points" as |yeti|}}
 
       {{#yeti.table as |table|}}
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
-            First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
-            Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
-            Points
-          {{/header.column}}
-        {{/table.header}}
-
+        {{table.header}}
         {{table.body}}
       {{/yeti.table}}
 
@@ -34,28 +18,36 @@ You can still customize the generated rows using:
   {{demo.snippet "general-simple.hbs"}}
 {{/docs-demo}}
 
-If you need to make more advanced customizations, you will need
-to use `{{#table.body}}` in the block form. This form
-allows you to:
+You can still customize the generated rows using the following parameters on `{{table.body}}`:
+
+- `onRowClick` - adds a click action to each row, called with the clicked row's data as an argument
+- `rowClass` - adds a class to each `tr` element
+
+You will probably need to make more customizations, and to do so you will need to use `{{table.header}}`
+and/or `{{table.body}}` in the block form. This form allows you to:
 
 - Use any component or markup as the cell's content
 - Use the row data accross multiple cells of the same row
 - Attach click listeners to the row or cell
 - Use row data to conditionally add classes
 
+<aside>
+  Notice that if you don't need automatic unrolling or sorting, the `columns` property is optional.
+</aside>
+
 {{#docs-demo as |demo|}}
   {{#demo.example name="general-simple-with-body.hbs"}}
-    {{#yeti-table data=data sortProperty="firstName" sortDirection="desc" as |yeti|}}
+    {{#yeti-table data=data as |yeti|}}
 
       {{#yeti.table as |table|}}
         {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+          {{#header.column}}
             First name
           {{/header.column}}
-          {{#header.column prop="lastName"}}
+          {{#header.column}}
             Last name
           {{/header.column}}
-          {{#header.column prop="points"}}
+          {{#header.column}}
             Points
           {{/header.column}}
         {{/table.header}}

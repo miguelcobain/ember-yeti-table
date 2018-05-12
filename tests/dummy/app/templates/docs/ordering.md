@@ -6,17 +6,17 @@ You can disable sorting in any column by passing `orderable=false` to any column
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="ordering-simple.hbs"}}
-    {{#yeti-table data=data as |yeti|}}
+    {{#yeti-table data=data columns="firstName lastName points" as |yeti|}}
 
         {{#yeti.table as |table|}}
           {{#table.header as |header|}}
-            {{#header.column prop="firstName"}}
+            {{#header.column}}
               First name
             {{/header.column}}
-            {{#header.column prop="lastName"}}
+            {{#header.column orderable=false}}
               Last name
             {{/header.column}}
-            {{#header.column prop="points"}}
+            {{#header.column}}
               Points
             {{/header.column}}
           {{/table.header}}
@@ -30,30 +30,33 @@ You can disable sorting in any column by passing `orderable=false` to any column
   {{demo.snippet "ordering-simple.hbs"}}
 {{/docs-demo}}
 
-If you need to specify an order by default, you can pass in `sortProperty` and `sortDirection`. `sortDirection` can be `asc` or `desc` strings but it defaults to `asc`.
+If you need to specify an order by default, you can pass in `sortProperty` and `sortDirection`. `sortDirection` can be `asc` or `desc` strings and it defaults to `asc`.
 
 Note that updating these properties will also update the ordering of the table. Also, if you update an object's property which the table is sorted on, the table ordering will update accordingly.
 
 It is very common to customize the column header based on the sorting status of that column.
 Yeti table provides two approaches for this customization:
 
-- **css classes** - When a column is ordered ascending, it will have the `yeti-table-sorted-asc` class. When a column is ordered descending, it will have the `yeti-table-sorted-desc` class.
-- **yielded hash** - Every `{{header.column}}` component will yield a hash of booleans: `isSorted`, `isAscSorted` and `isDescSorted`. You can use these to customize the rendering of the column yourself.
+- **css classes** - When a column is ordered ascending, it will have the `yeti-table-sorted-asc` class. When a column is ordered descending, it will have the `yeti-table-sorted-desc` class. You can use these to style according to your needs.
+- **yielded hash** - Every `{{header.column}}` component will yield a hash of booleans that contains: `isSorted`, `isAscSorted` and `isDescSorted`. You can use these to customize the rendering of the column itself.
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="ordering-custom.hbs"}}
-    {{#yeti-table data=data sortProperty="points" as |yeti|}}
+    {{#yeti-table data=data columns="firstName lastName points" sortProperty="points" as |yeti|}}
 
       {{#yeti.table as |table|}}
         {{#table.header as |header|}}
-          {{#header.column prop="firstName" as |column|}}
-            First name {{if column.isAscSorted "(sorted asc)"}} {{if column.isDescSorted "(sorted desc)"}}
+          {{#header.column as |column|}}
+            First name
+            {{if column.isAscSorted "(sorted asc)"}} {{if column.isDescSorted "(sorted desc)"}}
           {{/header.column}}
-          {{#header.column prop="lastName" as |column|}}
-            Last name {{if column.isAscSorted "(sorted asc)"}} {{if column.isDescSorted "(sorted desc)"}}
+          {{#header.column as |column|}}
+            Last name
+            {{if column.isAscSorted "(sorted asc)"}} {{if column.isDescSorted "(sorted desc)"}}
           {{/header.column}}
-          {{#header.column prop="points" as |column|}}
-            Points {{if column.isAscSorted "(sorted asc)"}} {{if column.isDescSorted "(sorted desc)"}}
+          {{#header.column as |column|}}
+            Points
+            {{if column.isAscSorted "(sorted asc)"}} {{if column.isDescSorted "(sorted desc)"}}
           {{/header.column}}
         {{/table.header}}
 
@@ -76,18 +79,18 @@ Let's say we want to sort by `firstName` ascending and then by `lastName` descen
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="ordering-advanced.hbs"}}
-    {{#yeti-table data=advancedSortingData
+    {{#yeti-table data=advancedSortingData columns="firstName lastName points"
       sortDefinition="firstName lastName:desc" as |yeti|}}
 
       {{#yeti.table as |table|}}
         {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+          {{#header.column}}
             First name
           {{/header.column}}
-          {{#header.column prop="lastName"}}
+          {{#header.column}}
             Last name
           {{/header.column}}
-          {{#header.column prop="points"}}
+          {{#header.column}}
             Points
           {{/header.column}}
         {{/table.header}}

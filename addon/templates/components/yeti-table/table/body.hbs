@@ -16,15 +16,13 @@
         onClick=(action onRowClick rowData) as |row|}}
 
         {{#each columns as |column|}}
-          {{#if column.visible}}
-            {{#row.cell class=column.columnClass}}
-              {{#if column.prop}}
-                {{get rowData column.prop}}
-              {{else}}
-                {{rowData}}
-              {{/if}}
-            {{/row.cell}}
-          {{/if}}
+          {{#row.cell}}
+            {{#if column}}
+              {{get rowData column}}
+            {{else}}
+              {{rowData}}
+            {{/if}}
+          {{/row.cell}}
         {{/each}}
 
       {{/yeti-table/table/body/row}}

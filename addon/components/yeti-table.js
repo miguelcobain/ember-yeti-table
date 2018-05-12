@@ -1,17 +1,16 @@
 import Component from '@ember/component';
 import layout from '../templates/components/yeti-table';
-import { computed } from '@ember/object';
+import { computed, get, defineProperty } from '@ember/object';
 import { sort, reads } from '@ember/object/computed';
-import { ParentMixin } from 'ember-composability-tools';
+import { isArray } from '@ember/array';
+import createRegex from 'ember-yeti-table/utils/create-regex';
 
-export default Component.extend(ParentMixin, {
+export default Component.extend({
   layout,
 
-  columns: reads('childComponents.firstObject.columns'),
-
-  filteredData: computed('data.[]', function() {
-    // filter logic here
-    return this.get('data');
+  _columns: computed('columns.[]', function() {
+    let columns = this.get('columns') || [];
+    return isArray(columns) ? columns : columns.trim().split(' ');
   }),
 
   sortProperty: null,
@@ -28,31 +27,37 @@ export default Component.extend(ParentMixin, {
     }
   }),
 
+  sortIndex: computed('sortProperty', '_columns.[]', function() {
+    return this.get('_columns').indexOf(this.get('sortProperty'));
+  }),
+
   orderedData: sort('filteredData', '_sortDefinition'),
 
   processedData: reads('orderedData'),
 
-  didInsertParent() {
+  init() {
     this._super(...arguments);
-    let props = this.get('columns').mapBy('prop');
-    this._observerPaths = props.map((p) => `data.@each.${p}`);
-    this._observerPaths.forEach((path) => {
-      this.addObserver(path, this, 'scheduleProcessData');
-    });
+    let columns = this.get('_columns');
+
+    defineProperty(this, 'filteredData', computed(`data.@each.{${columns.join(',')}}`, '_columns.[]', 'searchText', function() {
+      let data = this.get('data');
+      let searchRegex = createRegex(this.get('searchText'), false, true, true);
+      let columns = this.get('_columns');
+
+      if (!searchRegex) {
+        return data;
+      }
+
+      return data.filter(((row) => {
+        return columns.some((prop) => {
+          return searchRegex.test(get(row, prop));
+        });
+      }));
+    }));
   },
 
-  willDestroyElement() {
-    this._super(...arguments);
-    this._observerPaths.forEach((path) => {
-      this.removeObserver(path, this, 'scheduleProcessData');
-    });
-  },
-
-  scheduleProcessData() {
-    this.notifyPropertyChange('filteredData');
-  },
-
-  onColumnSort(prop) {
+  onColumnSort(index) {
+    let prop = this.get('_columns')[index];
     let sortProperty = this.get('sortProperty');
     if (sortProperty === prop) {
       let sortDirection = this.get('sortDirection');

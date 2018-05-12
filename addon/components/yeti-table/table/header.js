@@ -4,5 +4,15 @@ import { ParentMixin, ChildMixin } from 'ember-composability-tools';
 
 export default Component.extend(ParentMixin, ChildMixin, {
   layout,
-  tagName: ''
+  tagName: '',
+
+  actions: {
+    onColumnClick(column, e) {
+      if (this.get('onColumnClick') && column.get('orderable')) {
+        let el = e.currentTarget;
+        let index = [...el.parentNode.querySelectorAll('th')].indexOf(el);
+        this.get('onColumnClick')(index, e);
+      }
+    }
+  }
 });
