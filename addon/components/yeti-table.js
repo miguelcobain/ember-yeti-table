@@ -52,6 +52,10 @@ export default Component.extend({
       let searchRegex = createRegex(this.get('searchText'), false, true, true);
       let columns = this.get('_columns');
 
+      if (isEmpty(data)) {
+        return [];
+      }
+
       if (!searchRegex) {
         return data;
       }
