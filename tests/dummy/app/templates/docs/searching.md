@@ -5,7 +5,7 @@ You can filter a table's rows simply by using the `searchText` property.
 This allows you to update that property as you wish, either using an input element, a query parameter, a select box, etc.
 
 {{#docs-demo as |demo|}}
-  {{#demo.example name="ordering-simple.hbs"}}
+  {{#demo.example name="searching-simple.hbs"}}
     {{input value=searchText}}
 
     {{#yeti-table data=data columns="firstName lastName points" searchText=searchText as |yeti|}}
@@ -29,5 +29,5 @@ This allows you to update that property as you wish, either using an input eleme
       {{/yeti-table}}
   {{/demo.example}}
 
-  {{demo.snippet "ordering-simple.hbs"}}
+  {{demo.snippet "searching-simple.hbs"}}
 {{/docs-demo}}
