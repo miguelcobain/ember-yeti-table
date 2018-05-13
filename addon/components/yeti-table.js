@@ -1,8 +1,9 @@
 import Component from '@ember/component';
 import layout from '../templates/components/yeti-table';
 import { computed, get, defineProperty } from '@ember/object';
-import { sort, reads } from '@ember/object/computed';
+import { sort } from '@ember/object/computed';
 import { isArray } from '@ember/array';
+import { isEmpty } from '@ember/utils';
 import createRegex from 'ember-yeti-table/utils/create-regex';
 
 export default Component.extend({
@@ -33,7 +34,14 @@ export default Component.extend({
 
   orderedData: sort('filteredData', '_sortDefinition'),
 
-  processedData: reads('orderedData'),
+  // workaround for https://github.com/emberjs/ember.js/pull/16632
+  processedData: computed('_sortDefinition', 'orderedData', 'filteredData', function() {
+    if (isEmpty(this.get('_sortDefinition'))) {
+      return this.get('filteredData');
+    } else {
+      return this.get('orderedData');
+    }
+  }),
 
   init() {
     this._super(...arguments);

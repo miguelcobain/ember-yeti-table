@@ -9,7 +9,9 @@
     {{#docs-demo as |demo|}}
       {{#demo.example name="index-example.hbs"}}
 
-        {{#yeti-table data=data columns="firstName lastName points" as |yeti|}}
+        {{input value=searchText}}
+
+        {{#yeti-table data=data columns="firstName lastName points" searchText=searchText as |yeti|}}
 
           {{#yeti.table as |table|}}
             {{table.header}}
