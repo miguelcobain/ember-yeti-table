@@ -3,5 +3,5 @@ import layout from '../../../../../templates/components/yeti-table/table/body/ro
 
 export default Component.extend({
   layout,
-  tagName: ''
+  tagName: 'td'
 });

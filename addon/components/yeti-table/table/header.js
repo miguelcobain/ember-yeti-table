@@ -4,7 +4,7 @@ import { ParentMixin, ChildMixin } from 'ember-composability-tools';
 
 export default Component.extend(ParentMixin, ChildMixin, {
   layout,
-  tagName: '',
+  tagName: 'thead',
 
   actions: {
     onColumnClick(column, e) {

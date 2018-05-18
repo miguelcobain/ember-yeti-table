@@ -1,31 +1,29 @@
-<tbody class={{class}}>
-  {{#if hasBlock}}
+{{#if hasBlock}}
 
-    {{#each data as |rowData index|}}
-      {{yield
-        (hash row=(component "yeti-table/table/body/row" onClick=onRowClick))
-        rowData
-        index}}
-    {{/each}}
+  {{#each data as |rowData index|}}
+    {{yield
+      (hash row=(component "yeti-table/table/body/row" onClick=onRowClick))
+      rowData
+      index}}
+  {{/each}}
 
-  {{else}}
+{{else}}
 
-    {{#each data as |rowData|}}
-      {{#yeti-table/table/body/row
-        class=rowClass
-        onClick=(action onRowClick rowData) as |row|}}
+  {{#each data as |rowData|}}
+    {{#yeti-table/table/body/row
+      class=rowClass
+      onClick=(action onRowClick rowData) as |row|}}
 
-        {{#each columns as |column|}}
-          {{#row.cell}}
-            {{#if column}}
-              {{get rowData column}}
-            {{else}}
-              {{rowData}}
-            {{/if}}
-          {{/row.cell}}
-        {{/each}}
+      {{#each columns as |column|}}
+        {{#row.cell}}
+          {{#if column}}
+            {{get rowData column}}
+          {{else}}
+            {{rowData}}
+          {{/if}}
+        {{/row.cell}}
+      {{/each}}
 
-      {{/yeti-table/table/body/row}}
-    {{/each}}
-  {{/if}}
-</tbody>
+    {{/yeti-table/table/body/row}}
+  {{/each}}
+{{/if}}

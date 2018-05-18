@@ -1,15 +1,13 @@
-<thead class={{class}}>
-  <tr>
-    {{#if hasBlock}}
-      {{yield (hash
-        column=(component "yeti-table/table/header/column" onClick=(action "onColumnClick") sortIndex=sortIndex sortDirection=sortDirection)
-      )}}
-    {{else}}
-      {{#each columns as |column|}}
-        {{#yeti-table/table/header/column onClick=(action "onColumnClick") sortIndex=sortIndex sortDirection=sortDirection}}
-          {{column}}
-        {{/yeti-table/table/header/column}}
-      {{/each}}
-    {{/if}}
-  </tr>
-</thead>
+<tr>
+  {{#if hasBlock}}
+    {{yield (hash
+      column=(component "yeti-table/table/header/column" onClick=(action "onColumnClick") sortIndex=sortIndex sortDirection=sortDirection)
+    )}}
+  {{else}}
+    {{#each columns as |column|}}
+      {{#yeti-table/table/header/column onClick=(action "onColumnClick") sortIndex=sortIndex sortDirection=sortDirection}}
+        {{column}}
+      {{/yeti-table/table/header/column}}
+    {{/each}}
+  {{/if}}
+</tr>
