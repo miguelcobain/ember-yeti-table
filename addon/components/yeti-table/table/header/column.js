@@ -8,6 +8,7 @@ export default Component.extend({
 
   classNameBindings: [
     'orderable:yeti-table-orderable',
+    'isSorted:yeti-table-sorted',
     'isAscSorted:yeti-table-sorted-asc',
     'isDescSorted:yeti-table-sorted-desc'
   ],

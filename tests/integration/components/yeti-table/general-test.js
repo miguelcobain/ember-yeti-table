@@ -105,6 +105,35 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Custom Yehuda');
   });
 
+  test('columnClass applies a class to each column', async function(assert) {
+    await render(hbs`
+      {{#yeti-table data=data as |yeti|}}
+
+        {{#yeti.table as |table|}}
+          {{#table.header as |header|}}
+            {{#header.column prop="firstName"}}
+              First name
+            {{/header.column}}
+            {{#header.column prop="lastName" columnClass="custom-column-class"}}
+              Last name
+            {{/header.column}}
+            {{#header.column prop="points"}}
+              Points
+            {{/header.column}}
+          {{/table.header}}
+
+          {{table.body}}
+        {{/yeti.table}}
+
+      {{/yeti-table}}
+    `);
+
+    let rows = this.element.querySelectorAll('tbody tr td:nth-child(2)');
+    rows.forEach((r) => {
+      assert.dom(r).hasClass('custom-column-class');
+    });
+  });
+
   test('rowClass applies a class to each row', async function(assert) {
     await render(hbs`
       {{#yeti-table data=data as |yeti|}}
