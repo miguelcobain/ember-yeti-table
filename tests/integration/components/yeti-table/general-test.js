@@ -55,12 +55,12 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
       {{/yeti-table}}
     `);
 
-    assert.equal(this.element.querySelectorAll('table').length, 1);
-    assert.equal(this.element.querySelectorAll('thead').length, 1);
-    assert.equal(this.element.querySelectorAll('tbody').length, 1);
-    assert.equal(this.element.querySelectorAll('tr').length, 6);
-    assert.equal(this.element.querySelectorAll('th').length, 3);
-    assert.equal(this.element.querySelectorAll('td').length, 5 * 3);
+    assert.dom('table').exists({ count: 1 });
+    assert.dom('thead').exists({ count: 1 });
+    assert.dom('tbody').exists({ count: 1 });
+    assert.dom('tr').exists({ count: 6 });
+    assert.dom('th').exists({ count: 3 });
+    assert.dom('td').exists({ count: 5 * 3 });
   });
 
   test('body block form renders table', async function(assert) {
@@ -249,5 +249,59 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     });
 
     await click('tbody tr:nth-child(4)');
+  });
+
+  test('renders with data with arrays', async function(assert) {
+    this.data = [
+      ['Miguel', 'Andrade', 1, 2, 3, 4],
+      ['José', 'Baderous', 1, 2, 3, 4],
+      ['Maria', 'Silva', 1, 2, 3, 4],
+      ['Tom', 'Dale', 1, 2, 3, 4],
+      ['Yehuda', 'Katz', 1, 2, 3, 4]
+    ];
+
+    await render(hbs`
+      {{#yeti-table data=data as |yeti|}}
+
+        {{#yeti.table as |table|}}
+          {{#table.header as |header|}}
+            {{#header.column prop="0"}}
+              First name
+            {{/header.column}}
+            {{#header.column prop="1"}}
+              Last name
+            {{/header.column}}
+            {{#header.column prop="2"}}
+              Matches
+            {{/header.column}}
+            {{#header.column prop="3"}}
+              Wins
+            {{/header.column}}
+            {{#header.column prop="4"}}
+              Losses
+            {{/header.column}}
+            {{#header.column prop="5"}}
+              Points
+            {{/header.column}}
+          {{/table.header}}
+
+          {{table.body}}
+        {{/yeti.table}}
+
+      {{/yeti-table}}
+    `);
+
+    assert.dom('table').exists({ count: 1 });
+    assert.dom('thead').exists({ count: 1 });
+    assert.dom('tbody').exists({ count: 1 });
+    assert.dom('tbody tr').exists({ count: this.data.length });
+    assert.dom('th').exists({ count: this.data[0].length });
+    assert.dom('td').exists({ count: this.data.length * this.data[0].length });
+
+    this.data.forEach((line, row) => {
+      line.forEach((data, column) => {
+        assert.dom(`tbody tr:nth-child(${row + 1}) td:nth-child(${column + 1})`).hasText(`${data}`);
+      });
+    })
   });
 });
