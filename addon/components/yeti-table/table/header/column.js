@@ -5,7 +5,11 @@ import layout from '../../../../templates/components/yeti-table/table/header/col
 export default Component.extend({
   layout,
   tagName: 'th',
-  classNameBindings: ['isAscSorted:yeti-table-sorted-asc', 'isDescSorted:yeti-table-sorted-desc'],
+  classNameBindings: [
+    'orderable:yeti-table-orderable',
+    'isAscSorted:yeti-table-sorted-asc',
+    'isDescSorted:yeti-table-sorted-desc'
+  ],
   orderable: true,
 
   isSorted: computed('sortIndex', 'columnIndex', function() {

@@ -33,6 +33,49 @@ module('Integration | Component | yeti-table (ordering)', function(hooks) {
     }]);
   });
 
+  test('by default all columns are orderable and have the orderable class', async function(assert) {
+    await render(hbs`
+      {{#yeti-table data=data columns="firstName lastName points" as |yeti|}}
+
+        {{#yeti.table as |table|}}
+          {{table.header}}
+          {{table.body}}
+        {{/yeti.table}}
+
+      {{/yeti-table}}
+    `);
+
+    assert.dom('th').hasClass('yeti-table-orderable');
+  });
+
+  test('using orderable=false does not add the orderable class', async function(assert) {
+    await render(hbs`
+      {{#yeti-table sortProperty="firstName" data=data columns="firstName lastName points" as |yeti|}}
+
+        {{#yeti.table as |table|}}
+          {{#table.header as |header|}}
+            {{#header.column}}
+              First name
+            {{/header.column}}
+            {{#header.column orderable=false}}
+              Last name
+            {{/header.column}}
+            {{#header.column}}
+              Points
+            {{/header.column}}
+          {{/table.header}}
+
+          {{table.body}}
+        {{/yeti.table}}
+
+      {{/yeti-table}}
+    `);
+
+    assert.dom('thead tr th:nth-child(1)').hasClass('yeti-table-orderable');
+    assert.dom('thead tr th:nth-child(2)').doesNotHaveClass('yeti-table-orderable');
+    assert.dom('thead tr th:nth-child(3)').hasClass('yeti-table-orderable');
+  });
+
   test('default sortProperty works', async function(assert) {
     await render(hbs`
       {{#yeti-table sortProperty="firstName" data=data columns="firstName lastName points" as |yeti|}}
