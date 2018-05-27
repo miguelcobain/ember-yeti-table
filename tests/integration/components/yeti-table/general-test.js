@@ -34,17 +34,17 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
   test('body blockless form renders table', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data columns="firstName lastName points" as |yeti|}}
+      {{#yeti-table data=data as |yeti|}}
 
         {{#yeti.table as |table|}}
           {{#table.header as |header|}}
-            {{#header.column}}
+            {{#header.column prop="firstName"}}
               First name
             {{/header.column}}
-            {{#header.column}}
+            {{#header.column prop="lastName"}}
               Last name
             {{/header.column}}
-            {{#header.column}}
+            {{#header.column prop="points"}}
               Points
             {{/header.column}}
           {{/table.header}}

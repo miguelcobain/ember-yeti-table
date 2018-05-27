@@ -61,7 +61,7 @@ module('Integration | Component | yeti-table (ordering)', function(hooks) {
 
   test('using orderable=false does not add the orderable class', async function(assert) {
     await render(hbs`
-      {{#yeti-table sortProperty="firstName" data=data columns="firstName lastName points" as |yeti|}}
+      {{#yeti-table sortProperty="firstName" data=data as |yeti|}}
 
         {{#yeti.table as |table|}}
           {{#table.header as |header|}}
