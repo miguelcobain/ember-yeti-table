@@ -1,17 +1,14 @@
 import Component from '@ember/component';
 import layout from '../../../templates/components/yeti-table/table/header';
-import { ParentMixin, ChildMixin } from 'ember-composability-tools';
 
-export default Component.extend(ParentMixin, ChildMixin, {
+export default Component.extend({
   layout,
   tagName: 'thead',
 
   actions: {
     onColumnClick(column, e) {
       if (this.get('onColumnClick') && column.get('orderable')) {
-        let el = e.currentTarget;
-        let index = [...el.parentNode.querySelectorAll('th')].indexOf(el);
-        this.get('onColumnClick')(index, e);
+        this.get('onColumnClick')(column, e);
       }
     }
   }

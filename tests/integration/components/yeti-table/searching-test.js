@@ -36,10 +36,21 @@ module('Integration | Component | yeti-table (searching)', function(hooks) {
     this.set('searchText', 'Baderous');
 
     await render(hbs`
-      {{#yeti-table data=data columns="firstName lastName points" searchText=searchText as |yeti|}}
+      {{#yeti-table data=data searchText=searchText as |yeti|}}
 
         {{#yeti.table as |table|}}
-          {{table.header}}
+          {{#table.header as |header|}}
+            {{#header.column prop="firstName"}}
+              First name
+            {{/header.column}}
+            {{#header.column prop="lastName"}}
+              Last name
+            {{/header.column}}
+            {{#header.column prop="points"}}
+              Points
+            {{/header.column}}
+          {{/table.header}}
+
           {{table.body}}
         {{/yeti.table}}
 
@@ -53,10 +64,21 @@ module('Integration | Component | yeti-table (searching)', function(hooks) {
 
   test('updating searchText filters rows', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data columns="firstName lastName points" searchText=searchText as |yeti|}}
+      {{#yeti-table data=data searchText=searchText as |yeti|}}
 
         {{#yeti.table as |table|}}
-          {{table.header}}
+          {{#table.header as |header|}}
+            {{#header.column prop="firstName"}}
+              First name
+            {{/header.column}}
+            {{#header.column prop="lastName"}}
+              Last name
+            {{/header.column}}
+            {{#header.column prop="points"}}
+              Points
+            {{/header.column}}
+          {{/table.header}}
+
           {{table.body}}
         {{/yeti.table}}
 

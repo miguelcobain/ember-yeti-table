@@ -5,9 +5,9 @@ export default Component.extend({
   layout,
   tagName: 'table',
 
-  onColumnClick(index) {
+  onColumnClick(column) {
     if (this.get('onColumnSort')) {
-      this.get('onColumnSort')(index);
+      this.get('onColumnSort')(column);
     }
   }
 });

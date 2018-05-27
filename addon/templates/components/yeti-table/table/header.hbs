@@ -1,11 +1,11 @@
 <tr>
   {{#if hasBlock}}
     {{yield (hash
-      column=(component "yeti-table/table/header/column" onClick=(action "onColumnClick") sortIndex=sortIndex sortDirection=sortDirection)
+      column=(component "yeti-table/table/header/column" onClick=(action "onColumnClick") sortProperty=sortProperty sortDirection=sortDirection parent=parent)
     )}}
   {{else}}
     {{#each columns as |column|}}
-      {{#yeti-table/table/header/column onClick=(action "onColumnClick") sortIndex=sortIndex sortDirection=sortDirection}}
+      {{#yeti-table/table/header/column onClick=(action "onColumnClick") sortProperty=sortProperty sortDirection=sortDirection parent=parent}}
         {{column}}
       {{/yeti-table/table/header/column}}
     {{/each}}

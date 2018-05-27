@@ -15,9 +15,9 @@
       onClick=(action onRowClick rowData) as |row|}}
 
       {{#each columns as |column|}}
-        {{#row.cell}}
-          {{#if column}}
-            {{get rowData column}}
+        {{#row.cell class=column.columnClass}}
+          {{#if column.prop}}
+            {{get rowData column.prop}}
           {{else}}
             {{rowData}}
           {{/if}}

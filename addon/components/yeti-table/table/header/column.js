@@ -5,15 +5,17 @@ import layout from '../../../../templates/components/yeti-table/table/header/col
 export default Component.extend({
   layout,
   tagName: 'th',
+
   classNameBindings: [
     'orderable:yeti-table-orderable',
     'isAscSorted:yeti-table-sorted-asc',
     'isDescSorted:yeti-table-sorted-desc'
   ],
+
   orderable: true,
 
-  isSorted: computed('sortIndex', 'columnIndex', function() {
-    return this.get('sortIndex') === this.get('columnIndex');
+  isSorted: computed('sortProperty', 'prop', function() {
+    return this.get('sortProperty') === this.get('prop');
   }),
 
   isAscSorted: computed('isSorted', 'sortDirection', function() {
@@ -24,10 +26,18 @@ export default Component.extend({
     return this.get('isSorted') && this.get('sortDirection') === 'desc';
   }),
 
-  didInsertElement() {
+  init() {
     this._super(...arguments);
-    let index = [...this.element.parentNode.querySelectorAll('th')].indexOf(this.element);
-    this.set('columnIndex', index);
+    if (this.get('parent')) {
+      this.get('parent').registerColumn(this);
+    }
+  },
+
+  willDestroyElement() {
+    this._super(...arguments);
+    if (this.get('parent')) {
+      this.get('parent').unregisterColumn(this);
+    }
   },
 
   click() {
