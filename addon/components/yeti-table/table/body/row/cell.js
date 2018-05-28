@@ -3,5 +3,19 @@ import layout from '../../../../../templates/components/yeti-table/table/body/ro
 
 export default Component.extend({
   layout,
-  tagName: 'td'
+  tagName: '',
+
+  init() {
+    this._super(...arguments);
+    if (this.get('parent')) {
+      this.get('parent').registerCell(this);
+    }
+  },
+
+  willDestroyElement() {
+    this._super(...arguments);
+    if (this.get('parent')) {
+      this.get('parent').unregisterCell(this);
+    }
+  }
 });

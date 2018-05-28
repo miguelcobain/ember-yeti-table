@@ -4,16 +4,10 @@ import layout from '../../../../templates/components/yeti-table/table/header/col
 
 export default Component.extend({
   layout,
-  tagName: 'th',
-
-  classNameBindings: [
-    'orderable:yeti-table-orderable',
-    'isSorted:yeti-table-sorted',
-    'isAscSorted:yeti-table-sorted-asc',
-    'isDescSorted:yeti-table-sorted-desc'
-  ],
+  tagName: '',
 
   orderable: true,
+  visible: true,
 
   isSorted: computed('sortProperty', 'prop', function() {
     return this.get('sortProperty') === this.get('prop');
@@ -39,9 +33,5 @@ export default Component.extend({
     if (this.get('parent')) {
       this.get('parent').unregisterColumn(this);
     }
-  },
-
-  click() {
-    this.get('onClick')(this, ...arguments);
   }
 });

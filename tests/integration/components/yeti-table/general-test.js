@@ -304,4 +304,46 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
       });
     })
   });
+
+  test('column visibility works', async function(assert) {
+    this.visible = true;
+
+    await render(hbs`
+      {{#yeti-table data=data as |yeti|}}
+
+        {{#yeti.table as |table|}}
+          {{#table.header as |header|}}
+            {{#header.column prop="firstName"}}
+              First name
+            {{/header.column}}
+            {{#header.column prop="lastName" visible=visible}}
+              Last name
+            {{/header.column}}
+            {{#header.column prop="points"}}
+              Points
+            {{/header.column}}
+          {{/table.header}}
+
+          {{table.body}}
+        {{/yeti.table}}
+
+      {{/yeti-table}}
+    `);
+
+    assert.dom('table').exists({ count: 1 });
+    assert.dom('thead').exists({ count: 1 });
+    assert.dom('tbody').exists({ count: 1 });
+    assert.dom('tr').exists({ count: 6 });
+    assert.dom('th').exists({ count: 3 });
+    assert.dom('td').exists({ count: 5 * 3 });
+
+    this.set('visible', false);
+
+    assert.dom('table').exists({ count: 1 });
+    assert.dom('thead').exists({ count: 1 });
+    assert.dom('tbody').exists({ count: 1 });
+    assert.dom('tr').exists({ count: 6 });
+    assert.dom('th').exists({ count: 2 });
+    assert.dom('td').exists({ count: 5 * 2 });
+  });
 });

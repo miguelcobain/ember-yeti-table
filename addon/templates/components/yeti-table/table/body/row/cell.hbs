@@ -1,1 +1,5 @@
-{{yield}}
+{{#if column.visible}}
+  <td class="{{class}} {{column.columnClass}}">
+    {{yield}}
+  </td>
+{{/if}}

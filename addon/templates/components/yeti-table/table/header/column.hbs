@@ -1,5 +1,11 @@
-{{yield (hash
-  isSorted=isSorted
-  isAscSorted=isAscSorted
-  isDescSorted=isDescSorted
-)}}
+{{#if visible}}
+  <th
+    class="{{class}} {{if orderable "yeti-table-orderable"}} {{if isSorted "yeti-table-sorted"}} {{if isAscSorted "yeti-table-sorted-asc"}} {{if isDescSorted "yeti-table-sorted-desc"}}"
+    onclick={{action onClick this}}>
+    {{yield (hash
+      isSorted=isSorted
+      isAscSorted=isAscSorted
+      isDescSorted=isDescSorted
+    )}}
+  </th>
+{{/if}}
