@@ -161,4 +161,41 @@ module('Integration | Component | yeti-table (searching)', function(hooks) {
 
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
   });
+
+  test('rendering with searchText on multiple column filters rows correctly', async function(assert) {
+    this.set('searchTextFirst', 'Tom');
+    this.set('searchTextLast', '');
+
+    await render(hbs`
+      {{#yeti-table data=data as |table|}}
+
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName" searchText=searchTextFirst}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName" searchText=searchTextLast}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
+
+        {{table.body}}
+
+      {{/yeti-table}}
+    `);
+
+    assert.dom('tbody tr').exists({ count: 2 });
+
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Tom');
+
+    this.set('searchTextLast', 'Dale');
+
+    assert.dom('tbody tr').exists({ count: 1 });
+
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(1) td:nth-child(2)').hasText('Dale');
+  });
 });
