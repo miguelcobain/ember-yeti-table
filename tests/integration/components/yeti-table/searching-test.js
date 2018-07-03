@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import '@ember/test-helpers';
 import { A } from '@ember/array';
@@ -36,23 +36,21 @@ module('Integration | Component | yeti-table (searching)', function(hooks) {
     this.set('searchText', 'Baderous');
 
     await render(hbs`
-      {{#yeti-table data=data searchText=searchText as |yeti|}}
+      {{#yeti-table data=data searchText=searchText as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="firstName"}}
-              First name
-            {{/header.column}}
-            {{#header.column prop="lastName"}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="points"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName"}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{table.body}}
-        {{/yeti.table}}
+        {{table.body}}
 
       {{/yeti-table}}
     `);
@@ -64,23 +62,21 @@ module('Integration | Component | yeti-table (searching)', function(hooks) {
 
   test('updating searchText filters rows', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data searchText=searchText as |yeti|}}
+      {{#yeti-table data=data searchText=searchText as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="firstName"}}
-              First name
-            {{/header.column}}
-            {{#header.column prop="lastName"}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="points"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName"}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{table.body}}
-        {{/yeti.table}}
+        {{table.body}}
 
       {{/yeti-table}}
     `);
@@ -94,6 +90,72 @@ module('Integration | Component | yeti-table (searching)', function(hooks) {
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
 
     this.set('searchText', 'Baderous');
+
+    assert.dom('tbody tr').exists({ count: 1 });
+
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
+  });
+
+  test('rendering with searchText on column filters rows', async function(assert) {
+    this.set('searchText', 'Baderous');
+
+    await render(hbs`
+      {{#yeti-table data=data as |table|}}
+
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName" searchText=searchText}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
+
+        {{table.body}}
+
+      {{/yeti-table}}
+    `);
+
+    assert.dom('tbody tr').exists({ count: 1 });
+
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
+  });
+
+  test('updating searchText on column filters rows', async function(assert) {
+
+    await render(hbs`
+      {{#yeti-table data=data as |table|}}
+
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName" searchText=searchText}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
+
+        {{table.body}}
+
+      {{/yeti-table}}
+    `);
+
+    assert.dom('tbody tr').exists({ count: 5 });
+
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Miguel');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('José');
+    assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Maria');
+    assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
+
+    this.set('searchText', 'Baderous');
+    await settled();
 
     assert.dom('tbody tr').exists({ count: 1 });
 

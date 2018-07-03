@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import layout from '../../../../templates/components/yeti-table/table/header/column';
+import layout from '../../../templates/components/yeti-table/header/column';
 
 export default Component.extend({
   layout,
@@ -8,6 +8,8 @@ export default Component.extend({
 
   orderable: true,
   visible: true,
+  filterable: true,
+  searchText: '',
 
   isSorted: computed('sortProperty', 'prop', function() {
     return this.get('sortProperty') === this.get('prop');

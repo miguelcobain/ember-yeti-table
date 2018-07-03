@@ -4,23 +4,21 @@ In this example, ember-yeti-tables "unrolls" the table for you if you use `{{tab
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="general-simple.hbs"}}
-    {{#yeti-table data=data as |yeti|}}
+    {{#yeti-table data=data as |table|}}
 
-      {{#yeti.table as |table|}}
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
-            First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
-            Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
-            Points
-          {{/header.column}}
-        {{/table.header}}
+      {{#table.header as |header|}}
+        {{#header.column prop="firstName"}}
+          First name
+        {{/header.column}}
+        {{#header.column prop="lastName"}}
+          Last name
+        {{/header.column}}
+        {{#header.column prop="points"}}
+          Points
+        {{/header.column}}
+      {{/table.header}}
 
-        {{table.body}}
-      {{/yeti.table}}
+      {{table.body}}
 
     {{/yeti-table}}
   {{/demo.example}}
@@ -47,35 +45,33 @@ and/or `{{table.body}}` in the block form. This form allows you to:
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="general-simple-with-body.hbs"}}
-    {{#yeti-table data=data as |yeti|}}
+    {{#yeti-table data=data as |table|}}
 
-      {{#yeti.table as |table|}}
-        {{#table.header as |header|}}
-          {{#header.column}}
-            First name
-          {{/header.column}}
-          {{#header.column}}
-            Last name
-          {{/header.column}}
-          {{#header.column}}
-            Points
-          {{/header.column}}
-        {{/table.header}}
+      {{#table.header as |header|}}
+        {{#header.column}}
+          First name
+        {{/header.column}}
+        {{#header.column}}
+          Last name
+        {{/header.column}}
+        {{#header.column}}
+          Points
+        {{/header.column}}
+      {{/table.header}}
 
-        {{#table.body as |body person|}}
-          {{#body.row as |row|}}
-            {{#row.cell}}
-              {{person.firstName}}
-            {{/row.cell}}
-            {{#row.cell}}
-              {{person.lastName}}
-            {{/row.cell}}
-            {{#row.cell}}
-              {{person.points}}
-            {{/row.cell}}
-          {{/body.row}}
-        {{/table.body}}
-      {{/yeti.table}}
+      {{#table.body as |body person|}}
+        {{#body.row as |row|}}
+          {{#row.cell}}
+            {{person.firstName}}
+          {{/row.cell}}
+          {{#row.cell}}
+            {{person.lastName}}
+          {{/row.cell}}
+          {{#row.cell}}
+            {{person.points}}
+          {{/row.cell}}
+        {{/body.row}}
+      {{/table.body}}
 
     {{/yeti-table}}
   {{/demo.example}}

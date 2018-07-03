@@ -35,23 +35,21 @@ module('Integration | Component | yeti-table (ordering)', function(hooks) {
 
   test('by default all columns are orderable and have the orderable class', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data as |yeti|}}
+      {{#yeti-table data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="firstName"}}
-              First name
-            {{/header.column}}
-            {{#header.column prop="lastName"}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="points"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName"}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{table.body}}
-        {{/yeti.table}}
+        {{table.body}}
 
       {{/yeti-table}}
     `);
@@ -61,23 +59,21 @@ module('Integration | Component | yeti-table (ordering)', function(hooks) {
 
   test('using orderable=false does not add the orderable class', async function(assert) {
     await render(hbs`
-      {{#yeti-table sortProperty="firstName" data=data as |yeti|}}
+      {{#yeti-table sortProperty="firstName" data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="firstName"}}
-              First name
-            {{/header.column}}
-            {{#header.column prop="lastName" orderable=false}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="points"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName" orderable=false}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{table.body}}
-        {{/yeti.table}}
+        {{table.body}}
 
       {{/yeti-table}}
     `);
@@ -89,23 +85,21 @@ module('Integration | Component | yeti-table (ordering)', function(hooks) {
 
   test('default sortProperty works', async function(assert) {
     await render(hbs`
-      {{#yeti-table sortProperty="firstName" data=data as |yeti|}}
+      {{#yeti-table sortProperty="firstName" data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="firstName"}}
-              First name
-            {{/header.column}}
-            {{#header.column prop="lastName"}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="points"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName"}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{table.body}}
-        {{/yeti.table}}
+        {{table.body}}
 
       {{/yeti-table}}
     `);
@@ -121,23 +115,21 @@ module('Integration | Component | yeti-table (ordering)', function(hooks) {
     this.sortProperty = 'firstName';
 
     await render(hbs`
-      {{#yeti-table sortProperty=sortProperty data=data as |yeti|}}
+      {{#yeti-table sortProperty=sortProperty data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="firstName"}}
-              First name
-            {{/header.column}}
-            {{#header.column prop="lastName"}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="points"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName"}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{table.body}}
-        {{/yeti.table}}
+        {{table.body}}
 
       {{/yeti-table}}
     `);
@@ -161,23 +153,21 @@ module('Integration | Component | yeti-table (ordering)', function(hooks) {
     this.sortDirection = 'asc';
 
     await render(hbs`
-      {{#yeti-table sortProperty="firstName" sortDirection=sortDirection data=data as |yeti|}}
+      {{#yeti-table sortProperty="firstName" sortDirection=sortDirection data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="firstName"}}
-              First name
-            {{/header.column}}
-            {{#header.column prop="lastName"}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="points"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName"}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{table.body}}
-        {{/yeti.table}}
+        {{table.body}}
 
       {{/yeti-table}}
     `);
@@ -199,23 +189,21 @@ module('Integration | Component | yeti-table (ordering)', function(hooks) {
 
   test('default sortProperty and sortDirection works', async function(assert) {
     await render(hbs`
-      {{#yeti-table sortProperty="firstName" sortDirection="desc" data=data as |yeti|}}
+      {{#yeti-table sortProperty="firstName" sortDirection="desc" data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="firstName"}}
-              First name
-            {{/header.column}}
-            {{#header.column prop="lastName"}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="points"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName"}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{table.body}}
-        {{/yeti.table}}
+        {{table.body}}
 
       {{/yeti-table}}
     `);
@@ -229,23 +217,21 @@ module('Integration | Component | yeti-table (ordering)', function(hooks) {
 
   test('clicking on column header sorts', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data as |yeti|}}
+      {{#yeti-table data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="firstName"}}
-              First name
-            {{/header.column}}
-            {{#header.column prop="lastName"}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="points"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName"}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{table.body}}
-        {{/yeti.table}}
+        {{table.body}}
 
       {{/yeti-table}}
     `);
@@ -278,23 +264,21 @@ module('Integration | Component | yeti-table (ordering)', function(hooks) {
 
   test('changing a sorted property updates ordering', async function(assert) {
     await render(hbs`
-      {{#yeti-table sortProperty="firstName" data=data as |yeti|}}
+      {{#yeti-table sortProperty="firstName" data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="firstName"}}
-              First name
-            {{/header.column}}
-            {{#header.column prop="lastName"}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="points"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName"}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{table.body}}
-        {{/yeti.table}}
+        {{table.body}}
 
       {{/yeti-table}}
     `);
@@ -317,23 +301,21 @@ module('Integration | Component | yeti-table (ordering)', function(hooks) {
 
   test('sortDefinition works', async function(assert) {
     await render(hbs`
-      {{#yeti-table sortDefinition="firstName lastName" data=data as |yeti|}}
+      {{#yeti-table sortDefinition="firstName lastName" data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="firstName"}}
-              First name
-            {{/header.column}}
-            {{#header.column prop="lastName"}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="points"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName"}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{table.body}}
-        {{/yeti.table}}
+        {{table.body}}
 
       {{/yeti-table}}
     `);
@@ -356,23 +338,21 @@ module('Integration | Component | yeti-table (ordering)', function(hooks) {
 
   test('using sortDefinition and clicking header afterwards works', async function(assert) {
     await render(hbs`
-      {{#yeti-table sortDefinition="firstName lastName" data=data as |yeti|}}
+      {{#yeti-table sortDefinition="firstName lastName" data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="firstName"}}
-              First name
-            {{/header.column}}
-            {{#header.column prop="lastName"}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="points"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName"}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{table.body}}
-        {{/yeti.table}}
+        {{table.body}}
 
       {{/yeti-table}}
     `);
@@ -403,23 +383,21 @@ module('Integration | Component | yeti-table (ordering)', function(hooks) {
 
   test('default sortProperty applies correct order class to header', async function(assert) {
     await render(hbs`
-      {{#yeti-table sortProperty="firstName" data=data as |yeti|}}
+      {{#yeti-table sortProperty="firstName" data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="firstName"}}
-              First name
-            {{/header.column}}
-            {{#header.column prop="lastName"}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="points"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName"}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{table.body}}
-        {{/yeti.table}}
+        {{table.body}}
 
       {{/yeti-table}}
     `);
@@ -429,23 +407,21 @@ module('Integration | Component | yeti-table (ordering)', function(hooks) {
 
   test('default sortProperty applies correct order class to header (desc)', async function(assert) {
     await render(hbs`
-      {{#yeti-table sortProperty="firstName" sortDirection="desc" data=data as |yeti|}}
+      {{#yeti-table sortProperty="firstName" sortDirection="desc" data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="firstName"}}
-              First name
-            {{/header.column}}
-            {{#header.column prop="lastName"}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="points"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName"}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{table.body}}
-        {{/yeti.table}}
+        {{table.body}}
 
       {{/yeti-table}}
     `);
@@ -455,23 +431,21 @@ module('Integration | Component | yeti-table (ordering)', function(hooks) {
 
   test('clicking on column header applies correct class', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data as |yeti|}}
+      {{#yeti-table data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="firstName"}}
-              First name
-            {{/header.column}}
-            {{#header.column prop="lastName"}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="points"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName"}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{table.body}}
-        {{/yeti.table}}
+        {{table.body}}
 
       {{/yeti-table}}
     `);
@@ -493,28 +467,26 @@ module('Integration | Component | yeti-table (ordering)', function(hooks) {
 
   test('column header yields order status correctly', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data as |yeti|}}
+      {{#yeti-table data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="firstName" as |column|}}
-              First name
-              {{#if column.isAscSorted}}
-                <div class="up-arrow"></div>
-              {{else if column.isDescSorted}}
-                <div class="down-arrow"></div>
-              {{/if}}
-            {{/header.column}}
-            {{#header.column prop="lastName"}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="points"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName" as |column|}}
+            First name
+            {{#if column.isAscSorted}}
+              <div class="up-arrow"></div>
+            {{else if column.isDescSorted}}
+              <div class="down-arrow"></div>
+            {{/if}}
+          {{/header.column}}
+          {{#header.column prop="lastName"}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{table.body}}
-        {{/yeti.table}}
+        {{table.body}}
 
       {{/yeti-table}}
     `);

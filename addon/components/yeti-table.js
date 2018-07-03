@@ -8,6 +8,7 @@ import createRegex from 'ember-yeti-table/utils/create-regex';
 
 export default Component.extend({
   layout,
+  tagName: 'table',
 
   sortProperty: null,
   sortDirection: 'asc',
@@ -45,21 +46,36 @@ export default Component.extend({
 
     let columns = this.get('columns').mapBy('prop');
 
-    defineProperty(this, 'filteredData', computed(`data.@each.{${columns.join(',')}}`, 'columns.[]', 'searchText', function() {
+    defineProperty(this, 'filteredData', computed(`data.@each.{${columns.join(',')}}`, 'columns.@each.{prop,searchText,filterable}', 'searchText', function() {
       let data = this.get('data');
-      let searchRegex = createRegex(this.get('searchText'), false, true, true);
-      let columns = this.get('columns').mapBy('prop');
 
       if (isEmpty(data)) {
         return [];
       }
 
-      if (!searchRegex) {
+      // if no global filter, filtered columns are the ones that have a specific searchText
+      // if there is a global filter, then filtered columns are all the ones that have filterable = true
+      let filteredColumns;
+      if (isEmpty(this.get('searchText'))) {
+        filteredColumns = this.get('columns').filterBy('searchText');
+      } else {
+        filteredColumns = this.get('columns').filterBy('filterable');
+      }
+
+      if (isEmpty(filteredColumns)) {
         return data;
       }
 
+      let searchRegexes = filteredColumns.map((c) => {
+        let searchText = c.get('searchText') || this.get('searchText');
+        return {
+          prop: c.get('prop'),
+          searchRegex: createRegex(searchText, false, true, true)
+        };
+      });
+
       return data.filter(((row) => {
-        return columns.some((prop) => {
+        return searchRegexes.some(({ prop, searchRegex }) => {
           return searchRegex.test(get(row, prop));
         });
       }));

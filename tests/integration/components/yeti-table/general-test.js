@@ -34,23 +34,21 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
   test('body blockless form renders table', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data as |yeti|}}
+      {{#yeti-table data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="firstName"}}
-              First name
-            {{/header.column}}
-            {{#header.column prop="lastName"}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="points"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName"}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{table.body}}
-        {{/yeti.table}}
+        {{table.body}}
 
       {{/yeti-table}}
     `);
@@ -65,35 +63,33 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
   test('body block form renders table', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data as |yeti|}}
+      {{#yeti-table data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column}}
-              First name
-            {{/header.column}}
-            {{#header.column}}
-              Last name
-            {{/header.column}}
-            {{#header.column}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column}}
+            First name
+          {{/header.column}}
+          {{#header.column}}
+            Last name
+          {{/header.column}}
+          {{#header.column}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{#table.body as |body person|}}
-            {{#body.row as |row|}}
-              {{#row.cell}}
-                Custom {{person.firstName}}
-              {{/row.cell}}
-              {{#row.cell}}
-                {{person.lastName}}
-              {{/row.cell}}
-              {{#row.cell}}
-                {{person.points}}
-              {{/row.cell}}
-            {{/body.row}}
-          {{/table.body}}
-        {{/yeti.table}}
+        {{#table.body as |body person|}}
+          {{#body.row as |row|}}
+            {{#row.cell}}
+              Custom {{person.firstName}}
+            {{/row.cell}}
+            {{#row.cell}}
+              {{person.lastName}}
+            {{/row.cell}}
+            {{#row.cell}}
+              {{person.points}}
+            {{/row.cell}}
+          {{/body.row}}
+        {{/table.body}}
 
       {{/yeti-table}}
     `);
@@ -107,23 +103,21 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
   test('columnClass applies a class to each column with blockless body', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data as |yeti|}}
+      {{#yeti-table data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="firstName"}}
-              First name
-            {{/header.column}}
-            {{#header.column prop="lastName" columnClass="custom-column-class"}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="points"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName" columnClass="custom-column-class"}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{table.body}}
-        {{/yeti.table}}
+        {{table.body}}
 
       {{/yeti-table}}
     `);
@@ -136,35 +130,33 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
   test('columnClass applies a class to each column with block body', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data as |yeti|}}
+      {{#yeti-table data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="firstName"}}
-              First name
-            {{/header.column}}
-            {{#header.column prop="lastName" columnClass="custom-column-class"}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="points"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName" columnClass="custom-column-class"}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{#table.body as |body person|}}
-            {{#body.row as |row|}}
-              {{#row.cell}}
-                Custom {{person.firstName}}
-              {{/row.cell}}
-              {{#row.cell}}
-                {{person.lastName}}
-              {{/row.cell}}
-              {{#row.cell}}
-                {{person.points}}
-              {{/row.cell}}
-            {{/body.row}}
-          {{/table.body}}
-        {{/yeti.table}}
+        {{#table.body as |body person|}}
+          {{#body.row as |row|}}
+            {{#row.cell}}
+              Custom {{person.firstName}}
+            {{/row.cell}}
+            {{#row.cell}}
+              {{person.lastName}}
+            {{/row.cell}}
+            {{#row.cell}}
+              {{person.points}}
+            {{/row.cell}}
+          {{/body.row}}
+        {{/table.body}}
 
       {{/yeti-table}}
     `);
@@ -177,23 +169,21 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
   test('rowClass applies a class to each row', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data as |yeti|}}
+      {{#yeti-table data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="firstName"}}
-              First name
-            {{/header.column}}
-            {{#header.column prop="lastName"}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="points"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName"}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{table.body rowClass="custom-row-class"}}
-        {{/yeti.table}}
+        {{table.body rowClass="custom-row-class"}}
 
       {{/yeti-table}}
     `);
@@ -212,23 +202,21 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     };
 
     await render(hbs`
-      {{#yeti-table data=data as |yeti|}}
+      {{#yeti-table data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="firstName"}}
-              First name
-            {{/header.column}}
-            {{#header.column prop="lastName"}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="points"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName"}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{table.body onRowClick=(action rowClicked)}}
-        {{/yeti.table}}
+        {{table.body onRowClick=(action rowClicked)}}
 
       {{/yeti-table}}
     `);
@@ -250,35 +238,33 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     };
 
     await render(hbs`
-      {{#yeti-table data=data as |yeti|}}
+      {{#yeti-table data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column}}
-              First name
-            {{/header.column}}
-            {{#header.column}}
-              Last name
-            {{/header.column}}
-            {{#header.column}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column}}
+            First name
+          {{/header.column}}
+          {{#header.column}}
+            Last name
+          {{/header.column}}
+          {{#header.column}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{#table.body as |body person|}}
-            {{#body.row onClick=(action rowClicked person) as |row|}}
-              {{#row.cell}}
-                Custom {{person.firstName}}
-              {{/row.cell}}
-              {{#row.cell}}
-                {{person.lastName}}
-              {{/row.cell}}
-              {{#row.cell}}
-                {{person.points}}
-              {{/row.cell}}
-            {{/body.row}}
-          {{/table.body}}
-        {{/yeti.table}}
+        {{#table.body as |body person|}}
+          {{#body.row onClick=(action rowClicked person) as |row|}}
+            {{#row.cell}}
+              Custom {{person.firstName}}
+            {{/row.cell}}
+            {{#row.cell}}
+              {{person.lastName}}
+            {{/row.cell}}
+            {{#row.cell}}
+              {{person.points}}
+            {{/row.cell}}
+          {{/body.row}}
+        {{/table.body}}
 
       {{/yeti-table}}
     `);
@@ -302,32 +288,30 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     ];
 
     await render(hbs`
-      {{#yeti-table data=data as |yeti|}}
+      {{#yeti-table data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="0"}}
-              First name
-            {{/header.column}}
-            {{#header.column prop="1"}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="2"}}
-              Matches
-            {{/header.column}}
-            {{#header.column prop="3"}}
-              Wins
-            {{/header.column}}
-            {{#header.column prop="4"}}
-              Losses
-            {{/header.column}}
-            {{#header.column prop="5"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="0"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="1"}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="2"}}
+            Matches
+          {{/header.column}}
+          {{#header.column prop="3"}}
+            Wins
+          {{/header.column}}
+          {{#header.column prop="4"}}
+            Losses
+          {{/header.column}}
+          {{#header.column prop="5"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{table.body}}
-        {{/yeti.table}}
+        {{table.body}}
 
       {{/yeti-table}}
     `);
@@ -350,23 +334,21 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     this.visible = true;
 
     await render(hbs`
-      {{#yeti-table data=data as |yeti|}}
+      {{#yeti-table data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="firstName"}}
-              First name
-            {{/header.column}}
-            {{#header.column prop="lastName" visible=visible}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="points"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName" visible=visible}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{table.body}}
-        {{/yeti.table}}
+        {{table.body}}
 
       {{/yeti-table}}
     `);
@@ -392,35 +374,33 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     this.visible = true;
 
     await render(hbs`
-      {{#yeti-table data=data as |yeti|}}
+      {{#yeti-table data=data as |table|}}
 
-        {{#yeti.table as |table|}}
-          {{#table.header as |header|}}
-            {{#header.column prop="firstName"}}
-              First name
-            {{/header.column}}
-            {{#header.column prop="lastName" visible=visible}}
-              Last name
-            {{/header.column}}
-            {{#header.column prop="points"}}
-              Points
-            {{/header.column}}
-          {{/table.header}}
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName" visible=visible}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
 
-          {{#table.body as |body person|}}
-            {{#body.row as |row|}}
-              {{#row.cell}}
-                {{person.firstName}}
-              {{/row.cell}}
-              {{#row.cell}}
-                {{person.lastName}}
-              {{/row.cell}}
-              {{#row.cell}}
-                {{person.points}}
-              {{/row.cell}}
-            {{/body.row}}
-          {{/table.body}}
-        {{/yeti.table}}
+        {{#table.body as |body person|}}
+          {{#body.row as |row|}}
+            {{#row.cell}}
+              {{person.firstName}}
+            {{/row.cell}}
+            {{#row.cell}}
+              {{person.lastName}}
+            {{/row.cell}}
+            {{#row.cell}}
+              {{person.points}}
+            {{/row.cell}}
+          {{/body.row}}
+        {{/table.body}}
 
       {{/yeti-table}}
     `);

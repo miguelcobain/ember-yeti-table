@@ -1,7 +1,7 @@
 <tr>
   {{#if hasBlock}}
     {{yield (hash
-      column=(component "yeti-table/table/header/column" onClick=(action "onColumnClick") sortProperty=sortProperty sortDirection=sortDirection parent=parent)
+      column=(component "yeti-table/header/column" onClick=(action "onColumnClick") sortProperty=sortProperty sortDirection=sortDirection parent=parent)
     )}}
   {{else}}
     {{#each columns as |column|}}
