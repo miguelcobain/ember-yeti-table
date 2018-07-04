@@ -13,8 +13,10 @@ export default Component.extend({
   sortProperty: null,
   sortDirection: 'asc',
   _sortDefinition: computed('sortDefinition', 'sortProperty', 'sortDirection', function() {
-    if (this.get('sortDefinition')) {
-      return this.get('sortDefinition').split(' ');
+    let sortDefinition = this.get('sortDefinition');
+
+    if (sortDefinition) {
+      return sortDefinition.split(' ');
     } else {
       let def = [];
       if (this.get('sortProperty')) {
@@ -23,8 +25,6 @@ export default Component.extend({
       return def;
     }
   }),
-
-  orderedData: sort('filteredData', '_sortDefinition'),
 
   // workaround for https://github.com/emberjs/ember.js/pull/16632
   processedData: computed('_sortDefinition', 'orderedData.[]', 'filteredData.[]', function() {
@@ -39,6 +39,20 @@ export default Component.extend({
     this._super(...arguments);
     this.set('columns', A());
     this.set('filteredData', []);
+
+    // defining this in init is needed because `sort` macro only
+    // supports passing in a function and not a key to a function
+    let comparator = this.get('comparator');
+    if (typeof comparator === 'function') {
+      let sortFn = (itemA, itemB) => {
+        let compareValue = comparator(itemA, itemB, this.get('sortProperty'), this.get('sortDirection'));
+        return this.get('sortProperty') === 'asc' ? compareValue : -compareValue;
+      };
+      defineProperty(this, 'orderedData', sort('filteredData', sortFn));
+    } else {
+      defineProperty(this, 'orderedData', sort('filteredData', '_sortDefinition'));
+    }
+
   },
 
   didInsertElement() {

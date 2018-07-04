@@ -336,6 +336,71 @@ module('Integration | Component | yeti-table (ordering)', function(hooks) {
     assert.dom('tbody tr:nth-child(5) td:nth-child(2)').hasText('Pale');
   });
 
+  test('function sortDefinition works', async function(assert) {
+    this.set('customSort', (a, b) => {
+      if (a.points > b.points) {
+        return 1;
+      } else if (a.points < b.points) {
+        return -1;
+      }
+
+      return 0;
+    });
+
+    await render(hbs`
+      {{#yeti-table comparator=(action customSort) data=data as |table|}}
+
+        {{#table.header as |header|}}
+          {{#header.column prop="firstName"}}
+            First name
+          {{/header.column}}
+          {{#header.column prop="lastName"}}
+            Last name
+          {{/header.column}}
+          {{#header.column prop="points"}}
+            Points
+          {{/header.column}}
+        {{/table.header}}
+
+        {{table.body}}
+
+      {{/yeti-table}}
+    `);
+
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Miguel');
+    assert.dom('tbody tr:nth-child(1) td:nth-child(2)').hasText('Andrade');
+
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('José');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(2)').hasText('Baderous');
+
+    assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Maria');
+    assert.dom('tbody tr:nth-child(3) td:nth-child(2)').hasText('Silva');
+
+    assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(4) td:nth-child(2)').hasText('Pale');
+
+    assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(2)').hasText('Dale');
+
+    await click('thead th:nth-child(3)');
+
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(1) td:nth-child(2)').hasText('Dale');
+
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(2)').hasText('Pale');
+
+    assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Maria');
+    assert.dom('tbody tr:nth-child(3) td:nth-child(2)').hasText('Silva');
+
+    assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('José');
+    assert.dom('tbody tr:nth-child(4) td:nth-child(2)').hasText('Baderous');
+
+    assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Miguel');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(2)').hasText('Andrade');
+
+  });
+
   test('using sortDefinition and clicking header afterwards works', async function(assert) {
     await render(hbs`
       {{#yeti-table sortDefinition="firstName lastName" data=data as |table|}}
