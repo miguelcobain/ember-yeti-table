@@ -46,7 +46,7 @@ export default Component.extend({
 
     let columns = this.get('columns').mapBy('prop');
 
-    defineProperty(this, 'filteredData', computed(`data.@each.{${columns.join(',')}}`, 'columns.@each.{prop,searchText,filterable}', 'searchText', function() {
+    defineProperty(this, 'filteredData', computed(`data.@each.{${columns.join(',')}}`, 'columns.@each.{prop,search,searchText,searchValue,filterable}', 'searchText', 'searchValue', 'search', function() {
       let data = this.get('data');
 
       if (isEmpty(data)) {
@@ -63,11 +63,28 @@ export default Component.extend({
 
       let searchText = this.get('searchText');
       let generalRegex = createRegex(searchText, false, true, true);
-      let searcheableColumns = filterableColumns.filter((c) => !isEmpty(c.get('searchText')));
-      let columnRegexes = searcheableColumns.map((c) => ({
-        prop: c.get('prop'),
-        searchRegex: createRegex(c.get('searchText'), false, true, true)
-      }));
+      let searcheableColumns = filterableColumns.filter((c) => !isEmpty(c.get('searchText')) || !isEmpty(c.get('search')));
+
+      let columnFilters = searcheableColumns.map((c) => {
+        let regex = createRegex(c.get('searchText'));
+
+        return (row) => {
+          let value = get(row, c.get('prop'));
+          let passesRegex = true;
+
+          if (!isEmpty(c.get('searchText'))) {
+            passesRegex = regex.test(value);
+          }
+
+          let passesCustom = true;
+
+          if (!isEmpty(c.get('search'))) {
+            passesCustom = c.get('search')(value, c.get('searchValue'))
+          }
+
+          return passesRegex && passesCustom;
+        };
+      });
 
       return data.filter(((row) => {
         let passesGeneral = true;
@@ -80,13 +97,17 @@ export default Component.extend({
 
         let passesColumn = true;
 
-        if (!isEmpty(columnRegexes)) {
-          passesColumn = columnRegexes.every(({ prop, searchRegex }) => {
-            return searchRegex.test(get(row, prop));
-          });
+        if (!isEmpty(columnFilters)) {
+          passesColumn = columnFilters.every((fn) => fn(row));
         }
 
-        return passesGeneral && passesColumn;
+        let passesCustom = true;
+        let customSearch = this.get('search');
+        if (!isEmpty(customSearch)) {
+          passesColumn = customSearch(row, this.get('searchValue'));
+        }
+
+        return passesGeneral && passesColumn && passesCustom;
       }));
     }));
 

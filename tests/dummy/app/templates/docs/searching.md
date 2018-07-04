@@ -78,3 +78,47 @@ You can still use the general `searchText` property in the parent `{{yeti-table}
 
   {{demo.snippet "searching-column.hbs"}}
 {{/docs-demo}}
+
+You can customize the search by passing in a custom `search` function to the parent `{{yeti-table}}` component or to a column definition.
+This function should return `true` or `false` to either include or exclude the row on the resulting set.
+If this function depends on a value, pass that value as a `searchValue` property.
+
+The `search` function on `{{yeti-table}}` arguments are:
+- `row` - the current data row to use for filtering
+- `searchValue` - the search value you passed in as `searchValue`
+
+The `search` function on `{{header.column}}` arguments are:
+- `value` - the current data **cell** to use for filtering
+- `searchValue` - the search value you passed in as `searchValue`
+
+This allows for advanced searching logic. See the following example:
+
+{{#docs-demo as |demo|}}
+  {{#demo.example name="searching-custom.hbs"}}
+
+    <p>Min points: {{input type="number" value=min}}</p>
+    <p>Max points: {{input type="number" value=max}}</p>
+
+    {{#yeti-table data=data as |table|}}
+
+      {{#table.header as |header|}}
+        {{#header.column prop="firstName"}}
+          First name
+        {{/header.column}}
+        {{#header.column prop="lastName"}}
+          Last name
+        {{/header.column}}
+        {{#header.column prop="points" searchValue=(hash min=min max=max) search=(action "searchPoints")}}
+          Points
+        {{/header.column}}
+      {{/table.header}}
+
+      {{table.body}}
+
+    {{/yeti-table}}
+
+  {{/demo.example}}
+
+  {{demo.snippet "searching-custom.hbs"}}
+  {{demo.snippet label="component.js" name="searching-custom.js"}}
+{{/docs-demo}}

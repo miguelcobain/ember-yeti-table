@@ -14,5 +14,22 @@ export default Controller.extend({
         points: faker.random.number({ min: 0, max: 100 })
       };
     }));
-  })
+  }),
+
+  // BEGIN-SNIPPET searching-custom.js
+  actions: {
+    searchPoints(points, { min, max }) {
+      min = parseInt(min);
+      max = parseInt(max);
+
+      if ((isNaN(min) && isNaN(max)) ||
+          (isNaN(min) && points <= max) ||
+          (min <= points && isNaN(max)) ||
+          (min <= points && points <= max)) {
+        return true;
+      }
+      return false;
+    }
+  }
+  // END-SNIPPET
 });
