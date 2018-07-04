@@ -53,31 +53,40 @@ export default Component.extend({
         return [];
       }
 
-      // if no global filter, filtered columns are the ones that have a specific searchText
-      // if there is a global filter, then filtered columns are all the ones that have filterable = true
-      let filteredColumns;
-      if (isEmpty(this.get('searchText'))) {
-        filteredColumns = this.get('columns').filterBy('searchText');
-      } else {
-        filteredColumns = this.get('columns').filterBy('filterable');
-      }
+      // only columns that have filterable = true will be considered
+      let filterableColumns = this.get('columns').filter((c) => c.get('filterable'));
 
-      if (isEmpty(filteredColumns)) {
+      if (isEmpty(filterableColumns)) {
+        // bail out if there are no columns to filter
         return data;
       }
 
-      let searchRegexes = filteredColumns.map((c) => {
-        let searchText = c.get('searchText') || this.get('searchText');
-        return {
-          prop: c.get('prop'),
-          searchRegex: createRegex(searchText, false, true, true)
-        };
-      });
+      let searchText = this.get('searchText');
+      let generalRegex = createRegex(searchText, false, true, true);
+      let searcheableColumns = filterableColumns.filter((c) => !isEmpty(c.get('searchText')));
+      let columnRegexes = searcheableColumns.map((c) => ({
+        prop: c.get('prop'),
+        searchRegex: createRegex(c.get('searchText'), false, true, true)
+      }));
 
       return data.filter(((row) => {
-        return searchRegexes.some(({ prop, searchRegex }) => {
-          return searchRegex.test(get(row, prop));
-        });
+        let passesGeneral = true;
+
+        if (!isEmpty(generalRegex)) {
+          passesGeneral = filterableColumns.some((c) => {
+            return generalRegex.test(get(row, c.get('prop')));
+          });
+        }
+
+        let passesColumn = true;
+
+        if (!isEmpty(columnRegexes)) {
+          passesColumn = columnRegexes.every(({ prop, searchRegex }) => {
+            return searchRegex.test(get(row, prop));
+          });
+        }
+
+        return passesGeneral && passesColumn;
       }));
     }));
 
