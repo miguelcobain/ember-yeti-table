@@ -1,10 +1,11 @@
 import Component from '@ember/component';
 
 import { computed } from '@ember-decorators/object';
+import { bool } from '@ember-decorators/object/computed';
 import { tagName } from '@ember-decorators/component';
 import { argument } from '@ember-decorators/argument';
 import { required } from '@ember-decorators/argument/validation';
-import { type, optional } from '@ember-decorators/argument/type';
+import { type, optional, arrayOf } from '@ember-decorators/argument/type';
 import { Action } from '@ember-decorators/argument/types';
 
 import layout from './template';
@@ -37,7 +38,7 @@ export default class Column extends Component {
   filterText;
 
   @argument
-  @type(optional(Action))
+  @type(optional(Function))
   filterFunction;
 
   @argument
@@ -49,26 +50,29 @@ export default class Column extends Component {
   columnClass;
 
   @argument
-  @type(optional('string'))
-  sortProperty;
+  @type(arrayOf('object'))
+  sortings;
 
   @argument
-  @type('string')
-  sortDirection;
+  @required
+  @type(Action)
+  onClick;
 
-  @computed('sortProperty', 'prop')
-  get isSorted() {
-    return this.get('sortProperty') === this.get('prop');
+  @computed('sortings.@each.prop', 'prop')
+  get sorting() {
+    return this.get('sortings').find((s) => s.prop === this.get('prop'));
   }
 
-  @computed('isSorted', 'sortDirection')
+  @bool('sorting') isSorted;
+
+  @computed('isSorted', 'sorting.direction')
   get isAscSorted() {
-    return this.get('isSorted') && this.get('sortDirection') === 'asc';
+    return this.get('isSorted') && this.get('sorting.direction') === 'asc';
   }
 
-  @computed('isSorted', 'sortDirection')
+  @computed('isSorted', 'sorting.direction')
   get isDescSorted() {
-    return this.get('isSorted') && this.get('sortDirection') === 'desc';
+    return this.get('isSorted') && this.get('sorting.direction') === 'desc';
   }
 
   init() {

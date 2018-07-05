@@ -1,7 +1,7 @@
 {{yield (hash
   header=(component "yeti-table/header"
     columns=columns onColumnClick=(action "onColumnSort")
-    sortProperty=sortProperty sortDirection=sortDirection parent=this
+    sortings=sortings parent=this
   )
   body=(component "yeti-table/body" data=processedData columns=columns parent=this)
 )}}

@@ -1,19 +1,20 @@
 import Component from '@ember/component';
 import { A } from '@ember/array';
 import { isEmpty } from '@ember/utils';
-import { computed as emberComputed, get, defineProperty } from '@ember/object';
-import { sort } from '@ember/object/computed';
+import { computed as emberComputed, get, set, defineProperty } from '@ember/object';
 
 import { tagName } from '@ember-decorators/component';
 import { computed, action } from '@ember-decorators/object';
+import { reads } from '@ember-decorators/object/computed';
 import { argument } from '@ember-decorators/argument';
 import { required } from '@ember-decorators/argument/validation';
 import { type, optional, arrayOf } from '@ember-decorators/argument/type';
 
 import createRegex from 'ember-yeti-table/utils/create-regex';
+import { sortMultiple, compareValues, mergeSort } from 'ember-yeti-table/utils/sorting-utils';
+
 
 import layout from './template';
-
 @tagName('table')
 export default class YetiTable extends Component {
   layout = layout;
@@ -24,56 +25,59 @@ export default class YetiTable extends Component {
   data;
 
   @argument
-  @type(optional('string'))
-  sortProperty = null;
+  @type(optional(Function))
+  filterFunction;
 
   @argument
-  @type('string')
-  sortDirection = 'asc';
+  @type(Function)
+  sortFunction = sortMultiple;
 
-  @computed('sortDefinition', 'sortProperty', 'sortDirection')
-  get _sortDefinition() {
-    let sortDefinition = this.get('sortDefinition');
+  @argument
+  @type(Function)
+  compareFunction = compareValues;
 
-    if (sortDefinition) {
-      return sortDefinition.split(' ');
-    } else {
-      let def = [];
-      if (this.get('sortProperty')) {
-        def.push(`${this.get('sortProperty')}:${this.get('sortDirection')}`);
-      }
-      return def;
+  @argument
+  @type(optional('string'))
+  sort = null;
+
+  @computed('sort')
+  get sortings() {
+    let sort = this.get('sort');
+    let sortings = [];
+
+    if (sort) {
+      sortings = sort.split(' ').map((sortDefinition) => {
+        let [prop, direction] = sortDefinition.split(':');
+        direction = direction ? direction : 'asc';
+        return { prop, direction };
+      });
     }
+
+    return sortings;
   }
 
-  // workaround for https://github.com/emberjs/ember.js/pull/16632
-  @computed('_sortDefinition', 'sortedData.[]', 'filteredData.[]')
-  get processedData() {
-    if (isEmpty(this.get('_sortDefinition'))) {
-      return this.get('filteredData');
-    } else {
-      return this.get('sortedData');
+  @computed('filteredData.[]', 'sortings.[]', 'sortFunction', 'compareFunction')
+  get sortedData() {
+    let data = this.get('filteredData');
+    let sortings = this.get('sortings');
+    let sortFunction = this.get('sortFunction');
+    let compareFunction = this.get('compareFunction');
+
+    if (sortings.length > 0) {
+      data = mergeSort(data, (itemA, itemB) => {
+        return sortFunction(itemA, itemB, sortings, compareFunction);
+      });
     }
+
+    return data;
   }
+
+  @reads('sortedData') processedData;
 
   init() {
     super.init(...arguments);
     this.set('columns', A());
     this.set('filteredData', []);
-
-    // defining this in init is needed because `sort` macro only
-    // supports passing in a function and not a key to a function
-    let comparator = this.get('comparator');
-    if (typeof comparator === 'function') {
-      let sortFn = (itemA, itemB) => {
-        let compareValue = comparator(itemA, itemB, this.get('sortProperty'), this.get('sortDirection'));
-        return this.get('sortProperty') === 'asc' ? compareValue : -compareValue;
-      };
-      defineProperty(this, 'sortedData', sort('filteredData', sortFn));
-    } else {
-      defineProperty(this, 'sortedData', sort('filteredData', '_sortDefinition'));
-    }
-
   }
 
   didInsertElement() {
@@ -152,19 +156,33 @@ export default class YetiTable extends Component {
   }
 
   @action
-  onColumnSort(column) {
+  onColumnSort(column, e) {
     let prop = column.get('prop');
-    let sortProperty = this.get('sortProperty');
+    let sortings = this.get('sortings');
+    let sorting = sortings.find((s) => s.prop === column.get('prop'));
 
-    if (sortProperty === prop) {
-      let sortDirection = this.get('sortDirection');
-      let newDirection = sortDirection === 'asc' ? 'desc' : 'asc';
-      this.set('sortDirection', newDirection);
+    // 1. column is already sorted and we need to change direction
+    // 2. column is not sorted and we need to update the sorting
+    //   2.1 normal click replace the sorting with the new one
+    //   2.2 shift+click adds the new sorting
+
+    if (sorting) {
+      let direction = get(sorting, 'direction');
+      let newDirection = direction === 'asc' ? 'desc' : 'asc';
+      set(sorting, 'direction', newDirection);
     } else {
-      this.set('sortProperty', prop);
-      this.set('sortDirection', 'asc');
+      let newSorting = { prop, direction: 'asc' };
+
+      if (e.shiftKey) {
+        sortings = [...sortings, newSorting];
+      } else {
+        sortings = [newSorting];
+      }
     }
-    this.set('sortDefinition', null);
+
+    let sort = sortings.map(({ prop, direction }) => `${prop}:${direction}`).join(' ');
+
+    this.set('sort', sort);
   }
 
   registerColumn(column) {
