@@ -1,14 +1,14 @@
 # Filtering
 
-You can filter a table's rows simply by using the `filterText` property.
+You can filter a table's rows simply by using the `filter` property.
 
 This allows you to update that property as you wish, either using an input element, a query parameter, a select box, etc.
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="filtering-simple.hbs"}}
-    {{input value=filterText}}
+    {{input value=filter}}
 
-    {{#yeti-table data=data filterText=filterText as |table|}}
+    {{#yeti-table data=data filter=filter as |table|}}
 
       {{#table.header as |header|}}
         {{#header.column prop="firstName"}}
@@ -30,29 +30,29 @@ This allows you to update that property as you wish, either using an input eleme
   {{demo.snippet "filtering-simple.hbs"}}
 {{/docs-demo}}
 
-If you want to filter on a single column, you can use `filterText` on the column definition.
-You can still use the general `filterText` property in the parent `{{yeti-table}}` component.
+If you want to filter on a single column, you can use `filter` on the column definition.
+You can still use the general `filter` property in the parent `{{yeti-table}}` component.
 
 <aside>
-  The column definitions `filterText` property is subtractive, meaning that it will filter out rows
-  from the subset that passes the general `filterText`.
+  The column definitions `filter` property is subtractive, meaning that it will filter out rows
+  from the subset that passes the general `filter`.
 </aside>
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="filtering-column.hbs"}}
 
-    {{input value=filterText}}
+    {{input value=filter}}
 
-    {{#yeti-table data=data filterText=filterText as |table|}}
+    {{#yeti-table data=data filter=filter as |table|}}
 
       {{#table.header as |header|}}
-        {{#header.column prop="firstName" filterText=firstNameFilter}}
+        {{#header.column prop="firstName" filter=firstNameFilter}}
           First name
         {{/header.column}}
-        {{#header.column prop="lastName" filterText=lastNameFilter}}
+        {{#header.column prop="lastName" filter=lastNameFilter}}
           Last name
         {{/header.column}}
-        {{#header.column prop="points" filterText=pointsFilter}}
+        {{#header.column prop="points" filter=pointsFilter}}
           Points
         {{/header.column}}
       {{/table.header}}

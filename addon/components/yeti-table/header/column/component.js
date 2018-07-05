@@ -35,7 +35,7 @@ export default class Column extends Component {
 
   @argument
   @type(optional('string'))
-  filterText;
+  filter;
 
   @argument
   @type(optional(Function))

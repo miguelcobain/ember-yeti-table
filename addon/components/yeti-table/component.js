@@ -85,7 +85,7 @@ export default class YetiTable extends Component {
 
     let columns = this.get('columns').mapBy('prop');
 
-    defineProperty(this, 'filteredData', emberComputed(`data.@each.{${columns.join(',')}}`, 'columns.@each.{prop,filterFunction,filterText,filterUsing,filterable}', 'filterText', 'filterUsing', 'filterFunction', function() {
+    defineProperty(this, 'filteredData', emberComputed(`data.@each.{${columns.join(',')}}`, 'columns.@each.{prop,filterFunction,filter,filterUsing,filterable}', 'filter', 'filterUsing', 'filterFunction', function() {
       let data = this.get('data');
 
       if (isEmpty(data)) {
@@ -100,18 +100,18 @@ export default class YetiTable extends Component {
         return data;
       }
 
-      let filterText = this.get('filterText');
-      let generalRegex = createRegex(filterText, false, true, true);
-      let searcheableColumns = filterableColumns.filter((c) => !isEmpty(c.get('filterText')) || !isEmpty(c.get('filterFunction')));
+      let filter = this.get('filter');
+      let generalRegex = createRegex(filter, false, true, true);
+      let searcheableColumns = filterableColumns.filter((c) => !isEmpty(c.get('filter')) || !isEmpty(c.get('filterFunction')));
 
       let columnFilters = searcheableColumns.map((c) => {
-        let regex = createRegex(c.get('filterText'));
+        let regex = createRegex(c.get('filter'));
 
         return (row) => {
           let value = get(row, c.get('prop'));
           let passesRegex = true;
 
-          if (!isEmpty(c.get('filterText'))) {
+          if (!isEmpty(c.get('filter'))) {
             passesRegex = regex.test(value);
           }
 

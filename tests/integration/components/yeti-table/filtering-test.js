@@ -33,11 +33,11 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     }]);
   });
 
-  test('rendering with filterText filters rows', async function(assert) {
-    this.set('filterText', 'Baderous');
+  test('rendering with filter filters rows', async function(assert) {
+    this.set('filter', 'Baderous');
 
     await render(hbs`
-      {{#yeti-table data=data filterText=filterText as |table|}}
+      {{#yeti-table data=data filter=filter as |table|}}
 
         {{#table.header as |header|}}
           {{#header.column prop="firstName"}}
@@ -61,9 +61,9 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
   });
 
-  test('updating filterText filters rows', async function(assert) {
+  test('updating filter filters rows', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data filterText=filterText as |table|}}
+      {{#yeti-table data=data filter=filter as |table|}}
 
         {{#table.header as |header|}}
           {{#header.column prop="firstName"}}
@@ -90,15 +90,15 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
 
-    this.set('filterText', 'Baderous');
+    this.set('filter', 'Baderous');
 
     assert.dom('tbody tr').exists({ count: 1 });
 
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
   });
 
-  test('rendering with filterText on column filters rows', async function(assert) {
-    this.set('filterText', 'Baderous');
+  test('rendering with filter on column filters rows', async function(assert) {
+    this.set('filter', 'Baderous');
 
     await render(hbs`
       {{#yeti-table data=data as |table|}}
@@ -107,7 +107,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
           {{#header.column prop="firstName"}}
             First name
           {{/header.column}}
-          {{#header.column prop="lastName" filterText=filterText}}
+          {{#header.column prop="lastName" filter=filter}}
             Last name
           {{/header.column}}
           {{#header.column prop="points"}}
@@ -125,7 +125,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
   });
 
-  test('updating filterText on column filters rows', async function(assert) {
+  test('updating filter on column filters rows', async function(assert) {
 
     await render(hbs`
       {{#yeti-table data=data as |table|}}
@@ -134,7 +134,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
           {{#header.column prop="firstName"}}
             First name
           {{/header.column}}
-          {{#header.column prop="lastName" filterText=filterText}}
+          {{#header.column prop="lastName" filter=filter}}
             Last name
           {{/header.column}}
           {{#header.column prop="points"}}
@@ -155,7 +155,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
 
-    this.set('filterText', 'Baderous');
+    this.set('filter', 'Baderous');
     await settled();
 
     assert.dom('tbody tr').exists({ count: 1 });
@@ -163,18 +163,18 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
   });
 
-  test('rendering with filterText on multiple column filters rows correctly', async function(assert) {
-    this.set('filterTextFirst', 'Tom');
-    this.set('filterTextLast', '');
+  test('rendering with filter on multiple column filters rows correctly', async function(assert) {
+    this.set('filterFirst', 'Tom');
+    this.set('filterLast', '');
 
     await render(hbs`
       {{#yeti-table data=data as |table|}}
 
         {{#table.header as |header|}}
-          {{#header.column prop="firstName" filterText=filterTextFirst}}
+          {{#header.column prop="firstName" filter=filterFirst}}
             First name
           {{/header.column}}
-          {{#header.column prop="lastName" filterText=filterTextLast}}
+          {{#header.column prop="lastName" filter=filterLast}}
             Last name
           {{/header.column}}
           {{#header.column prop="points"}}
@@ -192,7 +192,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Tom');
     assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Tom');
 
-    this.set('filterTextLast', 'Dale');
+    this.set('filterLast', 'Dale');
 
     assert.dom('tbody tr').exists({ count: 1 });
 
@@ -202,7 +202,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
 
   test('changing a filtered property updates table', async function(assert) {
     await render(hbs`
-      {{#yeti-table filterText="Tom" data=data as |table|}}
+      {{#yeti-table filter="Tom" data=data as |table|}}
 
         {{#table.header as |header|}}
           {{#header.column prop="firstName"}}
@@ -233,8 +233,8 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
   });
 
   test('custom filter function', async function(assert) {
-    this.filter = (row, filterText) => {
-      let [prop, text] = filterText.split(':');
+    this.filter = (row, filter) => {
+      let [prop, text] = filter.split(':');
 
       if (prop && text) {
         let value = get(row, prop) || '';
