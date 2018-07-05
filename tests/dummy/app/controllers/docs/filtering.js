@@ -16,9 +16,9 @@ export default Controller.extend({
     }));
   }),
 
-  // BEGIN-SNIPPET searching-custom.js
+  // BEGIN-SNIPPET filtering-custom.js
   actions: {
-    searchPoints(points, { min, max }) {
+    filterPoints(points, { min, max }) {
       min = parseInt(min);
       max = parseInt(max);
 

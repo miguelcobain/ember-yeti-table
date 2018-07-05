@@ -9,7 +9,7 @@ export default Component.extend({
   sortable: true,
   visible: true,
   filterable: true,
-  searchText: '',
+  filterText: '',
 
   isSorted: computed('sortProperty', 'prop', function() {
     return this.get('sortProperty') === this.get('prop');

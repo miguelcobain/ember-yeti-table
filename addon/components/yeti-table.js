@@ -60,7 +60,7 @@ export default Component.extend({
 
     let columns = this.get('columns').mapBy('prop');
 
-    defineProperty(this, 'filteredData', computed(`data.@each.{${columns.join(',')}}`, 'columns.@each.{prop,search,searchText,searchValue,filterable}', 'searchText', 'searchValue', 'search', function() {
+    defineProperty(this, 'filteredData', computed(`data.@each.{${columns.join(',')}}`, 'columns.@each.{prop,filterFunction,filterText,filterUsing,filterable}', 'filterText', 'filterUsing', 'filterFunction', function() {
       let data = this.get('data');
 
       if (isEmpty(data)) {
@@ -75,25 +75,25 @@ export default Component.extend({
         return data;
       }
 
-      let searchText = this.get('searchText');
-      let generalRegex = createRegex(searchText, false, true, true);
-      let searcheableColumns = filterableColumns.filter((c) => !isEmpty(c.get('searchText')) || !isEmpty(c.get('search')));
+      let filterText = this.get('filterText');
+      let generalRegex = createRegex(filterText, false, true, true);
+      let searcheableColumns = filterableColumns.filter((c) => !isEmpty(c.get('filterText')) || !isEmpty(c.get('filterFunction')));
 
       let columnFilters = searcheableColumns.map((c) => {
-        let regex = createRegex(c.get('searchText'));
+        let regex = createRegex(c.get('filterText'));
 
         return (row) => {
           let value = get(row, c.get('prop'));
           let passesRegex = true;
 
-          if (!isEmpty(c.get('searchText'))) {
+          if (!isEmpty(c.get('filterText'))) {
             passesRegex = regex.test(value);
           }
 
           let passesCustom = true;
 
-          if (!isEmpty(c.get('search'))) {
-            passesCustom = c.get('search')(value, c.get('searchValue'))
+          if (!isEmpty(c.get('filterFunction'))) {
+            passesCustom = c.get('filterFunction')(value, c.get('filterUsing'))
           }
 
           return passesRegex && passesCustom;
@@ -116,9 +116,9 @@ export default Component.extend({
         }
 
         let passesCustom = true;
-        let customSearch = this.get('search');
-        if (!isEmpty(customSearch)) {
-          passesColumn = customSearch(row, this.get('searchValue'));
+        let customFilter = this.get('filterFunction');
+        if (!isEmpty(customFilter)) {
+          passesColumn = customFilter(row, this.get('filterUsing'));
         }
 
         return passesGeneral && passesColumn && passesCustom;
