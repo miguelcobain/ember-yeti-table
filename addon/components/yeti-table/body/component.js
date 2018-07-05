@@ -5,7 +5,7 @@ import { argument } from '@ember-decorators/argument';
 import { required } from '@ember-decorators/argument/validation';
 import { type, arrayOf } from '@ember-decorators/argument/type';
 
-import layout from '../../templates/components/yeti-table/body';
+import layout from './template';
 
 @tagName('tbody')
 export default class Body extends Component {

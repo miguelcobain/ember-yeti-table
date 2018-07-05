@@ -7,7 +7,7 @@ import { required } from '@ember-decorators/argument/validation';
 import { type, arrayOf, optional } from '@ember-decorators/argument/type';
 import { Action } from '@ember-decorators/argument/types';
 
-import layout from '../../templates/components/yeti-table/header';
+import layout from './template';
 
 @tagName('thead')
 export default class Header extends Component {

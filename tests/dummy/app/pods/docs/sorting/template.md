@@ -1,4 +1,4 @@
-# sorting
+# Sorting
 
 Yeti table columns are sortable by default. Try to click the table headers in the example below.
 

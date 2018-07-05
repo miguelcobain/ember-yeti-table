@@ -1,4 +1,4 @@
-# filtering
+# Filtering
 
 You can filter a table's rows simply by using the `filterText` property.
 

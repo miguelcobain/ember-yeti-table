@@ -12,7 +12,7 @@ import { type, optional, arrayOf } from '@ember-decorators/argument/type';
 
 import createRegex from 'ember-yeti-table/utils/create-regex';
 
-import layout from '../templates/components/yeti-table';
+import layout from './template';
 
 @tagName('table')
 export default class YetiTable extends Component {

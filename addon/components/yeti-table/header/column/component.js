@@ -7,7 +7,7 @@ import { required } from '@ember-decorators/argument/validation';
 import { type, optional } from '@ember-decorators/argument/type';
 import { Action } from '@ember-decorators/argument/types';
 
-import layout from '../../../templates/components/yeti-table/header/column';
+import layout from './template';
 
 @tagName('')
 export default class Column extends Component {

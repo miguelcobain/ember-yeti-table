@@ -7,7 +7,7 @@ import { required } from '@ember-decorators/argument/validation';
 import { type, optional, arrayOf } from '@ember-decorators/argument/type';
 import { Action } from '@ember-decorators/argument/types';
 
-import layout from '../../../templates/components/yeti-table/body/row';
+import layout from './template';
 
 @tagName('tr')
 export default class Row extends Component {
