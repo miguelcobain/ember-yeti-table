@@ -157,31 +157,38 @@ export default class YetiTable extends Component {
 
   @action
   onColumnSort(column, e) {
-    let prop = column.get('prop');
     let sortings = this.get('sortings');
-    let sorting = sortings.find((s) => s.prop === column.get('prop'));
-
-    // 1. column is already sorted and we need to change direction
-    // 2. column is not sorted and we need to update the sorting
-    //   2.1 normal click replace the sorting with the new one
-    //   2.2 shift+click adds the new sorting
+    let prop = column.get('prop');
+    let sorting = column.get('sorting');
+    let direction = 'asc';
 
     if (sorting) {
-      let direction = get(sorting, 'direction');
-      let newDirection = direction === 'asc' ? 'desc' : 'asc';
-      set(sorting, 'direction', newDirection);
-    } else {
-      let newSorting = { prop, direction: 'asc' };
+      // if this column is already sorted, calculate the opposite
+      // direction and remove old sorting
+      direction = get(sorting, 'direction');
+      direction = direction === 'asc' ? 'desc' : 'asc';
+      set(sorting, 'direction', direction);
 
+      if (!e.shiftKey) {
+        sortings = [sorting];
+      }
+    } else {
+      // create new sorting
+      let newSorting = { prop, direction };
+
+      // normal click replaces all sortings with the new one
+      // shift click adds a new sorting to the existing ones
       if (e.shiftKey) {
-        sortings = [...sortings, newSorting];
+        sortings.push(newSorting);
       } else {
         sortings = [newSorting];
       }
     }
 
+    // generate the sort definition based on the new sortings
     let sort = sortings.map(({ prop, direction }) => `${prop}:${direction}`).join(' ');
 
+    // update the sort property which will trigger the necessary updates to resort the data
     this.set('sort', sort);
   }
 

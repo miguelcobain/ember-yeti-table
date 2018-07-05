@@ -112,7 +112,7 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
   });
 
-  test('updating sortworks', async function(assert) {
+  test('updating sort property works', async function(assert) {
     this.sort = 'firstName';
 
     await render(hbs`
@@ -150,7 +150,7 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
     assert.dom('tbody tr:nth-child(5) td:nth-child(2)').hasText('Silva');
   });
 
-  test('updating sortDirection works', async function(assert) {
+  test('updating sort direction works', async function(assert) {
     this.sort = 'firstName';
 
     await render(hbs`

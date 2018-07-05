@@ -28,9 +28,10 @@ You can disable sorting in any column by passing `sortable=false` to any column 
   {{demo.snippet "sorting-simple.hbs"}}
 {{/docs-demo}}
 
-If you need to specify an sort order by default, you can pass in `sortProperty` and `sortDirection`. `sortDirection` can be `asc` or `desc` strings and it defaults to `asc`.
+If you need to specify a sort order, you can use the `sort` property. The property should be a string with a syntax similar to 
+the [`sort` macro](https://emberjs.com/api/ember/3.0/functions/@ember%2Fobject%2Fcomputed/sort) from `@ember/object/computed`.
 
-Note that updating these properties will also update the sorting of the table. Also, if you update an object's property which the table is sorted on, the table sorting will update accordingly.
+Note that updating the `sort` property will also update the sorting of the table. Also, if you update an object's property which the table is sorted on, the table sorting will update accordingly.
 
 It is very common to customize the column header based on the sorting status of that column.
 Yeti table provides two approaches for this customization:
@@ -40,7 +41,7 @@ Yeti table provides two approaches for this customization:
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="sorting-custom.hbs"}}
-    {{#yeti-table data=data sortProperty="points" as |table|}}
+    {{#yeti-table data=data sort="points" as |table|}}
 
       {{#table.header as |header|}}
         {{#header.column prop="firstName" as |column|}}
@@ -65,17 +66,17 @@ Yeti table provides two approaches for this customization:
   {{demo.snippet "sorting-custom.hbs"}}
 {{/docs-demo}}
 
-# Advanced sorting
+# Multiple sorting
 
-Sometimes we have more advanced sorting requirements. Yeti table uses the `sort` macro from `@ember/object/computed` ([docs here](https://emberjs.com/api/ember/3.0/functions/@ember%2Fobject%2Fcomputed/sort)) under the hood and exposes the sort definition as the `sortDefinition` property.
+Sometimes we have more advanced sorting requirements. In most cases, the `sort` property will suffice.
 
-Let's say we want to sort by `firstName` ascending and then by `lastName` descending. We could pass `sortDefinition="firstName:asc lastName:desc"` string to yeti-table. 
+Let's say we want to sort by `firstName` ascending and then by `lastName` descending. We could pass `sort="firstName lastName:desc"` string to yeti-table. 
 
-<aside>Yeti table takes care of splitting the string for you, so you don't need to pass in an array.</aside>
+<aside>The `asc` direction will be used if you omit a direction.</aside>
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="sorting-advanced.hbs"}}
-    {{#yeti-table data=advancedSortingData sortDefinition="firstName lastName:desc" as |table|}}
+    {{#yeti-table data=advancedSortingData sort="firstName lastName:desc" as |table|}}
 
       {{#table.header as |header|}}
         {{#header.column prop="firstName"}}
@@ -99,4 +100,14 @@ Let's say we want to sort by `firstName` ascending and then by `lastName` descen
 
 Notice that the last names are sorting descending for the same first name.
 
-Column header classes, yielded sort status and clickable columns **do not apply** in this advanced sorting scenario. Let's chat a bit if you want to support this.
+<aside>Bonus: you can shift+click on a header column to add a new sort to the existing ones!</aside>
+
+# Advanced sorting
+
+Yeti table allows you to pass in a `sortFunction` and a `compareFunction`. They do slightly different things.
+
+Use the `sortFunction` if you want to completely customize how the row sorting is done. It will be invoked with two rows,
+the current sortings that are applied and the compare function.
+
+Use `compareFunction` if you just want to customize how two values relate to each other (not the entire row). It will be invoked with two values
+and you just need to return -1, 0 or 1 depending on if first value is greater than the second or not. The default compare function used is [`compare` function](https://emberjs.com/api/ember/3.2/functions/@ember%2Futils/compare) from `@ember/utils`.
