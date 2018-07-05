@@ -23,10 +23,14 @@
     "test:all": "ember try:each"
   },
   "dependencies": {
+    "@ember-decorators/babel-transforms": "^2.0.0",
     "ember-cli-babel": "^6.6.0",
-    "ember-cli-htmlbars": "^2.0.1"
+    "ember-cli-htmlbars": "^2.0.1",
+    "ember-decorators": "^2.2.0"
   },
   "devDependencies": {
+    "@ember-decorators/argument": "^0.8.16",
+    "babel-eslint": "^8.0.0",
     "broccoli-asset-rev": "^2.4.5",
     "ember-ajax": "^3.0.0",
     "ember-cli": "~3.1.3",

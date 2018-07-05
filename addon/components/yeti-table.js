@@ -1,18 +1,38 @@
 import Component from '@ember/component';
-import layout from '../templates/components/yeti-table';
-import { computed, get, defineProperty } from '@ember/object';
-import { sort } from '@ember/object/computed';
 import { A } from '@ember/array';
 import { isEmpty } from '@ember/utils';
+import { computed as emberComputed, get, defineProperty } from '@ember/object';
+import { sort } from '@ember/object/computed';
+
+import { tagName } from '@ember-decorators/component';
+import { computed, action } from '@ember-decorators/object';
+import { argument } from '@ember-decorators/argument';
+import { required } from '@ember-decorators/argument/validation';
+import { type, optional, arrayOf } from '@ember-decorators/argument/type';
+
 import createRegex from 'ember-yeti-table/utils/create-regex';
 
-export default Component.extend({
-  layout,
-  tagName: 'table',
+import layout from '../templates/components/yeti-table';
 
-  sortProperty: null,
-  sortDirection: 'asc',
-  _sortDefinition: computed('sortDefinition', 'sortProperty', 'sortDirection', function() {
+@tagName('table')
+export default class YetiTable extends Component {
+  layout = layout;
+
+  @argument
+  @required
+  @type(arrayOf('object'))
+  data;
+
+  @argument
+  @type(optional('string'))
+  sortProperty = null;
+
+  @argument
+  @type('string')
+  sortDirection = 'asc';
+
+  @computed('sortDefinition', 'sortProperty', 'sortDirection')
+  get _sortDefinition() {
     let sortDefinition = this.get('sortDefinition');
 
     if (sortDefinition) {
@@ -24,19 +44,20 @@ export default Component.extend({
       }
       return def;
     }
-  }),
+  }
 
   // workaround for https://github.com/emberjs/ember.js/pull/16632
-  processedData: computed('_sortDefinition', 'sortedData.[]', 'filteredData.[]', function() {
+  @computed('_sortDefinition', 'sortedData.[]', 'filteredData.[]')
+  get processedData() {
     if (isEmpty(this.get('_sortDefinition'))) {
       return this.get('filteredData');
     } else {
       return this.get('sortedData');
     }
-  }),
+  }
 
   init() {
-    this._super(...arguments);
+    super.init(...arguments);
     this.set('columns', A());
     this.set('filteredData', []);
 
@@ -53,14 +74,14 @@ export default Component.extend({
       defineProperty(this, 'sortedData', sort('filteredData', '_sortDefinition'));
     }
 
-  },
+  }
 
   didInsertElement() {
-    this._super(...arguments);
+    super.didInsertElement(...arguments);
 
     let columns = this.get('columns').mapBy('prop');
 
-    defineProperty(this, 'filteredData', computed(`data.@each.{${columns.join(',')}}`, 'columns.@each.{prop,filterFunction,filterText,filterUsing,filterable}', 'filterText', 'filterUsing', 'filterFunction', function() {
+    defineProperty(this, 'filteredData', emberComputed(`data.@each.{${columns.join(',')}}`, 'columns.@each.{prop,filterFunction,filterText,filterUsing,filterable}', 'filterText', 'filterUsing', 'filterFunction', function() {
       let data = this.get('data');
 
       if (isEmpty(data)) {
@@ -128,8 +149,9 @@ export default Component.extend({
     // defining a computed property on didInsertElement doesn't seem
     // to trigger any observers. This forces an update.
     this.notifyPropertyChange('filteredData');
-  },
+  }
 
+  @action
   onColumnSort(column) {
     let prop = column.get('prop');
     let sortProperty = this.get('sortProperty');
@@ -143,13 +165,13 @@ export default Component.extend({
       this.set('sortDirection', 'asc');
     }
     this.set('sortDefinition', null);
-  },
+  }
 
   registerColumn(column) {
     this.get('columns').addObject(column);
-  },
+  }
 
   unregisterColumn(column) {
     this.get('columns').removeObject(column);
   }
-});
+}
