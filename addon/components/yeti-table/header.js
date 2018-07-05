@@ -7,7 +7,7 @@ export default Component.extend({
 
   actions: {
     onColumnClick(column, e) {
-      if (this.get('onColumnClick') && column.get('orderable')) {
+      if (this.get('onColumnClick') && column.get('sortable')) {
         this.get('onColumnClick')(column, e);
       }
     }

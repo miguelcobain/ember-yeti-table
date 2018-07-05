@@ -27,11 +27,11 @@ export default Component.extend({
   }),
 
   // workaround for https://github.com/emberjs/ember.js/pull/16632
-  processedData: computed('_sortDefinition', 'orderedData.[]', 'filteredData.[]', function() {
+  processedData: computed('_sortDefinition', 'sortedData.[]', 'filteredData.[]', function() {
     if (isEmpty(this.get('_sortDefinition'))) {
       return this.get('filteredData');
     } else {
-      return this.get('orderedData');
+      return this.get('sortedData');
     }
   }),
 
@@ -48,9 +48,9 @@ export default Component.extend({
         let compareValue = comparator(itemA, itemB, this.get('sortProperty'), this.get('sortDirection'));
         return this.get('sortProperty') === 'asc' ? compareValue : -compareValue;
       };
-      defineProperty(this, 'orderedData', sort('filteredData', sortFn));
+      defineProperty(this, 'sortedData', sort('filteredData', sortFn));
     } else {
-      defineProperty(this, 'orderedData', sort('filteredData', '_sortDefinition'));
+      defineProperty(this, 'sortedData', sort('filteredData', '_sortDefinition'));
     }
 
   },

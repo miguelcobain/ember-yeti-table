@@ -6,7 +6,7 @@ export default Component.extend({
   layout,
   tagName: '',
 
-  orderable: true,
+  sortable: true,
   visible: true,
   filterable: true,
   searchText: '',
