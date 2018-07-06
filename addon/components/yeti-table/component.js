@@ -25,6 +25,18 @@ export default class YetiTable extends Component {
   data;
 
   @argument
+  @type('boolean')
+  pagination = false;
+
+  @argument
+  @type('number')
+  pageSize = 15;
+
+  @argument
+  @type('number')
+  pageNumber = 1;
+
+  @argument
   @type(optional(Function))
   filterFunction;
 
@@ -72,7 +84,41 @@ export default class YetiTable extends Component {
     return data;
   }
 
-  @reads('sortedData') processedData;
+  @computed('pageSize', 'pageNumber')
+  get paginationData() {
+    let pageSize = this.get('pageSize');
+    let pageNumber = this.get('pageNumber');
+    let totalRows = this.get('totalRows');
+
+    let pageStart = (pageNumber - 1) * pageSize;
+    let pageEnd = pageStart + pageSize - 1;
+
+    let isFirstPage = pageNumber === 1;
+    let isLastPage, totalPages;
+
+    if (totalRows) {
+      totalPages = Math.ceil(totalRows / pageSize);
+      isLastPage = pageNumber === totalPages;
+      pageEnd = Math.min(pageEnd, totalRows)
+    }
+
+    return { pageSize, pageNumber, pageStart, pageEnd, isFirstPage, isLastPage, totalRows, totalPages };
+  }
+
+  @computed('sortedData.[]', 'pagination', 'paginationData')
+  get pagedData() {
+    let pagination = this.get('pagination');
+    let data = this.get('sortedData');
+
+    if (pagination) {
+      let { pageStart, pageEnd } = this.get('paginationData');
+      data = data.slice(pageStart, pageEnd + 1); // slice excludes last element so we need to add 1
+    }
+
+    return data;
+  }
+
+  @reads('pagedData') processedData;
 
   init() {
     super.init(...arguments);
@@ -190,6 +236,39 @@ export default class YetiTable extends Component {
 
     // update the sort property which will trigger the necessary updates to resort the data
     this.set('sort', sort);
+  }
+
+  @action
+  previousPage() {
+    if (this.get('pagination')) {
+      let { pageNumber } = this.get('paginationData');
+      this.set('pageNumber', Math.max(pageNumber - 1, 1));
+    }
+  }
+
+  @action
+  nextPage() {
+    if (this.get('pagination')) {
+      let { pageNumber, isLastPage } = this.get('paginationData');
+
+      if (!isLastPage) {
+        this.set('pageNumber', pageNumber + 1);
+      }
+    }
+  }
+
+  @action
+  goToPage(pageNumber) {
+    if (this.get('pagination')) {
+      let { totalPages } = this.get('paginationData');
+      pageNumber = Math.max(pageNumber, 1);
+
+      if (totalPages) {
+        pageNumber = Math.min(pageNumber, totalPages);
+      }
+
+      this.set('pageNumber', pageNumber);
+    }
   }
 
   registerColumn(column) {

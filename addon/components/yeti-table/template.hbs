@@ -4,4 +4,10 @@
     sortings=sortings parent=this
   )
   body=(component "yeti-table/body" data=processedData columns=columns parent=this)
+  actions=(hash
+    previousPage=(action "previousPage")
+    nextPage=(action "nextPage")
+    goToPage=(action "goToPage")
+  )
+  paginationData=paginationData
 )}}
