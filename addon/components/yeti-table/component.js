@@ -37,6 +37,10 @@ export default class YetiTable extends Component {
   pageNumber = 1;
 
   @argument
+  @type(optional('number'))
+  totalRows;
+
+  @argument
   @type(optional(Function))
   filterFunction;
 
