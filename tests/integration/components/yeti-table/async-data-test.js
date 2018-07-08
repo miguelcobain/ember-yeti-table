@@ -63,23 +63,23 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     this.dataPromise = [];
 
     await render(hbs`
-      {{#yeti-table data=dataPromise as |table|}}
+      <YetiTable @data={{dataPromise}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     this.set('dataPromise', new RSVP.Promise((resolve) => {
@@ -100,27 +100,27 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     this.dataPromise = [];
 
     await render(hbs`
-      {{#yeti-table data=dataPromise as |table|}}
+      <YetiTable @data={{dataPromise}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
         {{#if table.isLoading}}
           <div class="loading-message">Loading...</div>
         {{/if}}
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     this.set('dataPromise', new RSVP.Promise((resolve) => {
@@ -143,23 +143,23 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     this.dataPromise = [];
 
     await render(hbs`
-      {{#yeti-table data=dataPromise as |table|}}
+      <YetiTable @data={{dataPromise}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     this.set('dataPromise', new RSVP.Promise((resolve) => {
@@ -195,27 +195,27 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     });
 
     render(hbs`
-      {{#yeti-table loadData=loadData as |table|}}
+      <YetiTable @loadData={{loadData}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
         {{#if table.isLoading}}
           <div class="loading-message">Loading...</div>
         {{/if}}
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     await waitFor('.loading-message');
@@ -237,23 +237,23 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     });
 
     await render(hbs`
-      {{#yeti-table loadData=loadData sort="lastName:desc" filter="Miguel" as |table|}}
+      <YetiTable @loadData={{loadData}} @sort="lastName:desc" @filter="Miguel" as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     await settled();
@@ -291,23 +291,23 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     });
 
     await render(hbs`
-      {{#yeti-table loadData=loadData filter=filter as |table|}}
+      <YetiTable @loadData={{loadData}} @filter={{filter}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     await settled();
@@ -349,23 +349,23 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     });
 
     await render(hbs`
-      {{#yeti-table loadData=loadData sort=sort as |table|}}
+      <YetiTable @loadData={{loadData}} @sort={{sort}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     await settled();
@@ -406,27 +406,27 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     });
 
     await render(hbs`
-      {{#yeti-table loadData=loadData pagination=true totalRows=10 pageSize=5 as |table|}}
+      <YetiTable @loadData={{loadData}} @pagination={{true}} @totalRows={{10}} @pageSize={{5}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
         <button id="next" onclick={{table.actions.nextPage}}>
           Next
         </button>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     await settled();

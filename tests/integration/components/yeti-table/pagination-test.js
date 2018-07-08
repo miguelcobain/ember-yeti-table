@@ -22,23 +22,23 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
 
   test('when using pagination, it does not render more than pageSize rows', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data pagination=true pageSize=15 as |table|}}
+      <YetiTable @data={{data}} @pagination={{true}} @pageSize={{15}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     assert.dom('tbody tr').exists({ count: 15 });
@@ -48,23 +48,23 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
     this.pageSize = 15;
 
     await render(hbs`
-      {{#yeti-table data=data pagination=true pageSize=pageSize as |table|}}
+      <YetiTable @data={{data}} @pagination={{true}} @pageSize={{pageSize}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     assert.dom('tbody tr').exists({ count: 15 });
@@ -76,23 +76,23 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
 
   test('rendering with initial pageNumber, renders the correct page', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data pagination=true pageSize=15 pageNumber=2 as |table|}}
+      <YetiTable @data={{data}} @pagination={{true}} @pageSize={{15}} @pageNumber={{2}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     assert.dom('tbody tr').exists({ count: 15 });
@@ -104,23 +104,23 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
     this.pageNumber = 1;
 
     await render(hbs`
-      {{#yeti-table data=data pagination=true pageSize=15 pageNumber=pageNumber as |table|}}
+      <YetiTable @data={{data}} @pagination={{true}} @pageSize={{15}} @pageNumber={{pageNumber}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     assert.dom('tbody tr').exists({ count: 15 });
@@ -134,21 +134,21 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
 
   test('using yield actions works to change pages', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data pagination=true pageSize=15 totalRows=40 as |table|}}
+      <YetiTable @data={{data}} @pagination={{true}} @pageSize={{15}} @totalRows={{40}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
         <button id="previous" onclick={{action table.actions.previousPage}}>
           Previous
@@ -170,7 +170,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
           -2000
         </button>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     assert.dom('tbody tr').exists({ count: 15 });
@@ -204,27 +204,27 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
 
   test('yielded paginationData is correct', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data pagination=true pageSize=15 totalRows=40 as |table|}}
+      <YetiTable @data={{data}} @pagination={{true}} @pageSize={{15}} @totalRows={{40}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
-        <button id="previous" disabled={{table.paginationData.isFirstPage}} onclick={{table.actions.previousPage}}>
+        <button id="previous" disabled={{table.paginationData.isFirstPage}} onclick={{action table.actions.previousPage}}>
           Previous
         </button>
 
-        <button id="next" disabled={{table.paginationData.isLastPage}} onclick={{table.actions.nextPage}}>
+        <button id="next" disabled={{table.paginationData.isLastPage}} onclick={{action table.actions.nextPage}}>
           Next
         </button>
 
@@ -232,7 +232,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
         <div id="pageNumber">{{table.paginationData.pageNumber}} of {{table.paginationData.totalPages}}</div>
         <div id="pageStart">{{table.paginationData.pageStart}} to {{table.paginationData.pageEnd}} of {{table.paginationData.totalRows}}</div>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     assert.dom('tbody tr').exists({ count: 15 });

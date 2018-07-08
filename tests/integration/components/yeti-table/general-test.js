@@ -34,23 +34,23 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
   test('body blockless form renders table', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data as |table|}}
+      <YetiTable @data={{data}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     assert.dom('table').exists({ count: 1 });
@@ -63,35 +63,35 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
   test('body block form renders table', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data as |table|}}
+      <YetiTable @data={{data}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{#table.body as |body person|}}
-          {{#body.row as |row|}}
-            {{#row.cell}}
+        <table.body as |body person|>
+          <body.row as |row|>
+            <row.cell>
               Custom {{person.firstName}}
-            {{/row.cell}}
-            {{#row.cell}}
+            </row.cell>
+            <row.cell>
               {{person.lastName}}
-            {{/row.cell}}
-            {{#row.cell}}
+            </row.cell>
+            <row.cell>
               {{person.points}}
-            {{/row.cell}}
-          {{/body.row}}
-        {{/table.body}}
+            </row.cell>
+          </body.row>
+        </table.body>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Custom Miguel');
@@ -103,23 +103,23 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
   test('columnClass applies a class to each column with blockless body', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data as |table|}}
+      <YetiTable @data={{data}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName" columnClass="custom-column-class"}}
+          </header.column>
+          <header.column @prop="lastName" @columnClass="custom-column-class">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     let rows = this.element.querySelectorAll('tbody tr td:nth-child(2)');
@@ -130,35 +130,35 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
   test('columnClass applies a class to each column with block body', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data as |table|}}
+      <YetiTable @data={{data}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName" columnClass="custom-column-class"}}
+          </header.column>
+          <header.column @prop="lastName" @columnClass="custom-column-class">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{#table.body as |body person|}}
-          {{#body.row as |row|}}
-            {{#row.cell}}
+        <table.body as |body person|>
+          <body.row as |row|>
+            <row.cell>
               Custom {{person.firstName}}
-            {{/row.cell}}
-            {{#row.cell}}
+            </row.cell>
+            <row.cell>
               {{person.lastName}}
-            {{/row.cell}}
-            {{#row.cell}}
+            </row.cell>
+            <row.cell>
               {{person.points}}
-            {{/row.cell}}
-          {{/body.row}}
-        {{/table.body}}
+            </row.cell>
+          </body.row>
+        </table.body>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     let rows = this.element.querySelectorAll('tbody tr td:nth-child(2)');
@@ -169,23 +169,23 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
   test('rowClass applies a class to each row', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data as |table|}}
+      <YetiTable @data={{data}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body rowClass="custom-row-class"}}
+        <table.body @rowClass="custom-row-class"/>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     let rows = this.element.querySelectorAll('tbody tr');
@@ -202,23 +202,23 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     };
 
     await render(hbs`
-      {{#yeti-table data=data as |table|}}
+      <YetiTable @data={{data}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body onRowClick=(action rowClicked)}}
+        <table.body @onRowClick={{action rowClicked}} />
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     await click('tbody tr:nth-child(1)');
@@ -238,35 +238,35 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     };
 
     await render(hbs`
-      {{#yeti-table data=data as |table|}}
+      <YetiTable @data={{data}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column}}
+        <table.header as |header|>
+          <header.column>
             First name
-          {{/header.column}}
-          {{#header.column}}
+          </header.column>
+          <header.column>
             Last name
-          {{/header.column}}
-          {{#header.column}}
+          </header.column>
+          <header.column>
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{#table.body as |body person|}}
-          {{#body.row onClick=(action rowClicked person) as |row|}}
-            {{#row.cell}}
+        <table.body as |body person|>
+          <body.row @onClick={{action rowClicked person}} as |row|>
+            <row.cell>
               Custom {{person.firstName}}
-            {{/row.cell}}
-            {{#row.cell}}
+            </row.cell>
+            <row.cell>
               {{person.lastName}}
-            {{/row.cell}}
-            {{#row.cell}}
+            </row.cell>
+            <row.cell>
               {{person.points}}
-            {{/row.cell}}
-          {{/body.row}}
-        {{/table.body}}
+            </row.cell>
+          </body.row>
+        </table.body>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     await click('tbody tr:nth-child(1)');
@@ -288,32 +288,32 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     ];
 
     await render(hbs`
-      {{#yeti-table data=data as |table|}}
+      <YetiTable @data={{data}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="0"}}
+        <table.header as |header|>
+          <header.column @prop="0">
             First name
-          {{/header.column}}
-          {{#header.column prop="1"}}
+          </header.column>
+          <header.column @prop="1">
             Last name
-          {{/header.column}}
-          {{#header.column prop="2"}}
+          </header.column>
+          <header.column @prop="2">
             Matches
-          {{/header.column}}
-          {{#header.column prop="3"}}
+          </header.column>
+          <header.column @prop="3">
             Wins
-          {{/header.column}}
-          {{#header.column prop="4"}}
+          </header.column>
+          <header.column @prop="4">
             Losses
-          {{/header.column}}
-          {{#header.column prop="5"}}
+          </header.column>
+          <header.column @prop="5">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     assert.dom('table').exists({ count: 1 });
@@ -334,23 +334,23 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     this.visible = true;
 
     await render(hbs`
-      {{#yeti-table data=data as |table|}}
+      <YetiTable @data={{data}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName" visible=visible}}
+          </header.column>
+          <header.column @prop="lastName" @visible={{visible}}>
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     assert.dom('table').exists({ count: 1 });
@@ -374,35 +374,35 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     this.visible = true;
 
     await render(hbs`
-      {{#yeti-table data=data as |table|}}
+      <YetiTable @data={{data}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName" visible=visible}}
+          </header.column>
+          <header.column @prop="lastName" @visible={{visible}}>
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{#table.body as |body person|}}
-          {{#body.row as |row|}}
-            {{#row.cell}}
+        <table.body as |body person|>
+          <body.row as |row|>
+            <row.cell>
               {{person.firstName}}
-            {{/row.cell}}
-            {{#row.cell}}
+            </row.cell>
+            <row.cell>
               {{person.lastName}}
-            {{/row.cell}}
-            {{#row.cell}}
+            </row.cell>
+            <row.cell>
               {{person.points}}
-            {{/row.cell}}
-          {{/body.row}}
-        {{/table.body}}
+            </row.cell>
+          </body.row>
+        </table.body>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     assert.dom('table').exists({ count: 1 });

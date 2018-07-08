@@ -34,23 +34,23 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
 
   test('rendering with filter filters rows', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data filter="Baderous" as |table|}}
+      <YetiTable @data={{data}} @filter="Baderous" as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     assert.dom('tbody tr').exists({ count: 1 });
@@ -60,23 +60,23 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
 
   test('updating filter filters rows', async function(assert) {
     await render(hbs`
-      {{#yeti-table data=data filter=filter as |table|}}
+      <YetiTable @data={{data}} @filter={{filter}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     assert.dom('tbody tr').exists({ count: 5 });
@@ -98,23 +98,23 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     this.set('filter', 'Baderous');
 
     await render(hbs`
-      {{#yeti-table data=data as |table|}}
+      <YetiTable @data={{data}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName" filter=filter}}
+          </header.column>
+          <header.column @prop="lastName" @filter={{filter}}>
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     assert.dom('tbody tr').exists({ count: 1 });
@@ -125,23 +125,23 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
   test('updating filter on column filters rows', async function(assert) {
 
     await render(hbs`
-      {{#yeti-table data=data as |table|}}
+      <YetiTable @data={{data}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName" filter=filter}}
+          </header.column>
+          <header.column @prop="lastName" @filter={{filter}}>
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     assert.dom('tbody tr').exists({ count: 5 });
@@ -165,23 +165,23 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     this.set('filterLast', '');
 
     await render(hbs`
-      {{#yeti-table data=data as |table|}}
+      <YetiTable @data={{data}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName" filter=filterFirst}}
+        <table.header as |header|>
+          <header.column @prop="firstName" @filter={{filterFirst}}>
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName" filter=filterLast}}
+          </header.column>
+          <header.column @prop="lastName" @filter={{filterLast}}>
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     assert.dom('tbody tr').exists({ count: 2 });
@@ -199,23 +199,23 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
 
   test('changing a filtered property updates table', async function(assert) {
     await render(hbs`
-      {{#yeti-table filter="Tom" data=data as |table|}}
+      <YetiTable @data={{data}} @filter="Tom" as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     assert.dom('tbody tr').exists({ count: 2 });
@@ -244,23 +244,23 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     this.set('filterText', 'firstName:tom');
 
     await render(hbs`
-      {{#yeti-table data=data filterFunction=(action filter) filterUsing=filterText as |table|}}
+      <YetiTable @data={{data}} @filterFunction={{action filter}} @filterUsing={{filterText}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     assert.dom('tbody tr').exists({ count: 2 });
@@ -283,23 +283,23 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     this.set('max', 100);
 
     await render(hbs`
-      {{#yeti-table data=data filterUsing=(hash min=min max=max) filterFunction=(action filter) as |table|}}
+      <YetiTable @data={{data}} @filterUsing={{hash min=min max=max}} @filterFunction={{action filter}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points"}}
+          </header.column>
+          <header.column @prop="points">
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     assert.dom('tbody tr').exists({ count: 5 });
@@ -319,23 +319,23 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     this.set('max', 100);
 
     await render(hbs`
-      {{#yeti-table data=data as |table|}}
+      <YetiTable @data={{data}} as |table|>
 
-        {{#table.header as |header|}}
-          {{#header.column prop="firstName"}}
+        <table.header as |header|>
+          <header.column @prop="firstName">
             First name
-          {{/header.column}}
-          {{#header.column prop="lastName"}}
+          </header.column>
+          <header.column @prop="lastName">
             Last name
-          {{/header.column}}
-          {{#header.column prop="points" filterUsing=(hash min=min max=max) filterFunction=(action filter)}}
+          </header.column>
+          <header.column @prop="points" @filterUsing={{hash min=min max=max}} @filterFunction={{action filter}}>
             Points
-          {{/header.column}}
-        {{/table.header}}
+          </header.column>
+        </table.header>
 
-        {{table.body}}
+        <table.body/>
 
-      {{/yeti-table}}
+      </YetiTable>
     `);
 
     assert.dom('tbody tr').exists({ count: 5 });

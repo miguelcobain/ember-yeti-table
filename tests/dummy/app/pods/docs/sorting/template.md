@@ -6,23 +6,23 @@ You can disable sorting in any column by passing `sortable=false` to any column 
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="sorting-simple.hbs"}}
-    {{#yeti-table data=data as |table|}}
+    <YetiTable @data={{data}} as |table|>
 
-      {{#table.header as |header|}}
-        {{#header.column prop="firstName"}}
+      <table.header as |header|>
+        <header.column @prop="firstName">
           First name
-        {{/header.column}}
-        {{#header.column prop="lastName" sortable=false}}
+        </header.column>
+        <header.column @prop="lastName" @sortable={{false}}>
           Last name
-        {{/header.column}}
-        {{#header.column prop="points"}}
+        </header.column>
+        <header.column @prop="points">
           Points
-        {{/header.column}}
-      {{/table.header}}
+        </header.column>
+      </table.header>
 
-      {{table.body}}
+      <table.body/>
 
-    {{/yeti-table}}
+    </YetiTable>
   {{/demo.example}}
 
   {{demo.snippet "sorting-simple.hbs"}}
@@ -41,26 +41,26 @@ Yeti table provides two approaches for this customization:
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="sorting-custom.hbs"}}
-    {{#yeti-table data=data sort="points" as |table|}}
+    <YetiTable @data={{data}} sort="points" as |table|>
 
-      {{#table.header as |header|}}
-        {{#header.column prop="firstName" as |column|}}
+      <table.header as |header|>
+        <header.column @prop="firstName" as |column|>
           First name
           {{if column.isAscSorted "(sorted asc)"}} {{if column.isDescSorted "(sorted desc)"}}
-        {{/header.column}}
-        {{#header.column prop="lastName" as |column|}}
+        </header.column>
+        <header.column @prop="lastName" as |column|>
           Last name
           {{if column.isAscSorted "(sorted asc)"}} {{if column.isDescSorted "(sorted desc)"}}
-        {{/header.column}}
-        {{#header.column prop="points" as |column|}}
+        </header.column>
+        <header.column @prop="points" as |column|>
           Points
           {{if column.isAscSorted "(sorted asc)"}} {{if column.isDescSorted "(sorted desc)"}}
-        {{/header.column}}
-      {{/table.header}}
+        </header.column>
+      </table.header>
 
-      {{table.body}}
+      <table.body/>
 
-    {{/yeti-table}}
+    </YetiTable>
   {{/demo.example}}
 
   {{demo.snippet "sorting-custom.hbs"}}
@@ -76,23 +76,25 @@ Let's say we want to sort by `firstName` ascending and then by `lastName` descen
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="sorting-advanced.hbs"}}
-    {{#yeti-table data=advancedSortingData sort="firstName lastName:desc" as |table|}}
+    <YetiTable
+      @data={{advancedSortingData}}
+      @sort="firstName lastName:desc" as |table|>
 
-      {{#table.header as |header|}}
-        {{#header.column prop="firstName"}}
+      <table.header as |header|>
+        <header.column @prop="firstName">
           First name
-        {{/header.column}}
-        {{#header.column prop="lastName"}}
+        </header.column>
+        <header.column @prop="lastName">
           Last name
-        {{/header.column}}
-        {{#header.column prop="points"}}
+        </header.column>
+        <header.column @prop="points">
           Points
-        {{/header.column}}
-      {{/table.header}}
+        </header.column>
+      </table.header>
 
-      {{table.body}}
+      <table.body/>
 
-    {{/yeti-table}}
+    </YetiTable>
   {{/demo.example}}
 
   {{demo.snippet "sorting-advanced.hbs"}}

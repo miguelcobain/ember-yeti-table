@@ -8,23 +8,23 @@ This allows you to update that property as you wish, either using an input eleme
   {{#demo.example name="filtering-simple.hbs"}}
     {{input value=filter}}
 
-    {{#yeti-table data=data filter=filter as |table|}}
+    <YetiTable @data={{data}} @filter={{filter}} as |table|>
 
-      {{#table.header as |header|}}
-        {{#header.column prop="firstName"}}
+      <table.header as |header|>
+        <header.column @prop="firstName">
           First name
-        {{/header.column}}
-        {{#header.column prop="lastName"}}
+        </header.column>
+        <header.column @prop="lastName">
           Last name
-        {{/header.column}}
-        {{#header.column prop="points"}}
+        </header.column>
+        <header.column @prop="points">
           Points
-        {{/header.column}}
-      {{/table.header}}
+        </header.column>
+      </table.header>
 
-      {{table.body}}
+      <table.body/>
 
-    {{/yeti-table}}
+    </YetiTable>
   {{/demo.example}}
 
   {{demo.snippet "filtering-simple.hbs"}}
@@ -43,21 +43,21 @@ You can still use the general `filter` property in the parent `{{yeti-table}}` c
 
     {{input value=filter}}
 
-    {{#yeti-table data=data filter=filter as |table|}}
+    <YetiTable @data={{data}} @filter={{filter}} as |table|>
 
-      {{#table.header as |header|}}
-        {{#header.column prop="firstName" filter=firstNameFilter}}
+      <table.header as |header|>
+        <header.column @prop="firstName" @filter={{firstNameFilter}}>
           First name
-        {{/header.column}}
-        {{#header.column prop="lastName" filter=lastNameFilter}}
+        </header.column>
+        <header.column @prop="lastName" @filter={{lastNameFilter}}>
           Last name
-        {{/header.column}}
-        {{#header.column prop="points" filter=pointsFilter}}
+        </header.column>
+        <header.column @prop="points" @filter={{pointsFilter}}>
           Points
-        {{/header.column}}
-      {{/table.header}}
+        </header.column>
+      </table.header>
 
-      {{table.body}}
+      <table.body/>
 
       <tfoot>
         <tr>
@@ -73,7 +73,7 @@ You can still use the general `filter` property in the parent `{{yeti-table}}` c
         </tr>
       </tfoot>
 
-    {{/yeti-table}}
+    </YetiTable>
   {{/demo.example}}
 
   {{demo.snippet "filtering-column.hbs"}}
@@ -99,23 +99,23 @@ This allows for advanced filtering logic. See the following example:
     <p>Min points: {{input type="number" value=min}}</p>
     <p>Max points: {{input type="number" value=max}}</p>
 
-    {{#yeti-table data=data as |table|}}
+    <YetiTable @data={{data}} as |table|>
 
-      {{#table.header as |header|}}
-        {{#header.column prop="firstName"}}
+      <table.header as |header|>
+        <header.column @prop="firstName">
           First name
-        {{/header.column}}
-        {{#header.column prop="lastName"}}
+        </header.column>
+        <header.column @prop="lastName">
           Last name
-        {{/header.column}}
-        {{#header.column prop="points" filterFunction=(action "filterPoints") filterUsing=(hash min=min max=max)}}
+        </header.column>
+        <header.column @prop="points" @filterFunction={{action "filterPoints"}} @filterUsing={{hash min=min max=max}}>
           Points
-        {{/header.column}}
-      {{/table.header}}
+        </header.column>
+      </table.header>
 
-      {{table.body}}
+      <table.body/>
 
-    {{/yeti-table}}
+    </YetiTable>
 
   {{/demo.example}}
 
