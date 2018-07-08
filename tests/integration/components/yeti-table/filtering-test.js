@@ -2,7 +2,6 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import '@ember/test-helpers';
 import { A } from '@ember/array';
 import { set, get } from '@ember/object';
 
@@ -34,10 +33,8 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
   });
 
   test('rendering with filter filters rows', async function(assert) {
-    this.set('filter', 'Baderous');
-
     await render(hbs`
-      {{#yeti-table data=data filter=filter as |table|}}
+      {{#yeti-table data=data filter="Baderous" as |table|}}
 
         {{#table.header as |header|}}
           {{#header.column prop="firstName"}}

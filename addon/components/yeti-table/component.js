@@ -5,10 +5,8 @@ import { computed as emberComputed, get, set, defineProperty } from '@ember/obje
 
 import { tagName } from '@ember-decorators/component';
 import { computed, action } from '@ember-decorators/object';
-import { reads } from '@ember-decorators/object/computed';
 import { argument } from '@ember-decorators/argument';
-import { required } from '@ember-decorators/argument/validation';
-import { type, optional, arrayOf } from '@ember-decorators/argument/type';
+import { type, optional, arrayOf, unionOf } from '@ember-decorators/argument/type';
 
 import createRegex from 'ember-yeti-table/utils/create-regex';
 import { sortMultiple, compareValues, mergeSort } from 'ember-yeti-table/utils/sorting-utils';
@@ -20,9 +18,16 @@ export default class YetiTable extends Component {
   layout = layout;
 
   @argument
-  @required
-  @type(arrayOf('object'))
+  @type(optional(unionOf(arrayOf('object'), 'object'))) //shapeOf({ then: Function })
   data;
+
+  resolvedData;
+
+  @argument
+  @type(optional(Function))
+  loadData;
+
+  isLoading = false;
 
   @argument
   @type('boolean')
@@ -41,8 +46,16 @@ export default class YetiTable extends Component {
   totalRows;
 
   @argument
+  @type(optional('string'))
+  filter;
+
+  @argument
   @type(optional(Function))
   filterFunction;
+
+  @argument
+  @type(optional('any'))
+  filterUsing;
 
   @argument
   @type(Function)
@@ -122,12 +135,47 @@ export default class YetiTable extends Component {
     return data;
   }
 
-  @reads('pagedData') processedData;
+  @computed('pagedData', 'resolvedData', 'loadData')
+  get processedData() {
+    if (this.get('loadData')) {
+      // skip processing and return raw data if remote data is enabled via `loadData`
+      return this.get('resolvedData');
+    } else {
+      return this.get('pagedData');
+    }
+  }
 
   init() {
     super.init(...arguments);
     this.set('columns', A());
     this.set('filteredData', []);
+    this.set('resolvedData', []);
+  }
+
+  didReceiveAttrs() {
+    // data has changed
+    let oldData = this._oldData;
+    let data = this.get('data');
+
+    if (data !== oldData) {
+      if (data && data.then) {
+        this.set('isLoading', true);
+        data.then((resolvedData) => {
+          // check if data is still the same promise
+          if (data === this.get('data') && !this.isDestroyed) {
+            this.set('resolvedData', resolvedData);
+          }
+        }).finally(() => {
+          if (!this.isDestroyed) {
+            this.set('isLoading', false);
+          }
+        });
+      } else {
+        this.set('resolvedData', data || []);
+      }
+    }
+
+    this._oldData = data;
   }
 
   didInsertElement() {
@@ -135,8 +183,18 @@ export default class YetiTable extends Component {
 
     let columns = this.get('columns').mapBy('prop');
 
-    defineProperty(this, 'filteredData', emberComputed(`data.@each.{${columns.join(',')}}`, 'columns.@each.{prop,filterFunction,filter,filterUsing,filterable}', 'filter', 'filterUsing', 'filterFunction', function() {
-      let data = this.get('data');
+    let loadData = this.get('loadData');
+    if (loadData) {
+      this.addObserver('columns.@each.{filter,filterUsing}', this.runLoadData);
+      this.addObserver('filter', this.runLoadData);
+      this.addObserver('filterUsing', this.runLoadData);
+      this.addObserver('sortings.@each.{prop,direction}', this.runLoadData);
+      this.addObserver('paginationData', this.runLoadData);
+      this.runLoadData();
+    }
+
+    defineProperty(this, 'filteredData', emberComputed(`resolvedData.@each.{${columns.join(',')}}`, 'columns.@each.{prop,filterFunction,filter,filterUsing,filterable}', 'filter', 'filterUsing', 'filterFunction', function() {
+      let data = this.get('resolvedData');
 
       if (isEmpty(data)) {
         return [];
@@ -205,6 +263,51 @@ export default class YetiTable extends Component {
     this.notifyPropertyChange('filteredData');
   }
 
+  willDestroyElement() {
+    super.willDestroyElement(...arguments);
+    let loadData = this.get('loadData');
+    if (loadData) {
+      this.removeObserver('columns.@each.{filter,filterUsing}', this.runLoadData);
+      this.removeObserver('filter', this.runLoadData);
+      this.removeObserver('filterUsing', this.runLoadData);
+    }
+  }
+
+  runLoadData() {
+    let loadData = this.get('loadData');
+    if (typeof loadData === 'function') {
+      let param = {};
+
+      if (this.get('pagination')) {
+        param.paginationData = this.get('paginationData');
+      }
+
+      param.sortData = this.get('sortings');
+      param.filterData = {
+        filter: this.get('filter'),
+        filterUsing: this.get('filterUsing'),
+        columnFilters: this.get('columns').map((c) => ({ filter: c.get('filter'), filterUsing: c.get('filterUsing') }))
+      };
+
+      let promise = loadData(param);
+
+      if (promise && promise.then) {
+        this.set('isLoading', true);
+        promise.then((resolvedData) => {
+          if (!this.isDestroyed) {
+            this.set('resolvedData', resolvedData);
+          }
+        }).finally(() => {
+          if (!this.isDestroyed) {
+            this.set('isLoading', false);
+          }
+        });
+      } else {
+        this.set('resolvedData', promise);
+      }
+    }
+  }
+
   @action
   onColumnSort(column, e) {
     let sortings = this.get('sortings');
@@ -238,7 +341,7 @@ export default class YetiTable extends Component {
     // generate the sort definition based on the new sortings
     let sort = sortings.map(({ prop, direction }) => `${prop}:${direction}`).join(' ');
 
-    // update the sort property which will trigger the necessary updates to resort the data
+    // update the sort property which will trigger the necessary updates to re-sort the data
     this.set('sort', sort);
   }
 
