@@ -1,12 +1,13 @@
 import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import { computed, action } from '@ember-decorators/object';
 import { A } from '@ember/array';
 import faker from 'faker';
 
-export default Controller.extend({
-  numberOfRows: 10,
+export default class FilteringController extends Controller {
+  numberOfRows = 10;
 
-  data: computed('numberOfRows', function() {
+  @computed('numberOfRows')
+  get data() {
     return A(Array.from(Array(this.get('numberOfRows')), () => {
       return {
         firstName: faker.name.firstName(),
@@ -14,22 +15,21 @@ export default Controller.extend({
         points: faker.random.number({ min: 0, max: 100 })
       };
     }));
-  }),
+  }
 
   // BEGIN-SNIPPET filtering-custom.js
-  actions: {
-    filterPoints(points, { min, max }) {
-      min = parseInt(min);
-      max = parseInt(max);
+  @action
+  filterPoints(points, { min, max }) {
+    min = parseInt(min);
+    max = parseInt(max);
 
-      if ((isNaN(min) && isNaN(max)) ||
-          (isNaN(min) && points <= max) ||
-          (min <= points && isNaN(max)) ||
-          (min <= points && points <= max)) {
-        return true;
-      }
-      return false;
+    if ((isNaN(min) && isNaN(max)) ||
+        (isNaN(min) && points <= max) ||
+        (min <= points && isNaN(max)) ||
+        (min <= points && points <= max)) {
+      return true;
     }
+    return false;
   }
   // END-SNIPPET
-});
+}
