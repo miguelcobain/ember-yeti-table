@@ -6,7 +6,7 @@ import { computed as emberComputed, get, set, defineProperty } from '@ember/obje
 import { tagName } from '@ember-decorators/component';
 import { computed, action } from '@ember-decorators/object';
 import { argument } from '@ember-decorators/argument';
-import { type, optional, arrayOf, unionOf } from '@ember-decorators/argument/type';
+import { type, optional, arrayOf, unionOf, shapeOf } from '@ember-decorators/argument/type';
 
 import createRegex from 'ember-yeti-table/utils/create-regex';
 import { sortMultiple, compareValues, mergeSort } from 'ember-yeti-table/utils/sorting-utils';
@@ -18,7 +18,14 @@ export default class YetiTable extends Component {
   layout = layout;
 
   @argument
-  @type(optional(unionOf(arrayOf('object'), 'object'))) //shapeOf({ then: Function })
+  /*
+  @type(optional(
+    unionOf(
+      arrayOf('object'),
+      shapeOf({ then: Function })
+    )
+  ))
+  */
   data;
 
   resolvedData;
@@ -101,7 +108,7 @@ export default class YetiTable extends Component {
     return data;
   }
 
-  @computed('pageSize', 'pageNumber')
+  @computed('pageSize', 'pageNumber', 'totalRows')
   get paginationData() {
     let pageSize = this.get('pageSize');
     let pageNumber = this.get('pageNumber');
@@ -375,6 +382,13 @@ export default class YetiTable extends Component {
       }
 
       this.set('pageNumber', pageNumber);
+    }
+  }
+
+  @action
+  changePageSize(pageSize) {
+    if (this.get('pagination')) {
+      this.set('pageSize', pageSize);
     }
   }
 

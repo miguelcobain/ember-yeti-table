@@ -1,0 +1,100 @@
+$row-height: 48px;
+
+table.material-table {
+  width: 100%;
+  font-family: 'Roboto', sans-serif;
+  color: rgba(0, 0, 0, 0.87);
+  border-spacing: 0px;
+
+  thead {
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.60);
+
+    th {
+      &.yeti-table-sorted {
+        color: rgba(0, 0, 0, 1);
+
+        &:before {
+          vertical-align: middle;
+          padding-right: 8px;
+
+          font-family: 'Material Icons';
+          font-weight: normal;
+          font-style: normal;
+          font-size: 18px;
+          line-height: 1;
+          letter-spacing: normal;
+          text-transform: none;
+          display: inline-block;
+          white-space: nowrap;
+          word-wrap: normal;
+          direction: ltr;
+          font-feature-settings: 'liga';
+        }
+      }
+
+      &.yeti-table-sortable {
+        cursor: pointer;
+      }
+
+      &.yeti-table-sorted-asc:before {
+        content: 'arrow_upward';
+      }
+
+      &.yeti-table-sorted-desc:before {
+        content: 'arrow_downward';
+      }
+    }
+  }
+
+  tbody {
+    font-size: 14px;
+  }
+
+  thead, tbody {
+    tr {
+      th, td {
+        height: $row-height;
+        text-align: left;
+        white-space: nowrap;
+        padding: 12px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        box-sizing: border-box;
+
+        &.avatar-cell {
+          padding-top: 6px;
+          padding-bottom: 6px;
+          width: 64px;
+        }
+      }
+
+      th:first-child, td:first-child {
+        padding-left: 16px;
+      }
+    }
+  }
+
+  tfoot .pagination-controls {
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.60);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 16px 12px;
+
+    .next {
+      margin-left: 24px;
+    }
+
+    .previous {
+      margin-left: 44px;
+    }
+
+    .page-info {
+      margin-left: 30px;
+    }
+  }
+
+}

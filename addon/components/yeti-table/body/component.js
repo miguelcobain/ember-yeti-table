@@ -13,7 +13,7 @@ export default class Body extends Component {
 
   @argument
   @required
-  @type(arrayOf('object'))
+  // @type(arrayOf('object'))
   data;
 
   @argument
