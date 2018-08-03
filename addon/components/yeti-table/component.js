@@ -1,16 +1,31 @@
 import Component from '@ember/component';
 import { A } from '@ember/array';
 import { isEmpty } from '@ember/utils';
-import { computed as emberComputed, get, set, defineProperty } from '@ember/object';
+import {
+  computed as emberComputed,
+  get,
+  set,
+  defineProperty
+} from '@ember/object';
 
 import { tagName } from '@ember-decorators/component';
 import { computed, action } from '@ember-decorators/object';
 import { argument } from '@ember-decorators/argument';
-import { type, optional, arrayOf, unionOf, shapeOf } from '@ember-decorators/argument/type';
+import {
+  type,
+  optional,
+  arrayOf,
+  unionOf,
+  shapeOf
+} from '@ember-decorators/argument/type';
 import { classNames } from '@ember-decorators/component';
 
 import createRegex from 'ember-yeti-table/utils/create-regex';
-import { sortMultiple, compareValues, mergeSort } from 'ember-yeti-table/utils/sorting-utils';
+import {
+  sortMultiple,
+  compareValues,
+  mergeSort
+} from 'ember-yeti-table/utils/sorting-utils';
 
 
 import layout from './template';

@@ -1,13 +1,23 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, clearRender, settled, click, waitFor } from '@ember/test-helpers';
+import {
+  render,
+  clearRender,
+  settled,
+  click,
+  waitFor
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { A } from '@ember/array';
 import RSVP from 'rsvp';
 import { later } from '@ember/runloop';
 import sinon from 'sinon';
 
-import { sortMultiple, compareValues, mergeSort } from 'ember-yeti-table/utils/sorting-utils';
+import {
+  sortMultiple,
+  compareValues,
+  mergeSort
+} from 'ember-yeti-table/utils/sorting-utils';
 
 module('Integration | Component | yeti-table (async)', function(hooks) {
   setupRenderingTest(hooks);
