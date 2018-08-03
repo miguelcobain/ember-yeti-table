@@ -23,19 +23,19 @@
     "test:all": "ember try:each"
   },
   "dependencies": {
+    "@ember-decorators/argument": "^0.8.18",
     "@ember-decorators/babel-transforms": "^2.0.0",
     "ember-angle-bracket-invocation-polyfill": "^1.1.5",
     "ember-cli-babel": "^6.6.0",
     "ember-cli-htmlbars": "^2.0.1",
-    "ember-decorators": "^2.2.0",
-    "@ember-decorators/argument": "^0.8.18"
+    "ember-decorators": "^2.2.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.0",
     "broccoli-asset-rev": "^2.7.0",
     "ember-ajax": "^3.0.0",
     "ember-auto-import": "^1.0.1",
-    "ember-cli": "3.1.4",
+    "ember-cli": "~3.3.0",
     "ember-cli-addon-docs": "^0.5.0",
     "ember-cli-addon-docs-yuidoc": "^0.2.0",
     "ember-cli-dependency-checker": "^2.0.0",
@@ -64,7 +64,7 @@
     "ember-native-dom-helpers": "^0.6.2",
     "ember-resolver": "^4.0.0",
     "ember-router-scroll": "^0.6.0",
-    "ember-source": "~3.2.0",
+    "ember-source": "~3.3.0",
     "ember-source-channel-url": "^1.0.1",
     "ember-try": "^0.2.23",
     "emberx-select": "^3.1.1",
