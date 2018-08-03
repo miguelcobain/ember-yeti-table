@@ -2,6 +2,7 @@ import {
   sortMultiple as sortFunction,
   compareValues as compareFunction
 } from 'ember-yeti-table/utils/sorting-utils';
+import createRegex from 'ember-yeti-table/utils/create-regex';
 
 export default function() {
 
@@ -30,12 +31,21 @@ export default function() {
   */
 
   this.get('/users', ({ users }, request) => {
-    let { pageSize, pageNumber, sortBy, sortDir } = request.queryParams;
+    let { pageSize, pageNumber, sortBy, sortDir, filter } = request.queryParams;
 
     let records = users.all();
 
     // add this so we can have this info on the serializer
     request.mirageMeta = { totalRows: records.length };
+
+    if (filter) {
+      let regex = createRegex(filter, false, true, true);
+      records = records.filter((item) => {
+        return ['firstName', 'lastName', 'email', 'age'].some((key) => {
+          return regex.test(item.attrs[key]);
+        });
+      });
+    }
 
     if (sortBy) {
       let sortings = sortBy.map((prop, i) => {

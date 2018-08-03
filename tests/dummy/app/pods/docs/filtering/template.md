@@ -1,8 +1,13 @@
 # Filtering
 
-You can filter a table's rows simply by using the `filter` property.
+## Global filtering
 
-This allows you to update that property as you wish, either using an input element, a query parameter, a select box, etc.
+You can filter a table's rows simply by using the `@filter` argument.
+
+This allows you to update that argument as you wish, either using an input element, a query parameter, a select box, you name it.
+
+Using the `@filter` argument on the `<YetiTable>` component itself will apply a *global* filter to the rows.
+This means that Yeti Table will only show rows in which any of its columns match that text. 
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="filtering-simple.hbs"}}
@@ -30,12 +35,16 @@ This allows you to update that property as you wish, either using an input eleme
   {{demo.snippet "filtering-simple.hbs"}}
 {{/docs-demo}}
 
-If you want to filter on a single column, you can use `filter` on the column definition.
-You can still use the general `filter` property in the parent `{{yeti-table}}` component.
+## Single column filtering
+
+You can also use the `@filter` argument on the columns, in which case the filter would only apply to that column.
+This means that Yeti Table will only show rows in which that particular column matches that text. 
+
+You can use the `@filter` argument on `<YetiTable>` and `<header.column>` at the same time.
 
 <aside>
-  The column definitions `filter` property is subtractive, meaning that it will filter out rows
-  from the subset that passes the general `filter`.
+  The column definitions `@filter` argument is subtractive, meaning that it will filter out rows
+  from the subset that passes the general `@filter`.
 </aside>
 
 {{#docs-demo as |demo|}}
@@ -79,25 +88,28 @@ You can still use the general `filter` property in the parent `{{yeti-table}}` c
   {{demo.snippet "filtering-column.hbs"}}
 {{/docs-demo}}
 
-You can customize the filtering by passing in a custom `filterFunction` function to the parent `{{yeti-table}}` component or to a column definition.
+## Advanced filtering
+
+You can customize the filtering by passing in a custom `@filterFunction` function argument to the
+parent `<YetiTable>` component or to a column definition.
 This function should return `true` or `false` to either include or exclude the row on the resulting set.
-If this function depends on a value, pass that value as a `filterUsing` property.
+If this function depends on a value, pass that value as a `@filterUsing` argument.
 
-The `filterFunction` function on `{{yeti-table}}` arguments are:
+The `@filterFunction` function on `<YetiTable>` arguments are:
 - `row` - the current data row to use for filtering
-- `filterUsing` - the value you passed in as `filterUsing`
+- `filterUsing` - the value you passed in as `@filterUsing`
 
-The `filterFunction` function on `{{header.column}}` arguments are:
+The `@filterFunction` function on `<header.column>` arguments are:
 - `value` - the current data **cell** to use for filtering
-- `filterUsing` - the value you passed in as `filterUsing`
+- `filterUsing` - the value you passed in as `@filterUsing`
 
 This allows for advanced filtering logic. See the following example:
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="filtering-custom.hbs"}}
 
-    <p>Min points: {{input type="number" value=min}}</p>
-    <p>Max points: {{input type="number" value=max}}</p>
+    <p>Min points: {{input type="number" value=min min=0 max=max}}</p>
+    <p>Max points: {{input type="number" value=max min=min max=100}}</p>
 
     <YetiTable @data={{data}} as |table|>
 
@@ -108,7 +120,9 @@ This allows for advanced filtering logic. See the following example:
         <header.column @prop="lastName">
           Last name
         </header.column>
-        <header.column @prop="points" @filterFunction={{action "filterPoints"}} @filterUsing={{hash min=min max=max}}>
+        <header.column @prop="points"
+          @filterFunction={{action "filterPoints"}}
+          @filterUsing={{hash min=min max=max}}>
           Points
         </header.column>
       </table.header>

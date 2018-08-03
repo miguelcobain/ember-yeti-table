@@ -78,9 +78,9 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@ember-decorators/argument@^0.8.17":
-  version "0.8.17"
-  resolved "https://registry.yarnpkg.com/@ember-decorators/argument/-/argument-0.8.17.tgz#03b099defa6d3710080ba89037822ab46a73ae54"
+"@ember-decorators/argument@^0.8.18":
+  version "0.8.18"
+  resolved "https://registry.yarnpkg.com/@ember-decorators/argument/-/argument-0.8.18.tgz#16e9856b162e5300ae8980ea08274f91b1f2c8b2"
   dependencies:
     babel-plugin-filter-imports "^1.1.1"
     broccoli-funnel "^2.0.1"

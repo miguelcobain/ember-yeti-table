@@ -3,7 +3,7 @@ import Component from '@ember/component';
 import { tagName } from '@ember-decorators/component';
 import { argument } from '@ember-decorators/argument';
 import { required } from '@ember-decorators/argument/validation';
-import { type, arrayOf } from '@ember-decorators/argument/type';
+import { type, arrayOf, unionOf, shapeOf } from '@ember-decorators/argument/type';
 
 import layout from './template';
 
@@ -13,7 +13,12 @@ export default class Body extends Component {
 
   @argument
   @required
-  // @type(arrayOf('object'))
+  @type(
+    unionOf(
+      arrayOf('object'),
+      shapeOf({ then: Function })
+    )
+  )
   data;
 
   @argument

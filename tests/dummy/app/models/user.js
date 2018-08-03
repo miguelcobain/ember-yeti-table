@@ -2,6 +2,7 @@ import Model from 'ember-data/model';
 import { attr } from '@ember-decorators/data';
 import { computed } from '@ember-decorators/object';
 
+// BEGIN-SNIPPET user.js
 export default class User extends Model {
   @attr('string') firstName;
   @attr('string') lastName;
@@ -14,9 +15,7 @@ export default class User extends Model {
 
   @computed('firstName', 'lastName')
   get name() {
-    const first = this.get('firstName');
-    const last = this.get('lastName');
-
-    return `${first} ${last}`;
+    return `${this.firstName} ${this.lastName}`;
   }
 }
+// END-SNIPPET

@@ -1,6 +1,6 @@
 # General
 
-In this example, ember-yeti-tables "unrolls" the table for you if you use `<table.body/>` in the blockless form.
+In this example, Yeti Table "unrolls" the table for you if you use `<table.body/>` in the blockless form.
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="general-simple.hbs"}}

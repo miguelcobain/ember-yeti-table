@@ -6,8 +6,10 @@
 
 <div class="docs-container docs-md">
   <section class="max-w-md mx-auto pb-8">
-    {{#docs-demo as |demo|}}
-      {{#demo.example name="index-example.hbs"}}
+    {{svg-jar "yeti" width="100px"}}
+
+    {{#docs-demo class="mt-0" as |demo|}}
+      {{#demo.example class="pt-0" name="index-example.hbs"}}
 
         <YetiTable @data={{data}} as |table|>
 

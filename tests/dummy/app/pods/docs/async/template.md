@@ -1,9 +1,75 @@
 
+# Async data
+
+## The `loadData` function
+
+Up until now the guides assumed you passed in an array of data to the `@data` argument of `<YetiTable>`.
+However, sometimes you don't have all the data available or loading all rows at once isn't possible, e.g the dataset is too large.
+
+In this cases we delegate sorting, filtering and pagination to the server (or any other async data source, for that matter).
+The data source is effectively "driving" the table.
+
+Yeti Table provides a `@loadData` argument that you can pass in a function to load data.
+This function will be invoked whenever new data is needed:
+
+- when sorting changes
+- when any `@filter` or `@filterUsing` changes
+- when the page number or page size changes (if pagination is enabled)
+
+## `loadData` arguments
+
+The argument for the `loadData` function is an object that contains:
+
+- `paginationData` - an object that contains:
+  - `pageSize` - the current size of the page
+  - `pageNumber` - the current page number
+  - `pageStart` - the 0-indexed index of the first record of the current page
+  - `pageEnd` - the 0-indexed index of the last record of the current page
+  - `isFirstPage` - boolean that is `true` when we're on the first page (useful to disable a previous button)
+  - `isLastPage` - boolean that is `true` when we're on the last page (useful to disable a next button)
+  - `totalRows` - the total nubmer of rows (same as the `@totalRows` argument)
+  - `totalPages` - the calculated total number of pages based on the current `pageSize`
+
+- `sortData` - an array of `{ prop, direction }` objects for each column that represents the current sorting status of the table
+
+- `filterData` - an object that contains:
+  - `filter` - the current global filter applied to the table
+  - `filterUsing` - the current `@filterUsing` property, if existent
+  - `columnFilters` - an array of `{ filter, filterUsing }` objects for each column
+
+With this data you should be able to build the correct request to inform your server of what exact info Yeti Table wants.
+
+## `isLoading`
+
+In the hash that Yeti Table yields, there is an `isLoading` boolean. This boolean is `true` when:
+
+- the promise passed in to the `@data` argument is didn't resolve yet
+- the `@loadData` function is running
+
+You can use this boolean to build a loading data indicator on the table.
+
+## All together now
+
+Here is an example of a table using async loading with filtering, sorting and pagination with custom made pagination controls.
+
+This example uses ember-data and ember-cli-mirage to fake a real server.
+In this example, filtering, sorting and pagination are entirely done on the server. Yeti Table just
+asks for data and displays it.
+
+<aside>
+  The server side implementation is out of scope for these guides, but you can check it [here](https://github.com/miguelcobain/ember-yeti-table/blob/master/tests/dummy/mirage/config.js#L32-L54) if you're interested.
+</aside>
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="async-simple.hbs"}}
 
-    <YetiTable class="material-table" @loadData={{action loadData}} @pagination={{true}} @pageSize={{20}} @totalRows={{totalRows}} as |table|>
+    {{input value=filter}}
+
+    <YetiTable
+      @loadData={{action "loadData"}}
+      @sort="firstName"
+      @filter={{filter}}
+      @pagination={{true}} @pageSize={{20}} @totalRows={{totalRows}} as |table|>
       
       <table.header as |header|>
         <header.column @prop="avatarUrl" @sortable={{false}}>
@@ -78,4 +144,6 @@
   {{/demo.example}}
 
   {{demo.snippet "async-simple.hbs"}}
+  {{demo.snippet label="component.js" name="async-simple.js"}}
+  {{demo.snippet label="user.js" name="user.js"}}
 {{/docs-demo}}

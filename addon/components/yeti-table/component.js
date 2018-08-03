@@ -7,6 +7,7 @@ import { tagName } from '@ember-decorators/component';
 import { computed, action } from '@ember-decorators/object';
 import { argument } from '@ember-decorators/argument';
 import { type, optional, arrayOf, unionOf, shapeOf } from '@ember-decorators/argument/type';
+import { classNames } from '@ember-decorators/component';
 
 import createRegex from 'ember-yeti-table/utils/create-regex';
 import { sortMultiple, compareValues, mergeSort } from 'ember-yeti-table/utils/sorting-utils';
@@ -14,18 +15,17 @@ import { sortMultiple, compareValues, mergeSort } from 'ember-yeti-table/utils/s
 
 import layout from './template';
 @tagName('table')
+@classNames('yeti-table')
 export default class YetiTable extends Component {
   layout = layout;
 
   @argument
-  /*
   @type(optional(
     unionOf(
       arrayOf('object'),
       shapeOf({ then: Function })
     )
   ))
-  */
   data;
 
   resolvedData;

@@ -15,6 +15,11 @@ export default class Column extends Component {
   layout = layout;
 
   @argument
+  @required
+  @type(Component)
+  parent;
+
+  @argument
   @type(optional('string'))
   prop;
 

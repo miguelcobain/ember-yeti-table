@@ -4,7 +4,7 @@ import { A } from '@ember/array';
 import faker from 'faker';
 
 export default class SortingController extends Controller {
-  numberOfRows = 10;
+  numberOfRows = 5;
 
   @computed('numberOfRows')
   get data() {
