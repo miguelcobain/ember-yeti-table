@@ -3,7 +3,8 @@ import Component from '@ember/component';
 import { tagName } from '@ember-decorators/component';
 import { argument } from '@ember-decorators/argument';
 import { required } from '@ember-decorators/argument/validation';
-import { type, arrayOf, unionOf, shapeOf } from '@ember-decorators/argument/type';
+import { type, arrayOf, unionOf, shapeOf, optional } from '@ember-decorators/argument/type';
+import { Action } from '@ember-decorators/argument/types';
 
 import layout from './template';
 
@@ -23,13 +24,24 @@ export default class Body extends Component {
 
   @argument
   @required
+  @type(arrayOf(Component))
+  columns;
+
+  @argument
+  @required
   @type(Component)
   parent;
 
   @argument
-  @required
-  @type(arrayOf(Component))
-  columns;
+  @type(optional('string'))
+  rowClass;
 
-  onRowClick() {}
+  @argument
+  @required
+  @type(Component)
+  parent;
+
+  @argument
+  @type(optional(Action))
+  onRowClick = () => {};
 }
