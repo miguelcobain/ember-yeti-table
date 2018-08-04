@@ -247,13 +247,13 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     });
 
     await render(hbs`
-      <YetiTable @loadData={{loadData}} @sort="lastName:desc" @filter="Miguel" as |table|>
+      <YetiTable @loadData={{loadData}} @filter="Miguel" as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
             First name
           </header.column>
-          <header.column @prop="lastName">
+          <header.column @prop="lastName" @sort="desc">
             Last name
           </header.column>
           <header.column @prop="points">
@@ -359,13 +359,13 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     });
 
     await render(hbs`
-      <YetiTable @loadData={{loadData}} @sort={{sort}} as |table|>
+      <YetiTable @loadData={{loadData}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
             First name
           </header.column>
-          <header.column @prop="lastName">
+          <header.column @prop="lastName" @sort={{sortDir}}>
             Last name
           </header.column>
           <header.column @prop="points">
@@ -387,7 +387,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
 
     assert.ok(this.loadData.calledOnce, 'loadData was called once');
 
-    this.set('sort', 'lastName:desc');
+    this.set('sortDir', 'desc');
 
     await settled();
 

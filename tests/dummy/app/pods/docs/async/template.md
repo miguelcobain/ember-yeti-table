@@ -67,7 +67,6 @@ asks for data and displays it.
 
     <YetiTable
       @loadData={{action "loadData"}}
-      @sort="firstName"
       @filter={{filter}}
       @pagination={{true}} @pageSize={{20}} @totalRows={{totalRows}} as |table|>
       
@@ -75,7 +74,7 @@ asks for data and displays it.
         <header.column @prop="avatarUrl" @sortable={{false}}>
           Avatar
         </header.column>
-        <header.column @prop="firstName">
+        <header.column @prop="firstName" @sort="asc">
           First name
         </header.column>
         <header.column @prop="lastName">

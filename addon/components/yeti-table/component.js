@@ -4,9 +4,9 @@ import { isEmpty } from '@ember/utils';
 import {
   computed as emberComputed,
   get,
-  set,
   defineProperty
 } from '@ember/object';
+import { once } from '@ember/runloop';
 
 import { tagName } from '@ember-decorators/component';
 import { computed, action } from '@ember-decorators/object';
@@ -87,42 +87,6 @@ export default class YetiTable extends Component {
   @type(Function)
   compareFunction = compareValues;
 
-  @argument
-  @type(optional('string'))
-  sort = null;
-
-  @computed('sort')
-  get sortings() {
-    let sort = this.get('sort');
-    let sortings = [];
-
-    if (sort) {
-      sortings = sort.split(' ').map((sortDefinition) => {
-        let [prop, direction] = sortDefinition.split(':');
-        direction = direction ? direction : 'asc';
-        return { prop, direction };
-      });
-    }
-
-    return sortings;
-  }
-
-  @computed('filteredData.[]', 'sortings.[]', 'sortFunction', 'compareFunction')
-  get sortedData() {
-    let data = this.get('filteredData');
-    let sortings = this.get('sortings');
-    let sortFunction = this.get('sortFunction');
-    let compareFunction = this.get('compareFunction');
-
-    if (sortings.length > 0) {
-      data = mergeSort(data, (itemA, itemB) => {
-        return sortFunction(itemA, itemB, sortings, compareFunction);
-      });
-    }
-
-    return data;
-  }
-
   @computed('pageSize', 'pageNumber', 'totalRows')
   get paginationData() {
     let pageSize = this.get('pageSize');
@@ -171,6 +135,7 @@ export default class YetiTable extends Component {
     super.init(...arguments);
     this.set('columns', A());
     this.set('filteredData', []);
+    this.set('sortedData', []);
     this.set('resolvedData', []);
   }
 
@@ -204,16 +169,6 @@ export default class YetiTable extends Component {
     super.didInsertElement(...arguments);
 
     let columns = this.get('columns').mapBy('prop');
-
-    let loadData = this.get('loadData');
-    if (loadData) {
-      this.addObserver('columns.@each.{filter,filterUsing}', this.runLoadData);
-      this.addObserver('filter', this.runLoadData);
-      this.addObserver('filterUsing', this.runLoadData);
-      this.addObserver('sortings.@each.{prop,direction}', this.runLoadData);
-      this.addObserver('paginationData', this.runLoadData);
-      this.runLoadData();
-    }
 
     defineProperty(this, 'filteredData', emberComputed(`resolvedData.@each.{${columns.join(',')}}`, 'columns.@each.{prop,filterFunction,filter,filterUsing,filterable}', 'filter', 'filterUsing', 'filterFunction', function() {
       let data = this.get('resolvedData');
@@ -280,91 +235,118 @@ export default class YetiTable extends Component {
       }));
     }));
 
+    defineProperty(this, 'sortedData', emberComputed(`filteredData.@each.{${columns.join(',')}}`, 'columns.@each.{prop,sort,sortable}', 'sortFunction', 'compareFunction', function() {
+      let data = this.get('filteredData');
+      let sortableColumns = this.get('columns').filter((c) => !isEmpty(c.get('sort')));
+      let sortings = sortableColumns.map((c) => ({ prop: c.get('prop'), direction: c.get('sort') }));
+      let sortFunction = this.get('sortFunction');
+      let compareFunction = this.get('compareFunction');
+
+      if (sortings.length > 0) {
+        data = mergeSort(data, (itemA, itemB) => {
+          return sortFunction(itemA, itemB, sortings, compareFunction);
+        });
+      }
+
+      return data;
+    }));
+
     // defining a computed property on didInsertElement doesn't seem
-    // to trigger any observers. This forces an update.
+    // to trigger any updates. This forces an update.
     this.notifyPropertyChange('filteredData');
+    this.notifyPropertyChange('sortedData');
+    let loadData = this.get('loadData');
+    if (loadData) {
+      this.addObserver('columns.@each.filter', this.runLoadData);
+      this.addObserver('columns.@each.filterUsing', this.runLoadData);
+      this.addObserver('columns.@each.sort', this.runLoadData);
+      this.addObserver('filter', this.runLoadData);
+      this.addObserver('filterUsing', this.runLoadData);
+      this.addObserver('paginationData', this.runLoadData);
+      this.runLoadData();
+    }
   }
 
   willDestroyElement() {
     super.willDestroyElement(...arguments);
     let loadData = this.get('loadData');
     if (loadData) {
-      this.removeObserver('columns.@each.{filter,filterUsing}', this.runLoadData);
+      this.removeObserver('columns.@each.filter', this.runLoadData);
+      this.removeObserver('columns.@each.filterUsing', this.runLoadData);
+      this.removeObserver('columns.@each.sort', this.runLoadData);
       this.removeObserver('filter', this.runLoadData);
       this.removeObserver('filterUsing', this.runLoadData);
+      this.removeObserver('paginationData', this.runLoadData);
     }
   }
 
   runLoadData() {
-    let loadData = this.get('loadData');
-    if (typeof loadData === 'function') {
-      let param = {};
+    once(() => {
+      let loadData = this.get('loadData');
+      if (typeof loadData === 'function') {
+        let param = {};
 
-      if (this.get('pagination')) {
-        param.paginationData = this.get('paginationData');
+        if (this.get('pagination')) {
+          param.paginationData = this.get('paginationData');
+        }
+
+        param.sortData = this.get('columns')
+          .filter((c) => !isEmpty(c.get('sort')))
+          .map((c) => ({ prop: c.get('prop'), direction: c.get('sort') }));
+        param.filterData = {
+          filter: this.get('filter'),
+          filterUsing: this.get('filterUsing'),
+          columnFilters: this.get('columns').map((c) => ({ filter: c.get('filter'), filterUsing: c.get('filterUsing') }))
+        };
+
+        let promise = loadData(param);
+
+        if (promise && promise.then) {
+          this.set('isLoading', true);
+          promise.then((resolvedData) => {
+            if (!this.isDestroyed) {
+              this.set('resolvedData', resolvedData);
+            }
+          }).finally(() => {
+            if (!this.isDestroyed) {
+              this.set('isLoading', false);
+            }
+          });
+        } else {
+          this.set('resolvedData', promise);
+        }
       }
-
-      param.sortData = this.get('sortings');
-      param.filterData = {
-        filter: this.get('filter'),
-        filterUsing: this.get('filterUsing'),
-        columnFilters: this.get('columns').map((c) => ({ filter: c.get('filter'), filterUsing: c.get('filterUsing') }))
-      };
-
-      let promise = loadData(param);
-
-      if (promise && promise.then) {
-        this.set('isLoading', true);
-        promise.then((resolvedData) => {
-          if (!this.isDestroyed) {
-            this.set('resolvedData', resolvedData);
-          }
-        }).finally(() => {
-          if (!this.isDestroyed) {
-            this.set('isLoading', false);
-          }
-        });
-      } else {
-        this.set('resolvedData', promise);
-      }
-    }
+    });
   }
 
   @action
   onColumnSort(column, e) {
-    let sortings = this.get('sortings');
-    let prop = column.get('prop');
-    let sorting = column.get('sorting');
     let direction = 'asc';
 
-    if (sorting) {
+    if (column.get('isSorted')) {
       // if this column is already sorted, calculate the opposite
       // direction and remove old sorting
-      direction = get(sorting, 'direction');
+      direction = column.get('sort');
       direction = direction === 'asc' ? 'desc' : 'asc';
-      set(sorting, 'direction', direction);
+      column.set('sort', direction);
 
       if (!e.shiftKey) {
-        sortings = [sorting];
+        // if not pressed shift, reset other column sortings
+        let columns = this.get('columns').filter((c) => c !== column);
+        columns.forEach((c) => c.set('sort', null));
       }
     } else {
       // create new sorting
-      let newSorting = { prop, direction };
+      column.set('sort', direction);
 
       // normal click replaces all sortings with the new one
       // shift click adds a new sorting to the existing ones
-      if (e.shiftKey) {
-        sortings.push(newSorting);
-      } else {
-        sortings = [newSorting];
+      if (!e.shiftKey) {
+        // if not pressed shift, reset other column sortings
+        let columns = this.get('columns').filter((c) => c !== column);
+        columns.forEach((c) => c.set('sort', null));
       }
     }
-
-    // generate the sort definition based on the new sortings
-    let sort = sortings.map(({ prop, direction }) => `${prop}:${direction}`).join(' ');
-
-    // update the sort property which will trigger the necessary updates to re-sort the data
-    this.set('sort', sort);
   }
 
   @action

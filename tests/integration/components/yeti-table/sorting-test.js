@@ -64,7 +64,7 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
 
   test('using sortable=false does not add the sortable class', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} @sort="firstName" as |table|>
+      <YetiTable @data={{data}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -90,10 +90,10 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
 
   test('default sort works', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} @sort="firstName" as |table|>
+      <YetiTable @data={{data}} as |table|>
 
         <table.header as |header|>
-          <header.column @prop="firstName">
+          <header.column @prop="firstName" @sort="asc">
             First name
           </header.column>
           <header.column @prop="lastName">
@@ -117,16 +117,16 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
   });
 
   test('updating sort property works', async function(assert) {
-    this.sort = 'firstName';
+    this.firstNameSort = 'asc';
 
     await render(hbs`
-      <YetiTable @data={{data}} @sort={{sort}} as |table|>
+      <YetiTable @data={{data}} as |table|>
 
         <table.header as |header|>
-          <header.column @prop="firstName">
+          <header.column @prop="firstName" @sort={{firstNameSort}}>
             First name
           </header.column>
-          <header.column @prop="lastName">
+          <header.column @prop="lastName" @sort={{lastNameSort}}>
             Last name
           </header.column>
           <header.column @prop="points">
@@ -145,7 +145,8 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
     assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
 
-    this.set('sort', 'lastName');
+    this.set('firstNameSort', null);
+    this.set('lastNameSort', 'asc');
 
     assert.dom('tbody tr:nth-child(1) td:nth-child(2)').hasText('Andrade');
     assert.dom('tbody tr:nth-child(2) td:nth-child(2)').hasText('Baderous');
@@ -155,13 +156,13 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
   });
 
   test('updating sort direction works', async function(assert) {
-    this.sort = 'firstName';
+    this.sort = 'asc';
 
     await render(hbs`
-      <YetiTable @data={{data}} @sort={{sort}} as |table|>
+      <YetiTable @data={{data}} as |table|>
 
         <table.header as |header|>
-          <header.column @prop="firstName">
+          <header.column @prop="firstName" @sort={{sort}}>
             First name
           </header.column>
           <header.column @prop="lastName">
@@ -183,7 +184,7 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
     assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
 
-    this.set('sort', 'firstName:desc');
+    this.set('sort', 'desc');
 
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Tom');
     assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Tom');
@@ -194,10 +195,10 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
 
   test('default sort with direction works', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} @sort="firstName:desc" as |table|>
+      <YetiTable @data={{data}} as |table|>
 
         <table.header as |header|>
-          <header.column @prop="firstName">
+          <header.column @prop="firstName" @sort="desc">
             First name
           </header.column>
           <header.column @prop="lastName">
@@ -331,10 +332,10 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
 
   test('changing a sorted property updates sorting', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} @sort="firstName" as |table|>
+      <YetiTable @data={{data}} as |table|>
 
         <table.header as |header|>
-          <header.column @prop="firstName">
+          <header.column @prop="firstName" @sort="asc">
             First name
           </header.column>
           <header.column @prop="lastName">
@@ -368,13 +369,13 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
 
   test('using multiple properties on sort works', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} @sort="firstName lastName" as |table|>
+      <YetiTable @data={{data}} as |table|>
 
         <table.header as |header|>
-          <header.column @prop="firstName">
+          <header.column @prop="firstName" @sort="asc">
             First name
           </header.column>
-          <header.column @prop="lastName">
+          <header.column @prop="lastName" @sort="asc">
             Last name
           </header.column>
           <header.column @prop="points">
@@ -489,13 +490,13 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
 
   test('using sort and clicking header afterwards works', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} @sort="firstName lastName" as |table|>
+      <YetiTable @data={{data}} as |table|>
 
         <table.header as |header|>
-          <header.column @prop="firstName">
+          <header.column @prop="firstName" @sort="asc">
             First name
           </header.column>
-          <header.column @prop="lastName">
+          <header.column @prop="lastName" @sort="asc">
             Last name
           </header.column>
           <header.column @prop="points">
@@ -534,10 +535,10 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
 
   test('default sort applies correct order class to header column', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} @sort="firstName" as |table|>
+      <YetiTable @data={{data}} as |table|>
 
         <table.header as |header|>
-          <header.column @prop="firstName">
+          <header.column @prop="firstName" @sort="asc">
             First name
           </header.column>
           <header.column @prop="lastName">
@@ -558,10 +559,10 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
 
   test('default sort applies correct order class to header column (desc)', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} @sort="firstName:desc" as |table|>
+      <YetiTable @data={{data}} as |table|>
 
         <table.header as |header|>
-          <header.column @prop="firstName">
+          <header.column @prop="firstName" @sort="desc">
             First name
           </header.column>
           <header.column @prop="lastName">

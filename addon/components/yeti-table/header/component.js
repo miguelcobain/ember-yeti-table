@@ -24,10 +24,6 @@ export default class Header extends Component {
   columns;
 
   @argument
-  @type(arrayOf('object'))
-  sortings;
-
-  @argument
   @required
   @type(Action)
   onColumnClick;

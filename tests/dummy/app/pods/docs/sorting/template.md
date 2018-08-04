@@ -33,14 +33,13 @@ In this example we disabled sorting on the second column.
 
 ## The `@sort` argument
 
-If you need to specify a sort order, you can use the `@sort` argument. The argument should be a string with a syntax similar to 
-the [`sort` macro](https://emberjs.com/api/ember/3.0/functions/@ember%2Fobject%2Fcomputed/sort) from `@ember/object/computed`.
+If you need to specify a sort order, you can use the `@sort` argument on the column definitions, with a string of `asc` or `desc`.
 
 Note that updating the `@sort` argument will also update the sorting of the table. Also, if you update an object's property which the table is sorted on, the table sorting will update accordingly.
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="sorting-sort-property.hbs"}}
-    <YetiTable @data={{data}} @sort="points" as |table|>
+    <YetiTable @data={{data}} as |table|>
 
       <table.header as |header|>
         <header.column @prop="firstName">
@@ -49,7 +48,7 @@ Note that updating the `@sort` argument will also update the sorting of the tabl
         <header.column @prop="lastName">
           Last name
         </header.column>
-        <header.column @prop="points">
+        <header.column @prop="points" @sort="asc">
           Points
         </header.column>
       </table.header>
@@ -74,7 +73,7 @@ In the following example we're showing `(sorted desc)` or `(sorted asc)` text de
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="sorting-custom.hbs"}}
-    <YetiTable @data={{data}} @sort="points" as |table|>
+    <YetiTable @data={{data}} as |table|>
 
       <table.header as |header|>
         <header.column @prop="firstName" as |column|>
@@ -85,7 +84,7 @@ In the following example we're showing `(sorted desc)` or `(sorted asc)` text de
           Last name
           {{if column.isAscSorted "(sorted asc)"}} {{if column.isDescSorted "(sorted desc)"}}
         </header.column>
-        <header.column @prop="points" as |column|>
+        <header.column @prop="points" @sort="asc" as |column|>
           Points
           {{if column.isAscSorted "(sorted asc)"}} {{if column.isDescSorted "(sorted desc)"}}
         </header.column>
@@ -101,23 +100,21 @@ In the following example we're showing `(sorted desc)` or `(sorted asc)` text de
 
 ## Multiple sorting
 
-Sometimes we have more advanced sorting requirements. In most cases, the `@sort` property will suffice.
+Sometimes we have slightly more advanced sorting requirements and need to sort on multiple columns.
+In this case you can just use the `@sort` property on multiple columns.
 
-Let's say we want to sort by `firstName` ascending and then by `lastName` descending. We could pass in `@sort="firstName lastName:desc"` string to Yeti Table. 
-
-<aside>The `asc` direction will be used if you omit a direction.</aside>
+Let's say we want to sort by `firstName` ascending and then by `lastName` descending. We could pass in `@sort="asc"`
+to the first name column and `@sort="desc"` to the last name column.
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="sorting-advanced.hbs"}}
-    <YetiTable
-      @data={{advancedSortingData}}
-      @sort="firstName lastName:desc" as |table|>
+    <YetiTable @data={{advancedSortingData}} as |table|>
 
       <table.header as |header|>
-        <header.column @prop="firstName">
+        <header.column @prop="firstName" @sort="asc">
           First name
         </header.column>
-        <header.column @prop="lastName">
+        <header.column @prop="lastName" @sort="desc">
           Last name
         </header.column>
         <header.column @prop="points">
