@@ -60,7 +60,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
 
   test('updating filter filters rows', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} @filter={{filter}} as |table|>
+      <YetiTable @data={{data}} @filter={{filterText}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -87,7 +87,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
 
-    this.set('filter', 'Baderous');
+    this.set('filterText', 'Baderous');
 
     assert.dom('tbody tr').exists({ count: 1 });
 
@@ -95,7 +95,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
   });
 
   test('rendering with filter on column filters rows', async function(assert) {
-    this.set('filter', 'Baderous');
+    this.set('filterText', 'Baderous');
 
     await render(hbs`
       <YetiTable @data={{data}} as |table|>
@@ -104,7 +104,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
           <header.column @prop="firstName">
             First name
           </header.column>
-          <header.column @prop="lastName" @filter={{filter}}>
+          <header.column @prop="lastName" @filter={{filterText}}>
             Last name
           </header.column>
           <header.column @prop="points">
@@ -131,7 +131,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
           <header.column @prop="firstName">
             First name
           </header.column>
-          <header.column @prop="lastName" @filter={{filter}}>
+          <header.column @prop="lastName" @filter={{filterText}}>
             Last name
           </header.column>
           <header.column @prop="points">
@@ -152,7 +152,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
 
-    this.set('filter', 'Baderous');
+    this.set('filterText', 'Baderous');
     await settled();
 
     assert.dom('tbody tr').exists({ count: 1 });

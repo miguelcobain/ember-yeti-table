@@ -301,7 +301,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     });
 
     await render(hbs`
-      <YetiTable @loadData={{loadData}} @filter={{filter}} as |table|>
+      <YetiTable @loadData={{loadData}} @filter={{filterText}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -326,7 +326,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
 
     assert.ok(this.loadData.calledOnce, 'loadData was called once');
 
-    this.set('filter', 'Baderous');
+    this.set('filterText', 'Baderous');
 
     await settled();
 
