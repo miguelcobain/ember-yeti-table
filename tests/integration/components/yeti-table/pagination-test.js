@@ -134,7 +134,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
 
   test('using yield actions works to change pages', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} @pagination={{true}} @pageSize={{15}} @totalRows={{40}} as |table|>
+      <YetiTable @data={{data}} @pagination={{true}} @pageSize={{15}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -204,7 +204,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
 
   test('yielded paginationData is correct', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} @pagination={{true}} @pageSize={{15}} @totalRows={{40}} as |table|>
+      <YetiTable @data={{data}} @pagination={{true}} @pageSize={{15}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -241,7 +241,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
     assert.dom('button#next').isNotDisabled();
     assert.dom('div#pageSize').hasText('15');
     assert.dom('div#pageNumber').hasText('1 of 3');
-    assert.dom('div#pageStart').hasText('0 to 14 of 40');
+    assert.dom('div#pageStart').hasText('1 to 15 of 40');
 
     await click('button#next');
 
@@ -251,7 +251,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
     assert.dom('button#next').isNotDisabled();
     assert.dom('div#pageSize').hasText('15');
     assert.dom('div#pageNumber').hasText('2 of 3');
-    assert.dom('div#pageStart').hasText('15 to 29 of 40');
+    assert.dom('div#pageStart').hasText('16 to 30 of 40');
 
     await click('button#next');
 
@@ -261,6 +261,6 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
     assert.dom('button#next').isDisabled();
     assert.dom('div#pageSize').hasText('15');
     assert.dom('div#pageNumber').hasText('3 of 3');
-    assert.dom('div#pageStart').hasText('30 to 40 of 40');
+    assert.dom('div#pageStart').hasText('31 to 40 of 40');
   });
 });

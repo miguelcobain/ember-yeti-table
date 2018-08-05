@@ -1,0 +1,26 @@
+{{#if showInfo}}
+  <div class="yeti-table-pagination-controls-page-info">
+    Showing {{paginationData.pageStart}} to {{paginationData.pageEnd}} of {{paginationData.totalRows}} entries
+  </div>
+{{/if}}
+
+{{#if showPageSizeSelector}}
+  <div class="yeti-table-pagination-controls-page-size">
+    Rows per page:
+    <select onchange={{action paginationActions.changePageSize value="target.value"}}>
+      {{#each pageSizes as |pageSize|}}
+        <option value={{pageSize}} selected={{yeti-table-eq paginationData.pageSize pageSize}}>{{pageSize}}</option>
+      {{/each}}
+    </select>
+  </div>
+{{/if}}
+
+{{#if showButtons}}
+  <button class="yeti-table-pagination-controls-previous" disabled={{paginationData.isFirstPage}} onclick={{action paginationActions.previousPage}}>
+    Previous
+  </button>
+
+  <button class="yeti-table-pagination-controls-next" disabled={{paginationData.isLastPage}} onclick={{action paginationActions.nextPage}}>
+    Next
+  </button>
+{{/if}}

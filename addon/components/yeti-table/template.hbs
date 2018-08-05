@@ -4,6 +4,15 @@
     parent=this
   )
   body=(component "yeti-table/body" data=processedData columns=columns parent=this)
+  pagination=(component "yeti-table/pagination"
+    paginationData=paginationData
+    paginationActions=(hash
+      previousPage=(action "previousPage")
+      nextPage=(action "nextPage")
+      goToPage=(action "goToPage")
+      changePageSize=(action "changePageSize")
+    )
+  )
   actions=(hash
     previousPage=(action "previousPage")
     nextPage=(action "nextPage")
@@ -12,4 +21,5 @@
   )
   paginationData=paginationData
   isLoading=isLoading
+  totalColumns=totalColumns
 )}}

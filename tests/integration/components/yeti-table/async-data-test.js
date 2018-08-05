@@ -462,8 +462,8 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
       paginationData: {
         pageSize: 5,
         pageNumber: 1,
-        pageStart: 0,
-        pageEnd: 4,
+        pageStart: 1,
+        pageEnd: 5,
         isFirstPage: true,
         isLastPage: false,
         totalRows: 10,
@@ -475,8 +475,8 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
       paginationData: {
         pageSize: 5,
         pageNumber: 2,
-        pageStart: 5,
-        pageEnd: 9,
+        pageStart: 6,
+        pageEnd: 10,
         isFirstPage: false,
         isLastPage: true,
         totalRows: 10,

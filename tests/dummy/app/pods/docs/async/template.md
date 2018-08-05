@@ -23,8 +23,8 @@ The argument for the `loadData` function is an object that contains:
 - `paginationData` - an object that contains:
   - `pageSize` - the current size of the page
   - `pageNumber` - the current page number
-  - `pageStart` - the 0-indexed index of the first record of the current page
-  - `pageEnd` - the 0-indexed index of the last record of the current page
+  - `pageStart` - the 1-indexed index of the first record of the current page
+  - `pageEnd` - the 1-indexed index of the last record of the current page
   - `isFirstPage` - boolean that is `true` when we're on the first page (useful to disable a previous button)
   - `isLastPage` - boolean that is `true` when we're on the last page (useful to disable a next button)
   - `totalRows` - the total nubmer of rows (same as the `@totalRows` argument)
@@ -47,6 +47,16 @@ In the hash that Yeti Table yields, there is an `isLoading` boolean. This boolea
 - the `@loadData` function is running
 
 You can use this boolean to build a loading data indicator on the table.
+
+## `@totalRows` and async
+
+You'll usually use pagination and async together. In such a case, Yeti Table needs to know
+the total number of rows to display the correct pagination information.
+
+To do this, you need to get the total number of rows from your server (usually sent in the `meta` hash in JSON:API)
+and set that value to the `@totalRows` argument of `<YetiTable>`.
+
+In the next section we'll see an example of such.
 
 ## All together now
 
@@ -110,7 +120,7 @@ asks for data and displays it.
 
       <tfoot>
         <tr>
-          <td colspan="5">
+          <td colspan={{table.totalColumns}}>
             <div class="pagination-controls">
               <div>
                 Rows per page:
@@ -123,7 +133,7 @@ asks for data and displays it.
               </div>
 
               <div class="page-info">
-                {{add table.paginationData.pageStart 1}} - {{add table.paginationData.pageEnd 1}} of {{table.paginationData.totalRows}}
+                {{table.paginationData.pageStart}} - {{table.paginationData.pageEnd}} of {{table.paginationData.totalRows}}
               </div>
 
               <button class="previous" disabled={{table.paginationData.isFirstPage}} onclick={{action table.actions.previousPage}}>

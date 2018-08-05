@@ -10,6 +10,7 @@ import { once } from '@ember/runloop';
 
 import { tagName } from '@ember-decorators/component';
 import { computed, action } from '@ember-decorators/object';
+import { reads, filterBy } from '@ember-decorators/object/computed';
 import { argument } from '@ember-decorators/argument';
 import {
   type,
@@ -87,7 +88,10 @@ export default class YetiTable extends Component {
   @type(Function)
   compareFunction = compareValues;
 
-  @computed('pageSize', 'pageNumber', 'totalRows')
+  @filterBy('columns', 'visible', true) visibleColumns;
+  @reads('visibleColumns.length') totalColumns;
+
+  @computed('pageSize', 'pageNumber', 'totalRows', 'loadData', 'sortedData.[]')
   get paginationData() {
     let pageSize = this.get('pageSize');
     let pageNumber = this.get('pageNumber');
@@ -96,8 +100,16 @@ export default class YetiTable extends Component {
     let pageStart = (pageNumber - 1) * pageSize;
     let pageEnd = pageStart + pageSize - 1;
 
+    // make pageStart and pageEnd 1-indexed
+    pageStart += 1;
+    pageEnd += 1;
+
     let isFirstPage = pageNumber === 1;
     let isLastPage, totalPages;
+
+    if (!this.get('loadData')) {
+      totalRows = this.get('sortedData.length');
+    }
 
     if (totalRows) {
       totalPages = Math.ceil(totalRows / pageSize);
@@ -115,7 +127,7 @@ export default class YetiTable extends Component {
 
     if (pagination) {
       let { pageStart, pageEnd } = this.get('paginationData');
-      data = data.slice(pageStart, pageEnd + 1); // slice excludes last element so we need to add 1
+      data = data.slice(pageStart - 1, pageEnd); // slice excludes last element so we don't need to subtract 1
     }
 
     return data;
@@ -385,7 +397,7 @@ export default class YetiTable extends Component {
   @action
   changePageSize(pageSize) {
     if (this.get('pagination')) {
-      this.set('pageSize', pageSize);
+      this.set('pageSize', parseInt(pageSize));
     }
   }
 
