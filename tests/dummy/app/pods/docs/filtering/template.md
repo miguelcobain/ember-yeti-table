@@ -11,7 +11,9 @@ This means that Yeti Table will only show rows in which any of its columns match
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="filtering-simple.hbs"}}
-    {{input value=filter}}
+    <div class="flex justify-end">
+      {{input value=filter type="search" placeholder="Search..." class="input"}}
+    </div>
 
     <YetiTable @data={{data}} @filter={{filter}} as |table|>
 
@@ -50,7 +52,9 @@ You can use the `@filter` argument on `<YetiTable>` and `<header.column>` at the
 {{#docs-demo as |demo|}}
   {{#demo.example name="filtering-column.hbs"}}
 
-    {{input value=filter}}
+    <div class="flex justify-end">
+      {{input value=filter type="search" placeholder="Search..." class="input"}}
+    </div>
 
     <YetiTable @data={{data}} @filter={{filter}} as |table|>
 
@@ -108,8 +112,10 @@ This allows for advanced filtering logic. See the following example:
 {{#docs-demo as |demo|}}
   {{#demo.example name="filtering-custom.hbs"}}
 
-    <p>Min points: {{input type="number" value=min min=0 max=max}}</p>
-    <p>Max points: {{input type="number" value=max min=min max=100}}</p>
+    <div class="flex justify-end">
+      <div>Min points: {{input type="number" type="search" class="input" value=min min=0 max=max}}</div>
+      <div>Max points: {{input type="number" type="search" class="input" value=max min=min max=100}}</div>
+    </div>
 
     <YetiTable @data={{data}} as |table|>
 

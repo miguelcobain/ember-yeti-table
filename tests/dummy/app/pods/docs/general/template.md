@@ -1,6 +1,15 @@
-# General
+# Defining a table
 
-In this example, Yeti Table "unrolls" the table for you if you use `<table.body/>` in the blockless form.
+Your starting point for Yeti Table will be the `@data` argument. It accepts an array of objects
+or a promise that resolves to such an array.
+
+Then you must define your table columns inside the header component, each of them with a `@prop` argument that corresponds to the
+property key of each object that you want to display for that column. Yeti Table will update itself based on
+these property names, e.g if a `firstName` property of an object changes, Yeti Table might need to re-sort
+or re-filter the rows.
+
+Afterwards, we just need to define our table body. If you use `<table.body/>` in the blockless form,
+Yeti Table "unrolls" all the rows for you. This is useful for simple tables. Here is such an example:
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="general-simple.hbs"}}
@@ -26,13 +35,13 @@ In this example, Yeti Table "unrolls" the table for you if you use `<table.body/
   {{demo.snippet "general-simple.hbs"}}
 {{/docs-demo}}
 
-You can still customize the generated rows using the following parameters on `<table.body/>`:
+You can still customize the generated rows using the following arguments on `<table.body/>`:
 
-- `onRowClick` - adds a click action to each row, called with the clicked row's data as an argument
-- `rowClass` - adds a class to each `tr` element
+- `@onRowClick` - adds a click action to each row, called with the clicked row's data as an argument
+- `@rowClass` - adds a class to each `tr` element
 
-You will probably need to make more customizations, and to do so you will need to use `{{table.header}}`
-and/or `<table.body/>` in the block form. This form allows you to:
+You will probably need to make more customizations, and to do so you will need to use `<table.header>`
+and/or `<table.body>` in the block form. This form allows you to:
 
 - Use any component or markup as a cell's content
 - Use the row data across multiple cells of the same row
@@ -40,7 +49,7 @@ and/or `<table.body/>` in the block form. This form allows you to:
 - Use row data to conditionally add classes
 
 <aside>
-  Notice that if you don't need automatic unrolling or sorting, the `prop` property is optional.
+  Notice that if you don't need automatic unrolling, sorting or filtering, the `prop` property is optional.
 </aside>
 
 {{#docs-demo as |demo|}}
@@ -78,3 +87,12 @@ and/or `<table.body/>` in the block form. This form allows you to:
 
   {{demo.snippet "general-simple-with-body.hbs"}}
 {{/docs-demo}}
+
+Each `<body.row>` component accepts an optional `@onClick` action that will be called if the row is clicked.
+
+Additionally, you might need to toggle the visibility of each row, and for that we can use the `@visible` argument
+on the `<header.column>` component. It defaults to `true`. Setting it to false will hide all the cells for that column
+accross all rows.
+
+The `<header.column>` component also accepts a `@columnClass` argument. Yeti Table will apply this class all the cells
+for that column accross all rows.

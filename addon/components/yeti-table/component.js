@@ -30,6 +30,24 @@ import {
 
 import layout from './template';
 
+/**
+  The primary Yeti Table component. This component represents the root of the
+  table, and manages high level state of all of its subcomponents.
+  ```hbs
+  <EmberTable as |t|>
+    <t.head @columns={{columns}} />
+    <t.body @rows={{rows}} />
+    <t.foot @rows={{footerRows}} />
+  </EmberTable>
+  ```
+  @yield {Component} table.header - the table header component
+  @yield {Component} table.body - the table body component
+  @yield {Component} table.pagination - the pagination controls component
+  @yield {object} table.actions - an object that contains actions to interact with the table
+  @yield {object} table.paginationData - object that represents the current pagination state
+  @yield {boolean} table.isLoading - boolean that is `true` when data is being loaded
+  @yield {number} table.totalColumns - the number of visible columns on the table
+*/
 @tagName('table')
 @classNames('yeti-table')
 export default class YetiTable extends Component {

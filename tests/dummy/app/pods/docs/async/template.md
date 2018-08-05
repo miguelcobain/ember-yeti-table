@@ -73,12 +73,14 @@ asks for data and displays it.
 {{#docs-demo as |demo|}}
   {{#demo.example name="async-simple.hbs"}}
 
-    {{input value=filter}}
+    <div class="flex justify-end">
+      {{input value=filter type="search" placeholder="Search..." class="input"}}
+    </div>
 
     <YetiTable
       @loadData={{action "loadData"}}
       @filter={{filter}}
-      @pagination={{true}} @pageSize={{20}} @totalRows={{totalRows}} as |table|>
+      @pagination={{true}} @pageSize={{10}} @totalRows={{totalRows}} as |table|>
       
       <table.header as |header|>
         <header.column @prop="avatarUrl" @sortable={{false}}>
@@ -147,6 +149,12 @@ asks for data and displays it.
           </td>
         </tr>
       </tfoot>
+
+      {{#if table.isLoading}}
+        <div class="loading-pane">
+          {{loading-spinner}}
+        </div>
+      {{/if}}
 
     </YetiTable>
 

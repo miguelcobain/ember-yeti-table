@@ -5,6 +5,7 @@ table.yeti-table {
   font-family: 'Roboto', sans-serif;
   color: rgba(0, 0, 0, 0.87);
   border-spacing: 0px;
+  position: relative;
 
   thead {
     font-size: 13px;
@@ -117,6 +118,18 @@ table.yeti-table {
     .page-info {
       margin-left: 30px;
     }
+  }
+
+  .loading-pane {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
 }
