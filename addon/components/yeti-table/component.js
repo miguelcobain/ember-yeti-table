@@ -27,8 +27,8 @@ import {
   mergeSort
 } from 'ember-yeti-table/utils/sorting-utils';
 
-
 import layout from './template';
+
 @tagName('table')
 @classNames('yeti-table')
 export default class YetiTable extends Component {

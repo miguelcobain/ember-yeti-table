@@ -10,6 +10,7 @@ import hbs from 'htmlbars-inline-precompile';
 import { A } from '@ember/array';
 import { set, get } from '@ember/object';
 import { compare } from '@ember/utils';
+import { run } from '@ember/runloop';
 
 module('Integration | Component | yeti-table (sorting)', function(hooks) {
   setupRenderingTest(hooks);
@@ -357,7 +358,9 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
     assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
 
-    set(this.data.objectAt(3), 'firstName', '123');
+    run(() => {
+      set(this.data.objectAt(3), 'firstName', '123');
+    });
     await settled();
 
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('123');
