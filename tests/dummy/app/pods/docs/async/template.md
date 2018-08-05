@@ -43,7 +43,7 @@ With this data you should be able to build the correct request to inform your se
 
 In the hash that Yeti Table yields, there is an `isLoading` boolean. This boolean is `true` when:
 
-- the promise passed in to the `@data` argument is didn't resolve yet
+- the promise passed in to the `@data` argument didn't resolve yet
 - the `@loadData` function is running
 
 You can use this boolean to build a loading data indicator on the table.
