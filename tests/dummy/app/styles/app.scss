@@ -3,6 +3,22 @@ $primary: #5B47B9;
 @import "material";
 @import "material-spinner";
 
+body {
+  font-family:
+    'Roboto',
+    'system-ui',
+    'BlinkMacSystemFont',
+    '-apple-system',
+    'Segoe UI',
+    'Oxygen',
+    'Ubuntu',
+    'Cantarell',
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    'sans-serif';
+}
+
 .avatar {
   border-radius: 50%;
   width: 36px;
