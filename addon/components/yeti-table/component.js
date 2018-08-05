@@ -34,12 +34,25 @@ import layout from './template';
   The primary Yeti Table component. This component represents the root of the
   table, and manages high level state of all of its subcomponents.
   ```hbs
-  <EmberTable as |t|>
-    <t.head @columns={{columns}} />
-    <t.body @rows={{rows}} />
-    <t.foot @rows={{footerRows}} />
-  </EmberTable>
+  <YetiTable @data={{data}} as |table|>
+
+    <table.header as |header|>
+      <header.column @prop="firstName">
+        First name
+      </header.column>
+      <header.column @prop="lastName">
+        Last name
+      </header.column>
+      <header.column @prop="points">
+        Points
+      </header.column>
+    </table.header>
+
+    <table.body/>
+
+  </YetiTable>
   ```
+  @class YetiTable
   @yield {Component} table.header - the table header component
   @yield {Component} table.body - the table body component
   @yield {Component} table.pagination - the pagination controls component
