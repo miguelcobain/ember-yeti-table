@@ -5,8 +5,8 @@ module.exports = function(environment) {
     modulePrefix: 'dummy',
     podModulePrefix: 'dummy/pods',
     environment,
-    rootURL: '/ember-yeti-table',
-    locationType: 'hash',
+    rootURL: '/',
+    locationType: 'router-scroll',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
