@@ -80,7 +80,8 @@
     "node": "6.* || 8.* || >= 10.*"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config"
+    "configPath": "tests/dummy/config",
+    "demoURL": "https://miguelcobain.github.io/ember-yeti-table"
   },
   "homepage": "https://miguelcobain.github.io/ember-yeti-table"
 }
