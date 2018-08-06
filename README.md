@@ -1,4 +1,4 @@
-# ember-yeti-table
+# ember-yeti-table [![Build Status](https://travis-ci.org/miguelcobain/ember-yeti-table.svg?branch=master)](https://travis-ci.org/miguelcobain/ember-yeti-table) [![Ember Observer Score](http://emberobserver.com/badges/ember-yeti-table.svg)](http://emberobserver.com/addons/ember-yeti-table)
 
 [Short description of the addon.]
 
