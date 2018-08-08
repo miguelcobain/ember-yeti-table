@@ -1,6 +1,6 @@
 # Yeti Table [![Build Status](https://travis-ci.org/miguelcobain/ember-yeti-table.svg?branch=master)](https://travis-ci.org/miguelcobain/ember-yeti-table) [![Ember Observer Score](http://emberobserver.com/badges/ember-yeti-table.svg)](http://emberobserver.com/addons/ember-yeti-table)
 
-Yeti Table provides a new expressive way to build tables in Ember. With flexibility in mind
+Yeti Table provides a new expressive way to build tables in Ember with flexibility in mind.
 
 Installation
 ------------------------------------------------------------------------------
