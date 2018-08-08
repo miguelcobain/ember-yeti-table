@@ -33,6 +33,11 @@ export default class Header extends Component {
 
   @argument
   @required
+  @type('boolean')
+  sortable;
+
+  @argument
+  @required
   @type(Component)
   parent;
 

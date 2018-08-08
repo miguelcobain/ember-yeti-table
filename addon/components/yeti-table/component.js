@@ -161,6 +161,14 @@ export default class YetiTable extends Component {
   filterUsing;
 
   /**
+   * Used to enable/disable sorting on all columns. You should use this to avoid passing
+   * the @sortable argument to all columns.
+   */
+  @argument
+  @type(optional('boolean'))
+  sortable = true;
+
+  /**
    * Use the `@sortFunction` if you want to completely customize how the row sorting is done.
    * It will be invoked with two rows, the current sortings that are applied and the `@compareFunction`.
    */

@@ -63,6 +63,32 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
     assert.dom('th').hasClass('yeti-table-sortable');
   });
 
+  test('using @sortable={{false}} on <YetiTable> does not add the sortable classes to all collumns', async function(assert) {
+    await render(hbs`
+      <YetiTable @data={{data}} @sortable={{false}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName">
+            First name
+          </header.column>
+          <header.column @prop="lastName">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body/>
+
+      </YetiTable>
+    `);
+
+    assert.dom('thead tr th:nth-child(1)').doesNotHaveClass('yeti-table-sortable');
+    assert.dom('thead tr th:nth-child(2)').doesNotHaveClass('yeti-table-sortable');
+    assert.dom('thead tr th:nth-child(3)').doesNotHaveClass('yeti-table-sortable');
+  });
+
   test('using sortable=false does not add the sortable class', async function(assert) {
     await render(hbs`
       <YetiTable @data={{data}} as |table|>

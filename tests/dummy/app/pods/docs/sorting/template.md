@@ -5,7 +5,11 @@
 Yeti table columns are sortable by default. Try to click the table headers in the example below.
 
 You can disable sorting in any column by passing `@sortable={{false}}` to any column definition.
-In this example we disabled sorting on the second column.
+
+If you want to disable sorting on all columns, instead of doing it on each column, you can pass in
+`@sortable={{false}}` to the parant `<YetiTable>` component.
+
+In the following example we disabled sorting on the second column.
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="sorting-simple.hbs"}}

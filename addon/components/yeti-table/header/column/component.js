@@ -59,7 +59,7 @@ export default class Column extends Component {
   /**
    * Used to turn off sorting clicking on this column (clicks won't toggle sorting anymore).
    * Useful on avatar columns, for example, where a sorting order doesn't really make sense.
-   * Defaults to `true`.
+   * Defaults to the `<YetiTable>` `@sortable` argument (which in turn defaults to `true`).
    */
   @argument
   @type('boolean')
