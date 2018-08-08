@@ -3916,7 +3916,7 @@ ember-composable-helpers@^2.1.0:
     broccoli-funnel "^1.0.1"
     ember-cli-babel "^6.6.0"
 
-ember-concurrency-decorators@^0.0.4-beta.0:
+ember-concurrency-decorators@0.0.4-beta.0:
   version "0.0.4-beta.0"
   resolved "https://registry.yarnpkg.com/ember-concurrency-decorators/-/ember-concurrency-decorators-0.0.4-beta.0.tgz#5088e129827fa2f1d3c5fd0684df0cb47a67b92c"
   dependencies:

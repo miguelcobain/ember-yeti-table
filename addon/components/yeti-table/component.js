@@ -36,6 +36,15 @@ const arrayOrPromise = unionOf(
 );
 
 /**
+ * bring ember-concurrency didCancel helper instead of
+ * including the whole dependency
+ */
+const TASK_CANCELATION_NAME = 'TaskCancelation';
+const didCancel = function(e) {
+  return e && e.name === TASK_CANCELATION_NAME;
+}
+
+/**
   The primary Yeti Table component. This component represents the root of the
   table, and manages high level state of all of its subcomponents.
   ```hbs
@@ -264,10 +273,15 @@ export default class YetiTable extends Component {
           // check if data is still the same promise
           if (data === this.get('data') && !this.isDestroyed) {
             this.set('resolvedData', resolvedData);
-          }
-        }).finally(() => {
-          if (!this.isDestroyed) {
             this.set('isLoading', false);
+          }
+        }).catch((e) => {
+          if (!didCancel(e)) {
+            if (!this.isDestroyed) {
+              this.set('isLoading', false);
+            }
+            // re-throw the non-cancelation error
+            throw e;
           }
         });
       } else {
@@ -421,10 +435,15 @@ export default class YetiTable extends Component {
           promise.then((resolvedData) => {
             if (!this.isDestroyed) {
               this.set('resolvedData', resolvedData);
-            }
-          }).finally(() => {
-            if (!this.isDestroyed) {
               this.set('isLoading', false);
+            }
+          }).catch((e) => {
+            if (!didCancel(e)) {
+              if (!this.isDestroyed) {
+                this.set('isLoading', false);
+              }
+              // re-throw the non-cancelation error
+              throw e;
             }
           });
         } else {

@@ -66,6 +66,9 @@ This example uses ember-data and ember-cli-mirage to fake a real server.
 In this example, filtering, sorting and pagination are entirely done on the server. Yeti Table just
 asks for data and displays it.
 
+The example also uses ember-concurrency to easily debounce the `loadData` function. You could also write this function
+as an async/await function (check the `component-async-await.js` tab of the next demo).
+
 <aside>
   The server side implementation is out of scope for these guides, but you can check it [here](https://github.com/miguelcobain/ember-yeti-table/blob/master/tests/dummy/mirage/config.js#L32-L54) if you're interested.
 </aside>
@@ -78,7 +81,7 @@ asks for data and displays it.
     </div>
 
     <YetiTable
-      @loadData={{action "loadData"}}
+      @loadData={{perform loadDataTask}}
       @filter={{filter}}
       @pagination={{true}} @pageSize={{10}} @totalRows={{totalRows}} as |table|>
       
@@ -161,5 +164,6 @@ asks for data and displays it.
 
   {{demo.snippet "async-simple.hbs"}}
   {{demo.snippet label="component.js" name="async-simple.js"}}
+  {{demo.snippet label="component-async-await.js" name="async-simple-es7.js"}}
   {{demo.snippet label="user.js" name="user.js"}}
 {{/docs-demo}}
