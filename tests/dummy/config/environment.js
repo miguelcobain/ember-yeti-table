@@ -50,6 +50,9 @@ module.exports = function(environment) {
     ENV.rootURL = 'ADDON_DOCS_ROOT_URL';
     // here you can enable a production-specific feature
 
+    // using router-scroll/history breaks the favicon on gh-pages
+    ENV.locationType = 'hash';
+
     ENV['ember-cli-mirage'] = {
       enabled: true
     };
