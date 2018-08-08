@@ -10,7 +10,8 @@ addons:
   chrome: stable
 
 cache:
-  yarn: true
+  directories:
+    - $HOME/.npm
 
 env:
   global:
@@ -18,10 +19,12 @@ env:
     - JOBS=1
 
 install:
-  - yarn install
+  - npm config set spin false
+  - npm install -g npm@4
+  - npm --version
 
 script:
-  - yarn lint:js
+  - npm run lint:js
   # We need to cleanup, since our deploy depends on the git repo's status
   - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO
 
@@ -51,5 +54,4 @@ jobs:
       script: node_modules/.bin/ember deploy production
 
   allow_failures:
-    - env: EMBER_TRY_SCENARIO=ember-beta
     - env: EMBER_TRY_SCENARIO=ember-canary
