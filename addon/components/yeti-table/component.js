@@ -132,11 +132,11 @@ export default class YetiTable extends Component {
 
   /**
    * The global filter. If passed in, Yeti Table will search all the rows that contain this
-   * string and show them.
+   * string and show them. Defaults to `''`.
    */
-  @argument
+  @argument({ defaultIfUndefined: true })
   @type(optional('string'))
-  filter;
+  filter = '';
 
   /**
    * An optional function to customize the filtering logic. This function should return true

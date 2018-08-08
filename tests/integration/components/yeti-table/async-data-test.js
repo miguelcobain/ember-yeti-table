@@ -335,7 +335,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     await clearRender();
 
     assert.ok(this.loadData.calledTwice, 'loadData was called twice');
-    assert.ok(this.loadData.firstCall.calledWithMatch({ filterData: { filter: undefined }}));
+    assert.ok(this.loadData.firstCall.calledWithMatch({ filterData: { filter: '' }}));
     assert.ok(this.loadData.secondCall.calledWithMatch({ filterData: { filter: 'Baderous' }}));
   });
 
@@ -521,6 +521,49 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom', 'column 1 is not sorted');
     assert.dom('tbody tr:nth-child(5) td:nth-child(2)').hasText('Dale', 'column 2 is not sorted');
     assert.dom('tbody tr:nth-child(5) td:nth-child(3)').hasText('5', 'column 3 is not sorted');
+
+    await clearRender();
+
+    assert.ok(this.loadData.calledOnce, 'loadData was called once');
+  });
+
+  test('loadData is called once if we change @filter from undefined to ""', async function(assert) {
+    this.loadData = sinon.spy(() => {
+      return new RSVP.Promise((resolve) => {
+        later(() => {
+          resolve(this.data);
+        }, 150);
+      });
+    });
+
+    await render(hbs`
+      <YetiTable @loadData={{loadData}} @filter={{filterText}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName">
+            First name
+          </header.column>
+          <header.column @prop="lastName" @sort="desc">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body/>
+
+      </YetiTable>
+    `);
+
+    await settled();
+
+    assert.dom('tbody tr').exists({ count: 5 }, 'is not filtered');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom', 'column 1 is not sorted');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(2)').hasText('Dale', 'column 2 is not sorted');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(3)').hasText('5', 'column 3 is not sorted');
+
+    this.set('filterText', '');
 
     await clearRender();
 
