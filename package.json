@@ -6,6 +6,7 @@
     "ember-addon",
     "table",
     "tables",
+    "datagrid",
     "yeti"
   ],
   "repository": "https://github.com/miguelcobain/ember-yeti-table",
