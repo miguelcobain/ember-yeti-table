@@ -10,8 +10,7 @@ addons:
   chrome: stable
 
 cache:
-  directories:
-    - $HOME/.npm
+  yarn: true
 
 env:
   global:
@@ -34,9 +33,11 @@ jobs:
   include:
     # runs linting and tests with current locked deps
     - stage: tests
+      install:
+        - yarn install --non-interactive
       script:
-        - npm run lint:js
-        - npm test
+        - yarn lint:js
+        - yarn test
 
     - stage: versioned tests
       env: EMBER_TRY_SCENARIO=ember-lts-2.12
@@ -52,9 +53,11 @@ jobs:
       script: node_modules/.bin/ember deploy production
 
 before_install:
-  - npm config set spin false
-  - npm install -g npm@4
-  - npm --version
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH=$HOME/.yarn/bin:$PATH
+
+install:
+  - yarn install --no-lockfile --non-interactive
 
 script:
   - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO
