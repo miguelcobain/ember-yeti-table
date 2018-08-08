@@ -127,10 +127,9 @@ asks for data and displays it.
               <div>
                 Rows per page:
                 <select disabled={{table.isLoading}} onchange={{action table.actions.changePageSize value="target.value"}}>
-                  <option value={{10}} selected={{eq table.paginationData.pageSize 10}}>10</option>
-                  <option value={{15}} selected={{eq table.paginationData.pageSize 15}}>15</option>
-                  <option value={{20}} selected={{eq table.paginationData.pageSize 20}}>20</option>
-                  <option value={{25}} selected={{eq table.paginationData.pageSize 25}}>25</option>
+                  {{#each (array 10 15 20 25) as |pageSize|}}
+                    <option value={{pageSize}} selected={{eq table.paginationData.pageSize pageSize}}>{{pageSize}}</option>
+                  {{/each}}
                 </select>
               </div>
 
