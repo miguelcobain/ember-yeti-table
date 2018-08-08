@@ -21,14 +21,19 @@ import {
 } from '@ember-decorators/argument/type';
 import { classNames } from '@ember-decorators/component';
 
-import createRegex from 'ember-yeti-table/utils/create-regex';
+import createRegex from 'ember-yeti-table/-private/utils/create-regex';
 import {
   sortMultiple,
   compareValues,
   mergeSort
-} from 'ember-yeti-table/utils/sorting-utils';
+} from 'ember-yeti-table/-private/utils/sorting-utils';
 
 import layout from './template';
+
+const arrayOrPromise = unionOf(
+  arrayOf('object'),
+  shapeOf({ then: Function })
+);
 
 /**
   The primary Yeti Table component. This component represents the root of the
@@ -52,72 +57,129 @@ import layout from './template';
 
   </YetiTable>
   ```
-  @class YetiTable
-  @yield {Component} table.header - the table header component
-  @yield {Component} table.body - the table body component
-  @yield {Component} table.pagination - the pagination controls component
-  @yield {object} table.actions - an object that contains actions to interact with the table
-  @yield {object} table.paginationData - object that represents the current pagination state
-  @yield {boolean} table.isLoading - boolean that is `true` when data is being loaded
-  @yield {number} table.totalColumns - the number of visible columns on the table
+  @yield {object} table
+  @yield {Component} table.header       the table header component
+  @yield {Component} table.body         the table body component
+  @yield {Component} table.pagination   the pagination controls component
+  @yield {object} table.actions         an object that contains actions to interact with the table
+  @yield {object} table.paginationData  object that represents the current pagination state
+  @yield {boolean} table.isLoading      boolean that is `true` when data is being loaded
+  @yield {number} table.totalColumns    the number of visible columns on the table
 */
 @tagName('table')
 @classNames('yeti-table')
 export default class YetiTable extends Component {
   layout = layout;
 
+  /**
+   * The data for Yeti Table to render. It can be an array or a promise that resolves with an array.
+   * The only case when `@data` is optional is if a `@loadData` was passed in.
+   */
   @argument
-  @type(optional(
-    unionOf(
-      arrayOf('object'),
-      shapeOf({ then: Function })
-    )
-  ))
+  @type(optional(arrayOrPromise))
   data;
 
-  resolvedData;
-
+  /**
+   * The function that will be called when Yeti Table needs data. This argument is used
+   * when you don't have all the data available or loading all rows at once isn't possible,
+   * e.g the dataset is too large.
+   *
+   * By passing in a function to `@loadData` you assume the responsibility to filter, sort and
+   * paginate the data (if said features are enabled).
+   *
+   * This function must return an array or a promise that resolves with an array.
+   *
+   * This function will be called with an argument with the current state of the table.
+   * Use this object to know what data to fetch, pass it to the server, etc.
+   * Please check the "Async Data" guide to understand what that object contains and
+   * an example of its usage.
+   */
   @argument
   @type(optional(Function))
   loadData;
 
-  isLoading = false;
-
+  /**
+   * Use this argument to enable the pagination feature. Default is `false`.
+   */
   @argument
   @type('boolean')
   pagination = false;
 
+  /**
+   * Controls the size of each page. Default is `15`.
+   */
   @argument
   @type('number')
   pageSize = 15;
 
+  /**
+   * Controls the current page to show. Default is `1`.
+   */
   @argument
   @type('number')
   pageNumber = 1;
 
+  /**
+   * Optional argument that informs yeti table of how many rows your data has.
+   * Only needed when using a `@loadData` function and `@pagination={{true}}`.
+   * When you use `@data`, Yeti Table uses the size of that array.
+   * This information is used to calculate the pagination information that is yielded
+   * and passed to the `@loadData` function.
+   */
   @argument
   @type(optional('number'))
   totalRows;
 
+  /**
+   * The global filter. If passed in, Yeti Table will search all the rows that contain this
+   * string and show them.
+   */
   @argument
   @type(optional('string'))
   filter;
 
+  /**
+   * An optional function to customize the filtering logic. This function should return true
+   * or false to either include or exclude the row on the resulting set. If this function depends
+   * on a value, pass that value as the `@filterUsing` argument.
+   *
+   * This function will be called with two arguments:
+   * - `row` - the current data row to use for filtering
+   * - `filterUsing` - the value you passed in as `@filterUsing`
+   */
   @argument
   @type(optional(Function))
   filterFunction;
 
+  /**
+   * If you `@filterFunction` function depends on a different value (other that `@filter`)
+   * to show, pass it in this argument. Yeti Table uses this argument to know when to recalculate
+   * the fitlered rows.
+   */
   @argument
   @type(optional('any'))
   filterUsing;
 
+  /**
+   * Use the `@sortFunction` if you want to completely customize how the row sorting is done.
+   * It will be invoked with two rows, the current sortings that are applied and the `@compareFunction`.
+   */
   @argument
   @type(Function)
   sortFunction = sortMultiple;
 
+  /**
+   * Use `@compareFunction` if you just want to customize how two values relate to each other (not the entire row).
+   * It will be invoked with two values and you just need to return `-1`, `0` or `1` depending on if first value is
+   * greater than the second or not. The default compare function used is the `compare` function from `@ember/utils`.
+   */
   @argument
   @type(Function)
   compareFunction = compareValues;
+
+  isLoading = false;
+
+  resolvedData;
 
   @filterBy('columns', 'visible', true) visibleColumns;
   @reads('visibleColumns.length') totalColumns;
@@ -305,7 +367,8 @@ export default class YetiTable extends Component {
       this.addObserver('columns.@each.sort', this.runLoadData);
       this.addObserver('filter', this.runLoadData);
       this.addObserver('filterUsing', this.runLoadData);
-      this.addObserver('paginationData', this.runLoadData);
+      this.addObserver('pageSize', this.runLoadData);
+      this.addObserver('pageNumber', this.runLoadData);
       this.runLoadData();
     }
   }
@@ -319,7 +382,8 @@ export default class YetiTable extends Component {
       this.removeObserver('columns.@each.sort', this.runLoadData);
       this.removeObserver('filter', this.runLoadData);
       this.removeObserver('filterUsing', this.runLoadData);
-      this.removeObserver('paginationData', this.runLoadData);
+      this.removeObserver('pageSize', this.runLoadData);
+      this.removeObserver('pageNumber', this.runLoadData);
     }
   }
 

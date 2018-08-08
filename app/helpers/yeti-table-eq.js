@@ -1,1 +1,1 @@
-export { default, yetiTableEq } from 'ember-yeti-table/helpers/yeti-table-eq';
+export { default, yetiTableEq } from 'ember-yeti-table/-private/helpers/yeti-table-eq';

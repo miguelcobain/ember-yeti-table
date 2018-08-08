@@ -1,13 +1,5 @@
 <tr>
-  {{#if hasBlock}}
-    {{yield (hash
-      column=(component "yeti-table/header/column" onClick=(action "onColumnClick") parent=parent)
-    )}}
-  {{else}}
-    {{#each columns as |column|}}
-      {{#yeti-table/table/header/column onClick=(action "onColumnClick") parent=parent}}
-        {{column}}
-      {{/yeti-table/table/header/column}}
-    {{/each}}
-  {{/if}}
+  {{yield (hash
+    column=(component "yeti-table/header/column" onClick=(action "onColumnClick") parent=parent)
+  )}}
 </tr>

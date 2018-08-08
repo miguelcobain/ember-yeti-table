@@ -17,7 +17,7 @@ import {
   sortMultiple,
   compareValues,
   mergeSort
-} from 'ember-yeti-table/utils/sorting-utils';
+} from 'ember-yeti-table/-private/utils/sorting-utils';
 
 module('Integration | Component | yeti-table (async)', function(hooks) {
   setupRenderingTest(hooks);
@@ -483,6 +483,48 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
         totalPages: 2
       }
     }));
+  });
+
+  test('loadData is called once if updated totalRows on the loadData function', async function(assert) {
+    this.loadData = sinon.spy(() => {
+      return new RSVP.Promise((resolve) => {
+        later(() => {
+          this.set('totalRows', this.data.length);
+          resolve(this.data);
+        }, 150);
+      });
+    });
+
+    await render(hbs`
+      <YetiTable @loadData={{loadData}} @pagination={{true}} @pageSize={{10}} @totalRows={{totalRows}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName">
+            First name
+          </header.column>
+          <header.column @prop="lastName" @sort="desc">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body/>
+
+      </YetiTable>
+    `);
+
+    await settled();
+
+    assert.dom('tbody tr').exists({ count: 5 }, 'is not filtered');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom', 'column 1 is not sorted');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(2)').hasText('Dale', 'column 2 is not sorted');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(3)').hasText('5', 'column 3 is not sorted');
+
+    await clearRender();
+
+    assert.ok(this.loadData.calledOnce, 'loadData was called once');
   });
 
 });

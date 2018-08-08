@@ -126,23 +126,23 @@ asks for data and displays it.
             <div class="pagination-controls">
               <div>
                 Rows per page:
-                <XSelect @value={{table.paginationData.pageSize}} @action={{action table.actions.changePageSize}} as |xs|>
-                  <xs.option @value={{10}}>10</xs.option>
-                  <xs.option @value={{15}}>15</xs.option>
-                  <xs.option @value={{20}}>20</xs.option>
-                  <xs.option @value={{25}}>25</xs.option>
-                </XSelect>
+                <select disabled={{table.isLoading}} onchange={{action table.actions.changePageSize value="target.value"}}>
+                  <option value={{10}} selected={{eq table.paginationData.pageSize 10}}>10</option>
+                  <option value={{15}} selected={{eq table.paginationData.pageSize 15}}>15</option>
+                  <option value={{20}} selected={{eq table.paginationData.pageSize 20}}>20</option>
+                  <option value={{25}} selected={{eq table.paginationData.pageSize 25}}>25</option>
+                </select>
               </div>
 
               <div class="page-info">
                 {{table.paginationData.pageStart}} - {{table.paginationData.pageEnd}} of {{table.paginationData.totalRows}}
               </div>
 
-              <button class="previous" disabled={{table.paginationData.isFirstPage}} onclick={{action table.actions.previousPage}}>
+              <button class="previous" disabled={{or table.paginationData.isFirstPage table.isLoading}} onclick={{action table.actions.previousPage}}>
                 <i class="material-icons">keyboard_arrow_left</i>
               </button>
 
-              <button class="next" disabled={{table.paginationData.isLastPage}} onclick={{action table.actions.nextPage}}>
+              <button class="next" disabled={{or table.paginationData.isLastPage table.isLoading}} onclick={{action table.actions.nextPage}}>
                 <i class="material-icons">keyboard_arrow_right</i>
               </button>
             </div>

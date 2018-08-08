@@ -1,4 +1,4 @@
-import createRegex from 'dummy/utils/create-regex';
+import createRegex from 'ember-yeti-table/-private/utils/create-regex';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | create-regex', function() {

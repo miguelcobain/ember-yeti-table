@@ -9,6 +9,24 @@ import { Action } from '@ember-decorators/argument/types';
 
 import layout from './template';
 
+/**
+  Renders a `<thead>` element and yields the column component.
+  ```hbs
+  <table.header as |header|>
+    <header.column @prop="firstName">
+      First name
+    </header.column>
+    <header.column @prop="lastName">
+      Last name
+    </header.column>
+    <header.column @prop="points">
+      Points
+    </header.column>
+  </table.header>
+  ```
+  @yield {object} header
+  @yield {Component} header.column       the column component
+*/
 @tagName('thead')
 export default class Header extends Component {
   layout = layout;

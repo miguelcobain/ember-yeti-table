@@ -5,6 +5,7 @@
   )
   body=(component "yeti-table/body" data=processedData columns=columns parent=this)
   pagination=(component "yeti-table/pagination"
+    disabled=isLoading
     paginationData=paginationData
     paginationActions=(hash
       previousPage=(action "previousPage")

@@ -7,7 +7,7 @@
 {{#if showPageSizeSelector}}
   <div class="yeti-table-pagination-controls-page-size">
     Rows per page:
-    <select onchange={{action paginationActions.changePageSize value="target.value"}}>
+    <select disabled={{disabled}} onchange={{action paginationActions.changePageSize value="target.value"}}>
       {{#each pageSizes as |pageSize|}}
         <option value={{pageSize}} selected={{yeti-table-eq paginationData.pageSize pageSize}}>{{pageSize}}</option>
       {{/each}}
@@ -16,11 +16,11 @@
 {{/if}}
 
 {{#if showButtons}}
-  <button class="yeti-table-pagination-controls-previous" disabled={{paginationData.isFirstPage}} onclick={{action paginationActions.previousPage}}>
+  <button class="yeti-table-pagination-controls-previous" disabled={{shouldDisablePrevious}} onclick={{action paginationActions.previousPage}}>
     Previous
   </button>
 
-  <button class="yeti-table-pagination-controls-next" disabled={{paginationData.isLastPage}} onclick={{action paginationActions.nextPage}}>
+  <button class="yeti-table-pagination-controls-next" disabled={{shouldDisableNext}} onclick={{action paginationActions.nextPage}}>
     Next
   </button>
 {{/if}}

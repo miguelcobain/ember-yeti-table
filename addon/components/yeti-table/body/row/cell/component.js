@@ -7,6 +7,14 @@ import { type } from '@ember-decorators/argument/type';
 
 import layout from './template';
 
+/**
+  Renders a `<td>` element (if its corresponding column definition has `@visible={{true}}`).
+  ```hbs
+  <row.cell>
+    {{person.firstName}}
+  </row.cell>
+  ```
+*/
 @tagName('')
 export default class Cell extends Component {
   layout = layout;

@@ -1,8 +1,8 @@
 import {
   sortMultiple as sortFunction,
   compareValues as compareFunction
-} from 'ember-yeti-table/utils/sorting-utils';
-import createRegex from 'ember-yeti-table/utils/create-regex';
+} from 'ember-yeti-table/-private/utils/sorting-utils';
+import createRegex from 'ember-yeti-table/-private/utils/create-regex';
 
 export default function() {
 
