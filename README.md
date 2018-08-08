@@ -94,7 +94,7 @@ Check out more advanced features on the [Yeti Table documentation site](https://
 Credits
 ------------------------------------------------------------------------------
 
-Credits to the amazing [Ember Table](https://github.com/Addepar/Ember Table) addon.
+Credits to the amazing [Ember Table](https://github.com/Addepar/ember-table) addon.
 
 Yeti Table was also inpired by [DataTables](https://datatables.net/) in a lot of its features.
 
