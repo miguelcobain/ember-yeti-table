@@ -195,8 +195,6 @@ export default class YetiTable extends DidChangeAttrsComponent {
 
   isLoading = false;
 
-  resolvedData;
-
   @filterBy('columns', 'visible', true) visibleColumns;
   @reads('visibleColumns.length') totalColumns;
 
