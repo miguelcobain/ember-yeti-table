@@ -3,7 +3,6 @@ import { A } from '@ember/array';
 import { isEmpty } from '@ember/utils';
 import {
   computed as emberComputed,
-  get,
   defineProperty
 } from '@ember/object';
 import { once } from '@ember/runloop';
@@ -21,7 +20,7 @@ import {
 } from '@ember-decorators/argument/type';
 import { classNames } from '@ember-decorators/component';
 
-import createRegex from 'ember-yeti-table/-private/utils/create-regex';
+import filterData from 'ember-yeti-table/-private/utils/filtering-utils';
 import {
   sortMultiple,
   compareValues,
@@ -278,7 +277,6 @@ export default class YetiTable extends DidChangeAttrsComponent {
   didReceiveAttrs() {
     super.didReceiveAttrs(...arguments);
 
-    // data has changed
     let oldData = this._oldData;
     let data = this.get('data');
 
@@ -317,72 +315,33 @@ export default class YetiTable extends DidChangeAttrsComponent {
 
     let columns = this.get('columns').mapBy('prop');
 
-    defineProperty(this, 'filteredData', emberComputed(`resolvedData.@each.{${columns.join(',')}}`, 'columns.@each.{prop,filterFunction,filter,filterUsing,filterable}', 'filter', 'filterUsing', 'filterFunction', function() {
+    let filteredDataDeps = [
+      `resolvedData.@each.{${columns.join(',')}}`,
+      'columns.@each.{prop,filterFunction,filter,filterUsing,filterable}',
+      'filter',
+      'filterUsing',
+      'filterFunction'
+    ];
+
+    defineProperty(this, 'filteredData', emberComputed(...filteredDataDeps, function() {
       let data = this.get('resolvedData');
-
-      if (isEmpty(data)) {
-        return [];
-      }
-
       // only columns that have filterable = true will be considered
-      let filterableColumns = this.get('columns').filter((c) => c.get('filterable'));
-
-      if (isEmpty(filterableColumns)) {
-        // bail out if there are no columns to filter
-        return data;
-      }
-
+      let columns = this.get('columns').filter((c) => c.get('filterable'));
       let filter = this.get('filter');
-      let generalRegex = createRegex(filter, false, true, true);
-      let searcheableColumns = filterableColumns.filter((c) => !isEmpty(c.get('filter')) || !isEmpty(c.get('filterFunction')));
+      let filterFunction = this.get('filterFunction');
+      let filterUsing = this.get('filterUsing');
 
-      let columnFilters = searcheableColumns.map((c) => {
-        let regex = createRegex(c.get('filter'));
-
-        return (row) => {
-          let value = get(row, c.get('prop'));
-          let passesRegex = true;
-
-          if (!isEmpty(c.get('filter'))) {
-            passesRegex = regex.test(value);
-          }
-
-          let passesCustom = true;
-
-          if (!isEmpty(c.get('filterFunction'))) {
-            passesCustom = c.get('filterFunction')(value, c.get('filterUsing'))
-          }
-
-          return passesRegex && passesCustom;
-        };
-      });
-
-      return data.filter(((row) => {
-        let passesGeneral = true;
-
-        if (!isEmpty(generalRegex)) {
-          passesGeneral = filterableColumns.some((c) => {
-            return generalRegex.test(get(row, c.get('prop')));
-          });
-        }
-
-        let passesColumn = true;
-
-        if (!isEmpty(columnFilters)) {
-          passesColumn = columnFilters.every((fn) => fn(row));
-        }
-
-        let passesCustom = true;
-        let customFilter = this.get('filterFunction');
-        if (!isEmpty(customFilter)) {
-          passesColumn = customFilter(row, this.get('filterUsing'));
-        }
-
-        return passesGeneral && passesColumn && passesCustom;
-      }));
+      return filterData(data, columns, filter, filterFunction, filterUsing);
     }));
 
-    defineProperty(this, 'sortedData', emberComputed(`filteredData.@each.{${columns.join(',')}}`, 'columns.@each.{prop,sort,sortable}', 'sortFunction', 'compareFunction', function() {
+    let sortedDataDeps = [
+      `filteredData.@each.{${columns.join(',')}}`,
+      'columns.@each.{prop,sort,sortable}',
+      'sortFunction',
+      'compareFunction'
+    ];
+
+    defineProperty(this, 'sortedData', emberComputed(...sortedDataDeps, function() {
       let data = this.get('filteredData');
       let sortableColumns = this.get('columns').filter((c) => !isEmpty(c.get('sort')));
       let sortings = sortableColumns.map((c) => ({ prop: c.get('prop'), direction: c.get('sort') }));
