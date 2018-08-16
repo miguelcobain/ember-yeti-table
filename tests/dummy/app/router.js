@@ -16,6 +16,7 @@ Router.map(function() {
     this.route('filtering');
     this.route('pagination');
     this.route('async');
+    this.route('styling');
     this.route('legacy-usage');
   });
 
