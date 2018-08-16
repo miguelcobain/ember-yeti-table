@@ -12,16 +12,11 @@ function isEqual(_, a, b) {
  */
 export default class DidChangeAttrsComponent extends Component {
 
-  constructor(props) {
-    /**
-     * didReceiveAttrs runs before the contructor (after calling super)
-     * so we need thise hack to be able to set default values on the
-     * constructor.
-     * See: https://github.com/ember-decorators/ember-decorators/issues/123
-     */
-    props._didChangeAttrsBuffer = null; // this tracks previous state of any `trackAttrChanges`
-    props.didChangeAttrsConfig = props.didChangeAttrsConfig === undefined ? [] : props.didChangeAttrsConfig; // attributes to track
-    super(...arguments);
+  init() {
+    super.init(...arguments);
+
+    this._didChangeAttrsBuffer = null; // this tracks previous state of any `trackAttrChanges`
+    this.didChangeAttrsConfig = this.didChangeAttrsConfig === undefined ? [] : this.didChangeAttrsConfig; // attributes to track
   }
 
   didReceiveAttrs() {

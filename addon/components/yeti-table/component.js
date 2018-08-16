@@ -254,22 +254,16 @@ export default class YetiTable extends DidChangeAttrsComponent {
     }
   }
 
-  constructor(props) {
-    /**
-     * didReceiveAttrs runs before the contructor (after calling super)
-     * so we need thise hack to be able to set default values on the
-     * constructor.
-     * See: https://github.com/ember-decorators/ember-decorators/issues/123
-     */
-    props.columns = A();
-    props.filteredData = [];
-    props.sortedData = [];
-    props.resolvedData = [];
-    props.didChangeAttrsConfig = {
+  init() {
+    super.init(...arguments);
+
+    this.columns = A();
+    this.filteredData = [];
+    this.sortedData = [];
+    this.resolvedData = [];
+    this.didChangeAttrsConfig = {
       attrs: ['filter', 'filterUsing', 'pageSize', 'pageNumber']
     };
-
-    super(...arguments);
   }
 
   didReceiveAttrs() {

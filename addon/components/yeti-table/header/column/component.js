@@ -133,18 +133,13 @@ export default class Column extends DidChangeAttrsComponent {
 
   @or('isAscSorted', 'isDescSorted') isSorted;
 
-  constructor(props) {
-    /**
-     * didReceiveAttrs runs before the contructor (after calling super)
-     * so we need thise hack to be able to set default values on the
-     * constructor.
-     * See: https://github.com/ember-decorators/ember-decorators/issues/123
-     */
-    props.didChangeAttrsConfig = {
+  init() {
+    super.init(...arguments);
+
+    this.didChangeAttrsConfig = {
       attrs: ['filter', 'filterUsing', 'sort']
     };
 
-    super(...arguments);
     if (this.get('parent')) {
       this.get('parent').registerColumn(this);
     }
