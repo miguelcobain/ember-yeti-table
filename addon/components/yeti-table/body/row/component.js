@@ -62,10 +62,7 @@ export default class Row extends Component {
   @type(optional(Action))
   onClick;
 
-  init() {
-    super.init(...arguments);
-    this.set('cells', A());
-  }
+  cells = A();
 
   registerCell(cell) {
     let columns = this.get('columns');

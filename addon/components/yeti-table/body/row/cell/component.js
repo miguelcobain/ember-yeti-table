@@ -24,8 +24,8 @@ export default class Cell extends Component {
   @type(Component)
   parent;
 
-  init() {
-    super.init(...arguments);
+  constructor() {
+    super(...arguments);
     if (this.get('parent')) {
       this.get('parent').registerCell(this);
     }

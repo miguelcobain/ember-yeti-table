@@ -1,4 +1,4 @@
-import Component from '@ember/component';
+import DidChangeAttrsComponent from 'ember-yeti-table/-private/utils/did-change-attrs-component';
 import { A } from '@ember/array';
 import { isEmpty } from '@ember/utils';
 import {
@@ -77,7 +77,7 @@ const didCancel = function(e) {
 */
 @tagName('table')
 @classNames('yeti-table')
-export default class YetiTable extends Component {
+export default class YetiTable extends DidChangeAttrsComponent {
   layout = layout;
 
   /**
@@ -206,15 +206,6 @@ export default class YetiTable extends Component {
     let pageSize = this.get('pageSize');
     let pageNumber = this.get('pageNumber');
     let totalRows = this.get('totalRows');
-
-    let pageStart = (pageNumber - 1) * pageSize;
-    let pageEnd = pageStart + pageSize - 1;
-
-    // make pageStart and pageEnd 1-indexed
-    pageStart += 1;
-    pageEnd += 1;
-
-    let isFirstPage = pageNumber === 1;
     let isLastPage, totalPages;
 
     if (!this.get('loadData')) {
@@ -223,7 +214,20 @@ export default class YetiTable extends Component {
 
     if (totalRows) {
       totalPages = Math.ceil(totalRows / pageSize);
+      pageNumber = Math.min(pageNumber, totalPages);
       isLastPage = pageNumber === totalPages;
+    }
+
+    let isFirstPage = pageNumber === 1;
+    let pageStart = (pageNumber - 1) * pageSize;
+
+    let pageEnd = pageStart + pageSize - 1;
+
+    // make pageStart and pageEnd 1-indexed
+    pageStart += 1;
+    pageEnd += 1;
+
+    if (totalRows) {
       pageEnd = Math.min(pageEnd, totalRows)
     }
 
@@ -253,15 +257,27 @@ export default class YetiTable extends Component {
     }
   }
 
-  init() {
-    super.init(...arguments);
-    this.set('columns', A());
-    this.set('filteredData', []);
-    this.set('sortedData', []);
-    this.set('resolvedData', []);
+  constructor(props) {
+    /**
+     * didReceiveAttrs runs before the contructor (after calling super)
+     * so we need thise hack to be able to set default values on the
+     * constructor.
+     * See: https://github.com/ember-decorators/ember-decorators/issues/123
+     */
+    props.columns = A();
+    props.filteredData = [];
+    props.sortedData = [];
+    props.resolvedData = [];
+    props.didChangeAttrsConfig = {
+      attrs: ['filter', 'filterUsing', 'pageSize', 'pageNumber']
+    };
+
+    super(...arguments);
   }
 
   didReceiveAttrs() {
+    super.didReceiveAttrs(...arguments);
+
     // data has changed
     let oldData = this._oldData;
     let data = this.get('data');
@@ -290,6 +306,10 @@ export default class YetiTable extends Component {
     }
 
     this._oldData = data;
+  }
+
+  didChangeAttrs() {
+    this.runLoadData();
   }
 
   didInsertElement() {
@@ -382,75 +402,54 @@ export default class YetiTable extends Component {
     // to trigger any updates. This forces an update.
     this.notifyPropertyChange('filteredData');
     this.notifyPropertyChange('sortedData');
-    let loadData = this.get('loadData');
-    if (loadData) {
-      this.addObserver('columns.@each.filter', this.runLoadData);
-      this.addObserver('columns.@each.filterUsing', this.runLoadData);
-      this.addObserver('columns.@each.sort', this.runLoadData);
-      this.addObserver('filter', this.runLoadData);
-      this.addObserver('filterUsing', this.runLoadData);
-      this.addObserver('pageSize', this.runLoadData);
-      this.addObserver('pageNumber', this.runLoadData);
-      this.runLoadData();
-    }
-  }
-
-  willDestroyElement() {
-    super.willDestroyElement(...arguments);
-    let loadData = this.get('loadData');
-    if (loadData) {
-      this.removeObserver('columns.@each.filter', this.runLoadData);
-      this.removeObserver('columns.@each.filterUsing', this.runLoadData);
-      this.removeObserver('columns.@each.sort', this.runLoadData);
-      this.removeObserver('filter', this.runLoadData);
-      this.removeObserver('filterUsing', this.runLoadData);
-      this.removeObserver('pageSize', this.runLoadData);
-      this.removeObserver('pageNumber', this.runLoadData);
-    }
+    this.runLoadData();
   }
 
   runLoadData() {
-    once(() => {
-      let loadData = this.get('loadData');
-      if (typeof loadData === 'function') {
-        let param = {};
+    let loadData = this.get('loadData');
+    if (loadData) {
+      once(() => {
+        let loadData = this.get('loadData');
+        if (typeof loadData === 'function') {
+          let param = {};
 
-        if (this.get('pagination')) {
-          param.paginationData = this.get('paginationData');
-        }
+          if (this.get('pagination')) {
+            param.paginationData = this.get('paginationData');
+          }
 
-        param.sortData = this.get('columns')
-          .filter((c) => !isEmpty(c.get('sort')))
-          .map((c) => ({ prop: c.get('prop'), direction: c.get('sort') }));
-        param.filterData = {
-          filter: this.get('filter'),
-          filterUsing: this.get('filterUsing'),
-          columnFilters: this.get('columns').map((c) => ({ filter: c.get('filter'), filterUsing: c.get('filterUsing') }))
-        };
+          param.sortData = this.get('columns')
+            .filter((c) => !isEmpty(c.get('sort')))
+            .map((c) => ({ prop: c.get('prop'), direction: c.get('sort') }));
+          param.filterData = {
+            filter: this.get('filter'),
+            filterUsing: this.get('filterUsing'),
+            columnFilters: this.get('columns').map((c) => ({ filter: c.get('filter'), filterUsing: c.get('filterUsing') }))
+          };
 
-        let promise = loadData(param);
+          let promise = loadData(param);
 
-        if (promise && promise.then) {
-          this.set('isLoading', true);
-          promise.then((resolvedData) => {
-            if (!this.isDestroyed) {
-              this.set('resolvedData', resolvedData);
-              this.set('isLoading', false);
-            }
-          }).catch((e) => {
-            if (!didCancel(e)) {
+          if (promise && promise.then) {
+            this.set('isLoading', true);
+            promise.then((resolvedData) => {
               if (!this.isDestroyed) {
+                this.set('resolvedData', resolvedData);
                 this.set('isLoading', false);
               }
-              // re-throw the non-cancelation error
-              throw e;
-            }
-          });
-        } else {
-          this.set('resolvedData', promise);
+            }).catch((e) => {
+              if (!didCancel(e)) {
+                if (!this.isDestroyed) {
+                  this.set('isLoading', false);
+                }
+                // re-throw the non-cancelation error
+                throw e;
+              }
+            });
+          } else {
+            this.set('resolvedData', promise);
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   @action
@@ -488,6 +487,7 @@ export default class YetiTable extends Component {
     if (this.get('pagination')) {
       let { pageNumber } = this.get('paginationData');
       this.set('pageNumber', Math.max(pageNumber - 1, 1));
+      this.runLoadData();
     }
   }
 
@@ -498,6 +498,7 @@ export default class YetiTable extends Component {
 
       if (!isLastPage) {
         this.set('pageNumber', pageNumber + 1);
+        this.runLoadData();
       }
     }
   }
@@ -513,6 +514,7 @@ export default class YetiTable extends Component {
       }
 
       this.set('pageNumber', pageNumber);
+      this.runLoadData();
     }
   }
 
@@ -520,6 +522,7 @@ export default class YetiTable extends Component {
   changePageSize(pageSize) {
     if (this.get('pagination')) {
       this.set('pageSize', parseInt(pageSize));
+      this.runLoadData();
     }
   }
 

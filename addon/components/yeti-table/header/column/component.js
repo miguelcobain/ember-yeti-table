@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import DidChangeAttrsComponent from 'ember-yeti-table/-private/utils/did-change-attrs-component';
 
 import { equal, or } from '@ember-decorators/object/computed';
 import { tagName } from '@ember-decorators/component';
@@ -26,7 +27,7 @@ import layout from './template';
   @yield {boolean} column.isDescSorted - `true` if column is sorted descending
 */
 @tagName('')
-export default class Column extends Component {
+export default class Column extends DidChangeAttrsComponent {
   layout = layout;
 
   @argument
@@ -132,11 +133,25 @@ export default class Column extends Component {
 
   @or('isAscSorted', 'isDescSorted') isSorted;
 
-  init() {
-    super.init(...arguments);
+  constructor(props) {
+    /**
+     * didReceiveAttrs runs before the contructor (after calling super)
+     * so we need thise hack to be able to set default values on the
+     * constructor.
+     * See: https://github.com/ember-decorators/ember-decorators/issues/123
+     */
+    props.didChangeAttrsConfig = {
+      attrs: ['filter', 'filterUsing', 'sort']
+    };
+
+    super(...arguments);
     if (this.get('parent')) {
       this.get('parent').registerColumn(this);
     }
+  }
+
+  didChangeAttrs() {
+    this.get('parent').runLoadData();
   }
 
   willDestroyElement() {

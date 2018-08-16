@@ -132,6 +132,39 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(3)').hasText('15');
   });
 
+  test('updating pageSize to make the current pageNumber out of bounds also updates the pageNumber', async function(assert) {
+    this.pageNumber = 4;
+    this.pageSize = 10;
+
+    await render(hbs`
+      <YetiTable @data={{data}} @pagination={{true}} @pageSize={{pageSize}} @pageNumber={{pageNumber}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName">
+            First name
+          </header.column>
+          <header.column @prop="lastName">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body/>
+
+      </YetiTable>
+    `);
+
+    assert.dom('tbody tr').exists({ count: 10 });
+    assert.dom('tbody tr:nth-child(1) td:nth-child(3)').hasText('30');
+
+    this.set('pageSize', 35);
+
+    assert.dom('tbody tr').exists({ count: 5 });
+    assert.dom('tbody tr:nth-child(1) td:nth-child(3)').hasText('35');
+  });
+
   test('using yield actions works to change pages', async function(assert) {
     await render(hbs`
       <YetiTable @data={{data}} @pagination={{true}} @pageSize={{15}} as |table|>
