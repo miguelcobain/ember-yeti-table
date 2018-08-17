@@ -13,6 +13,9 @@ import RSVP from 'rsvp';
 import { later } from '@ember/runloop';
 import sinon from 'sinon';
 
+import EmberObject from '@ember/object';
+import { task, timeout } from 'ember-concurrency';
+
 import {
   sortMultiple,
   compareValues,
@@ -568,6 +571,55 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     await clearRender();
 
     assert.ok(this.loadData.calledOnce, 'loadData was called once');
+  });
+
+  test('loadData can be an ember-concurrency restartable task and be cancelled', async function(assert) {
+    assert.expect(4);
+    let data = this.data;
+    let spy = sinon.spy();
+    let hardWorkCounter = 0;
+
+    this.obj = EmberObject.extend({
+      loadData: task(function * () {
+        spy(...arguments);
+        yield timeout(100);
+        hardWorkCounter++;
+        return data;
+      }).restartable()
+    }).create();
+
+    this.set('filterText', 'Migu');
+
+    render(hbs`
+      <YetiTable @loadData={{perform obj.loadData}} @filter={{filterText}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName">
+            First name
+          </header.column>
+          <header.column @prop="lastName" @sort="desc">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body/>
+
+      </YetiTable>
+    `);
+
+    setTimeout(() => {
+      this.set('filterText', 'Tom');
+    }, 50);
+
+    await settled();
+
+    assert.ok(spy.calledTwice, 'load data was called twice (but one was cancelled)');
+    assert.ok(spy.firstCall.calledWithMatch({ filterData: { filter: 'Migu' }}));
+    assert.ok(spy.secondCall.calledWithMatch({ filterData: { filter: 'Tom' }}));
+    assert.equal(hardWorkCounter, 1, 'only did the "hard work" once');
   });
 
 });
