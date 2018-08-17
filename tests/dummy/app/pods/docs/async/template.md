@@ -67,7 +67,9 @@ In this example, filtering, sorting and pagination are entirely done on the serv
 asks for data and displays it.
 
 The example also uses ember-concurrency to easily debounce the `loadData` function. You could also write this function
-as an async/await function (check the `component-async-await.js` tab of the next demo).
+as an async/await function (check the `load-data-async-await.js` tab of the next demo).
+
+A custom pagination controls component is also included (check the `pagination-component.hbs` tab of the next demo).
 
 <aside>
   The server side implementation is out of scope for these guides, but you can check it [here](https://github.com/miguelcobain/ember-yeti-table/blob/master/tests/dummy/mirage/config.js#L32-L54) if you're interested.
@@ -126,35 +128,14 @@ as an async/await function (check the `component-async-await.js` tab of the next
       <tfoot>
         <tr>
           <td colspan={{table.totalColumns}}>
-            <div class="pagination-controls">
-              <div>
-                Rows per page:
-                <select disabled={{table.isLoading}} onchange={{action table.actions.changePageSize value="target.value"}}>
-                  {{#each (array 10 15 20 25) as |pageSize|}}
-                    <option value={{pageSize}} selected={{eq table.paginationData.pageSize pageSize}}>{{pageSize}}</option>
-                  {{/each}}
-                </select>
-              </div>
-
-              <div class="page-info">
-                {{table.paginationData.pageStart}} - {{table.paginationData.pageEnd}} of {{table.paginationData.totalRows}}
-              </div>
-
-              <button class="previous" disabled={{or table.paginationData.isFirstPage table.isLoading}} onclick={{action table.actions.previousPage}}>
-                <i class="material-icons">keyboard_arrow_left</i>
-              </button>
-
-              <button class="next" disabled={{or table.paginationData.isLastPage table.isLoading}} onclick={{action table.actions.nextPage}}>
-                <i class="material-icons">keyboard_arrow_right</i>
-              </button>
-            </div>
+            <MaterialPagination @table={{table}} />
           </td>
         </tr>
       </tfoot>
 
       {{#if table.isLoading}}
         <div class="loading-pane">
-          {{loading-spinner}}
+          <MaterialSpinner/>
         </div>
       {{/if}}
 
@@ -163,7 +144,8 @@ as an async/await function (check the `component-async-await.js` tab of the next
   {{/demo.example}}
 
   {{demo.snippet "async-simple.hbs"}}
-  {{demo.snippet label="component.js" name="async-simple.js"}}
-  {{demo.snippet label="component-async-await.js" name="async-simple-es7.js"}}
-  {{demo.snippet label="user.js" name="user.js"}}
+  {{demo.snippet label="load-data-task.js" name="async-simple.js"}}
+  {{demo.snippet label="load-data-async-await.js" name="async-simple-es7.js"}}
+  {{demo.snippet label="pagination-component.hbs" name="async-custom-pagination.hbs"}}
+  {{demo.snippet label="user-model.js" name="user.js"}}
 {{/docs-demo}}

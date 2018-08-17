@@ -96,3 +96,11 @@ accross all rows.
 
 The `<header.column>` component also accepts a `@columnClass` argument. Yeti Table will apply this class all the cells
 for that column accross all rows.
+
+<aside>
+  In angle bracket invocation, you can pass in element attributes without the `@`.
+  A typical usage is the `class` attribute. So you can just write `<body.row class="some-class">`.
+  <br><br>
+  An exception to this is the `cell` component due to an [`ember-angle-bracket-invocation-polyfill` bug](https://github.com/rwjblue/ember-angle-bracket-invocation-polyfill/pull/25).
+  In that component you need to pass in the class as a component argument, i.e `<row.cell @class="some-class">`.
+</aside>

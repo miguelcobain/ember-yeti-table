@@ -26,7 +26,6 @@
   "dependencies": {
     "@ember-decorators/argument": "^0.8.18",
     "@ember-decorators/babel-transforms": "^2.0.0",
-    "ember-angle-bracket-invocation-polyfill": "^1.1.5",
     "ember-cli-babel": "^6.7.1",
     "ember-cli-htmlbars": "^2.0.1",
     "ember-decorators": "^2.2.0",
@@ -39,6 +38,7 @@
     "broccoli-merge-trees": "^3.0.0",
     "broccoli-source": "^1.1.0",
     "ember-ajax": "^3.0.0",
+    "ember-angle-bracket-invocation-polyfill": "^1.2.0",
     "ember-array-helper": "^4.0.0",
     "ember-auto-import": "^1.2.10",
     "ember-cli": "~3.1.4",
