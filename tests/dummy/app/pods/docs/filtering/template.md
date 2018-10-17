@@ -75,13 +75,13 @@ You can use the `@filter` argument on `<YetiTable>` and `<header.column>` at the
       <tfoot>
         <tr>
           <td>
-            {{input value=firstNameFilter}}
+            {{input value=firstNameFilter class="input"}}
           </td>
           <td>
-            {{input value=lastNameFilter}}
+            {{input value=lastNameFilter class="input"}}
           </td>
           <td>
-            {{input value=pointsFilter}}
+            {{input value=pointsFilter class="input"}}
           </td>
         </tr>
       </tfoot>
