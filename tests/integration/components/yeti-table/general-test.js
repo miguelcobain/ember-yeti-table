@@ -101,6 +101,30 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Custom Yehuda');
   });
 
+  test('trClass applies a class to the header tr element', async function(assert) {
+    await render(hbs`
+      <YetiTable @data={{data}} as |table|>
+
+        <table.header @trClass="custom-tr-class" as |header|>
+          <header.column @prop="firstName">
+            First name
+          </header.column>
+          <header.column @prop="lastName">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body/>
+
+      </YetiTable>
+    `);
+
+    assert.dom('thead > tr').hasClass('custom-tr-class');
+  });
+
   test('columnClass applies a class to each column with blockless body', async function(assert) {
     await render(hbs`
       <YetiTable @data={{data}} as |table|>
