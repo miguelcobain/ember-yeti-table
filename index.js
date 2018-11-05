@@ -1,5 +1,5 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-yeti-table'
+  name: require('./package').name
 };

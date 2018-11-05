@@ -31,7 +31,15 @@ module.exports = function(defaults) {
       projects: {
         main: generateDefaultProject()
       },
-    }
+    },
+    // Workaround for https://github.com/ember-cli/ember-cli/issues/8075
+    'ember-cli-uglify': {
+      uglify: {
+        compress: {
+          collapse_vars: false
+        }
+      }
+    },
   });
 
   /*

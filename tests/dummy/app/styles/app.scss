@@ -40,3 +40,17 @@ body {
     border-bottom-color: $primary;
   }
 }
+
+// ember-cli-addon-docs overrides
+
+.docs-bg-brand, body {
+  background-color: $primary;
+}
+
+.docs-text-brand, .hover\:docs-text-brand:hover {
+  color: $primary;
+}
+
+.docs-font-title {
+  font-family: inherit;
+}
