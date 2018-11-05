@@ -1,5 +1,6 @@
 {{#if visible}}
   <th
+    role="button"
     class="{{class}} {{if sortable "yeti-table-sortable"}} {{if isSorted "yeti-table-sorted"}} {{if isAscSorted "yeti-table-sorted-asc"}} {{if isDescSorted "yeti-table-sorted-desc"}}"
     onclick={{action onClick this}}>
     {{yield (hash
