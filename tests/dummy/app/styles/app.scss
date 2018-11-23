@@ -43,7 +43,7 @@ body {
 
 // ember-cli-addon-docs overrides
 
-.docs-bg-brand, body {
+.docs-bg-brand, body, .hover\:docs-bg-brand:hover {
   background-color: $primary;
 }
 
@@ -54,3 +54,4 @@ body {
 .docs-font-title {
   font-family: inherit;
 }
+
