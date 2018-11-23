@@ -10,7 +10,7 @@ import layout from './template';
 
 /**
   Simple pagination controls component that is included to help you get started quickly.
-  Yeti Tables yields a lot of pagination data, so you shouldn't have a problem
+  Yeti Table yields a lot of pagination data, so you shouldn't have a problem
   creating your own pagination controls.
 
   At any rate, this component tries to be as flexible as possible. Some arguments
