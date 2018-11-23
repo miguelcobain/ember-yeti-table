@@ -293,6 +293,15 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
     assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Miguel');
     assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Tom');
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Tom');
+
+    await click('thead th:nth-child(1)');
+
+    // not sorted again
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Miguel');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('José');
+    assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Maria');
+    assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
   });
 
   test('shift clicking on column header adds a new sort', async function(assert) {

@@ -411,7 +411,12 @@ export default class YetiTable extends DidChangeAttrsComponent {
       // if this column is already sorted, calculate the opposite
       // direction and remove old sorting
       direction = column.get('sort');
-      direction = direction === 'asc' ? 'desc' : 'asc';
+
+      if (direction === 'asc') {
+        direction = 'desc'
+      } else if (direction === 'desc') {
+        direction = null;
+      }
       column.set('sort', direction);
 
       if (!e.shiftKey) {
