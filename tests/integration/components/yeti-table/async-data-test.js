@@ -406,6 +406,70 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     assert.ok(this.loadData.secondCall.calledWithMatch({ sortData: [{ prop: 'lastName', direction: 'desc' }]}));
   });
 
+  test('loadData is called when clicking a sortable header', async function(assert) {
+    assert.expect();
+
+    this.loadData = sinon.spy(({ sortData }) => {
+      return new RSVP.Promise((resolve) => {
+        later(() => {
+          let data = this.data;
+
+          if (sortData.length > 0) {
+            data = mergeSort(data, (itemA, itemB) => {
+              return sortMultiple(itemA, itemB, sortData, compareValues);
+            });
+          }
+
+          resolve(data);
+        }, 150);
+      });
+    });
+
+    await render(hbs`
+      <YetiTable @loadData={{loadData}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName">
+            First name
+          </header.column>
+          <header.column @prop="lastName">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body/>
+
+      </YetiTable>
+    `);
+
+    await settled();
+
+    assert.dom('tbody tr').exists({ count: 5 });
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Miguel');
+    assert.dom('tbody tr:nth-child(1) td:nth-child(2)').hasText('Andrade');
+    assert.dom('tbody tr:nth-child(1) td:nth-child(3)').hasText('1');
+
+    assert.ok(this.loadData.calledOnce, 'loadData was called once');
+
+    await click('thead tr th:nth-child(1)');
+
+    await settled();
+
+    assert.dom('tbody tr').exists({ count: 5 });
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
+    assert.dom('tbody tr:nth-child(1) td:nth-child(2)').hasText('Baderous');
+    assert.dom('tbody tr:nth-child(1) td:nth-child(3)').hasText('2');
+
+    await clearRender();
+
+    assert.ok(this.loadData.calledTwice, 'loadData was called twice');
+    assert.ok(this.loadData.firstCall.calledWithMatch({ sortData: [] }));
+    assert.ok(this.loadData.secondCall.calledWithMatch({ sortData: [{ prop: 'firstName', direction: 'asc' }]}));
+  });
+
   test('loadData is called when changing page', async function(assert) {
     assert.expect();
 

@@ -431,6 +431,7 @@ export default class YetiTable extends DidChangeAttrsComponent {
         columns.forEach((c) => c.set('sort', null));
       }
     }
+    this.runLoadData();
   }
 
   @action
