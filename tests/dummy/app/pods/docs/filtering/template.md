@@ -11,11 +11,13 @@ This means that Yeti Table will only show rows in which any of its columns match
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="filtering-simple.hbs"}}
-    <div class="flex justify-end">
-      {{input value=filter type="search" placeholder="Search..." class="input"}}
+    <div class="docs-flex docs-justify-end">
+      <input
+        class="input" type="search" placeholder="Search..."
+        value={{filterText}} oninput={{action (mut filterText) value="target.value"}}>
     </div>
 
-    <YetiTable @data={{data}} @filter={{filter}} as |table|>
+    <YetiTable @data={{data}} @filter={{filterText}} as |table|>
 
       <table.header as |header|>
         <header.column @prop="firstName">
@@ -52,11 +54,13 @@ You can use the `@filter` argument on `<YetiTable>` and `<header.column>` at the
 {{#docs-demo as |demo|}}
   {{#demo.example name="filtering-column.hbs"}}
 
-    <div class="flex justify-end">
-      {{input value=filter type="search" placeholder="Search..." class="input"}}
+    <div class="docs-flex docs-justify-end">
+      <input
+        class="input" type="search" placeholder="Search..."
+        value={{filterText}} oninput={{action (mut filterText) value="target.value"}}>
     </div>
 
-    <YetiTable @data={{data}} @filter={{filter}} as |table|>
+    <YetiTable @data={{data}} @filter={{filterText}} as |table|>
 
       <table.header as |header|>
         <header.column @prop="firstName" @filter={{firstNameFilter}}>
@@ -75,13 +79,19 @@ You can use the `@filter` argument on `<YetiTable>` and `<header.column>` at the
       <tfoot>
         <tr>
           <td>
-            {{input value=firstNameFilter class="input"}}
+            <input
+              class="input" type="search" placeholder="Search first name"
+              value={{firstNameFilter}} oninput={{action (mut firstNameFilter) value="target.value"}}>
           </td>
           <td>
-            {{input value=lastNameFilter class="input"}}
+            <input
+              class="input" type="search" placeholder="Search last name"
+              value={{lastNameFilter}} oninput={{action (mut lastNameFilter) value="target.value"}}>
           </td>
           <td>
-            {{input value=pointsFilter class="input"}}
+            <input
+              class="input" type="search" placeholder="Search points"
+              value={{pointsFilter}} oninput={{action (mut pointsFilter) value="target.value"}}>
           </td>
         </tr>
       </tfoot>
@@ -112,9 +122,19 @@ This allows for advanced filtering logic. See the following example:
 {{#docs-demo as |demo|}}
   {{#demo.example name="filtering-custom.hbs"}}
 
-    <div class="flex justify-end">
-      <div>Min points: {{input type="number" type="search" class="input" value=min min=0 max=max}}</div>
-      <div>Max points: {{input type="number" type="search" class="input" value=max min=min max=100}}</div>
+    <div class="docs-flex docs-justify-end">
+      <div>
+        Min points:
+        <input
+          class="input" type="number" min="0" max={{max}}
+          value={{min}} oninput={{action (mut min) value="target.value"}}>
+      </div>
+      <div>
+        Max points:
+        <input
+          class="input" type="number" min={{min}} max="100"
+          value={{max}} oninput={{action (mut max) value="target.value"}}>
+      </div>
     </div>
 
     <YetiTable @data={{data}} as |table|>

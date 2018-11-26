@@ -57,5 +57,4 @@ export default class AsyncController extends Controller {
   }
   // END-SNIPPET
 
-
 }

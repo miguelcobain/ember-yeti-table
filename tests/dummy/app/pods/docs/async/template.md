@@ -78,13 +78,15 @@ A custom pagination controls component is also included (check the `pagination-c
 {{#docs-demo as |demo|}}
   {{#demo.example name="async-simple.hbs"}}
 
-    <div class="flex justify-end">
-      {{input value=filter type="search" placeholder="Search..." class="input"}}
+    <div class="docs-flex docs-justify-end">
+      <input
+        class="input" type="search" placeholder="Search..."
+        value={{filterText}} oninput={{action (mut filterText) value="target.value"}}>
     </div>
 
     <YetiTable
       @loadData={{perform loadDataTask}}
-      @filter={{filter}}
+      @filter={{filterText}}
       @pagination={{true}} @pageSize={{10}} @totalRows={{totalRows}} as |table|>
       
       <table.header as |header|>
