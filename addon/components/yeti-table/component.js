@@ -207,7 +207,7 @@ export default class YetiTable extends DidChangeAttrsComponent {
   @filterBy('columns', 'visible', true) visibleColumns;
   @reads('visibleColumns.length') totalColumns;
 
-  @computed('pageSize', 'pageNumber', 'totalRows', 'loadData', 'sortedData.[]')
+  @computed('pageSize', 'pageNumber', 'totalRows', 'loadData', 'sortedData.[]', 'resolvedData.[]')
   get paginationData() {
     let pageSize = this.get('pageSize');
     let pageNumber = this.get('pageNumber');
@@ -216,6 +216,9 @@ export default class YetiTable extends DidChangeAttrsComponent {
 
     if (!this.get('loadData')) {
       totalRows = this.get('sortedData.length');
+    } else if (this.get('loadData') && totalRows === undefined) {
+      // try to guess the total rows when not using loadData for pagination
+      totalRows = this.get('resolvedData.length');
     }
 
     if (totalRows) {
