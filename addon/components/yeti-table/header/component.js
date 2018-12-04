@@ -4,7 +4,7 @@ import { tagName } from '@ember-decorators/component';
 import { action } from '@ember-decorators/object';
 import { argument } from '@ember-decorators/argument';
 import { required } from '@ember-decorators/argument/validation';
-import { type, arrayOf, optional } from '@ember-decorators/argument/type';
+import { type, arrayOf, optional, unionOf } from '@ember-decorators/argument/type';
 import { Action } from '@ember-decorators/argument/types';
 
 import layout from './template';
@@ -35,6 +35,11 @@ export default class Header extends Component {
   @required
   @type('boolean')
   sortable;
+
+  @argument
+  @required
+  @type(unionOf('string', arrayOf('string')))
+  sortSequence;
 
   @argument
   @required

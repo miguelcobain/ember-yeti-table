@@ -1,11 +1,14 @@
 import Component from '@ember/component';
+import { assert } from '@ember/debug';
+import { isArray } from '@ember/array';
 import DidChangeAttrsComponent from 'ember-yeti-table/-private/utils/did-change-attrs-component';
 
+import { computed } from '@ember-decorators/object';
 import { equal, or } from '@ember-decorators/object/computed';
 import { tagName } from '@ember-decorators/component';
 import { argument } from '@ember-decorators/argument';
 import { required } from '@ember-decorators/argument/validation';
-import { type, optional } from '@ember-decorators/argument/type';
+import { type, optional, unionOf, arrayOf } from '@ember-decorators/argument/type';
 import { Action } from '@ember-decorators/argument/types';
 
 import layout from './template';
@@ -75,6 +78,16 @@ export default class Column extends DidChangeAttrsComponent {
   sort = null;
 
   /**
+   * Use `@sortSequence` to customize the sequence in which the sorting order will cycle when
+   * clicking on this column header. You can either pass in a comma-separated string or an array
+   * of strings. Accepted values are `'asc'`, `'desc'` and `'unsorted'`. The default value is `['asc', 'desc']`
+   * or whatever the global table sortSequence value is.
+   */
+  @argument
+  @type(unionOf('string', arrayOf('string')))
+  sortSequence;
+
+  /**
    * Used to turn off filtering for this column. When `false`, Yeti Table won't look for
    * values on this column. Defaults to `true`.
    */
@@ -132,6 +145,18 @@ export default class Column extends DidChangeAttrsComponent {
   @equal('sort', 'desc') isDescSorted;
 
   @or('isAscSorted', 'isDescSorted') isSorted;
+
+  @computed('sortSequence')
+  get normalizedSortSequence() {
+    let sortSequence = this.get('sortSequence');
+    assert('@sortSequence must be either a comma-separated string or an array. Got `${sortSequence}.`', isArray(sortSequence) || typeof sortSequence === 'string');
+
+    if (isArray(sortSequence)) {
+      return sortSequence;
+    } else if (typeof sortSequence === 'string') {
+      return sortSequence.split(',').map((s) => s.trim());
+    }
+  }
 
   init() {
     super.init(...arguments);

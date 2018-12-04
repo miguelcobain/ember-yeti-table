@@ -193,6 +193,15 @@ export default class YetiTable extends DidChangeAttrsComponent {
   @type(Function)
   compareFunction = compareValues;
 
+  /**
+   * Use `@sortSequence` to customize the sequence in which the sorting order will cycle when
+   * clicking on the table headers. You can either pass in a comma-separated string or an array
+   * of strings. Accepted values are `'asc'`, `'desc'` and `'unsorted'`. The default value is `['asc', 'desc']`.
+   */
+  @argument
+  @type(unionOf('string', arrayOf('string')))
+  sortSequence = ['asc', 'desc'];
+
   isLoading = false;
 
   @filterBy('columns', 'visible', true) visibleColumns;
@@ -405,16 +414,14 @@ export default class YetiTable extends DidChangeAttrsComponent {
 
   @action
   onColumnSort(column, e) {
-    let direction = 'asc';
-
     if (column.get('isSorted')) {
-      // if this column is already sorted, calculate the opposite
-      // direction and remove old sorting
-      direction = column.get('sort');
+      // if this column is already sorted, calculate the next
+      // sorting on the sequence.
+      let direction = column.get('sort');
+      let sortSequence = column.get('normalizedSortSequence');
+      direction = sortSequence[(sortSequence.indexOf(direction) + 1) % sortSequence.length];
 
-      if (direction === 'asc') {
-        direction = 'desc'
-      } else if (direction === 'desc') {
+      if (direction === 'unsorted') {
         direction = null;
       }
       column.set('sort', direction);
@@ -425,6 +432,8 @@ export default class YetiTable extends DidChangeAttrsComponent {
         columns.forEach((c) => c.set('sort', null));
       }
     } else {
+      // use first direction from sort sequence
+      let direction = column.get('normalizedSortSequence')[0];
       // create new sorting
       column.set('sort', direction);
 

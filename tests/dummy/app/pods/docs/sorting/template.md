@@ -147,3 +147,16 @@ the current sortings that are applied and the compare function.
 
 Use `compareFunction` if you just want to customize how two values relate to each other (not the entire row). It will be invoked with two values
 and you just need to return `-1`, `0` or `1` depending on if first value is greater than the second or not. The default compare function used is [`compare` function](https://emberjs.com/api/ember/3.2/functions/@ember%2Futils/compare) from `@ember/utils`.
+
+## Sort sequence
+
+By default, clicking on a sortable column header will sort that column. But in what direction? The usual is for the column to sort ascending, then clicking it again changes it to descending. Further clicks toggle between ascending and descending. This is the default behavior.
+
+However, Yeti Table allows you to customize this sequence using the `@sortSequence` argument. This can be either a comma-separated
+string or an array of strings. Accepted values are `'asc'`, `'desc'` and `'unsorted'`.
+
+So, for example, if you want the first click to sort descending, the second to sort ascending and the third to go back to unsorted,
+you can use `<YetiTable @sortSequence="desc,asc,unsorted">`.
+
+You can also use `@sortSequence` on columns instead of on the whole table. This allows you to fine tune your sequences per column. Each column's
+sort sequence will default to whatever the value is for the global YetiTable component.

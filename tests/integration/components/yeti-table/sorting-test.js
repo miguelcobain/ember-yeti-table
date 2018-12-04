@@ -248,7 +248,7 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Tom');
   });
 
-  test('clicking on column header sorts', async function(assert) {
+  test('clicking on column header sorts (default @orderSequence)', async function(assert) {
     await render(hbs`
       <YetiTable @data={{data}} as |table|>
 
@@ -296,12 +296,142 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
 
     await click('thead th:nth-child(1)');
 
-    // not sorted again
+    // ascending again
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Maria');
+    assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Miguel');
+    assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
+  });
+
+  test('clicking on column header sorts (custom @orderSequence)', async function(assert) {
+    await render(hbs`
+      <YetiTable @data={{data}} @sortSequence="desc,asc,unsorted" as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName">
+            First name
+          </header.column>
+          <header.column @prop="lastName">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body/>
+
+      </YetiTable>
+    `);
+
+    // not sorted
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Miguel');
     assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('José');
     assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Maria');
     assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
+
+    await click('thead th:nth-child(1)');
+
+    // it is sorted descending
+    assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('José');
+    assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Maria');
+    assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Miguel');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Tom');
+
+    await click('thead th:nth-child(1)');
+
+    // it is sorted ascending
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Maria');
+    assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Miguel');
+    assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
+
+    await click('thead th:nth-child(1)');
+
+    // not sorted
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Miguel');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('José');
+    assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Maria');
+    assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
+
+    await click('thead th:nth-child(1)');
+
+    // it is sorted descending again
+    assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('José');
+    assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Maria');
+    assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Miguel');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Tom');
+  });
+
+  test('clicking on column header sorts (custom @orderSequence on column)', async function(assert) {
+    await render(hbs`
+      <YetiTable @data={{data}} @sortSequence="desc,asc" as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName" @sortSequence="desc,asc,unsorted">
+            First name
+          </header.column>
+          <header.column @prop="lastName">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body/>
+
+      </YetiTable>
+    `);
+
+    // not sorted
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Miguel');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('José');
+    assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Maria');
+    assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
+
+    await click('thead th:nth-child(1)');
+
+    // it is sorted descending
+    assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('José');
+    assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Maria');
+    assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Miguel');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Tom');
+
+    await click('thead th:nth-child(1)');
+
+    // it is sorted ascending
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Maria');
+    assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Miguel');
+    assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
+
+    await click('thead th:nth-child(1)');
+
+    // not sorted
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Miguel');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('José');
+    assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Maria');
+    assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
+
+    await click('thead th:nth-child(1)');
+
+    // it is sorted descending again
+    assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('José');
+    assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Maria');
+    assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Miguel');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Tom');
   });
 
   test('shift clicking on column header adds a new sort', async function(assert) {
