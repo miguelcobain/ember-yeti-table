@@ -9,7 +9,7 @@ import { once } from '@ember/runloop';
 
 import { tagName } from '@ember-decorators/component';
 import { computed, action } from '@ember-decorators/object';
-import { reads, filterBy } from '@ember-decorators/object/computed';
+import { filterBy } from '@ember-decorators/object/computed';
 import { argument } from '@ember-decorators/argument';
 import {
   type,
@@ -72,7 +72,10 @@ const didCancel = function(e) {
   @yield {object} table.actions         an object that contains actions to interact with the table
   @yield {object} table.paginationData  object that represents the current pagination state
   @yield {boolean} table.isLoading      boolean that is `true` when data is being loaded
-  @yield {number} table.totalColumns    the number of visible columns on the table
+  @yield {number} table.totalColumns    the number of columns on the table
+  @yield {number} table.visibleColumns  the number of visible columns on the table
+  @yield {number} table.totalRows       the total number of rows on the table (regardless of pagination)
+  @yield {number} table.visibleRows     the number of rendered rows on the table account for pagination, filtering, etc; when pagination is false, it will be the same as totalRows
 */
 @tagName('table')
 @classNames('yeti-table')
@@ -205,21 +208,30 @@ export default class YetiTable extends DidChangeAttrsComponent {
   isLoading = false;
 
   @filterBy('columns', 'visible', true) visibleColumns;
-  @reads('visibleColumns.length') totalColumns;
 
-  @computed('pageSize', 'pageNumber', 'totalRows', 'loadData', 'sortedData.[]', 'resolvedData.[]')
+  @computed('loadData', 'sortedData.[]', 'resolvedData.[]')
+  get normalizedTotalRows() {
+    if (!this.get('loadData')) {
+      // sync scenario using @data
+      return this.get('sortedData.length');
+    } else {
+      // async scenario. @loadData is present.
+      if (this.get('totalRows') === undefined) {
+        // @totalRows was not passed in. Use the returned data set length.
+        return this.get('resolvedData.length');
+      } else {
+        // @totalRows was passed in.
+        return this.get('totalRows');
+      }
+    }
+  }
+
+  @computed('pageSize', 'pageNumber', 'normalizedTotalRows')
   get paginationData() {
     let pageSize = this.get('pageSize');
     let pageNumber = this.get('pageNumber');
-    let totalRows = this.get('totalRows');
+    let totalRows = this.get('normalizedTotalRows');
     let isLastPage, totalPages;
-
-    if (!this.get('loadData')) {
-      totalRows = this.get('sortedData.length');
-    } else if (this.get('loadData') && totalRows === undefined) {
-      // try to guess the total rows when not using loadData for pagination
-      totalRows = this.get('resolvedData.length');
-    }
 
     if (totalRows) {
       totalPages = Math.ceil(totalRows / pageSize);

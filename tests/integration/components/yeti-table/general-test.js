@@ -445,4 +445,40 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('th').exists({ count: 2 });
     assert.dom('td').exists({ count: 5 * 2 });
   });
+
+  test('yielded totalColumns and totalRows are correct', async function(assert) {
+
+    await render(hbs`
+      <YetiTable @data={{data}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName">
+            First name
+          </header.column>
+          <header.column @prop="lastName">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+          <header.column @prop="dummy" @visible={{false}}>
+            Dummy
+          </header.column>
+        </table.header>
+
+        <table.body/>
+
+        <div id="totalColumns">{{table.totalColumns}}</div>
+        <div id="visibleColumns">{{table.visibleColumns}}</div>
+        <div id="totalRows">{{table.totalRows}}</div>
+        <div id="visibleRows">{{table.visibleRows}}</div>
+
+      </YetiTable>
+    `);
+
+    assert.dom('#totalColumns').hasText('4');
+    assert.dom('#visibleColumns').hasText('3');
+    assert.dom('#totalRows').hasText('5');
+    assert.dom('#visibleRows').hasText('5');
+  });
 });

@@ -82,7 +82,7 @@ Here is how to do that:
 
   <tfoot>
     <tr>
-      <td colspan={{table.totalColumns}}>
+      <td colspan={{table.visibleColumns}}>
         <table.pagination/>
       </td>
     </tr>
@@ -91,5 +91,5 @@ Here is how to do that:
 </YetiTable>
 ```
 
-By using `colspan={{table.totalColumns}}` we can make sure that the footer cell spans across
+By using `colspan={{table.visibleColumns}}` we can make sure that the footer cell spans across
 all columns.

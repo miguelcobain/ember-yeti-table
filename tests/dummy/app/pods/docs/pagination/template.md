@@ -30,7 +30,7 @@ with the yielded state and actions (more on that in the following section).
 
       <tfoot>
         <tr>
-          <td colspan={{table.totalColumns}}>
+          <td colspan={{table.visibleColumns}}>
             <table.pagination/>
           </td>
         </tr>

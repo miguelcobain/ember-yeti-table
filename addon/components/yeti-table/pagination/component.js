@@ -18,12 +18,12 @@ import layout from './template';
 
   If you want to render these controls on the table footer, you probably want
   a footer row that always spans all rows. To do that you can use a `colspan` equal
-  to the yielded `totalColumns` number. Example:
+  to the yielded `visibleColumns` number. Example:
 
   ```hbs
   <tfoot>
     <tr>
-      <td colspan={{table.totalColumns}}>
+      <td colspan={{table.visibleColumns}}>
         <table.pagination/>
       </td>
     </tr>
