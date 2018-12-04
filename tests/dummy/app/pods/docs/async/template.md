@@ -27,7 +27,7 @@ The argument for the `loadData` function is an object that contains:
   - `pageEnd` - the 1-indexed index of the last record of the current page
   - `isFirstPage` - boolean that is `true` when we're on the first page (useful to disable a previous button)
   - `isLastPage` - boolean that is `true` when we're on the last page (useful to disable a next button)
-  - `totalRows` - the total nubmer of rows (same as the `@totalRows` argument)
+  - `totalRows` - the total number of rows (same as the `@totalRows` argument)
   - `totalPages` - the calculated total number of pages based on the current `pageSize`
 
 - `sortData` - an array of `{ prop, direction }` objects for each column that represents the current sorting status of the table
