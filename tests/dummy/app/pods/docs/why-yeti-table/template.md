@@ -7,7 +7,7 @@ Yeti Table was born from an experimentation of trying to define columns in templ
 In practice, this empowers customization and feels more in line with writing regular HTML tables.
 This fact has many implications on the whole API of Yeti Table.
 
-What most people are probably thinking is how Yeti Table compares to the great [Ember Table](https://github.com/Addepar/Ember Table) addon.
+What most people are probably thinking is how Yeti Table compares to the great [Ember Table](https://github.com/Addepar/ember-table) addon.
 
 First of all, let me clarify that Ember Table is **amazing** and in fact Yeti Table borrowed **a lot** of good lessons from it. So, a big thank you to all of its contributors. 
 
