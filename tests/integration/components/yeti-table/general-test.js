@@ -481,4 +481,47 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('#totalRows').hasText('5');
     assert.dom('#visibleRows').hasText('5');
   });
+
+  test('can add arbitrary attributes to columns and cells', async function(assert) {
+
+    await render(hbs`
+      <YetiTable @data={{data}} as |table|>
+
+        <table.header as |header|>
+          <header.column class="custom-class" @columnClass="column-class" data-column="test-column">
+            First name
+          </header.column>
+          <header.column>
+            Last name
+          </header.column>
+          <header.column>
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body as |body person|>
+          <body.row as |row|>
+            <row.cell class="cell-class" data-cell="test-cell">
+              {{person.firstName}}
+            </row.cell>
+            <row.cell>
+              {{person.lastName}}
+            </row.cell>
+            <row.cell>
+              {{person.points}}
+            </row.cell>
+          </body.row>
+        </table.body>
+
+      </YetiTable>
+    `);
+
+    assert.dom('thead tr:nth-child(1) th:nth-child(1)').hasAttribute('data-column', 'test-column');
+    assert.dom('thead tr:nth-child(1) th:nth-child(1)').hasClass('custom-class');
+    assert.dom('thead tr:nth-child(1) th:nth-child(1)').hasClass('yeti-table-sortable');
+
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasAttribute('data-cell', 'test-cell');
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasClass('column-class');
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasClass('cell-class');
+  });
 });

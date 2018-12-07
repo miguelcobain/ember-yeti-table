@@ -109,7 +109,7 @@ A custom pagination controls component is also included (check the `pagination-c
 
       <table.body as |body user|>
         <body.row as |row|>
-          <row.cell @class="avatar-cell">
+          <row.cell class="avatar-cell">
             <img class="avatar" src={{user.avatarUrl}} alt={{user.name}}>
           </row.cell>
           <row.cell>
