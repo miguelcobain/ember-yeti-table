@@ -39,7 +39,6 @@
     "broccoli-funnel": "^2.0.1",
     "broccoli-merge-trees": "^3.0.0",
     "broccoli-source": "^1.1.0",
-    "ember-angle-bracket-invocation-polyfill": "^1.2.0",
     "ember-array-helper": "^4.0.0",
     "ember-auto-import": "^1.2.10",
     "ember-cli": "~3.5.0",
