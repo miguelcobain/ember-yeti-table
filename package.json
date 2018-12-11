@@ -25,11 +25,11 @@
     "test:all": "ember try:each"
   },
   "dependencies": {
-    "@ember-decorators/argument": "^0.8.21",
-    "@ember-decorators/babel-transforms": "^3.1.5",
-    "ember-cli-babel": "^7.1.2",
+    "@ember-decorators/argument": "^0.8.18",
+    "@ember-decorators/babel-transforms": "^2.0.0",
+    "ember-cli-babel": "^6.16.0",
     "ember-cli-htmlbars": "^3.0.0",
-    "ember-decorators": "^3.1.5",
+    "ember-decorators": "^2.2.0",
     "ember-legacy-class-shim": "^1.0.5"
   },
   "devDependencies": {
@@ -41,7 +41,7 @@
     "broccoli-source": "^1.1.0",
     "ember-array-helper": "^4.0.0",
     "ember-auto-import": "^1.2.10",
-    "ember-cli": "~3.5.1",
+    "ember-cli": "~3.5.0",
     "ember-cli-addon-docs": "^0.6.0",
     "ember-cli-addon-docs-esdoc": "^0.2.1",
     "ember-cli-dependency-checker": "^3.0.0",
@@ -70,7 +70,7 @@
     "ember-qunit": "^3.4.1",
     "ember-resolver": "^5.0.1",
     "ember-router-scroll": "^0.6.0",
-    "ember-source": "~3.5.1",
+    "ember-source": "~3.5.0",
     "ember-source-channel-url": "^1.1.0",
     "ember-truth-helpers": "^2.0.0",
     "ember-try": "^1.0.0",
