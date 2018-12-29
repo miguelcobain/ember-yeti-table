@@ -80,13 +80,13 @@ Here is how to do that:
 
   <table.body/>
 
-  <tfoot>
-    <tr>
-      <td colspan={{table.visibleColumns}}>
+  <table.foot as |foot|>
+    <foot.row as |row|>
+      <row.cell colspan={{table.visibleColumns}}>
         <table.pagination/>
-      </td>
-    </tr>
-  </tfoot>
+      </row.cell>
+    </foot.row>
+  </table.foot>
 
 </YetiTable>
 ```

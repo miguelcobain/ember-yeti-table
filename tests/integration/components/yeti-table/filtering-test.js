@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { A } from '@ember/array';
 import { set, get } from '@ember/object';
@@ -347,6 +347,77 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     this.set('max', 4);
 
     assert.dom('tbody tr').exists({ count: 3 });
+  });
+
+  test('Allows for Column filtering in the header', async function(assert) {
+
+    this.visibleTest = true;
+
+    await render(hbs`
+      <YetiTable @data={{data}} as |table|>
+
+        <table.head as |head|>
+          <head.row as |row|>
+            <row.column @prop="firstName" @filter={{firstNameFilter}} data-column="test-column">
+              First name
+            </row.column>
+            <row.column @prop="lastName" @filter={{lastNameFilter}}>
+              Last name
+            </row.column>
+            <row.column @visible={{visibleTest}} @prop="points" @filter={{pointsFilter}}>
+              Points
+            </row.column>
+          </head.row>
+          
+          <head.row as |row|>
+            <row.cell>
+                <input
+                  class="input" type="search" placeholder="Search first name"
+                  value={{firstNameFilter}}
+                  oninput={{action (mut firstNameFilter) value="target.value"}}>
+            </row.cell>
+            <row.cell>
+                <input
+                  class="input" type="search" placeholder="Search last name"
+                  value={{lastNameFilter}}
+                  oninput={{action (mut lastNameFilter) value="target.value"}}>
+            </row.cell>
+            <row.cell>
+                <input
+                  class="input" type="search" placeholder="Search points"
+                  value={{pointsFilter}}
+                  oninput={{action (mut pointsFilter) value="target.value"}}>
+            </row.cell>
+          </head.row>
+          
+        </table.head>
+
+        <table.body/>
+
+      </YetiTable>
+    `);
+
+    assert.dom('table').exists({ count: 1 });
+    assert.dom('thead').exists({ count: 1 });
+    assert.dom('thead tr').exists({ count: 2 });
+    assert.dom('thead th').exists({ count: 6 });
+
+    assert.dom('tbody').exists({ count: 1 });
+    assert.dom('tbody tr').exists({ count: 5 });
+    assert.dom('tbody td').exists({ count: 5 * 3 });
+
+    assert.dom('thead tr:nth-child(2) th:nth-child(1) input').hasAttribute("placeholder", "Search first name");
+    assert.dom('thead tr:nth-child(2) th:nth-child(2) input').hasAttribute("placeholder", "Search last name");
+    assert.dom('thead tr:nth-child(2) th:nth-child(3) input').hasAttribute("placeholder", "Search points");
+
+    await fillIn('thead tr:nth-child(2) th:nth-child(2) input', "s");
+
+    assert.dom('tbody tr').exists({ count: 2 });
+
+    this.set('visibleTest', false);
+
+    assert.dom('tbody td').exists({ count: 2 * 2 });
+
   });
 
 });

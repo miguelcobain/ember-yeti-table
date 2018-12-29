@@ -40,8 +40,8 @@ You can still customize the generated rows using the following arguments on `<ta
 - `@onRowClick` - adds a click action to each row, called with the clicked row's data as an argument
 - `@rowClass` - adds a class to each `tr` element
 
-You will probably need to make more customizations, and to do so you will need to use `<table.header>`
-and/or `<table.body>` in the block form. This form allows you to:
+You will probably need to make more customizations, and to do so you will need to use `<table.head>`
+`<table.foor>` and/or `<table.body>` in the block form. This form allows you to:
 
 - Use any component or markup as a cell's content
 - Use the row data across multiple cells of the same row
@@ -81,6 +81,20 @@ and/or `<table.body>` in the block form. This form allows you to:
           </row.cell>
         </body.row>
       </table.body>
+
+      <table.foot as |foot|>
+        <foot.row as |row|>
+          <row.cell>
+            First Name footer
+          </row.cell>
+          <row.cell>
+            Last Name footer
+          </row.cell>
+          <row.cell>
+            Points footer
+          </row.cell>
+        </foot.row>
+      </table.foot>
 
     </YetiTable>
   {{/demo.example}}

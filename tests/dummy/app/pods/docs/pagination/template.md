@@ -28,19 +28,22 @@ with the yielded state and actions (more on that in the following section).
 
       <table.body/>
 
-      <tfoot>
-        <tr>
-          <td colspan={{table.visibleColumns}}>
+      <table.foot as |foot|>
+        <foot.row as |row|>
+          <row.cell colspan={{table.visibleColumns}}>
             <table.pagination/>
-          </td>
-        </tr>
-      </tfoot>
+          </row.cell>
+        </foot.row>
+      </table.foot>
 
     </YetiTable>
   {{/demo.example}}
 
   {{demo.snippet "pagination-simple.hbs"}}
 {{/docs-demo}}
+
+By using `colspan={{table.visibleColumns}}` we can make sure that the footer cell spans across
+all columns.
 
 ## Pagination state and actions
 
