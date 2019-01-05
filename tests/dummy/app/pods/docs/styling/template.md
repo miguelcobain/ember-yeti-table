@@ -80,16 +80,16 @@ Here is how to do that:
 
   <table.body/>
 
-  <tfoot>
-    <tr>
-      <td colspan={{table.visibleColumns}}>
+  <table.foot as |foot|>
+    <foot.row as |row|>
+      <row.cell colspan={{table.visibleColumns}}>
         <table.pagination/>
-      </td>
-    </tr>
-  </tfoot>
+      </row.cell>
+    </foot.row>
+  </table.foot>
 
 </YetiTable>
 ```
 
-By using `colspan={{table.visibleColumns}}` we can make sure that the footer cell spans across
+By using `colspan={{table.visibleColumns}}` we can make sure that the footer cell always spans across
 all columns.

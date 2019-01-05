@@ -3,7 +3,12 @@
     columns=columns onColumnClick=(action "onColumnSort")
     sortable=sortable sortSequence=sortSequence parent=this
   )
+  head=(component "yeti-table/head"
+    columns=columns onColumnClick=(action "onColumnSort")
+    sortable=sortable sortSequence=sortSequence parent=this
+  )
   body=(component "yeti-table/body" data=processedData columns=columns parent=this)
+  foot=(component "yeti-table/foot" columns=columns parent=this)
   pagination=(component "yeti-table/pagination"
     disabled=isLoading
     paginationData=paginationData

@@ -51,8 +51,13 @@ You can use the `@filter` argument on `<YetiTable>` and `<header.column>` at the
   from the subset that passes the general `@filter`.
 </aside>
 
+<aside>
+  Notice how in the following example we used the `table.head` component instead of `table.header`
+  because we wanted to place the filter inputs on an additional header row.
+</aside>
+
 {{#docs-demo as |demo|}}
-  {{#demo.example name="filtering-column.hbs"}}
+  {{#demo.example name="filtering-column-provided.hbs"}}
 
     <div class="docs-flex docs-justify-end">
       <input
@@ -62,44 +67,48 @@ You can use the `@filter` argument on `<YetiTable>` and `<header.column>` at the
 
     <YetiTable @data={{data}} @filter={{filterText}} as |table|>
 
-      <table.header as |header|>
-        <header.column @prop="firstName" @filter={{firstNameFilter}}>
-          First name
-        </header.column>
-        <header.column @prop="lastName" @filter={{lastNameFilter}}>
-          Last name
-        </header.column>
-        <header.column @prop="points" @filter={{pointsFilter}}>
-          Points
-        </header.column>
-      </table.header>
+      <table.head as |head|>
+        <head.row as |row|>
+          <row.column @prop="firstName" @filter={{firstNameFilter}}>
+            First name
+          </row.column>
+          <row.column @prop="lastName" @filter={{lastNameFilter}}>
+            Last name
+          </row.column>
+          <row.column @prop="points" @filter={{pointsFilter}}>
+            Points
+          </row.column>
+        </head.row>
+        
+        <head.row as |row|>
+          <row.cell>
+              <input
+                class="input" type="search" placeholder="Search first name"
+                value={{firstNameFilter}}
+                oninput={{action (mut firstNameFilter) value="target.value"}}>
+          </row.cell>
+          <row.cell>
+              <input
+                class="input" type="search" placeholder="Search last name"
+                value={{lastNameFilter}}
+                oninput={{action (mut lastNameFilter) value="target.value"}}>
+          </row.cell>
+          <row.cell>
+              <input
+                class="input" type="search" placeholder="Search points"
+                value={{pointsFilter}}
+                oninput={{action (mut pointsFilter) value="target.value"}}>
+          </row.cell>
+        </head.row>
+        
+      </table.head>
 
       <table.body/>
-
-      <tfoot>
-        <tr>
-          <td>
-            <input
-              class="input" type="search" placeholder="Search first name"
-              value={{firstNameFilter}} oninput={{action (mut firstNameFilter) value="target.value"}}>
-          </td>
-          <td>
-            <input
-              class="input" type="search" placeholder="Search last name"
-              value={{lastNameFilter}} oninput={{action (mut lastNameFilter) value="target.value"}}>
-          </td>
-          <td>
-            <input
-              class="input" type="search" placeholder="Search points"
-              value={{pointsFilter}} oninput={{action (mut pointsFilter) value="target.value"}}>
-          </td>
-        </tr>
-      </tfoot>
 
     </YetiTable>
   {{/demo.example}}
 
-  {{demo.snippet "filtering-column.hbs"}}
+  {{demo.snippet "filtering-column-provided.hbs"}}
 {{/docs-demo}}
 
 ## Advanced filtering

@@ -41,11 +41,12 @@ const arrayOrPromise = unionOf(
 const TASK_CANCELATION_NAME = 'TaskCancelation';
 const didCancel = function(e) {
   return e && e.name === TASK_CANCELATION_NAME;
-}
+};
 
 /**
   The primary Yeti Table component. This component represents the root of the
   table, and manages high level state of all of its subcomponents.
+
   ```hbs
   <YetiTable @data={{data}} as |table|>
 
@@ -61,13 +62,38 @@ const didCancel = function(e) {
       </header.column>
     </table.header>
 
+  <table.body/>
+
+  </YetiTable>
+  ```
+
+  ```hbs
+  <YetiTable @data={{data}} as |table|>
+
+    <table.head as |head|>
+      <head.row as |row|>
+        <row.column @prop="firstName">
+          First name
+        </row.column>
+        <row.column @prop="lastName">
+          Last name
+        </row.column>
+        <row.column @prop="points">
+          Points
+        </row.column>
+      </head.row>
+    </table.head>
+
     <table.body/>
 
   </YetiTable>
   ```
+
   @yield {object} table
-  @yield {Component} table.header       the table header component
+  @yield {Component} table.header       the table header component (Single row in header)
+  @yield {Component} table.head         the table header component (Allows multiple rows in header)
   @yield {Component} table.body         the table body component
+  @yield {Component} table.foot         the table footer component
   @yield {Component} table.pagination   the pagination controls component
   @yield {object} table.actions         an object that contains actions to interact with the table
   @yield {object} table.paginationData  object that represents the current pagination state

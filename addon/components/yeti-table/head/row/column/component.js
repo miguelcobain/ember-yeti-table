@@ -14,14 +14,29 @@ import { Action } from '@ember-decorators/argument/types';
 import layout from './template';
 
 /**
-  An important component yielded from the header component that is used to define
+  An important component yielded from the header or head.row component that is used to define
   a column of the table.
+
   ```hbs
-  <header.column @prop="firstName" as |column|>
-    First name
-    {{if column.isAscSorted "(sorted asc)"}}
-    {{if column.isDescSorted "(sorted desc)"}}
-  </header.column>
+  <table.header as |header|>
+    <header.column @prop="firstName" as |column|>
+      First name
+      {{if column.isAscSorted "(sorted asc)"}}
+      {{if column.isDescSorted "(sorted desc)"}}
+    </header.column>
+  </table.header>
+  ```
+
+  ```hbs
+  <table.head as |head|>
+    <head.row as |row|>
+      <row.column @prop="firstName" as |column|>
+        First name
+        {{if column.isAscSorted "(sorted asc)"}}
+        {{if column.isDescSorted "(sorted desc)"}}
+      </row.column>
+    </head.row>
+  </table.head>
   ```
 
   @yield {object} column

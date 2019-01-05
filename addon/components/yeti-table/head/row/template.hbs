@@ -1,0 +1,6 @@
+<tr class={{trClass}} ...attributes>
+  {{yield (hash
+    column=(component "yeti-table/head/row/column" sortable=sortable sortSequence=sortSequence onClick=onColumnClick parent=parent)
+    cell=(component "yeti-table/head/row/cell" parent=this)
+  )}}
+</tr>

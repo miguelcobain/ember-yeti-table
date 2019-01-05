@@ -12,21 +12,21 @@
     {{#docs-demo class="main-page-demo" as |demo|}}
       {{#demo.example name="index-example.hbs"}}
 
-        <YetiTable @data={{data}} as |table|>
+        <YetiTable @data={{data}} as |t|>
 
-          <table.header as |header|>
-            <header.column @prop="firstName">
+          <t.header as |h|>
+            <h.column @prop="firstName">
               First name
-            </header.column>
-            <header.column @prop="lastName">
+            </h.column>
+            <h.column @prop="lastName">
               Last name
-            </header.column>
-            <header.column @prop="points">
+            </h.column>
+            <h.column @prop="points">
               Points
-            </header.column>
-          </table.header>
+            </h.column>
+          </t.header>
 
-          <table.body/>
+          <t.body/>
 
         </YetiTable>
 

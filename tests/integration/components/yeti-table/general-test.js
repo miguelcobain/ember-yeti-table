@@ -101,6 +101,52 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Custom Yehuda');
   });
 
+  test('renders table using head and foot components', async function(assert) {
+    await render(hbs`
+      <YetiTable @data={{data}} as |table|>
+
+        <table.head as |head|>
+          <head.row as |row|>
+            <row.column @prop="firstName">
+              First name
+            </row.column>
+            <row.column @prop="lastName">
+              Last name
+            </row.column>
+            <row.column @prop="points">
+              Points
+            </row.column>
+          </head.row>
+        </table.head>
+
+        <table.body/>
+        
+        <table.foot as |foot|>
+          <foot.row as |row|>
+            <row.cell>
+              Footer first Name
+            </row.cell>
+            <row.cell>
+              Footer last Name
+            </row.cell>
+            <row.cell>
+              Footer points
+            </row.cell>
+          </foot.row>
+        </table.foot>
+
+      </YetiTable>
+    `);
+
+    assert.dom('table').exists({ count: 1 });
+    assert.dom('thead').exists({ count: 1 });
+    assert.dom('tbody').exists({ count: 1 });
+    assert.dom('tfoot').exists({ count: 1 });
+    assert.dom('tr').exists({ count: 1 + 5 + 1 });
+    assert.dom('th').exists({ count: 3 });
+    assert.dom('td').exists({ count: (5 * 3) + 3 });
+  });
+
   test('trClass applies a class to the header tr element', async function(assert) {
     await render(hbs`
       <YetiTable @data={{data}} as |table|>
