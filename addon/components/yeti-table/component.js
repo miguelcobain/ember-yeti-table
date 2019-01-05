@@ -67,7 +67,7 @@ const didCancel = function(e) {
   </YetiTable>
   ```
 
- ```hbs
+  ```hbs
   <YetiTable @data={{data}} as |table|>
 
     <table.head as |head|>
@@ -93,6 +93,7 @@ const didCancel = function(e) {
   @yield {Component} table.header       the table header component (Single row in header)
   @yield {Component} table.head         the table header component (Allows multiple rows in header)
   @yield {Component} table.body         the table body component
+  @yield {Component} table.foot         the table footer component
   @yield {Component} table.pagination   the pagination controls component
   @yield {object} table.actions         an object that contains actions to interact with the table
   @yield {object} table.paginationData  object that represents the current pagination state

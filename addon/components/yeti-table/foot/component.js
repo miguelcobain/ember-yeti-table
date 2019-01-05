@@ -19,7 +19,8 @@ import layout from './template';
   </table.head>
   ```
 
-  @yield {Component} row
+  @yield {object} footer
+  @yield {Component} footer.row
 */
 @tagName('tfoot')
 export default class Foot extends Component {

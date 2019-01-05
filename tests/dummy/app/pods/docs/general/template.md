@@ -40,8 +40,8 @@ You can still customize the generated rows using the following arguments on `<ta
 - `@onRowClick` - adds a click action to each row, called with the clicked row's data as an argument
 - `@rowClass` - adds a class to each `tr` element
 
-You will probably need to make more customizations, and to do so you will need to use `<table.head>`
-`<table.foor>` and/or `<table.body>` in the block form. This form allows you to:
+You will probably need to make more customizations, and to do so you will need to use `<table.head>`,
+`<table.foot>` and/or `<table.body>` in the block form. This form allows you to:
 
 - Use any component or markup as a cell's content
 - Use the row data across multiple cells of the same row
@@ -118,3 +118,46 @@ for that column accross all rows.
   An exception to this is the `cell` and `column` component due to an [`ember-angle-bracket-invocation-polyfill` bug](https://github.com/rwjblue/ember-angle-bracket-invocation-polyfill/pull/25).
   In those components you can add a class as a component argument, i.e `&lt;row.cell @class="some-class"&gt;`.
 </aside>
+
+You might have noticed that the `<table.header>` component always renders a single `<tr>` row inside the `<thead>`.
+This will probably be your most common use case, but sometimes you might need to render additional rows in the header.
+To do that, you should use the `<table.head>` component, which doesn't render that single `<tr>` and let's you render the rows yourself.
+Here is an example of such a usage:
+
+{{#docs-demo as |demo|}}
+  {{#demo.example name="general-simple-with-multiple-rows-on-header.hbs"}}
+    <YetiTable @data={{data}} as |table|>
+
+      <table.head as |head|>
+        <head.row as |row|>
+          <row.column @prop="firstName">
+            First name
+          </row.column>
+          <row.column @prop="lastName">
+            Last name
+          </row.column>
+          <row.column @prop="points">
+            Points
+          </row.column>
+        </head.row>
+
+        <head.row as |row|>
+          <row.cell>
+            Additional row on header
+          </row.cell>
+          <row.cell>
+            Additional row on header
+          </row.cell>
+          <row.cell>
+            Additional row on header
+          </row.cell>
+        </head.row>
+      </table.head>
+
+      <table.body/>
+
+    </YetiTable>
+  {{/demo.example}}
+
+  {{demo.snippet "general-simple-with-multiple-rows-on-header.hbs"}}
+{{/docs-demo}}

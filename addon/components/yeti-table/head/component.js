@@ -10,6 +10,7 @@ import layout from './template';
 
 /**
   Renders a `<thead>` element and yields the row component.
+
   ```hbs
   <table.head as |head|>
     <head.row as |row|>
@@ -20,9 +21,10 @@ import layout from './template';
       </head.column>
     </head.row>
   </table.head>
- ```
+  ```
 
-  @yield {Component} row
+  @yield {object} head
+  @yield {Component} head.row
 */
 @tagName('thead')
 export default class Head extends Component {

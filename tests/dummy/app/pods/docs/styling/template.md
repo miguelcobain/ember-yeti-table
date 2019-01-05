@@ -91,5 +91,5 @@ Here is how to do that:
 </YetiTable>
 ```
 
-By using `colspan={{table.visibleColumns}}` we can make sure that the footer cell spans across
+By using `colspan={{table.visibleColumns}}` we can make sure that the footer cell always spans across
 all columns.

@@ -20,7 +20,8 @@ import layout from './template';
   </table.head>
   ```
 
-  @yield {Component} cell
+  @yield {object} row
+  @yield {Component} row.cell
 */
 @tagName('')
 export default class Row extends Component {

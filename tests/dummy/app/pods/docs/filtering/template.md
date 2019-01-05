@@ -41,9 +41,6 @@ This means that Yeti Table will only show rows in which any of its columns match
 
 ## Single column filtering
 
-To place column filter components in the head, a component head is yielded. Use this
-component instead of the header component to enable multiple rows in the header. 
-
 You can also use the `@filter` argument on the columns, in which case the filter would only apply to that column.
 This means that Yeti Table will only show rows in which that particular column matches that text. 
 
@@ -52,6 +49,11 @@ You can use the `@filter` argument on `<YetiTable>` and `<header.column>` at the
 <aside>
   The column definitions `@filter` argument is subtractive, meaning that it will filter out rows
   from the subset that passes the general `@filter`.
+</aside>
+
+<aside>
+  Notice how in the following example we used the `table.head` component instead of `table.header`
+  because we wanted to place the filter inputs on an additional header row.
 </aside>
 
 {{#docs-demo as |demo|}}
