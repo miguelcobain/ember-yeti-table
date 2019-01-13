@@ -4,6 +4,7 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { click } from '@ember/test-helpers';
 import { A } from '@ember/array';
+import DEFAULT_THEME from 'ember-yeti-table/-private/themes/default-theme';
 
 module('Integration | Component | yeti-table (general)', function(hooks) {
   setupRenderingTest(hooks);
@@ -54,6 +55,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     `);
 
     assert.dom('table').exists({ count: 1 });
+    assert.dom('table').hasClass(DEFAULT_THEME.table);
     assert.dom('thead').exists({ count: 1 });
     assert.dom('tbody').exists({ count: 1 });
     assert.dom('tr').exists({ count: 6 });

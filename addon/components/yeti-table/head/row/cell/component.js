@@ -30,6 +30,9 @@ import layout from './template';
 class Cell extends Component {
   layout = layout;
 
+  @argument(Object)
+  theme;
+
   @argument(Component)
   parent;
 

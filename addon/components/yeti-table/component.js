@@ -9,7 +9,7 @@ import { once } from '@ember/runloop';
 
 import { tagName } from '@ember-decorators/component';
 import { computed, action } from '@ember-decorators/object';
-import { filterBy } from '@ember-decorators/object/computed';
+import { filterBy, reads } from '@ember-decorators/object/computed';
 import { argument } from '@ember-decorators/argument';
 import {
   optional,
@@ -17,7 +17,7 @@ import {
   unionOf,
   shapeOf
 } from '@ember-decorators/argument/types';
-import { classNames } from '@ember-decorators/component';
+import { className } from '@ember-decorators/component';
 import defaultIfUndefined from 'ember-yeti-table/-private/decorators/default-if-undefined';
 
 import filterData from 'ember-yeti-table/-private/utils/filtering-utils';
@@ -27,7 +27,12 @@ import {
   mergeSort
 } from 'ember-yeti-table/-private/utils/sorting-utils';
 
+import { getOwner } from '@ember/application';
+import { assign } from '@ember/polyfills';
+
 import layout from './template';
+
+import DEFAULT_THEME from 'ember-yeti-table/-private/themes/default-theme';
 
 const arrayOrPromise = unionOf(
   arrayOf('object'),
@@ -102,11 +107,21 @@ const didCancel = function(e) {
   @yield {number} table.visibleColumns  the number of visible columns on the table
   @yield {number} table.totalRows       the total number of rows on the table (regardless of pagination)
   @yield {number} table.visibleRows     the number of rendered rows on the table account for pagination, filtering, etc; when pagination is false, it will be the same as totalRows
+  @yield {object} table.theme           the theme being used
 */
 @tagName('table')
 @classNames('yeti-table')
 class YetiTable extends DidChangeAttrsComponent {
   layout = layout;
+
+  /**
+   * `themeInstance` is an instance of [DefaultTheme](Themes.Default.html) or it's children.
+   * By default `yeti-table` uses [YetiTableDefaultTheme](Themes.default.html) instance.
+   *
+   * You may create your own theme-class and set `theme` to it's instance. Check Theme properties you may define in your own theme.
+   */
+  @argument(optional(Object))
+  theme;
 
   /**
    * The data for Yeti Table to render. It can be an array or a promise that resolves with an array.
@@ -219,6 +234,10 @@ class YetiTable extends DidChangeAttrsComponent {
   @argument(unionOf('string', arrayOf('string')))
   sortSequence = ['asc', 'desc'];
 
+  @className
+  @reads('mergedTheme.table')
+  themeClassName;
+
   isLoading = false;
 
   @filterBy('columns', 'visible', true) visibleColumns;
@@ -294,6 +313,11 @@ class YetiTable extends DidChangeAttrsComponent {
 
   init() {
     super.init(...arguments);
+
+    let config = getOwner(this).resolveRegistration('config:environment')['ember-yeti-table'];
+    let configTheme = config ? config.theme : {};
+    let mergedTheme = assign({}, DEFAULT_THEME, configTheme, this.theme || {});
+    this.mergedTheme = mergedTheme;
 
     this.columns = A();
     this.filteredData = [];

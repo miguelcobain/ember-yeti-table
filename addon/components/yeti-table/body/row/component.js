@@ -1,10 +1,11 @@
 import Component from '@ember/component';
 import { A } from '@ember/array';
 
-import { tagName } from '@ember-decorators/component';
+import { tagName, className } from '@ember-decorators/component';
 import { argument } from '@ember-decorators/argument';
 import { optional, arrayOf } from '@ember-decorators/argument/types';
 import { Action } from '@ember-decorators/argument/types';
+import { reads } from '@ember-decorators/object/computed';
 
 import layout from './template';
 
@@ -49,6 +50,9 @@ import layout from './template';
 class Row extends Component {
   layout = layout;
 
+  @argument(Object)
+  theme;
+
   @argument(arrayOf(Component))
   columns;
 
@@ -57,6 +61,14 @@ class Row extends Component {
    */
   @argument(optional(Action))
   onClick;
+
+  @className
+  @reads('theme.tbodyRow')
+  themeClass;
+
+  @className
+  @reads('theme.row')
+  themeRowClass;
 
   cells = A();
 

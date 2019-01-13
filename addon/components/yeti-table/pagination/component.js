@@ -20,18 +20,24 @@ import layout from './template';
   to the yielded `visibleColumns` number. Example:
 
   ```hbs
-  <tfoot>
-    <tr>
-      <td colspan={{table.visibleColumns}}>
-        <table.pagination/>
-      </td>
-    </tr>
-  </tfoot>
+  <YetiTable @data={{data}} @pagination={{true}} as |table|>
+    ...
+    <table.foot as |foot|>
+      <foot.row as |row|>
+        <row.cell colspan={{table.visibleColumns}}>
+          <table.pagination/>
+        </row.cell>
+      </foot.row>
+    </table.foot>
+  </YetiTable>
   ```
 */
 @classNames('yeti-table-pagination-controls')
 class Pagination extends Component {
   layout = layout;
+
+  @argument(Object)
+  theme;
 
   @argument('object')
   paginationData;

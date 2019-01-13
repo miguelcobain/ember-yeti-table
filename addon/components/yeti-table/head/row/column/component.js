@@ -47,6 +47,9 @@ import layout from './template';
 class Column extends DidChangeAttrsComponent {
   layout = layout;
 
+  @argument(optional(Object))
+  theme;
+
   @argument(Component)
   parent;
 

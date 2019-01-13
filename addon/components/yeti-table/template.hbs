@@ -1,16 +1,17 @@
 {{yield (hash
   header=(component "yeti-table/header"
     columns=columns onColumnClick=(action "onColumnSort")
-    sortable=sortable sortSequence=sortSequence parent=this
+    sortable=sortable sortSequence=sortSequence parent=this theme=mergedTheme
   )
   head=(component "yeti-table/head"
     columns=columns onColumnClick=(action "onColumnSort")
-    sortable=sortable sortSequence=sortSequence parent=this
+    sortable=sortable sortSequence=sortSequence theme=mergedTheme parent=this
   )
-  body=(component "yeti-table/body" data=processedData columns=columns parent=this)
-  foot=(component "yeti-table/foot" columns=columns parent=this)
+  body=(component "yeti-table/body" data=processedData columns=columns theme=mergedTheme parent=this)
+  foot=(component "yeti-table/foot" columns=columns theme=mergedTheme parent=this)
   pagination=(component "yeti-table/pagination"
     disabled=isLoading
+    theme=mergedTheme
     paginationData=paginationData
     paginationActions=(hash
       previousPage=(action "previousPage")
@@ -31,4 +32,5 @@
   visibleColumns=visibleColumns.length
   totalRows=normalizedTotalRows
   visibleRows=processedData.length
+  theme=mergedTheme
 )}}

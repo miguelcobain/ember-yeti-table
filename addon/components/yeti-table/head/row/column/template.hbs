@@ -1,7 +1,7 @@
 {{#if visible}}
   <th
     role={{if sortable "button"}}
-    class="{{class}} {{if sortable "yeti-table-sortable"}} {{if isSorted "yeti-table-sorted"}} {{if isAscSorted "yeti-table-sorted-asc"}} {{if isDescSorted "yeti-table-sorted-desc"}}"
+    class="{{class}} {{theme.theadCell}} {{if sortable theme.columnSortable}} {{if isSorted theme.columnSorted}} {{if isAscSorted theme.columnSortedAsc}} {{if isDescSorted theme.columnSortedDesc}}"
     onclick={{if sortable (action onClick this)}}
     ...attributes>
     {{yield (hash

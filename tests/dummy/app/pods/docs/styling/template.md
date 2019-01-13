@@ -13,6 +13,60 @@ Maybe you're using your own custom styles?
 
 No problem. Yeti Table should be flexible enough for you to render the markup you need.
 
+## Classes
+
+Yeti table does provide classes for you to use at each element of the table as a theme. 
+You may use the class names in the theme as provided or override elements of a theme with your 
+own class names 
+
+Yeti Table default theme is defined as
+```javascript
+defaultTheme = {
+  table: 'yeti-table',
+
+  row: '',
+
+  thead: '',
+  theadRow: '',
+  theadCell: '',
+
+  tbodyRow: '',
+  tbodyCell: '',
+
+  tfoot: '',
+  tfootRow: '',
+  tfootCell: '',
+
+  columnSortable:  'yeti-table-sortable',
+  columnSorted: 'yeti-table-sorted',
+  columnSortedAsc: 'yeti-table-sorted-asc',
+  columnSortedDesc: 'yeti-table-sorted-desc',
+
+  pagination: {
+
+    info: 'yeti-table-pagination-controls-page-info',
+    pageSize: 'yeti-table-pagination-controls-page-size',
+    next: 'yeti-table-pagination-controls-next',
+    previous: 'yeti-table-pagination-controls-previous'
+  }
+};
+```
+
+If you wish to override just the tbodyRow class you can do the following
+
+```hbs
+<YetiTable @theme={{hash tbodyRow="my-new-class"}} @data={{data}} @pagination={{true}} as |table|>
+  <table.header as |header|>
+    ...
+  </table.header>
+
+  <table.body as |body user|>
+    <body.row as |row|>
+      ...
+    </body.row>
+  </table.body>
+</YetiTable>
+```
 ## Examples
 
 If you're interested in the styles that are used in these pages, you can use them, of course.
@@ -22,11 +76,15 @@ The fact that Yeti Table was built with flexibility in mind should give you all 
 to customize markup to fit needs of many css frameworks like Bootstrap. Usually all it takes is a css class
 here and there.
 
-For example, bootstrap requires you to add some classes on the table elements. Here's an example:
+For example, bootstrap requires you to add some classes on the table elements. Note that the body row class
+required a conditional and therefore wasn't overridden in the theme, but could still be specified 
+using the `class` attribute 
+
+Here's an example:
 
 ```hbs
-<YetiTable class="table table-striped table-hover" @data={{data}} @pagination={{true}} as |table|>
-  <table.header class="thead-dark" as |header|>
+<YetiTable @theme={{table="table table-striped table-hover" thead="thead-dark"}} @data={{data}} @pagination={{true}} as |table|>
+  <table.header as |header|>
     ...
   </table.header>
 
