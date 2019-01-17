@@ -18,7 +18,7 @@ For the data, let's use an array of objects defined in your component:
 ```js
 import Component from '@ember/component';
 
-class DemoComponent extends Component {
+export default class DemoComponent extends Component {
   rows = [
     {
       firstName: 'Tony',
