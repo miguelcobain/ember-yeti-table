@@ -5,7 +5,7 @@
   },
   "include": [
       "addon/**/*",
-      "tests/dummy/**/*"
+      "tests/**/*"
   ],
   "exclude": [
     "node_modules",

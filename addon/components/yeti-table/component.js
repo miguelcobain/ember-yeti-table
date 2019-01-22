@@ -18,6 +18,7 @@ import {
   shapeOf
 } from '@ember-decorators/argument/types';
 import { classNames } from '@ember-decorators/component';
+import defaultIfUndefined from 'ember-yeti-table/-private/decorators/default-if-undefined';
 
 import filterData from 'ember-yeti-table/-private/utils/filtering-utils';
 import {
@@ -165,6 +166,7 @@ export default class YetiTable extends DidChangeAttrsComponent {
    * string and show them. Defaults to `''`.
    */
   @argument(optional('string'))
+  @defaultIfUndefined
   filter = '';
 
   /**

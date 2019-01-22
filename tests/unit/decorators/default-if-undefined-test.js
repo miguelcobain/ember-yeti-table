@@ -1,7 +1,7 @@
 import defaultIfUndefined from 'ember-yeti-table/-private/decorators/default-if-undefined';
 import { module, test } from 'qunit';
 
-module('Unit | Decorators | @defaultIfUndefined', function(hooks) {
+module('Unit | Decorators | @defaultIfUndefined', function() {
   test('it works', function(assert) {
     class Foo {
       @defaultIfUndefined bar = 'default';
