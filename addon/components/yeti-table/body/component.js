@@ -2,14 +2,12 @@ import Component from '@ember/component';
 
 import { tagName } from '@ember-decorators/component';
 import { argument } from '@ember-decorators/argument';
-import { required } from '@ember-decorators/argument/validation';
 import {
-  type,
   arrayOf,
   unionOf,
   shapeOf,
   optional
-} from '@ember-decorators/argument/type';
+} from '@ember-decorators/argument/types';
 import { Action } from '@ember-decorators/argument/types';
 
 import layout from './template';
@@ -50,33 +48,25 @@ const arrayOrPromise = unionOf(
 export default class Body extends Component {
   layout = layout;
 
-  @argument
-  @required
-  @type(arrayOrPromise)
+  @argument(arrayOrPromise)
   data;
 
-  @argument
-  @required
-  @type(arrayOf(Component))
+  @argument(arrayOf(Component))
   columns;
 
-  @argument
-  @required
-  @type(Component)
+  @argument(Component)
   parent;
 
   /**
    * Adds a class to each `<tr>` element. Can be used with both the blockless and block invocations.
    */
-  @argument
-  @type(optional('string'))
+  @argument(optional('string'))
   rowClass;
 
   /**
    * Adds a click action to each row, called with the clicked row's data as an argument.
    * Can be used with both the blockless and block invocations.
    */
-  @argument
-  @type(optional(Action))
+  @argument(optional(Action))
   onRowClick = () => {};
 }

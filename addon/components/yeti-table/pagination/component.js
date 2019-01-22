@@ -3,8 +3,7 @@ import Component from '@ember/component';
 import { or } from '@ember-decorators/object/computed';
 import { classNames } from '@ember-decorators/component';
 import { argument } from '@ember-decorators/argument';
-import { required } from '@ember-decorators/argument/validation';
-import { type, arrayOf } from '@ember-decorators/argument/type';
+import { arrayOf } from '@ember-decorators/argument/types';
 
 import layout from './template';
 
@@ -34,18 +33,13 @@ import layout from './template';
 export default class Pagination extends Component {
   layout = layout;
 
-  @argument
-  @required
-  @type('object')
+  @argument('object')
   paginationData;
 
-  @argument
-  @required
-  @type('object')
+  @argument('object')
   paginationActions;
 
-  @argument
-  @type('boolean')
+  @argument('boolean')
   disabled;
 
   @or('paginationData.isFirstPage', 'disabled')
@@ -59,8 +53,7 @@ export default class Pagination extends Component {
    * Particularly useful with an array helper, e.g `@pageSizes={{array 10 12 23 50 100}}`
    * Defaults to `[10, 15, 20, 25]`.
    */
-  @argument
-  @type(arrayOf('number'))
+  @argument(arrayOf('number'))
   pageSizes = [
     10, 15, 20, 25
   ];
@@ -68,22 +61,19 @@ export default class Pagination extends Component {
   /**
    * Used to show/hide some textual information about the current page. Defaults to `true`.
    */
-  @argument
-  @type('boolean')
+  @argument('boolean')
   showInfo = true;
 
   /**
    * Used to show/hide the page size selector. Defaults to `true`.
    */
-  @argument
-  @type('boolean')
+  @argument('boolean')
   showPageSizeSelector = true;
 
   /**
    * Used to show/hide the previous and next page buttons. Defaults to `true`.
    */
-  @argument
-  @type('boolean')
+  @argument('boolean')
   showButtons = true;
 
 }

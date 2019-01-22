@@ -3,8 +3,7 @@ import { A } from '@ember/array';
 
 import { tagName } from '@ember-decorators/component';
 import { argument } from '@ember-decorators/argument';
-import { required } from '@ember-decorators/argument/validation';
-import { type, optional, arrayOf } from '@ember-decorators/argument/type';
+import { optional, arrayOf } from '@ember-decorators/argument/types';
 import { Action } from '@ember-decorators/argument/types';
 
 import layout from './template';
@@ -50,16 +49,13 @@ import layout from './template';
 export default class Row extends Component {
   layout = layout;
 
-  @argument
-  @required
-  @type(arrayOf(Component))
+  @argument(arrayOf(Component))
   columns;
 
   /**
    * Adds a click action to the row.
    */
-  @argument
-  @type(optional(Action))
+  @argument(optional(Action))
   onClick;
 
   cells = A();

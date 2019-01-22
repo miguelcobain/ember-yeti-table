@@ -3,8 +3,7 @@ import { A } from '@ember/array';
 
 import { tagName } from '@ember-decorators/component';
 import { argument } from '@ember-decorators/argument';
-import { required } from '@ember-decorators/argument/validation';
-import { type, arrayOf } from '@ember-decorators/argument/type';
+import { arrayOf } from '@ember-decorators/argument/types';
 
 import layout from './template';
 
@@ -27,14 +26,10 @@ import layout from './template';
 export default class Row extends Component {
   layout = layout;
 
-  @argument
-  @required
-  @type(Component)
+  @argument(Component)
   parent;
 
-  @argument
-  @required
-  @type(arrayOf(Component))
+  @argument(arrayOf(Component))
   columns;
 
   cells = A();

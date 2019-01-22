@@ -3,8 +3,7 @@ import { A } from '@ember/array';
 
 import { tagName } from '@ember-decorators/component';
 import { argument } from '@ember-decorators/argument';
-import { required } from '@ember-decorators/argument/validation';
-import { type, optional, unionOf, arrayOf } from '@ember-decorators/argument/type';
+import { optional, unionOf, arrayOf } from '@ember-decorators/argument/types';
 import { Action } from '@ember-decorators/argument/types';
 
 import layout from './template';
@@ -30,31 +29,22 @@ import layout from './template';
 export default class Row extends Component {
   layout = layout;
 
-  @argument
-  @required
-  @type(Component)
+  @argument(Component)
   parent;
 
-  @argument
-  @required
-  @type(arrayOf(Component))
+  @argument(arrayOf(Component))
   columns;
 
-  @argument
-  @type('boolean')
+  @argument('boolean')
   sortable = true;
 
-  @argument
-  @type(optional('string'))
+  @argument(optional('string'))
   sort = null;
 
-  @argument
-  @type(unionOf('string', arrayOf('string')))
+  @argument(unionOf('string', arrayOf('string')))
   sortSequence;
 
-  @argument
-  @required
-  @type(Action)
+  @argument(Action)
   onColumnClick;
 
   cells = A();

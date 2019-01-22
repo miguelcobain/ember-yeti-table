@@ -12,12 +12,11 @@ import { computed, action } from '@ember-decorators/object';
 import { filterBy } from '@ember-decorators/object/computed';
 import { argument } from '@ember-decorators/argument';
 import {
-  type,
   optional,
   arrayOf,
   unionOf,
   shapeOf
-} from '@ember-decorators/argument/type';
+} from '@ember-decorators/argument/types';
 import { classNames } from '@ember-decorators/component';
 
 import filterData from 'ember-yeti-table/-private/utils/filtering-utils';
@@ -112,8 +111,7 @@ export default class YetiTable extends DidChangeAttrsComponent {
    * The data for Yeti Table to render. It can be an array or a promise that resolves with an array.
    * The only case when `@data` is optional is if a `@loadData` was passed in.
    */
-  @argument
-  @type(optional(arrayOrPromise))
+  @argument(optional(arrayOrPromise))
   data;
 
   /**
@@ -131,29 +129,25 @@ export default class YetiTable extends DidChangeAttrsComponent {
    * Please check the "Async Data" guide to understand what that object contains and
    * an example of its usage.
    */
-  @argument
-  @type(optional(Function))
+  @argument(optional(Function))
   loadData;
 
   /**
    * Use this argument to enable the pagination feature. Default is `false`.
    */
-  @argument
-  @type('boolean')
+  @argument('boolean')
   pagination = false;
 
   /**
    * Controls the size of each page. Default is `15`.
    */
-  @argument
-  @type('number')
+  @argument('number')
   pageSize = 15;
 
   /**
    * Controls the current page to show. Default is `1`.
    */
-  @argument
-  @type('number')
+  @argument('number')
   pageNumber = 1;
 
   /**
@@ -163,16 +157,14 @@ export default class YetiTable extends DidChangeAttrsComponent {
    * This information is used to calculate the pagination information that is yielded
    * and passed to the `@loadData` function.
    */
-  @argument
-  @type(optional('number'))
+  @argument(optional('number'))
   totalRows;
 
   /**
    * The global filter. If passed in, Yeti Table will search all the rows that contain this
    * string and show them. Defaults to `''`.
    */
-  @argument({ defaultIfUndefined: true })
-  @type(optional('string'))
+  @argument(optional('string'))
   filter = '';
 
   /**
@@ -184,8 +176,7 @@ export default class YetiTable extends DidChangeAttrsComponent {
    * - `row` - the current data row to use for filtering
    * - `filterUsing` - the value you passed in as `@filterUsing`
    */
-  @argument
-  @type(optional(Function))
+  @argument(optional(Function))
   filterFunction;
 
   /**
@@ -193,24 +184,21 @@ export default class YetiTable extends DidChangeAttrsComponent {
    * to show, pass it in this argument. Yeti Table uses this argument to know when to recalculate
    * the fitlered rows.
    */
-  @argument
-  @type(optional('any'))
+  @argument(optional('any'))
   filterUsing;
 
   /**
    * Used to enable/disable sorting on all columns. You should use this to avoid passing
    * the @sortable argument to all columns.
    */
-  @argument
-  @type(optional('boolean'))
+  @argument(optional('boolean'))
   sortable = true;
 
   /**
    * Use the `@sortFunction` if you want to completely customize how the row sorting is done.
    * It will be invoked with two rows, the current sortings that are applied and the `@compareFunction`.
    */
-  @argument
-  @type(Function)
+  @argument(Function)
   sortFunction = sortMultiple;
 
   /**
@@ -218,8 +206,7 @@ export default class YetiTable extends DidChangeAttrsComponent {
    * It will be invoked with two values and you just need to return `-1`, `0` or `1` depending on if first value is
    * greater than the second or not. The default compare function used is the `compare` function from `@ember/utils`.
    */
-  @argument
-  @type(Function)
+  @argument(Function)
   compareFunction = compareValues;
 
   /**
@@ -227,8 +214,7 @@ export default class YetiTable extends DidChangeAttrsComponent {
    * clicking on the table headers. You can either pass in a comma-separated string or an array
    * of strings. Accepted values are `'asc'`, `'desc'` and `'unsorted'`. The default value is `['asc', 'desc']`.
    */
-  @argument
-  @type(unionOf('string', arrayOf('string')))
+  @argument(unionOf('string', arrayOf('string')))
   sortSequence = ['asc', 'desc'];
 
   isLoading = false;
