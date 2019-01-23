@@ -60,5 +60,5 @@ Notice how we carefully passed in the `@prop` arguments in the column definition
 This way, Yeti Table knows which values you want in each column and can "unroll" the entire rows for you using just `<table.body/>`.
 
 <aside>
-  Confused by this weird syntax? Check out the {{#link-to "docs.legacy-usage"}}Legacy usage{{/link-to}} page to learn more about it.
+  Confused by this weird syntax? Check out the {{#docs-link "docs.legacy-usage"}}Legacy usage{{/docs-link}} page to learn more about it.
 </aside>
