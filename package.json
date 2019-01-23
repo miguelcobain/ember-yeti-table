@@ -29,8 +29,7 @@
     "@ember-decorators/babel-transforms": "^5.1.1",
     "ember-cli-babel": "^7.3.0",
     "ember-cli-htmlbars": "^3.0.0",
-    "ember-decorators": "^5.1.1",
-    "ember-native-class-polyfill": "^1.0.5"
+    "ember-decorators": "^5.1.1"
   },
   "devDependencies": {
     "@ember/optional-features": "^0.7.0",
