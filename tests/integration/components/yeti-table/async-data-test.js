@@ -13,7 +13,6 @@ import RSVP from 'rsvp';
 import { later } from '@ember/runloop';
 import sinon from 'sinon';
 
-import EmberObject from '@ember/object';
 import { timeout } from 'ember-concurrency';
 import { restartableTask } from 'ember-concurrency-decorators';
 
