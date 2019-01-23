@@ -6,6 +6,6 @@ import { argument } from '@ember-decorators/argument';
 @tagName('')
 export default class MaterialPagination extends Component {
 
-  @argument
+  @argument('object')
   table;
 }
