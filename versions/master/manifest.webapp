@@ -3,9 +3,9 @@
   "name": "ember-yeti-table",
   "description": "Lightweight and flexible tables addon.",
   "icons": {
-    "60": "/firefox_app_60x60.png",
-    "128": "/firefox_app_128x128.png",
-    "512": "/firefox_app_512x512.png"
+    "60": "/ADDON_DOCS_ROOT_URL/firefox_app_60x60.png",
+    "128": "/ADDON_DOCS_ROOT_URL/firefox_app_128x128.png",
+    "512": "/ADDON_DOCS_ROOT_URL/firefox_app_512x512.png"
   },
   "developer": {
     "name": "Miguel Andrade <jmandrade0@gmail.com>",
