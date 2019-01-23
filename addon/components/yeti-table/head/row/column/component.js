@@ -155,6 +155,8 @@ export default class Column extends DidChangeAttrsComponent {
       return sortSequence;
     } else if (typeof sortSequence === 'string') {
       return sortSequence.split(',').map((s) => s.trim());
+    } else {
+      return [];
     }
   }
 
