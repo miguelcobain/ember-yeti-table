@@ -1,4 +1,6 @@
-$primary: #5B47B9;
+:root {
+  --brand-primary: #5B47B9;
+}
 
 @import "material";
 @import "pagination-controls-example";
@@ -37,21 +39,12 @@ body {
   width: 120px;
 
   &:focus {
-    border-bottom-color: $primary;
+    border-bottom-color: var(--brand-primary);
   }
 }
 
 // ember-cli-addon-docs overrides
 
-.docs-bg-brand, body, .hover\:docs-bg-brand:hover {
-  background-color: $primary;
-}
-
-.docs-text-brand, .hover\:docs-text-brand:hover, .docs-md__a {
-  color: $primary;
-}
-
 .docs-font-title {
   font-family: inherit;
 }
-
