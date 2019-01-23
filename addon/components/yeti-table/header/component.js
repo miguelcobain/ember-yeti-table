@@ -27,7 +27,7 @@ import layout from './template';
   @yield {Component} header.column       the column component
 */
 @tagName('thead')
-export default class Header extends Component {
+class Header extends Component {
   layout = layout;
 
   @argument('boolean')
@@ -55,3 +55,5 @@ export default class Header extends Component {
     }
   }
 }
+
+export default Header;

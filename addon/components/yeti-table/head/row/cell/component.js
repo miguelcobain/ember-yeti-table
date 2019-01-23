@@ -27,7 +27,7 @@ import layout from './template';
 
  */
 @tagName('')
-export default class Cell extends Component {
+class Cell extends Component {
   layout = layout;
 
   @argument(Component)
@@ -48,3 +48,5 @@ export default class Cell extends Component {
     }
   }
 }
+
+export default Cell;

@@ -22,7 +22,7 @@ import layout from './template';
   @yield {Component} footer.row
 */
 @tagName('tfoot')
-export default class Foot extends Component {
+class Foot extends Component {
   layout = layout;
 
   @argument(Component)
@@ -31,3 +31,5 @@ export default class Foot extends Component {
   @argument(arrayOf(Component))
   columns;
 }
+
+export default Foot;

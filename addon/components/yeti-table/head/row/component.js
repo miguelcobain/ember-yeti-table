@@ -26,7 +26,7 @@ import layout from './template';
   @yield {Component} cell
 */
 @tagName('')
-export default class Row extends Component {
+class Row extends Component {
   layout = layout;
 
   @argument(Component)
@@ -70,3 +70,5 @@ export default class Row extends Component {
   }
 
 }
+
+export default Row;

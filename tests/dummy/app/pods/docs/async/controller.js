@@ -11,7 +11,7 @@ export default class AsyncController extends Controller {
    * This uses ember-concurrency and ember-concurrency-decorators.
    */
   @restartableTask
-  loadDataTask = function* ({ paginationData, sortData, filterData }) {
+  *loadDataTask({ paginationData, sortData, filterData }) {
     yield timeout(250);
 
     let params = {

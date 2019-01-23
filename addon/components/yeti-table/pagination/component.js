@@ -30,7 +30,7 @@ import layout from './template';
   ```
 */
 @classNames('yeti-table-pagination-controls')
-export default class Pagination extends Component {
+class Pagination extends Component {
   layout = layout;
 
   @argument('object')
@@ -77,3 +77,5 @@ export default class Pagination extends Component {
   showButtons = true;
 
 }
+
+export default Pagination;

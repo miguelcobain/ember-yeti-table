@@ -105,7 +105,7 @@ const didCancel = function(e) {
 */
 @tagName('table')
 @classNames('yeti-table')
-export default class YetiTable extends DidChangeAttrsComponent {
+class YetiTable extends DidChangeAttrsComponent {
   layout = layout;
 
   /**
@@ -529,3 +529,5 @@ export default class YetiTable extends DidChangeAttrsComponent {
     this.get('columns').removeObject(column);
   }
 }
+
+export default YetiTable;

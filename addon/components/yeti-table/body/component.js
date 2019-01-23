@@ -45,7 +45,7 @@ const arrayOrPromise = unionOf(
   @yield {Component} body.row - the row component
 */
 @tagName('tbody')
-export default class Body extends Component {
+class Body extends Component {
   layout = layout;
 
   @argument(arrayOrPromise)
@@ -70,3 +70,5 @@ export default class Body extends Component {
   @argument(optional(Action))
   onRowClick = () => {};
 }
+
+export default Body;

@@ -4,7 +4,7 @@ import { tagName } from '@ember-decorators/component';
 import { argument } from '@ember-decorators/argument';
 
 @tagName('')
-export default class MaterialSpinner extends Component {
+class MaterialSpinner extends Component {
 
   @argument('string')
   width = '65px';
@@ -13,3 +13,5 @@ export default class MaterialSpinner extends Component {
   height = '65px';
 
 }
+
+export default MaterialSpinner;

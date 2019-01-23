@@ -14,7 +14,8 @@ import { later } from '@ember/runloop';
 import sinon from 'sinon';
 
 import EmberObject from '@ember/object';
-import { task, timeout } from 'ember-concurrency';
+import { timeout } from 'ember-concurrency';
+import { restartableTask } from 'ember-concurrency-decorators';
 
 import {
   sortMultiple,
@@ -643,14 +644,17 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     let spy = sinon.spy();
     let hardWorkCounter = 0;
 
-    this.obj = EmberObject.extend({
-      loadData: task(function * () {
+    class Obj {
+      @restartableTask
+      *loadData() {
         spy(...arguments);
         yield timeout(100);
         hardWorkCounter++;
         return data;
-      }).restartable()
-    }).create();
+      }
+    }
+
+    this.obj = new Obj();
 
     this.set('filterText', 'Migu');
 

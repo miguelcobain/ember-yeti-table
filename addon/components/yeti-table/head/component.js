@@ -26,7 +26,7 @@ import layout from './template';
   @yield {Component} head.row
 */
 @tagName('thead')
-export default class Head extends Component {
+class Head extends Component {
   layout = layout;
 
   @argument('boolean')
@@ -45,3 +45,5 @@ export default class Head extends Component {
   onColumnClick;
 
 }
+
+export default Head;

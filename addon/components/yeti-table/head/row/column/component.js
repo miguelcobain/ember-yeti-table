@@ -44,7 +44,7 @@ import layout from './template';
   @yield {boolean} column.isDescSorted - `true` if column is sorted descending
 */
 @tagName('')
-export default class Column extends DidChangeAttrsComponent {
+class Column extends DidChangeAttrsComponent {
   layout = layout;
 
   @argument(Component)
@@ -183,3 +183,5 @@ export default class Column extends DidChangeAttrsComponent {
     }
   }
 }
+
+export default Column;
