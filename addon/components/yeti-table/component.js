@@ -119,7 +119,7 @@ class YetiTable extends DidChangeAttrsComponent {
    *
    * You may create your own theme-class and set `theme` to it's instance. Check Theme properties you may define in your own theme.
    */
-  @argument(optional(Object))
+  @argument(optional('object'))
   theme;
 
   /**
