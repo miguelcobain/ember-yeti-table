@@ -11,6 +11,7 @@ import { A } from '@ember/array';
 import { set, get } from '@ember/object';
 import { compare } from '@ember/utils';
 import { run } from '@ember/runloop';
+import DEFAULT_THEME from 'ember-yeti-table/-private/themes/default-theme';
 
 module('Integration | Component | yeti-table (sorting)', function(hooks) {
   setupRenderingTest(hooks);
@@ -60,7 +61,7 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
       </YetiTable>
     `);
 
-    assert.dom('th').hasClass('yeti-table-sortable');
+    assert.dom('th').hasClass(DEFAULT_THEME.sorting.columnSortable);
   });
 
   test('using @sortable={{false}} on <YetiTable> does not add the sortable classes to all collumns', async function(assert) {
@@ -84,9 +85,9 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
       </YetiTable>
     `);
 
-    assert.dom('thead tr th:nth-child(1)').doesNotHaveClass('yeti-table-sortable');
-    assert.dom('thead tr th:nth-child(2)').doesNotHaveClass('yeti-table-sortable');
-    assert.dom('thead tr th:nth-child(3)').doesNotHaveClass('yeti-table-sortable');
+    assert.dom('thead tr th:nth-child(1)').doesNotHaveClass(DEFAULT_THEME.sorting.columnSortable);
+    assert.dom('thead tr th:nth-child(2)').doesNotHaveClass(DEFAULT_THEME.sorting.columnSortable);
+    assert.dom('thead tr th:nth-child(3)').doesNotHaveClass(DEFAULT_THEME.sorting.columnSortable);
   });
 
   test('using sortable=false does not add the sortable class', async function(assert) {
@@ -110,9 +111,9 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
       </YetiTable>
     `);
 
-    assert.dom('thead tr th:nth-child(1)').hasClass('yeti-table-sortable');
-    assert.dom('thead tr th:nth-child(2)').doesNotHaveClass('yeti-table-sortable');
-    assert.dom('thead tr th:nth-child(3)').hasClass('yeti-table-sortable');
+    assert.dom('thead tr th:nth-child(1)').hasClass(DEFAULT_THEME.sorting.columnSortable);
+    assert.dom('thead tr th:nth-child(2)').doesNotHaveClass(DEFAULT_THEME.sorting.columnSortable);
+    assert.dom('thead tr th:nth-child(3)').hasClass(DEFAULT_THEME.sorting.columnSortable);
   });
 
   test('default sort works', async function(assert) {
@@ -722,7 +723,7 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
       </YetiTable>
     `);
 
-    assert.dom('thead tr:nth-child(1) th:nth-child(1)').hasClass('yeti-table-sorted-asc');
+    assert.dom('thead tr:nth-child(1) th:nth-child(1)').hasClass(DEFAULT_THEME.sorting.columnSortedAsc);
   });
 
   test('default sort applies correct order class to header column (desc)', async function(assert) {
@@ -746,7 +747,7 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
       </YetiTable>
     `);
 
-    assert.dom('thead tr:nth-child(1) th:nth-child(1)').hasClass('yeti-table-sorted-desc');
+    assert.dom('thead tr:nth-child(1) th:nth-child(1)').hasClass(DEFAULT_THEME.sorting.columnSortedDesc);
   });
 
   test('clicking on column header applies correct class', async function(assert) {
@@ -771,18 +772,18 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
     `);
 
     // not sorted
-    assert.dom('thead tr:nth-child(1) th:nth-child(1)').doesNotHaveClass('yeti-table-sorted-asc');
-    assert.dom('thead tr:nth-child(1) th:nth-child(1)').doesNotHaveClass('yeti-table-sorted-desc');
+    assert.dom('thead tr:nth-child(1) th:nth-child(1)').doesNotHaveClass(DEFAULT_THEME.sorting.columnSortedAsc);
+    assert.dom('thead tr:nth-child(1) th:nth-child(1)').doesNotHaveClass(DEFAULT_THEME.sorting.columnSortedDesc);
 
     await click('thead th:nth-child(1)');
 
     // it is sorted ascending
-    assert.dom('thead tr:nth-child(1) th:nth-child(1)').hasClass('yeti-table-sorted-asc');
+    assert.dom('thead tr:nth-child(1) th:nth-child(1)').hasClass(DEFAULT_THEME.sorting.columnSortedAsc);
 
     await click('thead th:nth-child(1)');
 
     // it is sorted descending
-    assert.dom('thead tr:nth-child(1) th:nth-child(1)').hasClass('yeti-table-sorted-desc');
+    assert.dom('thead tr:nth-child(1) th:nth-child(1)').hasClass(DEFAULT_THEME.sorting.columnSortedDesc);
   });
 
   test('column header yields order status correctly', async function(assert) {

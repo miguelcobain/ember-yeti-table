@@ -26,6 +26,9 @@ import layout from './template';
 class Row extends Component {
   layout = layout;
 
+  @argument('object')
+  theme;
+
   @argument(Component)
   parent;
 

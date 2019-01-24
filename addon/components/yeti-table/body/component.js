@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 
-import { tagName } from '@ember-decorators/component';
+import { tagName, className } from '@ember-decorators/component';
 import { argument } from '@ember-decorators/argument';
 import {
   arrayOf,
@@ -9,6 +9,7 @@ import {
   optional
 } from '@ember-decorators/argument/types';
 import { Action } from '@ember-decorators/argument/types';
+import { reads } from '@ember-decorators/object/computed';
 
 import layout from './template';
 
@@ -48,6 +49,9 @@ const arrayOrPromise = unionOf(
 class Body extends Component {
   layout = layout;
 
+  @argument('object')
+  theme;
+
   @argument(arrayOrPromise)
   data;
 
@@ -62,6 +66,10 @@ class Body extends Component {
    */
   @argument(optional('string'))
   rowClass;
+
+  @className
+  @reads('theme.tbody')
+  themeClass;
 
   /**
    * Adds a click action to each row, called with the clicked row's data as an argument.

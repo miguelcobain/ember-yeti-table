@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 
-import { or } from '@ember-decorators/object/computed';
-import { classNames } from '@ember-decorators/component';
+import { className } from '@ember-decorators/component';
+import { or, reads } from '@ember-decorators/object/computed';
 import { argument } from '@ember-decorators/argument';
 import { arrayOf } from '@ember-decorators/argument/types';
 
@@ -20,18 +20,28 @@ import layout from './template';
   to the yielded `visibleColumns` number. Example:
 
   ```hbs
-  <tfoot>
-    <tr>
-      <td colspan={{table.visibleColumns}}>
-        <table.pagination/>
-      </td>
-    </tr>
-  </tfoot>
+  <YetiTable @data={{data}} @pagination={{true}} as |table|>
+    ...
+    <table.foot as |foot|>
+      <foot.row as |row|>
+        <row.cell colspan={{table.visibleColumns}}>
+          <table.pagination/>
+        </row.cell>
+      </foot.row>
+    </table.foot>
+  </YetiTable>
   ```
 */
-@classNames('yeti-table-pagination-controls')
+
 class Pagination extends Component {
   layout = layout;
+
+  @argument('object')
+  theme;
+
+  @className
+  @reads('theme.pagination.controls')
+  themeClass;
 
   @argument('object')
   paginationData;
