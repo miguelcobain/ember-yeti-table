@@ -49,7 +49,7 @@ const arrayOrPromise = unionOf(
 class Body extends Component {
   layout = layout;
 
-  @argument(Object)
+  @argument('object')
   theme;
 
   @argument(arrayOrPromise)

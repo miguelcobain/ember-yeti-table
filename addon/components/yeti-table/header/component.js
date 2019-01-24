@@ -31,7 +31,7 @@ import layout from './template';
 class Header extends Component {
   layout = layout;
 
-  @argument(Object)
+  @argument('object')
   theme;
 
   @argument('boolean')

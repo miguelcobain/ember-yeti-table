@@ -29,7 +29,7 @@ import layout from './template';
 class Row extends Component {
   layout = layout;
 
-  @argument(Object)
+  @argument('object')
   theme;
 
   @argument(Component)

@@ -30,7 +30,7 @@ import layout from './template';
 class Cell extends Component {
   layout = layout;
 
-  @argument(Object)
+  @argument('object')
   theme;
 
   @argument(Component)

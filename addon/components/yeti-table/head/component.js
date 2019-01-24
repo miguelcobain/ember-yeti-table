@@ -30,7 +30,7 @@ import layout from './template';
 class Head extends Component {
   layout = layout;
 
-  @argument(Object)
+  @argument('object')
   theme;
 
   @argument('boolean')

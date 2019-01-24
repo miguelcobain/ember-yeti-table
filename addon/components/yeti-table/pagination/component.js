@@ -36,7 +36,7 @@ import layout from './template';
 class Pagination extends Component {
   layout = layout;
 
-  @argument(Object)
+  @argument('object')
   theme;
 
   @argument('object')
