@@ -2,7 +2,6 @@ import Component from '@ember/component';
 
 import { className } from '@ember-decorators/component';
 import { or, reads } from '@ember-decorators/object/computed';
-import { classNames } from '@ember-decorators/component';
 import { argument } from '@ember-decorators/argument';
 import { arrayOf } from '@ember-decorators/argument/types';
 
