@@ -70,7 +70,7 @@ Note that updating the `@sort` argument will also update the sorting of the tabl
 It is very common to customize the column header based on the sorting status of that column.
 Yeti table provides two approaches for this customization:
 
-- **css classes** - When a column is sorted ascending, it will have the `yeti-table-sorted-asc` class. When a column is sorted descending, it will have the `yeti-table-sorted-desc` class. You can use these to style according to your needs.
+- **css classes** - When a column is sorted ascending, it will have the `yeti-table-sorted-asc` class. When a column is sorted descending, it will have the `yeti-table-sorted-desc` class. You can use these to style according to your needs (if the default theme is applied).
 - **yielded hash** - Every `<header.column>` component will yield a hash of booleans that contains: `isSorted`, `isAscSorted` and `isDescSorted`. You can use these to customize the rendering of the column itself.
 
 In the following example we're showing `(sorted desc)` or `(sorted asc)` text depending on the sorting status of the column.

@@ -122,7 +122,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
         </table.head>
 
         <table.body/>
-        
+
         <table.foot as |foot|>
           <foot.row as |row|>
             <row.cell>
@@ -566,7 +566,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
     assert.dom('thead tr:nth-child(1) th:nth-child(1)').hasAttribute('data-column', 'test-column');
     assert.dom('thead tr:nth-child(1) th:nth-child(1)').hasClass('custom-class');
-    assert.dom('thead tr:nth-child(1) th:nth-child(1)').hasClass('yeti-table-sortable');
+    assert.dom('thead tr:nth-child(1) th:nth-child(1)').hasClass(DEFAULT_THEME.sorting.columnSortable);
 
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasAttribute('data-cell', 'test-cell');
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasClass('column-class');

@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 
-import { or } from '@ember-decorators/object/computed';
+import { className } from '@ember-decorators/component';
+import { or, reads } from '@ember-decorators/object/computed';
 import { classNames } from '@ember-decorators/component';
 import { argument } from '@ember-decorators/argument';
 import { arrayOf } from '@ember-decorators/argument/types';
@@ -32,12 +33,16 @@ import layout from './template';
   </YetiTable>
   ```
 */
-@classNames('yeti-table-pagination-controls')
+
 class Pagination extends Component {
   layout = layout;
 
   @argument('object')
   theme;
+
+  @className
+  @reads('theme.pagination.controls')
+  themeClass;
 
   @argument('object')
   paginationData;

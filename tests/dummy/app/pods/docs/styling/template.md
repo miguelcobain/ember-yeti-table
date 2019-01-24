@@ -19,40 +19,11 @@ Yeti table does provide classes for you to use at each element of the table as a
 You may use the class names in the theme as provided or override elements of a theme with your 
 own class names 
 
-Yeti Table default theme is defined as
-```javascript
-defaultTheme = {
-  table: 'yeti-table',
+Yeti Table default theme is defined as:
 
-  row: '',
+{{docs-snippet name="default-theme.js"}}
 
-  thead: '',
-  theadRow: '',
-  theadCell: '',
-
-  tbodyRow: '',
-  tbodyCell: '',
-
-  tfoot: '',
-  tfootRow: '',
-  tfootCell: '',
-
-  columnSortable:  'yeti-table-sortable',
-  columnSorted: 'yeti-table-sorted',
-  columnSortedAsc: 'yeti-table-sorted-asc',
-  columnSortedDesc: 'yeti-table-sorted-desc',
-
-  pagination: {
-
-    info: 'yeti-table-pagination-controls-page-info',
-    pageSize: 'yeti-table-pagination-controls-page-size',
-    next: 'yeti-table-pagination-controls-next',
-    previous: 'yeti-table-pagination-controls-previous'
-  }
-};
-```
-
-If you wish to override just the tbodyRow class you can do the following
+If you wish to override just the `tbodyRow` class you can do the following:
 
 ```hbs
 <YetiTable @theme={{hash tbodyRow="my-new-class"}} @data={{data}} @pagination={{true}} as |table|>
@@ -67,6 +38,7 @@ If you wish to override just the tbodyRow class you can do the following
   </table.body>
 </YetiTable>
 ```
+
 ## Examples
 
 If you're interested in the styles that are used in these pages, you can use them, of course.

@@ -40,6 +40,7 @@ module.exports = function(defaults) {
         }
       }
     },
+    snippetSearchPaths: ['addon']
   });
 
   /*

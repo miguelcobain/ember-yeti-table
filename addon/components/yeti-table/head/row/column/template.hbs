@@ -1,7 +1,7 @@
 {{#if visible}}
   <th
     role={{if sortable "button"}}
-    class="{{class}} {{theme.theadCell}} {{if sortable theme.columnSortable}} {{if isSorted theme.columnSorted}} {{if isAscSorted theme.columnSortedAsc}} {{if isDescSorted theme.columnSortedDesc}}"
+    class="{{class}} {{theme.theadCell}} {{if sortable theme.sorting.columnSortable}} {{if isSorted theme.sorting.columnSorted}} {{if isAscSorted theme.sorting.columnSortedAsc}} {{if isDescSorted theme.sorting.columnSortedDesc}}"
     onclick={{if sortable (action onClick this)}}
     ...attributes>
     {{yield (hash

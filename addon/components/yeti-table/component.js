@@ -7,7 +7,7 @@ import {
 } from '@ember/object';
 import { once } from '@ember/runloop';
 
-import { tagName } from '@ember-decorators/component';
+import { tagName, className } from '@ember-decorators/component';
 import { computed, action } from '@ember-decorators/object';
 import { filterBy, reads } from '@ember-decorators/object/computed';
 import { argument } from '@ember-decorators/argument';
@@ -17,7 +17,6 @@ import {
   unionOf,
   shapeOf
 } from '@ember-decorators/argument/types';
-import { className } from '@ember-decorators/component';
 import defaultIfUndefined from 'ember-yeti-table/-private/decorators/default-if-undefined';
 
 import filterData from 'ember-yeti-table/-private/utils/filtering-utils';
@@ -28,9 +27,10 @@ import {
 } from 'ember-yeti-table/-private/utils/sorting-utils';
 
 import { getOwner } from '@ember/application';
-import { assign } from '@ember/polyfills';
 
 import layout from './template';
+
+import merge from 'deepmerge';
 
 import DEFAULT_THEME from 'ember-yeti-table/-private/themes/default-theme';
 
@@ -235,7 +235,7 @@ class YetiTable extends DidChangeAttrsComponent {
 
   @className
   @reads('mergedTheme.table')
-  themeClassName;
+  themeClass;
 
   isLoading = false;
 
@@ -315,7 +315,7 @@ class YetiTable extends DidChangeAttrsComponent {
 
     let config = getOwner(this).resolveRegistration('config:environment')['ember-yeti-table'];
     let configTheme = config ? config.theme : {};
-    let mergedTheme = assign({}, DEFAULT_THEME, configTheme, this.theme || {});
+    let mergedTheme = merge.all([{}, DEFAULT_THEME, configTheme, this.get('theme') || {}]);
     this.mergedTheme = mergedTheme;
 
     this.columns = A();
