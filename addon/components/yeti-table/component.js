@@ -110,7 +110,6 @@ const didCancel = function(e) {
   @yield {object} table.theme           the theme being used
 */
 @tagName('table')
-@classNames('yeti-table')
 class YetiTable extends DidChangeAttrsComponent {
   layout = layout;
 
