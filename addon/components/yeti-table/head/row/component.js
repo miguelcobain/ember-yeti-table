@@ -50,6 +50,9 @@ class Row extends Component {
   @argument(Action)
   onColumnClick;
 
+  @argument(optional('boolean'))
+  useSortIndicator = false;
+
   cells = A();
 
   registerCell(cell) {

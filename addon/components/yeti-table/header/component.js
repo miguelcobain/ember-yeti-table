@@ -56,6 +56,13 @@ class Header extends Component {
   @reads('theme.thead')
   themeClass;
 
+  /**
+   * Should the sort classes be applied to the sortIndicator component or the column `td`.
+   * By default the sort classes are applied to the columnd `td`
+   */
+  @argument(optional('boolean'))
+  useSortIndicator = false;
+
   @action
   onColumnClick(column, e) {
     if (this.get('onColumnClick') && column.get('sortable')) {

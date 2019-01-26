@@ -2,7 +2,7 @@ import Component from '@ember/component';
 
 import { tagName, className } from '@ember-decorators/component';
 import { argument } from '@ember-decorators/argument';
-import { arrayOf, unionOf } from '@ember-decorators/argument/types';
+import { arrayOf, unionOf, optional } from '@ember-decorators/argument/types';
 import { Action } from '@ember-decorators/argument/types';
 import { reads } from '@ember-decorators/object/computed';
 
@@ -47,6 +47,13 @@ class Head extends Component {
 
   @argument(Action)
   onColumnClick;
+
+  /**
+   * Should the sort classes be applied to the sortIndicator component or the column `td`.
+   * By default the sort classes are applied to the columnd `td`
+   */
+  @argument(optional('boolean'))
+  useSortIndicator = false;
 
   @className
   @reads('theme.thead')

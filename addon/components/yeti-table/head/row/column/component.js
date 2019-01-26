@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { get } from '@ember/object';
 import { assert } from '@ember/debug';
 import { isArray } from '@ember/array';
 import DidChangeAttrsComponent from 'ember-yeti-table/-private/utils/did-change-attrs-component';
@@ -97,6 +98,9 @@ class Column extends DidChangeAttrsComponent {
   @argument(unionOf('string', arrayOf('string')))
   sortSequence;
 
+  @argument('boolean')
+  useSortIndicator;
+
   /**
    * Used to turn off filtering for this column. When `false`, Yeti Table won't look for
    * values on this column. Defaults to `true`.
@@ -160,6 +164,20 @@ class Column extends DidChangeAttrsComponent {
       return sortSequence.split(',').map((s) => s.trim());
     } else {
       return [];
+    }
+  }
+
+  @computed('useSortIndicator', 'isAscSorted', 'isDescSorted', 'theme.sorting.{columnSortedAsc,columnSortedDesc}')
+  get sortDirectionClass() {
+    if (this.useSortIndicator == false) {
+      if (this.isAscSorted) {
+        return get(this, 'theme.sorting.columnSortedAsc');
+      }
+      if (this.isDescSorted) {
+        return get(this, 'theme.sorting.columnSortedDesc');
+      }
+    } else {
+      return '';
     }
   }
 

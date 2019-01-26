@@ -1,13 +1,21 @@
 {{#if visible}}
   <th
     role={{if sortable "button"}}
-    class="{{class}} {{theme.theadCell}} {{if sortable theme.sorting.columnSortable}} {{if isSorted theme.sorting.columnSorted}} {{if isAscSorted theme.sorting.columnSortedAsc}} {{if isDescSorted theme.sorting.columnSortedDesc}}"
+    class="{{class}} {{theme.theadCell}} {{if sortable theme.sorting.columnSortable}}
+      {{if isSorted theme.sorting.columnSorted}}
+      {{sortDirectionClass}}
+      "
     onclick={{if sortable (action onClick this)}}
     ...attributes>
     {{yield (hash
       isSorted=isSorted
       isAscSorted=isAscSorted
       isDescSorted=isDescSorted
+      sortIndicator=(component "yeti-table/sort-indicator"
+        isSorted=isSorted
+        isAscSorted=isAscSorted
+        isDescSorted=isDescSorted
+        theme=theme)
     )}}
   </th>
 {{/if}}

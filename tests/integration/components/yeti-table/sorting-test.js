@@ -750,6 +750,66 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
     assert.dom('thead tr:nth-child(1) th:nth-child(1)').hasClass(DEFAULT_THEME.sorting.columnSortedDesc);
   });
 
+  test('sort does not apply sort direction class to header column when @useSortIndicator={{true}}', async function(assert) {
+    await render(hbs`
+      <YetiTable @data={{data}} as |table|>
+
+        <table.header @useSortIndicator={{true}} as |header|>
+          <header.column @prop="firstName" @sort="asc" as |column|>
+            First name
+            <column.sortIndicator/>
+          </header.column>
+          <header.column @prop="lastName" @sort="desc" as |column|>
+            Last name
+            <column.sortIndicator/>
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body/>
+
+      </YetiTable>
+    `);
+
+    assert.dom('thead tr:nth-child(1) th:nth-child(1)').doesNotHaveClass(DEFAULT_THEME.sorting.columnSortedAsc);
+    assert.dom('thead tr:nth-child(1) th:nth-child(1) i').hasClass(DEFAULT_THEME.sorting.columnSortedAsc);
+
+    assert.dom('thead tr:nth-child(1) th:nth-child(2)').doesNotHaveClass(DEFAULT_THEME.sorting.columnSortedDesc);
+    assert.dom('thead tr:nth-child(1) th:nth-child(2) i').hasClass(DEFAULT_THEME.sorting.columnSortedDesc);
+
+    await render(hbs`
+      <YetiTable @data={{data}} as |table|>
+
+        <table.head @useSortIndicator={{true}} as |head|>
+          <head.row as |row|>
+            <row.column @prop="firstName" @sort="asc" as |column|>
+              First name
+              <column.sortIndicator/>
+            </row.column>
+            <row.column @prop="lastName" @sort="desc" as |column|>
+              Last name
+              <column.sortIndicator/>
+            </row.column>
+            <row.column @prop="points">
+              Points
+            </row.column>
+          </head.row>        
+        </table.head>
+
+        <table.body/>
+
+      </YetiTable>
+    `);
+
+    assert.dom('thead tr:nth-child(1) th:nth-child(1)').doesNotHaveClass(DEFAULT_THEME.sorting.columnSortedAsc);
+    assert.dom('thead tr:nth-child(1) th:nth-child(1) i').hasClass(DEFAULT_THEME.sorting.columnSortedAsc);
+
+    assert.dom('thead tr:nth-child(1) th:nth-child(2)').doesNotHaveClass(DEFAULT_THEME.sorting.columnSortedDesc);
+    assert.dom('thead tr:nth-child(1) th:nth-child(2) i').hasClass(DEFAULT_THEME.sorting.columnSortedDesc);
+  });
+
   test('clicking on column header applies correct class', async function(assert) {
     await render(hbs`
       <YetiTable @data={{data}} as |table|>
@@ -828,4 +888,41 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
     assert.dom('thead tr:nth-child(1) th:nth-child(1) .down-arrow').exists();
     assert.dom('thead tr:nth-child(1) th:nth-child(1) .up-arrow').doesNotExist();
   });
+
+  test('clicking on column header applies correct class', async function(assert) {
+    await render(hbs`
+      <YetiTable @data={{data}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName">
+            First name
+          </header.column>
+          <header.column @prop="lastName">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body/>
+
+      </YetiTable>
+    `);
+
+    // not sorted
+    assert.dom('thead tr:nth-child(1) th:nth-child(1)').doesNotHaveClass(DEFAULT_THEME.sorting.columnSortedAsc);
+    assert.dom('thead tr:nth-child(1) th:nth-child(1)').doesNotHaveClass(DEFAULT_THEME.sorting.columnSortedDesc);
+
+    await click('thead th:nth-child(1)');
+
+    // it is sorted ascending
+    assert.dom('thead tr:nth-child(1) th:nth-child(1)').hasClass(DEFAULT_THEME.sorting.columnSortedAsc);
+
+    await click('thead th:nth-child(1)');
+
+    // it is sorted descending
+    assert.dom('thead tr:nth-child(1) th:nth-child(1)').hasClass(DEFAULT_THEME.sorting.columnSortedDesc);
+  });
+
 });

@@ -1,0 +1,7 @@
+{{#if hasBlock}}
+  {{yield (hash isSorted=@isSorted isAscSorted=@isAscSorted isDescSorted=@isDescSorted theme=@theme)}}
+{{else}}
+  {{#if @isSorted}}
+    <i class="{{if @isAscSorted @theme.sorting.columnSortedAsc}} {{if @isDescSorted @theme.sorting.columnSortedDesc}}" />
+  {{/if}}
+{{/if}}
