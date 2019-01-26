@@ -169,7 +169,7 @@ class Column extends DidChangeAttrsComponent {
 
   @computed('useSortIndicator', 'isAscSorted', 'isDescSorted', 'theme.sorting.{columnSortedAsc,columnSortedDesc}')
   get sortDirectionClass() {
-    if (this.useSortIndicator == false) {
+    if (this.useSortIndicator === false) {
       if (this.isAscSorted) {
         return get(this, 'theme.sorting.columnSortedAsc');
       }
