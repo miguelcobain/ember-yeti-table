@@ -176,9 +176,9 @@ class Column extends DidChangeAttrsComponent {
       if (this.isDescSorted) {
         return get(this, 'theme.sorting.columnSortedDesc');
       }
-    } else {
-      return '';
     }
+
+    return '';
   }
 
   init() {
