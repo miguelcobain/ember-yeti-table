@@ -8,7 +8,7 @@ Just run the usual ember-cli `install` command:
 ember install ember-yeti-table
 ```
 
-### Requirements
+### ⚠️ Requirements
 
 Yeti Table only supports the following Ember versions: **latest 3.4.X**, **latest 3.5.X** and **3.6+**.
 
