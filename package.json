@@ -25,13 +25,13 @@
     "test:all": "ember try:each"
   },
   "dependencies": {
-    "@ember-decorators/argument": "^1.0.0-beta.1",
+    "@ember-decorators/argument": "^1.0.0-beta.2",
     "@ember-decorators/babel-transforms": "^5.1.1",
     "deepmerge": "^3.1.0",
     "ember-auto-import": "^1.2.10",
     "ember-cli-babel": "^7.3.0",
     "ember-cli-htmlbars": "^3.0.0",
-    "ember-decorators": "^5.1.1",
+    "ember-decorators": "^5.1.2",
     "ember-native-class-polyfill": "^1.0.6"
   },
   "devDependencies": {
@@ -43,7 +43,7 @@
     "broccoli-source": "^1.1.0",
     "ember-array-helper": "^5.0.0",
     "ember-cli": "~3.7.1",
-    "ember-cli-addon-docs": "^0.6.2",
+    "ember-cli-addon-docs": "miguelcobain/ember-cli-addon-docs#escape-backticks",
     "ember-cli-addon-docs-esdoc": "^0.2.1",
     "ember-cli-dependency-checker": "^3.0.0",
     "ember-cli-deploy": "^1.0.2",

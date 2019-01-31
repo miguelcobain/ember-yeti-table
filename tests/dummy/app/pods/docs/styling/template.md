@@ -17,13 +17,13 @@ No problem. Yeti Table should be flexible enough for you to render the markup yo
 
 Yeti table does provide classes for you to use at each element of the table as a theme. 
 You may use the class names in the theme as provided or override elements of a theme with your 
-own class names 
+own class names .
 
 Yeti Table default theme is defined as:
 
 {{docs-snippet name="default-theme.js"}}
 
-If you wish to override just the `tbodyRow` class you can do the following:
+For example, if you wish to override just the `tbodyRow` class you can do the following:
 
 ```hbs
 <YetiTable @theme={{hash tbodyRow="my-new-class"}} @data={{data}} @pagination={{true}} as |table|>
@@ -38,6 +38,8 @@ If you wish to override just the `tbodyRow` class you can do the following:
   </table.body>
 </YetiTable>
 ```
+
+This should provide enough flexibility to customize how Yeti Table renders classes.
 
 ## Examples
 

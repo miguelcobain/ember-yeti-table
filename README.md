@@ -67,11 +67,6 @@ Yeti Table "unrolls" all the rows for you. This is useful for simple tables. Her
 </YetiTable>
 ```
 
-You can still customize the generated rows using the following arguments on `<table.body/>`:
-
-- `@onRowClick` - adds a click action to each row, called with the clicked row's data as an argument
-- `@rowClass` - adds a class to each `tr` element
-
 You will probably need to make more customizations, and to do so you will need to use `<table.header>`
 and/or `<table.body>` in the block form. This form allows you to:
 

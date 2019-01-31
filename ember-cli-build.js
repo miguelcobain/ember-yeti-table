@@ -40,7 +40,7 @@ module.exports = function(defaults) {
         }
       }
     },
-    snippetSearchPaths: ['addon']
+    snippetSearchPaths: ['addon', 'tests/dummy/app']
   });
 
   /*
