@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { deprecate } from '@ember/application/deprecations';
 
 import { tagName, className } from '@ember-decorators/component';
 import { argument } from '@ember-decorators/argument';
@@ -62,6 +63,7 @@ class Body extends Component {
   parent;
 
   /**
+   * @deprecated
    * Adds a class to each `<tr>` element. Can be used with both the blockless and block invocations.
    */
   @argument(optional('string'))
@@ -77,6 +79,14 @@ class Body extends Component {
    */
   @argument(optional(Action))
   onRowClick = () => {};
+
+  init() {
+    super.init(...arguments);
+    deprecate('`@rowClass` argument was deprecated in favor of using `tbodyRow` property of `@theme`. Please check the "Styling" section on the documentation site.', !this.get('rowClass'), {
+      id: 'no-row-class',
+      until: '0.2.0'
+    });
+  }
 }
 
 export default Body;
