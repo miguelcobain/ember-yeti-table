@@ -114,10 +114,9 @@ class YetiTable extends DidChangeAttrsComponent {
   layout = layout;
 
   /**
-   * `themeInstance` is an instance of [DefaultTheme](Themes.Default.html) or it's children.
-   * By default `yeti-table` uses [YetiTableDefaultTheme](Themes.default.html) instance.
-   *
-   * You may create your own theme-class and set `theme` to it's instance. Check Theme properties you may define in your own theme.
+   * An object that contains classes for yeti table to apply when rendering its various table
+   * html elements. The theme object your pass in will be deeply merged with yeti-table's default theme
+   * and with a theme defined in your environment.js at `ENV['ember-yeti-table'].theme`.
    */
   @argument(optional('object'))
   theme;

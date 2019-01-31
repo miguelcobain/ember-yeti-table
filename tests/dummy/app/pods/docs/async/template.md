@@ -72,7 +72,9 @@ as an async/await function (check the `load-data-async-await.js` tab of the next
 A custom pagination controls component is also included (check the `pagination-component.hbs` tab of the next demo).
 
 <aside>
-  The server side implementation is out of scope for these guides, but you can check it [here](https://github.com/miguelcobain/ember-yeti-table/blob/master/tests/dummy/mirage/config.js#L32-L54) if you're interested.
+  The server side implementation is out of scope for these guides, but you can check it
+  <a href="https://github.com/miguelcobain/ember-yeti-table/blob/master/tests/dummy/mirage/config.js#L33-L64">here</a>
+  if you're interested.
 </aside>
 
 {{#docs-demo as |demo|}}

@@ -67,5 +67,6 @@ Notice how we carefully passed in the `@prop` arguments in the column definition
 This way, Yeti Table knows which values you want in each column and can "unroll" the entire rows for you using just `<table.body/>`.
 
 <aside>
-  Confused by this weird syntax? Check out the {{#docs-link "docs.legacy-usage"}}Legacy usage{{/docs-link}} page to learn more about it.
+  Confused by this weird syntax? Read more about in the 
+  <a href="https://github.com/emberjs/rfcs/blob/master/text/0311-angle-bracket-invocation.md">Angle Bracket Invocation RFC</a>.
 </aside>

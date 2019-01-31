@@ -112,9 +112,6 @@ for that column accross all rows.
 <aside>
   In angle bracket invocation, you can pass in element attributes without the `@`.
   A typical usage is the `class` attribute. So you can just write `&lt;body.row class="some-class"&gt;`.
-  <br><br>
-  An exception to this is the `cell` and `column` component due to an [`ember-angle-bracket-invocation-polyfill` bug](https://github.com/rwjblue/ember-angle-bracket-invocation-polyfill/pull/25).
-  In those components you can add a class as a component argument, i.e `&lt;row.cell @class="some-class"&gt;`.
 </aside>
 
 You might have noticed that the `<table.header>` component always renders a single `<tr>` row inside the `<thead>`.

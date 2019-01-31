@@ -146,7 +146,7 @@ Use the `sortFunction` if you want to completely customize how the row sorting i
 the current sortings that are applied and the compare function.
 
 Use `compareFunction` if you just want to customize how two values relate to each other (not the entire row). It will be invoked with two values
-and you just need to return `-1`, `0` or `1` depending on if first value is greater than the second or not. The default compare function used is [`compare` function](https://emberjs.com/api/ember/3.2/functions/@ember%2Futils/compare) from `@ember/utils`.
+and you just need to return `-1`, `0` or `1` depending on if first value is greater than the second or not. The default compare function used is [`compare` function](https://emberjs.com/api/ember/3.7/functions/@ember%2Futils/compare) from `@ember/utils`.
 
 ## Sort sequence
 
