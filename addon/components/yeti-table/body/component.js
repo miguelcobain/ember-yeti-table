@@ -63,8 +63,8 @@ class Body extends Component {
   parent;
 
   /**
-   * @deprecated
    * Adds a class to each `<tr>` element. Can be used with both the blockless and block invocations.
+   * @deprecated use YetiTable's `@theme` instead of `@rowClass`
    */
   @argument(optional('string'))
   rowClass;
