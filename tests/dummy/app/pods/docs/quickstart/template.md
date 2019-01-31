@@ -68,5 +68,5 @@ This way, Yeti Table knows which values you want in each column and can "unroll"
 
 <aside>
   Confused by this weird syntax? Read more about in the 
-  <a href="https://github.com/emberjs/rfcs/blob/master/text/0311-angle-bracket-invocation.md">Angle Bracket Invocation RFC</a>.
+  <a href="https://github.com/emberjs/rfcs/blob/master/text/0311-angle-bracket-invocation.md" target="_blank" rel="noopener noreferrer">Angle Bracket Invocation RFC</a>.
 </aside>

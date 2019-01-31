@@ -73,7 +73,7 @@ A custom pagination controls component is also included (check the `pagination-c
 
 <aside>
   The server side implementation is out of scope for these guides, but you can check it
-  <a href="https://github.com/miguelcobain/ember-yeti-table/blob/master/tests/dummy/mirage/config.js#L33-L64">here</a>
+  <a href="https://github.com/miguelcobain/ember-yeti-table/blob/master/tests/dummy/mirage/config.js#L33-L64" target="_blank" rel="noopener noreferrer">here</a>
   if you're interested.
 </aside>
 
