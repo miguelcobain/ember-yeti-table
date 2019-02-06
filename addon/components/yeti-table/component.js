@@ -206,7 +206,7 @@ class YetiTable extends DidChangeAttrsComponent {
    * Used to enable/disable sorting on all columns. You should use this to avoid passing
    * the @sortable argument to all columns.
    */
-  @argument(optional('boolean'))
+  @argument('boolean')
   sortable = true;
 
   /**
