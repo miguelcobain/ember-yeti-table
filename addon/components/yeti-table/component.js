@@ -313,9 +313,9 @@ class YetiTable extends DidChangeAttrsComponent {
     super.init(...arguments);
 
     let config = getOwner(this).resolveRegistration('config:environment')['ember-yeti-table'];
-    let configTheme = config ? config.theme : {};
-    let mergedTheme = merge.all([{}, DEFAULT_THEME, configTheme, this.get('theme') || {}]);
-    this.mergedTheme = mergedTheme;
+    let configTheme = config && config.theme ? config.theme : {};
+    let localTheme = this.get('theme') || {};
+    this.mergedTheme = merge.all([{}, DEFAULT_THEME, configTheme, localTheme]);
 
     this.columns = A();
     this.filteredData = [];
