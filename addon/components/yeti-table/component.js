@@ -1,6 +1,6 @@
 import DidChangeAttrsComponent from 'ember-yeti-table/-private/utils/did-change-attrs-component';
 import { A } from '@ember/array';
-import { isEmpty } from '@ember/utils';
+import { isEmpty, isPresent } from '@ember/utils';
 import {
   computed as emberComputed,
   defineProperty
@@ -377,8 +377,8 @@ class YetiTable extends DidChangeAttrsComponent {
 
     defineProperty(this, 'filteredData', emberComputed(...filteredDataDeps, function() {
       let data = this.get('resolvedData');
-      // only columns that have filterable = true will be considered
-      let columns = this.get('columns').filter((c) => c.get('filterable'));
+      // only columns that have filterable = true and a prop defined will be considered
+      let columns = this.get('columns').filter((c) => c.get('filterable') && isPresent(c.get('prop')));
       let filter = this.get('filter');
       let filterFunction = this.get('filterFunction');
       let filterUsing = this.get('filterUsing');
