@@ -104,7 +104,7 @@ class Column extends DidChangeAttrsComponent {
    * Defaults to the `<YetiTable>` `@resizable` argument (which in turn defaults to `false`).
    */
   @argument('boolean')
-  resizable = true;
+  resizable = false;
 
   /**
    * Used to turn off filtering for this column. When `false`, Yeti Table won't look for
