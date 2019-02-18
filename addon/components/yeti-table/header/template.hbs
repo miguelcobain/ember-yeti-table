@@ -1,5 +1,5 @@
 <tr class="{{trClass}} {{theme.theadRow}} {{theme.row}}">
   {{yield (hash
-    column=(component "yeti-table/head/row/column" sortable=sortable sortSequence=sortSequence onClick=(action "onColumnClick") parent=parent theme=theme)
+    column=(component "yeti-table/head/row/column" sortable=sortable resizable=resizable sortSequence=sortSequence onClick=(action "onColumnClick") parent=parent theme=theme)
   )}}
 </tr>

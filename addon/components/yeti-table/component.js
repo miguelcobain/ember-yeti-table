@@ -232,6 +232,13 @@ class YetiTable extends DidChangeAttrsComponent {
   @argument(unionOf('string', arrayOf('string')))
   sortSequence = this.get('config').sortSequence || ['asc', 'desc'];
 
+  /**
+   * Used to enable/disable resizing on all columns. You should use this to avoid passing
+   * the @resizable argument to all columns.
+   */
+  @argument('boolean')
+  resizable = this.get('config').resizable === undefined ? false : this.get('config').resizable;
+
   @className
   @reads('mergedTheme.table')
   themeClass;
