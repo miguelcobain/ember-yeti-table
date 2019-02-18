@@ -28,13 +28,24 @@ export default {
 
   sorting: {
     // applied to <th> header cells when column is sortable
-    columnSortable:  'yeti-table-sortable',
+    columnSortable: 'yeti-table-sortable',
     // applied to <th> header cells when column is currently sorted
     columnSorted: 'yeti-table-sorted',
     // applied to <th> header cells when column is currently sorted ascending
     columnSortedAsc: 'yeti-table-sorted-asc',
     // applied to <th> header cells when column is currently sorted descending
     columnSortedDesc: 'yeti-table-sorted-desc',
+  },
+
+  resizing: {
+    // applied to <th> header cells when column is resizable
+    columnResizable: 'yeti-table-resizable',
+
+    // applied to the grip element inside <th> header cell
+    columnResizeGrip: 'yeti-table-resize-grip',
+
+    // applied to <th> header cells when column is being dragged for resize
+    columnIsResizing: 'yeti-table-resizing'
   },
 
   pagination: {

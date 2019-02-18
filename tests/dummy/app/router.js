@@ -17,6 +17,7 @@ Router.map(function() {
     this.route('pagination');
     this.route('async');
     this.route('styling');
+    this.route('configuration');
   });
 
   this.route('not-found', { path: '/*path' });

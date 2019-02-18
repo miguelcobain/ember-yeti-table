@@ -40,7 +40,13 @@ module.exports = function(defaults) {
         }
       }
     },
-    snippetSearchPaths: ['addon', 'tests/dummy/app']
+    snippetSearchPaths: ['addon', 'tests/dummy/app'],
+    babel: {
+      plugins: [
+        // Ensure that `ember-auto-import` can handle the dynamic imports
+        require('ember-auto-import/babel-plugin')
+      ]
+    }
   });
 
   /*

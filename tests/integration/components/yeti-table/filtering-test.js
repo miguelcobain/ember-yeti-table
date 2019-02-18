@@ -349,4 +349,32 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     assert.dom('tbody tr').exists({ count: 3 });
   });
 
+  test('Filtering works when a column header does not have a property', async function(assert) {
+    await render(hbs`
+      <YetiTable @data={{data}} @filter="Baderous" as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName">
+            First name
+          </header.column>
+          <header.column @prop="lastName">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+          <header.column>
+            Test blank column
+          </header.column>
+        </table.header>
+
+        <table.body/>
+
+      </YetiTable>
+    `);
+
+    assert.dom('tbody tr').exists({ count: 1 });
+
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
+  });
 });

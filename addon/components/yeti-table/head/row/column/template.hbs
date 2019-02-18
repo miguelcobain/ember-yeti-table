@@ -3,8 +3,9 @@
     {{did-insert (action "registerTh")}}
     {{will-destroy (action "unregisterTh")}}
     role={{if sortable "button"}}
-    class="{{class}} {{theme.theadCell}} {{if sortable theme.sorting.columnSortable}} {{if isSorted theme.sorting.columnSorted}} {{if isAscSorted theme.sorting.columnSortedAsc}} {{if isDescSorted theme.sorting.columnSortedDesc}}"
-    onclick={{if sortable (action onClick this)}}
+    class="{{class}} {{theme.theadCell}} {{if sortable theme.sorting.columnSortable}} {{if isSorted theme.sorting.columnSorted}} {{if isAscSorted theme.sorting.columnSortedAsc}} {{if isDescSorted theme.sorting.columnSortedDesc}} {{if resizable theme.resizing.columnResizable}} {{if isResizing theme.resizing.columnIsResizing}}"
+    onclick={{if sortable (action "columnClick")}}
+    {{! template-lint-disable no-inline-styles }}
     style={{columnStyle}}
     ...attributes>
     {{yield (hash
@@ -16,8 +17,9 @@
       <div
         {{did-insert (action "initHammer")}}
         {{will-destroy (action "teardownHammer")}}
-        class="{{theme.columnResizeGrip}} {{if isResizing theme.columnResizeGripIsResizing}}"
-        style="cursor: col-resize; position: absolute; right: 0; top: 0; bottom: 0; width: 5px; background-color: red;"
+        class={{theme.resizing.columnResizeGrip}}
+        {{! template-lint-disable no-inline-styles }}
+        style="cursor: col-resize; position: absolute; right: 0; top: 0; bottom: 0; width: 5px;"
       ></div>
     {{/if}}
   </th>

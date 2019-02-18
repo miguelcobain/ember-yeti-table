@@ -40,34 +40,8 @@ For example, if you wish to override just the `tbodyRow` class you can do the fo
 ```
 
 This should provide enough flexibility to customize how Yeti Table renders classes.
-
-## Customizing classes globally
-
-Yeti table also looks for theme definitions on your `config/environment.js` file. To do that, you must define
-a theme object with the `theme` key inside an `ember-yeti-table` object. Here is an example:
-
-```js
-// config/environment.js
-'ember-yeti-table': {
-  theme: {
-    table: 'my-custom-table-class',
-    sorting: {
-      columnSortable:  'my-custom-table-sortable-class',
-      columnSorted: 'my-custom-table-sorted-class',
-      columnSortedAsc: 'my-custom-table-sorted-asc-class',
-      columnSortedDesc: 'my-custom-table-sorted-desc-class',
-    }
-    // provide any other css class name overrides
-  }
-}
-```
-
-There are multiple ways you can customize themes and Yeti table deep merges all of them in a particular order.
-This means that you can override classes in any of the following ways (last wins):
-
-- Yeti table default theme
-- global theme defined in `config/environment.js`
-- `@theme` argument passed to `YetiTable`
+You can also define a global theme in your `config/environment.js` file. Check out the 
+{{#docs-link "docs.configuration"}}Configuration{{/docs-link}} page for more information.
 
 ## Examples
 

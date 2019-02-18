@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { next } from '@ember/runloop';
 import { assert } from '@ember/debug';
 import { isArray } from '@ember/array';
 import { htmlSafe } from '@ember/template';
@@ -10,8 +11,6 @@ import { tagName } from '@ember-decorators/component';
 import { argument } from '@ember-decorators/argument';
 import { optional, unionOf, arrayOf } from '@ember-decorators/argument/types';
 import { Action } from '@ember-decorators/argument/types';
-
-import Hammer from 'hammerjs';
 
 import layout from './template';
 
@@ -178,7 +177,7 @@ class Column extends DidChangeAttrsComponent {
     let styles = ['position: relative;'];
     let width = this.get('width');
     if (width) {
-      styles.push(`width: ${width}px;`);
+      styles.push(`min-width: ${width}px;max-width: ${width}px;width: ${width}px;`);
     }
     return htmlSafe(styles.join(''));
   }
@@ -200,9 +199,16 @@ class Column extends DidChangeAttrsComponent {
   }
 
   willDestroyElement() {
-    super.willDestroyElement(...arguments);
     if (this.get('parent')) {
       this.get('parent').unregisterColumn(this);
+    }
+    super.willDestroyElement(...arguments);
+  }
+
+  @action
+  columnClick() {
+    if (!this.get('isResizing')) {
+      this.onClick(this, ...arguments);
     }
   }
 
@@ -217,8 +223,9 @@ class Column extends DidChangeAttrsComponent {
   }
 
   @action
-  initHammer(element) {
-    let hammer = new Hammer(element);
+  async initHammer() {
+    let Hammer = await import('hammerjs');
+    let hammer = new Hammer.default(this._thElement);
 
     hammer.add(new Hammer.Press({ time: 0 }));
 
@@ -256,12 +263,11 @@ class Column extends DidChangeAttrsComponent {
     let [{ clientX }] = event.pointers;
 
     let delta = clientX - this._originalClientX;
-    console.log(delta, this._originalWidth + delta);
     this.set('width', this._originalWidth + delta)
   };
 
   panEndHandler = () => {
-    this.set('isResizing', false);
+    next(() => this.set('isResizing', false));
   };
 }
 

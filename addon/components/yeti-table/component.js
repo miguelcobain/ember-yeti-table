@@ -1,6 +1,6 @@
 import DidChangeAttrsComponent from 'ember-yeti-table/-private/utils/did-change-attrs-component';
 import { A } from '@ember/array';
-import { isEmpty } from '@ember/utils';
+import { isEmpty, isPresent } from '@ember/utils';
 import {
   computed as emberComputed,
   defineProperty
@@ -118,8 +118,8 @@ class YetiTable extends DidChangeAttrsComponent {
    * html elements. The theme object your pass in will be deeply merged with yeti-table's default theme
    * and with a theme defined in your environment.js at `ENV['ember-yeti-table'].theme`.
    */
-  @argument(optional('object'))
-  theme;
+  @argument('object')
+  theme = {};
 
   /**
    * The data for Yeti Table to render. It can be an array or a promise that resolves with an array.
@@ -150,13 +150,13 @@ class YetiTable extends DidChangeAttrsComponent {
    * Use this argument to enable the pagination feature. Default is `false`.
    */
   @argument('boolean')
-  pagination = false;
+  pagination = this.get('config').pagination === undefined ? false : this.get('config').pagination;
 
   /**
    * Controls the size of each page. Default is `15`.
    */
   @argument('number')
-  pageSize = 15;
+  pageSize = this.get('config').pageSize || 15;
 
   /**
    * Controls the current page to show. Default is `1`.
@@ -207,7 +207,7 @@ class YetiTable extends DidChangeAttrsComponent {
    * the @sortable argument to all columns.
    */
   @argument('boolean')
-  sortable = true;
+  sortable = this.get('config').sortable === undefined ? true : this.get('config').sortable;
 
   /**
    * Use the `@sortFunction` if you want to completely customize how the row sorting is done.
@@ -230,15 +230,28 @@ class YetiTable extends DidChangeAttrsComponent {
    * of strings. Accepted values are `'asc'`, `'desc'` and `'unsorted'`. The default value is `['asc', 'desc']`.
    */
   @argument(unionOf('string', arrayOf('string')))
-  sortSequence = ['asc', 'desc'];
+  sortSequence = this.get('config').sortSequence || ['asc', 'desc'];
 
   @className
   @reads('mergedTheme.table')
   themeClass;
 
+  // If the theme is replaced, this will invalidate, but not if any prop under theme is changed
+  @computed('theme', 'config.theme')
+  get mergedTheme() {
+    let configTheme = this.get('config').theme ||  {};
+    let localTheme = this.get('theme');
+    return merge.all([DEFAULT_THEME, configTheme, localTheme]);
+  }
+
   isLoading = false;
 
   @filterBy('columns', 'visible', true) visibleColumns;
+
+  @computed
+  get config() {
+    return getOwner(this).resolveRegistration('config:environment')['ember-yeti-table'] || {};
+  }
 
   @computed('loadData', 'sortedData.[]', 'resolvedData.[]')
   get normalizedTotalRows() {
@@ -312,11 +325,6 @@ class YetiTable extends DidChangeAttrsComponent {
   init() {
     super.init(...arguments);
 
-    let config = getOwner(this).resolveRegistration('config:environment')['ember-yeti-table'];
-    let configTheme = config && config.theme ? config.theme : {};
-    let localTheme = this.get('theme') || {};
-    this.mergedTheme = merge.all([{}, DEFAULT_THEME, configTheme, localTheme]);
-
     this.columns = A();
     this.filteredData = [];
     this.sortedData = [];
@@ -377,8 +385,8 @@ class YetiTable extends DidChangeAttrsComponent {
 
     defineProperty(this, 'filteredData', emberComputed(...filteredDataDeps, function() {
       let data = this.get('resolvedData');
-      // only columns that have filterable = true will be considered
-      let columns = this.get('columns').filter((c) => c.get('filterable'));
+      // only columns that have filterable = true and a prop defined will be considered
+      let columns = this.get('columns').filter((c) => c.get('filterable') && isPresent(c.get('prop')));
       let filter = this.get('filter');
       let filterFunction = this.get('filterFunction');
       let filterUsing = this.get('filterUsing');

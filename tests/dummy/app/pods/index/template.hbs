@@ -9,7 +9,7 @@
 <div class="docs-container docs-md">
   <section class="docs-max-w-md docs-mx-auto docs-pb-8">
 
-    {{#docs-demo class="main-page-demo" as |demo|}}
+    {{#docs-demo class="docs-flex docs-flex-row" as |demo|}}
       {{#demo.example name="index-example.hbs"}}
         {{input type="checkbox" checked=isVisible}}
         <YetiTable @data={{data}} as |t|>
@@ -35,7 +35,7 @@
       {{demo.snippet "index-example.hbs"}}
     {{/docs-demo}}
 
-    <div class="my-16 text-right">
+    <div class="docs-my-16 docs-text-right">
       {{#link-to
         "docs"
         class="docs-bg-brand docs-hover:docs-bg-black docs-text-white docs-py-2 docs-px-4 docs-no-underline docs-rounded"
