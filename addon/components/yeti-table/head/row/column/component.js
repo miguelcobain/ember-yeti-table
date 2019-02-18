@@ -1,14 +1,17 @@
 import Component from '@ember/component';
 import { assert } from '@ember/debug';
 import { isArray } from '@ember/array';
+import { htmlSafe } from '@ember/template';
 import DidChangeAttrsComponent from 'ember-yeti-table/-private/utils/did-change-attrs-component';
 
-import { computed } from '@ember-decorators/object';
+import { computed, action } from '@ember-decorators/object';
 import { equal, or } from '@ember-decorators/object/computed';
 import { tagName } from '@ember-decorators/component';
 import { argument } from '@ember-decorators/argument';
 import { optional, unionOf, arrayOf } from '@ember-decorators/argument/types';
 import { Action } from '@ember-decorators/argument/types';
+
+import Hammer from 'hammerjs';
 
 import layout from './template';
 
@@ -98,6 +101,13 @@ class Column extends DidChangeAttrsComponent {
   sortSequence;
 
   /**
+   * Used to turn on resizing on this column.
+   * Defaults to the `<YetiTable>` `@resizable` argument (which in turn defaults to `false`).
+   */
+  @argument('boolean')
+  resizable = true;
+
+  /**
    * Used to turn off filtering for this column. When `false`, Yeti Table won't look for
    * values on this column. Defaults to `true`.
    */
@@ -163,6 +173,16 @@ class Column extends DidChangeAttrsComponent {
     }
   }
 
+  @computed('width')
+  get columnStyle() {
+    let styles = ['position: relative;'];
+    let width = this.get('width');
+    if (width) {
+      styles.push(`width: ${width}px;`);
+    }
+    return htmlSafe(styles.join(''));
+  }
+
   init() {
     super.init(...arguments);
 
@@ -185,6 +205,64 @@ class Column extends DidChangeAttrsComponent {
       this.get('parent').unregisterColumn(this);
     }
   }
+
+  @action
+  registerTh(element) {
+    this._thElement = element;
+  }
+
+  @action
+  unregisterTh() {
+    this._thElement = null;
+  }
+
+  @action
+  initHammer(element) {
+    let hammer = new Hammer(element);
+
+    hammer.add(new Hammer.Press({ time: 0 }));
+
+    hammer.on('press', this.pressHandler);
+    hammer.on('panstart', this.panStartHandler);
+    hammer.on('panmove', this.panMoveHandler);
+    hammer.on('panend', this.panEndHandler);
+
+    this._hammer = hammer;
+  }
+
+  @action
+  teardownHammer() {
+    let hammer = this._hammer;
+
+    hammer.off('press');
+    hammer.off('panstart');
+    hammer.off('panmove');
+    hammer.off('panend');
+
+    hammer.destroy();
+  }
+
+  pressHandler = event => {
+    let [{ clientX }] = event.pointers;
+    this._originalClientX = clientX;
+    this._originalWidth = this._thElement.offsetWidth;
+  };
+
+  panStartHandler = () => {
+    this.set('isResizing', true);
+  };
+
+  panMoveHandler = event => {
+    let [{ clientX }] = event.pointers;
+
+    let delta = clientX - this._originalClientX;
+    console.log(delta, this._originalWidth + delta);
+    this.set('width', this._originalWidth + delta)
+  };
+
+  panEndHandler = () => {
+    this.set('isResizing', false);
+  };
 }
 
 export default Column;

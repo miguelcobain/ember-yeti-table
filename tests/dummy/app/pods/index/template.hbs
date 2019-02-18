@@ -11,11 +11,11 @@
 
     {{#docs-demo class="main-page-demo" as |demo|}}
       {{#demo.example name="index-example.hbs"}}
-
+        {{input type="checkbox" checked=isVisible}}
         <YetiTable @data={{data}} as |t|>
 
           <t.header as |h|>
-            <h.column @prop="firstName">
+            <h.column @prop="firstName" @visible={{isVisible}}>
               First name
             </h.column>
             <h.column @prop="lastName">

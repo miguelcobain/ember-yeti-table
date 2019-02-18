@@ -6,6 +6,8 @@ import faker from 'faker';
 export default class IndexController extends Controller {
   numberOfRows = 5;
 
+  isVisible = true;
+
   @computed('numberOfRows')
   get data() {
     return A(Array.from(Array(this.get('numberOfRows')), () => {
