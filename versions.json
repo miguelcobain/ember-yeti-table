@@ -15,8 +15,8 @@
   "-latest": {
     "path": "",
     "name": "Latest",
-    "sha": "1ac88293cac6e272470e1f6589f5f70c78521268",
-    "tag": "v0.1.0"
+    "sha": "69c972e0a7a28d29b73632c4e4d4a001aa44af84",
+    "tag": "v0.1.1"
   },
   "v0.0.3": {
     "path": "versions/v0.0.3",
@@ -41,5 +41,11 @@
     "name": "v0.1.0",
     "sha": "1ac88293cac6e272470e1f6589f5f70c78521268",
     "tag": "v0.1.0"
+  },
+  "v0.1.1": {
+    "path": "versions/v0.1.1",
+    "name": "v0.1.1",
+    "sha": "69c972e0a7a28d29b73632c4e4d4a001aa44af84",
+    "tag": "v0.1.1"
   }
 }
