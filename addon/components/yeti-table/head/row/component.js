@@ -47,6 +47,9 @@ class Row extends Component {
   @argument(unionOf('string', arrayOf('string')))
   sortSequence;
 
+  @argument('boolean')
+  resizable = false;
+
   @argument(Action)
   onColumnClick;
 

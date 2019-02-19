@@ -121,7 +121,7 @@ Here is an example of such a usage:
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="general-simple-with-multiple-rows-on-header.hbs"}}
-    <YetiTable @data={{data}} as |table|>
+    <YetiTable @data={{data}} @resizable={{true}} as |table|>
 
       <table.head as |head|>
         <head.row as |row|>

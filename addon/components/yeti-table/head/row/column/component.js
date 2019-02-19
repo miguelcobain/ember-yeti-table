@@ -223,9 +223,9 @@ class Column extends DidChangeAttrsComponent {
   }
 
   @action
-  async initHammer() {
+  async initHammer(element) {
     let Hammer = await import('hammerjs');
-    let hammer = new Hammer.default(this._thElement);
+    let hammer = new Hammer.default(element);
 
     hammer.add(new Hammer.Press({ time: 0 }));
 

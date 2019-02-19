@@ -1,11 +1,11 @@
 {{yield (hash
   header=(component "yeti-table/header"
     columns=columns onColumnClick=(action "onColumnSort")
-    sortable=sortable sortSequence=sortSequence parent=this theme=mergedTheme
+    resizable=resizable sortable=sortable sortSequence=sortSequence parent=this theme=mergedTheme
   )
   head=(component "yeti-table/head"
     columns=columns onColumnClick=(action "onColumnSort")
-    sortable=sortable sortSequence=sortSequence theme=mergedTheme parent=this
+    resizable=resizable sortable=sortable sortSequence=sortSequence theme=mergedTheme parent=this
   )
   body=(component "yeti-table/body" data=processedData columns=columns theme=mergedTheme parent=this)
   foot=(component "yeti-table/foot" columns=columns theme=mergedTheme parent=this)

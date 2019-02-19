@@ -36,6 +36,9 @@ class Head extends Component {
   @argument('boolean')
   sortable;
 
+  @argument('boolean')
+  resizable;
+
   @argument(unionOf('string', arrayOf('string')))
   sortSequence;
 
