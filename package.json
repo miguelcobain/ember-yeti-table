@@ -56,7 +56,7 @@
     "ember-cli-mirage": "^0.4.15",
     "ember-cli-sass": "^10.0.0",
     "ember-cli-sri": "^2.1.1",
-    "ember-cli-uglify": "^2.1.0",
+    "ember-cli-uglify": "^3.0.0",
     "ember-composability-tools": "0.0.11",
     "ember-concurrency": "^0.9.0",
     "ember-concurrency-decorators": "^0.6.0",
