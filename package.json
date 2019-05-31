@@ -58,7 +58,7 @@
     "ember-cli-sri": "^2.1.1",
     "ember-cli-uglify": "^2.1.0",
     "ember-composability-tools": "0.0.11",
-    "ember-concurrency": "^0.9.0",
+    "ember-concurrency": "^0.10.1",
     "ember-concurrency-decorators": "^0.6.0",
     "ember-data": "^3.8.0",
     "ember-disable-prototype-extensions": "^1.1.3",
