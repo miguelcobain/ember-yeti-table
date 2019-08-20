@@ -74,7 +74,7 @@
     "ember-template-lint": "^1.1.0",
     "ember-truth-helpers": "^2.1.0",
     "ember-try": "^1.1.0",
-    "eslint": "^5.15.1",
+    "eslint": "^6.2.0",
     "eslint-plugin-ember": "^6.2.0",
     "eslint-plugin-node": "^8.0.1",
     "faker": "^4.1.0",
