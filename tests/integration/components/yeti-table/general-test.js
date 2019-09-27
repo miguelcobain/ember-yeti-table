@@ -516,7 +516,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
         <table.body/>
 
-        <div id="totalColumns">{{table.totalColumns}}</div>
+        <div id="totalColumns">{{table.totalColumns.length}}</div>
         <div id="visibleColumns">{{table.visibleColumns}}</div>
         <div id="totalRows">{{table.totalRows}}</div>
         <div id="visibleRows">{{table.visibleRows.length}}</div>
