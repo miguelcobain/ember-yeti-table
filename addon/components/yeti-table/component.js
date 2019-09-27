@@ -94,7 +94,7 @@ const didCancel = function(e) {
   @yield {number} table.totalColumns    the number of columns on the table
   @yield {number} table.visibleColumns  the number of visible columns on the table
   @yield {number} table.totalRows       the total number of rows on the table (regardless of pagination)
-  @yield {number} table.visibleRows     the number of rendered rows on the table account for pagination, filtering, etc; when pagination is false, it will be the same as totalRows
+  @yield {number} table.visibleRows     the rendered rows on the table account for pagination, filtering, etc; when pagination is false, it will be the same length as totalRows
   @yield {object} table.theme           the theme being used
 */
 @tagName('table')
@@ -442,6 +442,7 @@ class YetiTable extends DidChangeAttrsComponent {
           }
         }
       };
+
       once(loadDataFunction);
     }
   }

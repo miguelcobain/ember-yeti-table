@@ -494,7 +494,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('td').exists({ count: 5 * 2 });
   });
 
-  test('yielded totalColumns and totalRows are correct', async function(assert) {
+  test('yielded totalColumns, totalRows, visibleColumns and visibleRows are correct', async function(assert) {
 
     await render(hbs`
       <YetiTable @data={{data}} as |table|>
@@ -519,7 +519,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
         <div id="totalColumns">{{table.totalColumns}}</div>
         <div id="visibleColumns">{{table.visibleColumns}}</div>
         <div id="totalRows">{{table.totalRows}}</div>
-        <div id="visibleRows">{{table.visibleRows}}</div>
+        <div id="visibleRows">{{table.visibleRows.length}}</div>
 
       </YetiTable>
     `);
