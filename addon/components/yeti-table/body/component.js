@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import { deprecate } from '@ember/application/deprecations';
 
 import { tagName, className } from '@ember-decorators/component';
 import { reads } from '@ember/object/computed';
@@ -45,12 +44,6 @@ class Body extends Component {
 
   parent;
 
-  /**
-   * Adds a class to each `<tr>` element. Can be used with both the blockless and block invocations.
-   * @deprecated use YetiTable's `@theme` instead of `@rowClass`
-   */
-  rowClass;
-
   @className
   @reads('theme.tbody')
   themeClass;
@@ -60,14 +53,6 @@ class Body extends Component {
    * Can be used with both the blockless and block invocations.
    */
   onRowClick = () => {};
-
-  init() {
-    super.init(...arguments);
-    deprecate('`@rowClass` argument was deprecated in favor of using `tbodyRow` property of `@theme`. Please check the "Styling" section on the documentation site.', !this.get('rowClass'), {
-      id: 'no-row-class',
-      until: '0.2.0'
-    });
-  }
 }
 
 export default Body;

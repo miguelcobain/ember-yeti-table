@@ -2,7 +2,7 @@
 
   {{#each data as |rowData index|}}
     {{yield
-      (hash row=(component "yeti-table/body/row" class=rowClass theme=theme onClick=this.onRowClick columns=columns))
+      (hash row=(component "yeti-table/body/row" theme=theme onClick=this.onRowClick columns=columns))
       rowData
       index}}
   {{/each}}
@@ -11,7 +11,6 @@
 
   {{#each data as |rowData|}}
     {{#yeti-table/body/row
-      class=rowClass
       theme=theme
       onClick=(action this.onRowClick rowData) columns=columns as |row|}}
 

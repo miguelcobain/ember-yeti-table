@@ -239,33 +239,6 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     });
   });
 
-  test('rowClass applies a class to each row', async function(assert) {
-    await render(hbs`
-      <YetiTable @data={{data}} as |table|>
-
-        <table.header as |header|>
-          <header.column @prop="firstName">
-            First name
-          </header.column>
-          <header.column @prop="lastName">
-            Last name
-          </header.column>
-          <header.column @prop="points">
-            Points
-          </header.column>
-        </table.header>
-
-        <table.body @rowClass="custom-row-class"/>
-
-      </YetiTable>
-    `);
-
-    let rows = this.element.querySelectorAll('tbody tr');
-    rows.forEach((r) => {
-      assert.dom(r).hasClass('custom-row-class');
-    });
-  });
-
   test('onRowClick action is triggered', async function(assert) {
     assert.expect(2);
 
