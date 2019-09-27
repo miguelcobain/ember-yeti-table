@@ -91,10 +91,11 @@ const didCancel = function(e) {
   @yield {object} table.actions         an object that contains actions to interact with the table
   @yield {object} table.paginationData  object that represents the current pagination state
   @yield {boolean} table.isLoading      boolean that is `true` when data is being loaded
-  @yield {array} table.totalColumns    the columns on the table
-  @yield {array} table.visibleColumns  the visible columns on the table
-  @yield {number} table.totalRows       the total number of rows on the table (regardless of pagination)
-  @yield {array} table.visibleRows     the rendered rows on the table account for pagination, filtering, etc; when pagination is false, it will be the same length as totalRows
+  @yield {array} table.columns          the columns on the table
+  @yield {array} table.visibleColumns   the visible columns on the table
+  @yield {array} table.rows             an array of all the rows yeti table knows of. In the sync case, it will contain the entire dataset. In the async case, it will be the same as `table.visibleRows`
+  @yield {number} table.totalRows       the total number of rows on the table (regardless of pagination). Important argument in the async case to inform yeti table of the total number of rows in the dataset.
+  @yield {array} table.visibleRows      the rendered rows on the table account for pagination, filtering, etc; when pagination is false, it will be the same length as totalRows
   @yield {object} table.theme           the theme being used
 */
 @tagName('table')
@@ -241,6 +242,17 @@ class YetiTable extends DidChangeAttrsComponent {
         // @totalRows was passed in.
         return this.get('totalRows');
       }
+    }
+  }
+
+  @computed('loadData', 'sortedData.[]', 'resolvedData.[]')
+  get normalizedRows() {
+    if (!this.get('loadData')) {
+      // sync scenario using @data
+      return this.get('sortedData');
+    } else {
+      // async scenario. @loadData is present.
+      return this.get('resolvedData');
     }
   }
 
