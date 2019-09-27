@@ -1,9 +1,7 @@
 import Component from '@ember/component';
 
 import { tagName, className } from '@ember-decorators/component';
-import { argument } from '@ember-decorators/argument';
-import { arrayOf } from '@ember-decorators/argument/types';
-import { reads } from '@ember-decorators/object/computed';
+import { reads } from '@ember/object/computed';
 
 import layout from './template';
 
@@ -26,13 +24,10 @@ import layout from './template';
 class Foot extends Component {
   layout = layout;
 
-  @argument('object')
   theme;
 
-  @argument(Component)
   parent;
 
-  @argument(arrayOf(Component))
   columns;
 
   @className

@@ -1,6 +1,6 @@
 import Model from 'ember-data/model';
-import { attr } from '@ember-decorators/data';
-import { computed } from '@ember-decorators/object';
+import attr from 'ember-data/attr';
+import { computed } from '@ember/object';
 
 // BEGIN-SNIPPET user.js
 export default class User extends Model {

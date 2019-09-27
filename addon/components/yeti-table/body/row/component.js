@@ -2,10 +2,7 @@ import Component from '@ember/component';
 import { A } from '@ember/array';
 
 import { tagName, className } from '@ember-decorators/component';
-import { argument } from '@ember-decorators/argument';
-import { optional, arrayOf } from '@ember-decorators/argument/types';
-import { Action } from '@ember-decorators/argument/types';
-import { reads } from '@ember-decorators/object/computed';
+import { reads } from '@ember/object/computed';
 
 import layout from './template';
 
@@ -50,16 +47,13 @@ import layout from './template';
 class Row extends Component {
   layout = layout;
 
-  @argument('object')
   theme;
 
-  @argument(arrayOf(Component))
   columns;
 
   /**
    * Adds a click action to the row.
    */
-  @argument(optional(Action))
   onClick;
 
   @className

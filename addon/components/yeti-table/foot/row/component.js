@@ -2,8 +2,6 @@ import Component from '@ember/component';
 import { A } from '@ember/array';
 
 import { tagName } from '@ember-decorators/component';
-import { argument } from '@ember-decorators/argument';
-import { arrayOf } from '@ember-decorators/argument/types';
 
 import layout from './template';
 
@@ -26,13 +24,10 @@ import layout from './template';
 class Row extends Component {
   layout = layout;
 
-  @argument('object')
   theme;
 
-  @argument(Component)
   parent;
 
-  @argument(arrayOf(Component))
   columns;
 
   cells = A();

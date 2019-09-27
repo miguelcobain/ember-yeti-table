@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { computed, action } from '@ember-decorators/object';
+import { computed, action } from '@ember/object';
 import { A } from '@ember/array';
 import faker from 'faker';
 

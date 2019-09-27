@@ -1,10 +1,7 @@
 import Component from '@ember/component';
 
 import { tagName, className } from '@ember-decorators/component';
-import { argument } from '@ember-decorators/argument';
-import { arrayOf, unionOf } from '@ember-decorators/argument/types';
-import { Action } from '@ember-decorators/argument/types';
-import { reads } from '@ember-decorators/object/computed';
+import { reads } from '@ember/object/computed';
 
 import layout from './template';
 
@@ -30,22 +27,16 @@ import layout from './template';
 class Head extends Component {
   layout = layout;
 
-  @argument('object')
   theme;
 
-  @argument('boolean')
   sortable;
 
-  @argument(unionOf('string', arrayOf('string')))
   sortSequence;
 
-  @argument(Component)
   parent;
 
-  @argument(arrayOf(Component))
   columns;
 
-  @argument(Action)
   onColumnClick;
 
   @className

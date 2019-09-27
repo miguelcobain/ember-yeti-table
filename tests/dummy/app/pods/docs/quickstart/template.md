@@ -12,9 +12,6 @@ ember install ember-yeti-table
 
 Yeti Table only supports the following Ember versions: **latest 3.4.X**, **latest 3.5.X** and **3.6+**.
 
-If you're using `ember-decorators`, make sure you're using version **5.x**.
-Also, if you happen to be using `@ember-decorators/argument`, you must use version **1.0.0-beta.1+**.
-
 ## Basic usage
 
 To render a table using Yeti Table you basically need two things: data, column definitions and rows.

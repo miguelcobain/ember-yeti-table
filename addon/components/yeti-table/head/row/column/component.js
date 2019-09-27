@@ -1,14 +1,10 @@
-import Component from '@ember/component';
 import { assert } from '@ember/debug';
 import { isArray } from '@ember/array';
 import DidChangeAttrsComponent from 'ember-yeti-table/-private/utils/did-change-attrs-component';
 
-import { computed } from '@ember-decorators/object';
-import { equal, or } from '@ember-decorators/object/computed';
+import { computed } from '@ember/object';
+import { equal, or } from '@ember/object/computed';
 import { tagName } from '@ember-decorators/component';
-import { argument } from '@ember-decorators/argument';
-import { optional, unionOf, arrayOf } from '@ember-decorators/argument/types';
-import { Action } from '@ember-decorators/argument/types';
 
 import layout from './template';
 
@@ -47,10 +43,8 @@ import layout from './template';
 class Column extends DidChangeAttrsComponent {
   layout = layout;
 
-  @argument(optional('object'))
   theme;
 
-  @argument(Component)
   parent;
 
   /**
@@ -63,14 +57,12 @@ class Column extends DidChangeAttrsComponent {
    * If you don't need sorting, filtering or automatic table unrolling (using the blockless
    * body component), then this property is optional.
    */
-  @argument(optional('string'))
   prop;
 
   /**
    * Set to `false` to hide the entire column across all rows. Keep in mind that this property
    * won't just hide the column using css. The DOM for the column will be removed. Defaults to `true`.
    */
-  @argument('boolean')
   visible = true;
 
   /**
@@ -78,14 +70,12 @@ class Column extends DidChangeAttrsComponent {
    * Useful on avatar columns, for example, where a sorting order doesn't really make sense.
    * Defaults to the `<YetiTable>` `@sortable` argument (which in turn defaults to `true`).
    */
-  @argument('boolean')
   sortable = true;
 
   /**
    * Optionally use an `asc` or `desc` string on this argument to turn on ascending or descending sorting
    * on this column. Useful to turn on default sortings on the table.
    */
-  @argument(optional('string'))
   sort = null;
 
   /**
@@ -94,14 +84,12 @@ class Column extends DidChangeAttrsComponent {
    * of strings. Accepted values are `'asc'`, `'desc'` and `'unsorted'`. The default value is `['asc', 'desc']`
    * or whatever the global table sortSequence value is.
    */
-  @argument(unionOf('string', arrayOf('string')))
   sortSequence;
 
   /**
    * Used to turn off filtering for this column. When `false`, Yeti Table won't look for
    * values on this column. Defaults to `true`.
    */
-  @argument('boolean')
   filterable = true;
 
   /**
@@ -111,7 +99,6 @@ class Column extends DidChangeAttrsComponent {
    * The column definitions `@filter` argument is subtractive, meaning that it will filter out rows
    * from the subset that passes the general `@filter`.
    */
-  @argument(optional('string'))
   filter;
 
   /**
@@ -123,7 +110,6 @@ class Column extends DidChangeAttrsComponent {
    * - `value` - the current data cell to use for filtering
    * - `filterUsing` - the value you passed in as `@filterUsing`
    */
-  @argument(optional(Function))
   filterFunction;
 
   /**
@@ -131,16 +117,13 @@ class Column extends DidChangeAttrsComponent {
    * to show, pass it in this argument. Yeti Table uses this argument to know when to recalculate
    * the fitlered rows.
    */
-  @argument(optional('any'))
   filterUsing;
 
   /**
    * Used to add a class to all the cells in this column.
    */
-  @argument(optional('string'))
   columnClass;
 
-  @argument(Action)
   onClick;
 
   @equal('sort', 'asc') isAscSorted;

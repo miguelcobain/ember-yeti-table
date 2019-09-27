@@ -1,11 +1,8 @@
 import Component from '@ember/component';
 
 import { tagName, className } from '@ember-decorators/component';
-import { action } from '@ember-decorators/object';
-import { argument } from '@ember-decorators/argument';
-import { arrayOf, optional, unionOf } from '@ember-decorators/argument/types';
-import { Action } from '@ember-decorators/argument/types';
-import { reads } from '@ember-decorators/object/computed';
+import { action } from '@ember/object';
+import { reads } from '@ember/object/computed';
 
 import layout from './template';
 
@@ -31,25 +28,18 @@ import layout from './template';
 class Header extends Component {
   layout = layout;
 
-  @argument('object')
   theme;
 
-  @argument('boolean')
   sortable;
 
-  @argument(unionOf('string', arrayOf('string')))
   sortSequence;
 
-  @argument(Component)
-  parent;
-
-  @argument(arrayOf(Component))
-  columns;
-
-  @argument(Action)
   onColumnClick;
 
-  @argument(optional('string'))
+  parent;
+
+  columns;
+
   trClass;
 
   @className
@@ -57,7 +47,7 @@ class Header extends Component {
   themeClass;
 
   @action
-  onColumnClick(column, e) {
+  onColumnClickHeader(column, e) {
     if (this.get('onColumnClick') && column.get('sortable')) {
       this.get('onColumnClick')(column, e);
     }

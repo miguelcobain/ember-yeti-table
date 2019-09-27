@@ -1,9 +1,7 @@
 import Component from '@ember/component';
 
 import { className } from '@ember-decorators/component';
-import { or, reads } from '@ember-decorators/object/computed';
-import { argument } from '@ember-decorators/argument';
-import { arrayOf } from '@ember-decorators/argument/types';
+import { or, reads } from '@ember/object/computed';
 
 import layout from './template';
 
@@ -36,20 +34,16 @@ import layout from './template';
 class Pagination extends Component {
   layout = layout;
 
-  @argument('object')
   theme;
 
   @className
   @reads('theme.pagination.controls')
   themeClass;
 
-  @argument('object')
   paginationData;
 
-  @argument('object')
   paginationActions;
 
-  @argument('boolean')
   disabled;
 
   @or('paginationData.isFirstPage', 'disabled')
@@ -63,7 +57,6 @@ class Pagination extends Component {
    * Particularly useful with an array helper, e.g `@pageSizes={{array 10 12 23 50 100}}`
    * Defaults to `[10, 15, 20, 25]`.
    */
-  @argument(arrayOf('number'))
   pageSizes = [
     10, 15, 20, 25
   ];
@@ -71,19 +64,16 @@ class Pagination extends Component {
   /**
    * Used to show/hide some textual information about the current page. Defaults to `true`.
    */
-  @argument('boolean')
   showInfo = true;
 
   /**
    * Used to show/hide the page size selector. Defaults to `true`.
    */
-  @argument('boolean')
   showPageSizeSelector = true;
 
   /**
    * Used to show/hide the previous and next page buttons. Defaults to `true`.
    */
-  @argument('boolean')
   showButtons = true;
 
 }

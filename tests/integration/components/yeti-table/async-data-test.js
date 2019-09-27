@@ -645,7 +645,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
 
     class Obj {
       @restartableTask
-      *loadData() {
+      loadData = function*() {
         spy(...arguments);
         yield timeout(100);
         hardWorkCounter++;

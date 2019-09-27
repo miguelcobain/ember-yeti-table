@@ -2,9 +2,6 @@ import Component from '@ember/component';
 import { A } from '@ember/array';
 
 import { tagName } from '@ember-decorators/component';
-import { argument } from '@ember-decorators/argument';
-import { optional, unionOf, arrayOf } from '@ember-decorators/argument/types';
-import { Action } from '@ember-decorators/argument/types';
 
 import layout from './template';
 
@@ -29,25 +26,18 @@ import layout from './template';
 class Row extends Component {
   layout = layout;
 
-  @argument('object')
   theme;
 
-  @argument(Component)
   parent;
 
-  @argument(arrayOf(Component))
   columns;
 
-  @argument('boolean')
   sortable = true;
 
-  @argument(optional('string'))
   sort = null;
 
-  @argument(unionOf('string', arrayOf('string')))
   sortSequence;
 
-  @argument(Action)
   onColumnClick;
 
   cells = A();

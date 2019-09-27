@@ -2,22 +2,9 @@ import Component from '@ember/component';
 import { deprecate } from '@ember/application/deprecations';
 
 import { tagName, className } from '@ember-decorators/component';
-import { argument } from '@ember-decorators/argument';
-import {
-  arrayOf,
-  unionOf,
-  shapeOf,
-  optional
-} from '@ember-decorators/argument/types';
-import { Action } from '@ember-decorators/argument/types';
-import { reads } from '@ember-decorators/object/computed';
+import { reads } from '@ember/object/computed';
 
 import layout from './template';
-
-const arrayOrPromise = unionOf(
-  arrayOf('object'),
-  shapeOf({ then: Function })
-);
 
 /**
   Renders a `<tbody>` element and yields the row component, row data and index.
@@ -50,23 +37,18 @@ const arrayOrPromise = unionOf(
 class Body extends Component {
   layout = layout;
 
-  @argument('object')
   theme;
 
-  @argument(arrayOrPromise)
   data;
 
-  @argument(arrayOf(Component))
   columns;
 
-  @argument(Component)
   parent;
 
   /**
    * Adds a class to each `<tr>` element. Can be used with both the blockless and block invocations.
    * @deprecated use YetiTable's `@theme` instead of `@rowClass`
    */
-  @argument(optional('string'))
   rowClass;
 
   @className
@@ -77,7 +59,6 @@ class Body extends Component {
    * Adds a click action to each row, called with the clicked row's data as an argument.
    * Can be used with both the blockless and block invocations.
    */
-  @argument(optional(Action))
   onRowClick = () => {};
 
   init() {

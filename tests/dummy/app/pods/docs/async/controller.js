@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { action } from '@ember-decorators/object';
+import { action } from '@ember/object';
 import { timeout } from 'ember-concurrency';
 import { restartableTask } from 'ember-concurrency-decorators';
 
@@ -9,9 +9,10 @@ export default class AsyncController extends Controller {
   /**
    * This example would be used on Yeti Table as `@loadData={{perform loadData}}`.
    * This uses ember-concurrency and ember-concurrency-decorators.
+   * Can't use `*loadData()` syntax until this issue is fixed https://github.com/machty/ember-concurrency-decorators/issues/48
    */
   @restartableTask
-  *loadDataTask({ paginationData, sortData, filterData }) {
+  loadDataTask = function*({ paginationData, sortData, filterData }) {
     yield timeout(250);
 
     let params = {
