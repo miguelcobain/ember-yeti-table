@@ -15,14 +15,14 @@ import layout from './template';
 
   If you want to render these controls on the table footer, you probably want
   a footer row that always spans all rows. To do that you can use a `colspan` equal
-  to the yielded `visibleColumns` number. Example:
+  to the yielded `visibleColumns.length` number. Example:
 
   ```hbs
   <YetiTable @data={{data}} @pagination={{true}} as |table|>
     ...
     <table.foot as |foot|>
       <foot.row as |row|>
-        <row.cell colspan={{table.visibleColumns}}>
+        <row.cell colspan={{table.visibleColumns.length}}>
           <table.pagination/>
         </row.cell>
       </foot.row>

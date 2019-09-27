@@ -92,7 +92,7 @@ const didCancel = function(e) {
   @yield {object} table.paginationData  object that represents the current pagination state
   @yield {boolean} table.isLoading      boolean that is `true` when data is being loaded
   @yield {array} table.totalColumns    the columns on the table
-  @yield {number} table.visibleColumns  the number of visible columns on the table
+  @yield {array} table.visibleColumns  the visible columns on the table
   @yield {number} table.totalRows       the total number of rows on the table (regardless of pagination)
   @yield {array} table.visibleRows     the rendered rows on the table account for pagination, filtering, etc; when pagination is false, it will be the same length as totalRows
   @yield {object} table.theme           the theme being used

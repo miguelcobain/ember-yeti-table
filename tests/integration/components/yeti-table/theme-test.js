@@ -98,7 +98,7 @@ module('Integration | Component | yeti-table (theme)', function(hooks) {
 
         <table.foot as |foot|>
           <foot.row as |row|>
-            <row.cell colspan={{table.visibleColumns}}>
+            <row.cell colspan={{table.visibleColumns.length}}>
               <table.pagination/>
             </row.cell>
           </foot.row>
@@ -158,7 +158,7 @@ module('Integration | Component | yeti-table (theme)', function(hooks) {
 
         <table.foot as |foot|>
           <foot.row as |row|>
-            <row.cell colspan={{table.visibleColumns}}>
+            <row.cell colspan={{table.visibleColumns.length}}>
               <table.pagination/>
             </row.cell>
           </foot.row>

@@ -131,7 +131,7 @@ A custom pagination controls component is also included (check the `pagination-c
 
       <tfoot>
         <tr>
-          <td colspan={{table.visibleColumns}}>
+          <td colspan={{table.visibleColumns.length}}>
             <MaterialPagination @table={{table}} />
           </td>
         </tr>
