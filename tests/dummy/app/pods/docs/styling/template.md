@@ -26,7 +26,7 @@ Yeti Table default theme is defined as:
 For example, if you wish to override just the `tbodyRow` class you can do the following:
 
 ```hbs
-<YetiTable @theme={{hash tbodyRow="my-new-class"}} @data={{data}} @pagination={{true}} as |table|>
+<YetiTable @theme={{hash tbodyRow="my-new-class"}} @data={{this.data}} @pagination={{true}} as |table|>
   <table.header as |header|>
     ...
   </table.header>
@@ -59,7 +59,7 @@ using the `class` attribute
 Here's an example:
 
 ```hbs
-<YetiTable @theme={{table="table table-striped table-hover" thead="thead-dark"}} @data={{data}} @pagination={{true}} as |table|>
+<YetiTable @theme={{hash table="table table-striped table-hover" thead="thead-dark"}} @data={{this.data}} @pagination={{true}} as |table|>
   <table.header as |header|>
     ...
   </table.header>
@@ -83,7 +83,7 @@ outside the `<table>` element.
 You can work around this problem by using something like:
 
 ```hbs
-<YetiTable @tagName="" @data={{data}} @pagination={{true}} as |t|>
+<YetiTable @tagName="" @data={{this.data}} @pagination={{true}} as |t|>
 
   <table> {{!-- we render our own table element here --}}
     <t.header as |header|>
@@ -106,7 +106,7 @@ the pagination controls is to use a full-span cell on the table footer.
 Here is how to do that:
 
 ```hbs
-<YetiTable @data={{data}} @pagination={{true}} as |table|>
+<YetiTable @data={{this.data}} @pagination={{true}} as |table|>
 
   <table.header as |header|>
     ...
@@ -126,4 +126,5 @@ Here is how to do that:
 ```
 
 By using `colspan={{table.visibleColumns.length}}` we can make sure that the footer cell always spans across
-all columns.
+all columns. Keep in mind that you need to use `@visible={{true}}` on the cell, to make sure it always stays visible
+no matter what, even if its column definition has `@visible={{false}}`.

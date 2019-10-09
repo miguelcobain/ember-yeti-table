@@ -1,14 +1,14 @@
 {{! template-lint-disable no-invalid-interactive }}
-{{#if visible}}
+{{#if this.visible}}
   <th
-    role={{if sortable "button"}}
-    class="{{class}} {{theme.theadCell}} {{if sortable theme.sorting.columnSortable}} {{if isSorted theme.sorting.columnSorted}} {{if isAscSorted theme.sorting.columnSortedAsc}} {{if isDescSorted theme.sorting.columnSortedDesc}}"
-    onclick={{if sortable (action onClick this)}}
+    role={{if this.sortable "button"}}
+    class="{{class}} {{@theme.theadCell}} {{if this.sortable @theme.sorting.columnSortable}} {{if this.isSorted @theme.sorting.columnSorted}} {{if this.isAscSorted @theme.sorting.columnSortedAsc}} {{if this.isDescSorted @theme.sorting.columnSortedDesc}}"
+    onclick={{if this.sortable (action @onClick this)}}
     ...attributes>
     {{yield (hash
-      isSorted=isSorted
-      isAscSorted=isAscSorted
-      isDescSorted=isDescSorted
+      isSorted=this.isSorted
+      isAscSorted=this.isAscSorted
+      isDescSorted=this.isDescSorted
     )}}
   </th>
 {{/if}}

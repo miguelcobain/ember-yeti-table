@@ -35,7 +35,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
 
   test('rendering with filter filters rows', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} @filter="Baderous" as |table|>
+      <YetiTable @data={{this.data}} @filter="Baderous" as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -61,7 +61,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
 
   test('updating filter filters rows', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} @filter={{filterText}} as |table|>
+      <YetiTable @data={{this.data}} @filter={{filterText}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -99,7 +99,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     this.set('filterText', 'Baderous');
 
     await render(hbs`
-      <YetiTable @data={{data}} as |table|>
+      <YetiTable @data={{this.data}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -126,7 +126,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
   test('updating filter on column filters rows', async function(assert) {
 
     await render(hbs`
-      <YetiTable @data={{data}} as |table|>
+      <YetiTable @data={{this.data}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -166,7 +166,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     this.set('filterLast', '');
 
     await render(hbs`
-      <YetiTable @data={{data}} as |table|>
+      <YetiTable @data={{this.data}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName" @filter={{filterFirst}}>
@@ -200,7 +200,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
 
   test('changing a filtered property updates table', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} @filter="Tom" as |table|>
+      <YetiTable @data={{this.data}} @filter="Tom" as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -247,7 +247,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     this.set('filterText', 'firstName:tom');
 
     await render(hbs`
-      <YetiTable @data={{data}} @filterFunction={{action filter}} @filterUsing={{filterText}} as |table|>
+      <YetiTable @data={{this.data}} @filterFunction={{action filter}} @filterUsing={{filterText}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -286,7 +286,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     this.set('max', 100);
 
     await render(hbs`
-      <YetiTable @data={{data}} @filterUsing={{hash min=min max=max}} @filterFunction={{action filter}} as |table|>
+      <YetiTable @data={{this.data}} @filterUsing={{hash min=min max=max}} @filterFunction={{action filter}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -322,7 +322,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     this.set('max', 100);
 
     await render(hbs`
-      <YetiTable @data={{data}} as |table|>
+      <YetiTable @data={{this.data}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -351,7 +351,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
 
   test('Filtering works when a column header does not have a property', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} @filter="Baderous" as |table|>
+      <YetiTable @data={{this.data}} @filter="Baderous" as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">

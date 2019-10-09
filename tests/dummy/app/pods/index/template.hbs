@@ -12,7 +12,7 @@
     {{#docs-demo class="docs-flex docs-flex-row" as |demo|}}
       {{#demo.example name="index-example.hbs"}}
 
-        <YetiTable @data={{data}} as |t|>
+        <YetiTable @data={{this.data}} as |t|>
 
           <t.header as |h|>
             <h.column @prop="firstName">

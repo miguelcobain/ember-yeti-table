@@ -12,7 +12,7 @@ with the yielded state and actions (more on that in the following section).
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="pagination-simple.hbs"}}
-    <YetiTable @data={{data}} @pagination={{true}} @pageSize={{10}} as |table|>
+    <YetiTable @data={{this.data}} @pagination={{true}} @pageSize={{10}} as |table|>
 
       <table.header as |header|>
         <header.column @prop="firstName">
@@ -30,7 +30,7 @@ with the yielded state and actions (more on that in the following section).
 
       <table.foot as |foot|>
         <foot.row as |row|>
-          <row.cell colspan={{table.visibleColumns.length}}>
+          <row.cell @visible={{true}} colspan={{table.visibleColumns.length}}>
             <table.pagination/>
           </row.cell>
         </foot.row>
@@ -43,7 +43,8 @@ with the yielded state and actions (more on that in the following section).
 {{/docs-demo}}
 
 By using `colspan={{table.visibleColumns.length}}` we can make sure that the footer cell always spans across
-all columns.
+all columns. Keep in mind that you need to use `@visible={{true}}` on the cell, to make sure it always stays visible
+no matter what, even if its column definition has `@visible={{false}}`.
 
 ## Pagination state and actions
 

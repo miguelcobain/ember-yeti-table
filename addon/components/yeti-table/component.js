@@ -41,7 +41,7 @@ const didCancel = function(e) {
   table, and manages high level state of all of its subcomponents.
 
   ```hbs
-  <YetiTable @data={{data}} as |table|>
+  <YetiTable @data={{this.data}} as |table|>
 
     <table.header as |header|>
       <header.column @prop="firstName">
@@ -61,7 +61,7 @@ const didCancel = function(e) {
   ```
 
   ```hbs
-  <YetiTable @data={{data}} as |table|>
+  <YetiTable @data={{this.data}} as |table|>
 
     <table.head as |head|>
       <head.row as |row|>

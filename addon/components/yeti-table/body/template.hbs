@@ -1,20 +1,20 @@
 {{#if hasBlock}}
 
-  {{#each data as |rowData index|}}
+  {{#each @data as |rowData index|}}
     {{yield
-      (hash row=(component "yeti-table/body/row" theme=theme onClick=this.onRowClick columns=columns))
+      (hash row=(component "yeti-table/body/row" theme=@theme onClick=this.onRowClick columns=@columns))
       rowData
       index}}
   {{/each}}
 
 {{else}}
 
-  {{#each data as |rowData|}}
+  {{#each @data as |rowData|}}
     {{#yeti-table/body/row
-      theme=theme
-      onClick=(action this.onRowClick rowData) columns=columns as |row|}}
+      theme=@theme
+      onClick=(action this.onRowClick rowData) columns=@columns as |row|}}
 
-      {{#each columns as |column|}}
+      {{#each @columns as |column|}}
         {{#row.cell class=column.columnClass}}
           {{#if column.prop}}
             {{get rowData column.prop}}

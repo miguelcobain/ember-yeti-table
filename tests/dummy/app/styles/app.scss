@@ -48,3 +48,12 @@ body {
 .docs-font-title {
   font-family: inherit;
 }
+
+// brand color no longer works in Ember CLI 3.13
+// see: https://github.com/ember-learn/ember-cli-addon-docs/issues/407
+.docs-bg-brand, .hover\:docs-bg-brand:hover {
+  background-color: #5B47B9 !important;
+}
+.docs-text-brand, .hover\:docs-text-brand:hover {
+  color: #5B47B9 !important;
+}

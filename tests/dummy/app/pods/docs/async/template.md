@@ -83,13 +83,13 @@ A custom pagination controls component is also included (check the `pagination-c
     <div class="docs-flex docs-justify-end">
       <input
         class="input" type="search" placeholder="Search..."
-        value={{filterText}} oninput={{action (mut filterText) value="target.value"}}>
+        value={{this.filterText}} oninput={{action (mut this.filterText) value="target.value"}}>
     </div>
 
     <YetiTable
-      @loadData={{perform loadDataTask}}
-      @filter={{filterText}}
-      @pagination={{true}} @pageSize={{10}} @totalRows={{totalRows}} as |table|>
+      @loadData={{perform this.loadDataTask}}
+      @filter={{this.filterText}}
+      @pagination={{true}} @pageSize={{10}} @totalRows={{this.totalRows}} as |table|>
       
       <table.header as |header|>
         <header.column @prop="avatarUrl" @sortable={{false}}>

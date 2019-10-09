@@ -21,7 +21,7 @@ import layout from './template';
   @yield {Component} row.cell
 */
 @tagName('')
-class Row extends Component {
+class FootRow extends Component {
   layout = layout;
 
   theme;
@@ -55,4 +55,4 @@ class Row extends Component {
 }
 
 
-export default Row;
+export default FootRow;

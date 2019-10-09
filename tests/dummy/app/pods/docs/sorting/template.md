@@ -13,7 +13,7 @@ In the following example we disabled sorting on the second column.
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="sorting-simple.hbs"}}
-    <YetiTable @data={{data}} as |table|>
+    <YetiTable @data={{this.data}} as |table|>
 
       <table.header as |header|>
         <header.column @prop="firstName">
@@ -43,7 +43,7 @@ Note that updating the `@sort` argument will also update the sorting of the tabl
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="sorting-sort-property.hbs"}}
-    <YetiTable @data={{data}} as |table|>
+    <YetiTable @data={{this.data}} as |table|>
 
       <table.header as |header|>
         <header.column @prop="firstName">
@@ -77,7 +77,7 @@ In the following example we're showing `(sorted desc)` or `(sorted asc)` text de
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="sorting-custom.hbs"}}
-    <YetiTable @data={{data}} as |table|>
+    <YetiTable @data={{this.data}} as |table|>
 
       <table.header as |header|>
         <header.column @prop="firstName" as |column|>
@@ -112,7 +112,7 @@ to the first name column and `@sort="desc"` to the last name column.
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="sorting-advanced.hbs"}}
-    <YetiTable @data={{advancedSortingData}} as |table|>
+    <YetiTable @data={{this.advancedSortingData}} as |table|>
 
       <table.header as |header|>
         <header.column @prop="firstName" @sort="asc">

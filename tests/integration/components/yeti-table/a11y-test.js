@@ -33,7 +33,7 @@ module('Integration | Component | yeti-table (a11y)', function(hooks) {
 
   test('only sortable columns have role="button"', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} as |table|>
+      <YetiTable @data={{this.data}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName" @sortable={{false}}>

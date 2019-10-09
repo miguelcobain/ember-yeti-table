@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 
 import { tagName } from '@ember-decorators/component';
+import { reads } from '@ember/object/computed';
 
 import layout from './template';
 
@@ -13,12 +14,20 @@ import layout from './template';
   ```
 */
 @tagName('')
-class Cell extends Component {
+class BodyCell extends Component {
   layout = layout;
 
   theme;
 
   parent;
+
+  /**
+   * Controls the visibility of the current cell. Keep in mind that this property
+   * won't just hide the column using css. The DOM for the column will be removed.
+   * Defaults to the `visible` argument of the corresponding column.
+   */
+  @reads('column.visible')
+  visible;
 
   init() {
     super.init(...arguments);
@@ -35,4 +44,4 @@ class Cell extends Component {
   }
 }
 
-export default Cell;
+export default BodyCell;

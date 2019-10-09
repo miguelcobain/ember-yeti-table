@@ -13,7 +13,7 @@ Yeti Table "unrolls" all the rows for you. This is useful for simple tables. Her
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="general-simple.hbs"}}
-    <YetiTable @data={{data}} as |table|>
+    <YetiTable @data={{this.data}} as |table|>
 
       <table.header as |header|>
         <header.column @prop="firstName">
@@ -52,7 +52,7 @@ You will probably need to make more customizations, and to do so you will need t
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="general-simple-with-body.hbs"}}
-    <YetiTable @data={{data}} as |table|>
+    <YetiTable @data={{this.data}} as |table|>
 
       <table.header as |header|>
         <header.column>
@@ -121,7 +121,7 @@ Here is an example of such a usage:
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="general-simple-with-multiple-rows-on-header.hbs"}}
-    <YetiTable @data={{data}} as |table|>
+    <YetiTable @data={{this.data}} as |table|>
 
       <table.head as |head|>
         <head.row as |row|>

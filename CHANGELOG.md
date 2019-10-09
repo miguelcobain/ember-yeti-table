@@ -8,6 +8,7 @@
 
 #### ✨ Features
 - now you can use `table.rows`. This will contain an array of all the rows yeti table knows of. In the sync case, it will contain the entire dataset. In the async case, it will be the same as `table.visibleRows`.
+- now you can use `@visible` on any cell component. Useful if you need to escape the default `@visible` value of the corresponding column e.g to always render pagination on the first row with a colspan
 
 #### 🏗 Chores
 - updated dependencies and removed `@argument` decorator because it was stopping us from supporting latest ember versions

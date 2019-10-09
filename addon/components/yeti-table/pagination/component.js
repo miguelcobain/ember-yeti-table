@@ -18,7 +18,7 @@ import layout from './template';
   to the yielded `visibleColumns.length` number. Example:
 
   ```hbs
-  <YetiTable @data={{data}} @pagination={{true}} as |table|>
+  <YetiTable @data={{this.data}} @pagination={{true}} as |table|>
     ...
     <table.foot as |foot|>
       <foot.row as |row|>

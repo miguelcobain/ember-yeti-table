@@ -1,37 +1,37 @@
 {{yield (hash
   header=(component "yeti-table/header"
-    columns=columns onColumnClick=(action "onColumnSort")
-    sortable=sortable sortSequence=sortSequence parent=this theme=mergedTheme
+    columns=this.columns onColumnClick=(action this.onColumnSort)
+    sortable=this.sortable sortSequence=this.sortSequence parent=this theme=this.mergedTheme
   )
   head=(component "yeti-table/head"
-    columns=columns onColumnClick=(action "onColumnSort")
-    sortable=sortable sortSequence=sortSequence theme=mergedTheme parent=this
+    columns=this.columns onColumnClick=(action this.onColumnSort)
+    sortable=this.sortable sortSequence=this.sortSequence theme=this.mergedTheme parent=this
   )
-  body=(component "yeti-table/body" data=processedData columns=columns theme=mergedTheme parent=this)
-  foot=(component "yeti-table/foot" columns=columns theme=mergedTheme parent=this)
+  body=(component "yeti-table/body" data=this.processedData columns=this.columns theme=this.mergedTheme parent=this)
+  foot=(component "yeti-table/foot" columns=this.columns theme=this.mergedTheme parent=this)
   pagination=(component "yeti-table/pagination"
-    disabled=isLoading
-    theme=mergedTheme
-    paginationData=paginationData
+    disabled=this.isLoading
+    theme=this.mergedTheme
+    paginationData=this.paginationData
     paginationActions=(hash
-      previousPage=(action "previousPage")
-      nextPage=(action "nextPage")
-      goToPage=(action "goToPage")
-      changePageSize=(action "changePageSize")
+      previousPage=(action this.previousPage)
+      nextPage=(action this.nextPage)
+      goToPage=(action this.goToPage)
+      changePageSize=(action this.changePageSize)
     )
   )
   actions=(hash
-    previousPage=(action "previousPage")
-    nextPage=(action "nextPage")
-    goToPage=(action "goToPage")
-    changePageSize=(action "changePageSize")
+    previousPage=(action this.previousPage)
+    nextPage=(action this.nextPage)
+    goToPage=(action this.goToPage)
+    changePageSize=(action this.changePageSize)
   )
-  paginationData=paginationData
-  isLoading=isLoading
-  columns=columns
-  visibleColumns=visibleColumns
-  rows=normalizedRows
-  totalRows=normalizedTotalRows
-  visibleRows=processedData
-  theme=mergedTheme
+  paginationData=this.paginationData
+  isLoading=this.isLoading
+  columns=this.columns
+  visibleColumns=this.visibleColumns
+  rows=this.normalizedRows
+  totalRows=this.normalizedTotalRows
+  visibleRows=this.processedData
+  theme=this.mergedTheme
 )}}

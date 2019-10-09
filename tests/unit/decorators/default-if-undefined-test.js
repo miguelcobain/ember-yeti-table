@@ -1,7 +1,7 @@
 import defaultTo from 'ember-yeti-table/-private/utils/default-to';
 import { module, test } from 'qunit';
 
-module('Unit | Decorators | @defaultIfUndefined', function() {
+module('Unit | Decorators | @defaultTo', function() {
   test('it works', function(assert) {
     class Foo {
       @defaultTo('default')

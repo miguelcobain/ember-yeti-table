@@ -23,7 +23,7 @@ For the data, let's use an array of objects defined in your component:
 import Component from '@ember/component';
 
 export default class DemoComponent extends Component {
-  rows = [
+  data = [
     {
       firstName: 'Tony',
       lastName: 'Stark',
@@ -41,7 +41,7 @@ export default class DemoComponent extends Component {
 Now let's setup the template for this component:
 
 ```hbs
-  <YetiTable @data={{data}} as |table|>
+  <YetiTable @data={{this.data}} as |table|>
     <table.header as |header|>
       <header.column @prop="firstName">
         First name

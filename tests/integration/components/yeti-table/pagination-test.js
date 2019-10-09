@@ -22,7 +22,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
 
   test('when using pagination, it does not render more than pageSize rows', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} @pagination={{true}} @pageSize={{15}} as |table|>
+      <YetiTable @data={{this.data}} @pagination={{true}} @pageSize={{15}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -48,7 +48,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
     this.pageSize = 15;
 
     await render(hbs`
-      <YetiTable @data={{data}} @pagination={{true}} @pageSize={{pageSize}} as |table|>
+      <YetiTable @data={{this.data}} @pagination={{true}} @pageSize={{pageSize}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -76,7 +76,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
 
   test('rendering with initial pageNumber, renders the correct page', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} @pagination={{true}} @pageSize={{15}} @pageNumber={{2}} as |table|>
+      <YetiTable @data={{this.data}} @pagination={{true}} @pageSize={{15}} @pageNumber={{2}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -104,7 +104,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
     this.pageNumber = 1;
 
     await render(hbs`
-      <YetiTable @data={{data}} @pagination={{true}} @pageSize={{15}} @pageNumber={{pageNumber}} as |table|>
+      <YetiTable @data={{this.data}} @pagination={{true}} @pageSize={{15}} @pageNumber={{pageNumber}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -137,7 +137,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
     this.pageSize = 10;
 
     await render(hbs`
-      <YetiTable @data={{data}} @pagination={{true}} @pageSize={{pageSize}} @pageNumber={{pageNumber}} as |table|>
+      <YetiTable @data={{this.data}} @pagination={{true}} @pageSize={{pageSize}} @pageNumber={{pageNumber}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -167,7 +167,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
 
   test('using yield actions works to change pages', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} @pagination={{true}} @pageSize={{15}} as |table|>
+      <YetiTable @data={{this.data}} @pagination={{true}} @pageSize={{15}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -237,7 +237,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
 
   test('yielded paginationData is correct', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} @pagination={{true}} @pageSize={{15}} as |table|>
+      <YetiTable @data={{this.data}} @pagination={{true}} @pageSize={{15}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">

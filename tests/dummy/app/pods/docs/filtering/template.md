@@ -14,10 +14,10 @@ This means that Yeti Table will only show rows in which any of its columns match
     <div class="docs-flex docs-justify-end">
       <input
         class="input" type="search" placeholder="Search..."
-        value={{filterText}} oninput={{action (mut filterText) value="target.value"}}>
+        value={{this.filterText}} oninput={{action (mut this.filterText) value="target.value"}}>
     </div>
 
-    <YetiTable @data={{data}} @filter={{filterText}} as |table|>
+    <YetiTable @data={{this.data}} @filter={{this.filterText}} as |table|>
 
       <table.header as |header|>
         <header.column @prop="firstName">
@@ -65,7 +65,7 @@ You can use the `@filter` argument on `<YetiTable>` and `<header.column>` at the
         value={{filterText}} oninput={{action (mut filterText) value="target.value"}}>
     </div>
 
-    <YetiTable @data={{data}} @filter={{filterText}} as |table|>
+    <YetiTable @data={{this.data}} @filter={{filterText}} as |table|>
 
       <table.head as |head|>
         <head.row as |row|>
@@ -146,7 +146,7 @@ This allows for advanced filtering logic. See the following example:
       </div>
     </div>
 
-    <YetiTable @data={{data}} as |table|>
+    <YetiTable @data={{this.data}} as |table|>
 
       <table.header as |header|>
         <header.column @prop="firstName">

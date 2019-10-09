@@ -48,7 +48,7 @@ Afterwards, we just need to define our table body. If you use `<table.body/>` in
 Yeti Table "unrolls" all the rows for you. This is useful for simple tables. Here is such an example:
 
 ```hbs
-<YetiTable @data={{data}} as |table|>
+<YetiTable @data={{this.data}} as |table|>
 
   <table.header as |header|>
     <header.column @prop="firstName">

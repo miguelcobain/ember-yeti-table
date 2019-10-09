@@ -35,7 +35,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
   test('body blockless form renders table', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} as |table|>
+      <YetiTable @data={{this.data}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -65,7 +65,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
   test('body block form renders table', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} as |table|>
+      <YetiTable @data={{this.data}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -105,7 +105,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
   test('renders table using head and foot components', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} as |table|>
+      <YetiTable @data={{this.data}} as |table|>
 
         <table.head as |head|>
           <head.row as |row|>
@@ -151,7 +151,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
   test('trClass applies a class to the header tr element', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} as |table|>
+      <YetiTable @data={{this.data}} as |table|>
 
         <table.header @trClass="custom-tr-class" as |header|>
           <header.column @prop="firstName">
@@ -175,7 +175,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
   test('columnClass applies a class to each column with blockless body', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} as |table|>
+      <YetiTable @data={{this.data}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -202,7 +202,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
   test('columnClass applies a class to each column with block body', async function(assert) {
     await render(hbs`
-      <YetiTable @data={{data}} as |table|>
+      <YetiTable @data={{this.data}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -247,7 +247,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     };
 
     await render(hbs`
-      <YetiTable @data={{data}} as |table|>
+      <YetiTable @data={{this.data}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -283,7 +283,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     };
 
     await render(hbs`
-      <YetiTable @data={{data}} as |table|>
+      <YetiTable @data={{this.data}} as |table|>
 
         <table.header as |header|>
           <header.column>
@@ -333,7 +333,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     ];
 
     await render(hbs`
-      <YetiTable @data={{data}} as |table|>
+      <YetiTable @data={{this.data}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="0">
@@ -379,7 +379,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     this.visible = true;
 
     await render(hbs`
-      <YetiTable @data={{data}} as |table|>
+      <YetiTable @data={{this.data}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -419,7 +419,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     this.visible = true;
 
     await render(hbs`
-      <YetiTable @data={{data}} as |table|>
+      <YetiTable @data={{this.data}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -470,7 +470,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
   test('yielded columns, visibleColumns, totalRows and visibleRows are correct', async function(assert) {
 
     await render(hbs`
-      <YetiTable @data={{data}} as |table|>
+      <YetiTable @data={{this.data}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -508,7 +508,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
   test('can add arbitrary attributes to columns and cells', async function(assert) {
 
     await render(hbs`
-      <YetiTable @data={{data}} as |table|>
+      <YetiTable @data={{this.data}} as |table|>
 
         <table.header as |header|>
           <header.column class="custom-class" @columnClass="column-class" data-column="test-column">
