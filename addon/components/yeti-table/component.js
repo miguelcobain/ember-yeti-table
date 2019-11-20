@@ -359,7 +359,15 @@ class YetiTable extends DidChangeAttrsComponent {
   didInsertElement() {
     super.didInsertElement(...arguments);
 
-    let columns = this.get('columns').mapBy('prop');
+    // Only include columns with a prop
+    // truncate prop names to the first period
+    // get a unique list
+    let columns = this.get("columns")
+      .filter(column => column.get("prop"))
+      .map(column => {
+        return column.get("prop").split(".")[0];
+      });
+    columns = A(columns).uniq();
 
     let filteredDataDeps = [
       `resolvedData.@each.{${columns.join(',')}}`,

@@ -13,23 +13,38 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     this.data = A([{
       firstName: 'Miguel',
       lastName: 'Andrade',
-      points: 1
+      points: 1,
+      address: {
+        city: "New York"
+      }
     }, {
       firstName: 'José',
       lastName: 'Baderous',
-      points: 2
+      points: 2,
+      address: {
+        city: "New York"
+      }
     }, {
       firstName: 'Maria',
       lastName: 'Silva',
-      points: 3
+      points: 3,
+      address: {
+        city: "New York"
+      }
     }, {
       firstName: 'Tom',
       lastName: 'Dale',
-      points: 4
+      points: 4,
+      address: {
+        city: "Portland"
+      }
     }, {
       firstName: 'Yehuda',
       lastName: 'Katz',
-      points: 5
+      points: 5,
+      address: {
+        city: "Portland"
+      }
     }]);
   });
 
@@ -101,6 +116,47 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Custom Maria');
     assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Custom Tom');
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Custom Yehuda');
+  });
+
+  test('supports nested properties', async function(assert) {
+    await render(hbs`
+      <YetiTable @data={{this.data}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName">
+            First name
+          </header.column>
+          <header.column @prop="lastName">
+            Last name
+          </header.column>
+          <header.column @prop="address.city">
+            City
+          </header.column>
+        </table.header>
+
+        <table.body as |body person|>
+          <body.row as |row|>
+            <row.cell>
+              Custom {{person.firstName}}
+            </row.cell>
+            <row.cell>
+              {{person.lastName}}
+            </row.cell>
+            <row.cell>
+              {{person.address.city}}
+            </row.cell>
+          </body.row>
+        </table.body>
+
+      </YetiTable>
+    `);
+
+    assert.dom('tbody tr:nth-child(1) td:nth-child(3)').hasText('New York');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(3)').hasText('New York');
+    assert.dom('tbody tr:nth-child(3) td:nth-child(3)').hasText('New York');
+    assert.dom('tbody tr:nth-child(4) td:nth-child(3)').hasText('Portland');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(3)').hasText('Portland');
+    // not sure how to test that a deprecation was NOT thrown
   });
 
   test('renders table using head and foot components', async function(assert) {

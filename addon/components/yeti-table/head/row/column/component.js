@@ -48,11 +48,15 @@ class Column extends DidChangeAttrsComponent {
   parent;
 
   /**
-   * An important argument that Yeti Table uses to tiw this column to a certain property on
+   * An important argument that Yeti Table uses to tie this column to a certain property on
    * each row object of the original `@data` (or `@loadFunction`) that was passed in.
    *
-   * This is the argument that allows Yeti Table to keep itself up to date when the original
-   * data changes.
+   * This is the argument that Yeti Table uses to filter and sort the data.
+   *
+   * This argument also allows Yeti Table to keep itself up to date when the original
+   * data changes. NOTE: If this property is a nested property (one that contains periods),
+   * the table will not update when this property changes. This is due to @each only supporting
+   * one level of properties.
    *
    * If you don't need sorting, filtering or automatic table unrolling (using the blockless
    * body component), then this property is optional.

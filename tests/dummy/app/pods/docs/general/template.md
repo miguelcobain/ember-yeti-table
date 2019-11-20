@@ -3,10 +3,14 @@
 Your starting point for Yeti Table will be the `@data` argument. It accepts an array of objects
 or a promise that resolves to such an array.
 
-Then you must define your table columns inside the header component, each of them with a `@prop` argument that corresponds to the
-property key of each object that you want to display for that column. Yeti Table will update itself based on
-these property names, e.g if a `firstName` property of an object changes, Yeti Table might need to re-sort
-or re-filter the rows.
+Then you must define your table columns inside the header component, each of them with a `@prop` argument that 
+corresponds to the property key of each object that you want to display for that column. Yeti table uses 
+this property for filtering and sorting.
+ 
+Yeti Table will update itself based on these property names, e.g if a `firstName` property of an object changes, 
+Yeti Table might need to re-sort or re-filter the rows. NOTE: If the property is a nested property (one that contains 
+periods), the table will not be updated when this property changes. This is due to @each only supporting one level
+of properties.
 
 Afterwards, we just need to define our table body. If you use `<table.body/>` in the blockless form,
 Yeti Table "unrolls" all the rows for you. This is useful for simple tables. Here is such an example:
