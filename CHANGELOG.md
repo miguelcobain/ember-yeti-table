@@ -1,3 +1,13 @@
+# v1.0.1
+
+#### 🐛 Bugfixes
+- allow usage of nested keys on the `@prop` argument. If the property is a nested property (one that contains 
+periods), the table will not be updated when this nested property changes. This is due to `@each` only supporting one level
+of properties.
+
+#### 🏗 Chores
+- updated dependencies
+
 # v1.0.0
 
 #### 🚨 Breaking Changes
