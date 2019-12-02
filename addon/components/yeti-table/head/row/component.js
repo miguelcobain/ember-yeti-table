@@ -51,7 +51,7 @@ class HeadRow extends Component {
       cell.set('column', column);
     } else {
       let index = this.get('cells.length');
-      let column = columns.objectAt(index);
+      let column = columns[index];
       cell.set('column', column);
     }
 

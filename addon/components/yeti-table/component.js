@@ -1,5 +1,4 @@
 import DidChangeAttrsComponent from 'ember-yeti-table/-private/utils/did-change-attrs-component';
-import { A } from '@ember/array';
 import { isEmpty, isPresent } from '@ember/utils';
 import {
   computed as emberComputed,
@@ -311,7 +310,7 @@ class YetiTable extends DidChangeAttrsComponent {
   init() {
     super.init(...arguments);
 
-    this.columns = A();
+    this.columns = [];
     this.filteredData = [];
     this.sortedData = [];
     this.resolvedData = [];
@@ -362,12 +361,10 @@ class YetiTable extends DidChangeAttrsComponent {
     // Only include columns with a prop
     // truncate prop names to the first period
     // get a unique list
-    let columns = this.get("columns")
-      .filter(column => column.get("prop"))
-      .map(column => {
-        return column.get("prop").split(".")[0];
-      });
-    columns = A(columns).uniq();
+    let columns = this.get('columns')
+      .filter(column => column.get('prop'))
+      .map(column => column.get('prop').split('.')[0])
+      .filter((v, i, a) => a.indexOf(v) === i);
 
     let filteredDataDeps = [
       `resolvedData.@each.{${columns.join(',')}}`,
@@ -548,11 +545,21 @@ class YetiTable extends DidChangeAttrsComponent {
   }
 
   registerColumn(column) {
-    this.get('columns').addObject(column);
+    // this.get('columns').addObject(column);
+
+    let columns = this.get('columns');
+    if (!columns.includes(column)) {
+      columns.push(column);
+    }
   }
 
   unregisterColumn(column) {
-    this.get('columns').removeObject(column);
+    // this.get('columns').removeObject(column);
+
+    let columns = this.get('columns');
+    if (columns.includes(column)) {
+      this.set('columns', columns.filter(c => c === column));
+    }
   }
 }
 

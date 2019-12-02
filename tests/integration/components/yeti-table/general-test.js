@@ -156,7 +156,8 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('tbody tr:nth-child(3) td:nth-child(3)').hasText('New York');
     assert.dom('tbody tr:nth-child(4) td:nth-child(3)').hasText('Portland');
     assert.dom('tbody tr:nth-child(5) td:nth-child(3)').hasText('Portland');
-    // not sure how to test that a deprecation was NOT thrown
+
+    assert.expectNoDeprecation();
   });
 
   test('renders table using head and foot components', async function(assert) {
