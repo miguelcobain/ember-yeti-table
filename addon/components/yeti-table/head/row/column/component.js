@@ -55,7 +55,7 @@ class Column extends DidChangeAttrsComponent {
    *
    * This argument also allows Yeti Table to keep itself up to date when the original
    * data changes. NOTE: If this property is a nested property (one that contains periods),
-   * the table will not update when this property changes. This is due to @each only supporting
+   * the table will not update when this property changes. This is due to `@each` only supporting
    * one level of properties.
    *
    * If you don't need sorting, filtering or automatic table unrolling (using the blockless

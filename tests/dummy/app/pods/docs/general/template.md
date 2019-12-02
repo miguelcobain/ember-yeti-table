@@ -9,7 +9,7 @@ this property for filtering and sorting.
  
 Yeti Table will update itself based on these property names, e.g if a `firstName` property of an object changes, 
 Yeti Table might need to re-sort or re-filter the rows. NOTE: If the property is a nested property (one that contains 
-periods), the table will not be updated when this property changes. This is due to @each only supporting one level
+periods), the table will not be updated when this nested property changes. This is due to `@each` only supporting one level
 of properties.
 
 Afterwards, we just need to define our table body. If you use `<table.body/>` in the blockless form,
