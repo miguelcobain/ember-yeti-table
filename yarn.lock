@@ -6302,9 +6302,9 @@ ember-svg-jar@^2.1.0:
     path-posix "^1.0.0"
 
 ember-template-lint@^1.8.2:
-  version "1.8.2"
-  resolved "https://registry.yarnpkg.com/ember-template-lint/-/ember-template-lint-1.8.2.tgz#5e124b75920088c10c5e7b162fb6775440c0b19b"
-  integrity sha512-WNlWKMm1nRlihhnRC8zPW+rGQSz1SXswzb+iQ0GAtfDR3XDRlYEnCODTiJuRsOIDPMHtacKXljHV8rZV3+/A0g==
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/ember-template-lint/-/ember-template-lint-1.9.0.tgz#a3ef6ac1d1ba415d3a1f46c2911a06dea292c1a3"
+  integrity sha512-M6C/3dOiUUhmHkk4oWTQ+8aXr49M5pJOSrV0oB3TWrYkNkzZg0y+PM60BYX/3xzwCzUQ91DPbBPTBVmMsVflXg==
   dependencies:
     "@glimmer/syntax" "^0.44.0"
     chalk "^2.0.0"
@@ -6569,8 +6569,9 @@ esdoc-ecmascript-proposal-plugin@^1.0.0:
   resolved "https://registry.yarnpkg.com/esdoc-ecmascript-proposal-plugin/-/esdoc-ecmascript-proposal-plugin-1.0.0.tgz#390dc5656ba8a2830e39dba3570d79138df2ffd9"
   integrity sha1-OQ3FZWuoooMOOdujVw15E43y/9k=
 
-"esdoc@github:pzuraq/esdoc#015a342":
+esdoc@pzuraq/esdoc#015a342:
   version "1.0.4"
+  uid "015a3426b2e53b2b0270a9c00133780db3f1d144"
   resolved "https://codeload.github.com/pzuraq/esdoc/tar.gz/015a3426b2e53b2b0270a9c00133780db3f1d144"
   dependencies:
     babel-generator "6.26.0"
