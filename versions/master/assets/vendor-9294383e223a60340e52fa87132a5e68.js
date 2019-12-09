@@ -9163,26 +9163,7 @@ for(var r=0,i=["padding"+n[0],"padding"+n[1],"border"+n[0]+"Width","border"+n[1]
 isNaN(s)||(r+=s)}return r},r=function(e){return function(t,a,r){switch(t){case"name":return e
 case"extract":return parseFloat(r)+n(e,a)
 case"inject":return parseFloat(r)-n(e,a)+"px"}}}
-a.Normalizations.registered.outerWidth=r("width"),a.Normalizations.registered.outerHeight=r("height")}}))
-var __ember_auto_import__=function(e){function t(t){for(var n,o,s=t[0],u=t[1],l=t[2],d=0,p=[];d<s.length;d++)o=s[d],r[o]&&p.push(r[o][0]),r[o]=0
-for(n in u)Object.prototype.hasOwnProperty.call(u,n)&&(e[n]=u[n])
-for(c&&c(t);p.length;)p.shift()()
-return i.push.apply(i,l||[]),a()}function a(){for(var e,t=0;t<i.length;t++){for(var a=i[t],n=!0,s=1;s<a.length;s++){var u=a[s]
-0!==r[u]&&(n=!1)}n&&(i.splice(t--,1),e=o(o.s=a[0]))}return e}var n={},r={0:0},i=[]
-function o(t){if(n[t])return n[t].exports
-var a=n[t]={i:t,l:!1,exports:{}}
-return e[t].call(a.exports,a,a.exports,o),a.l=!0,a.exports}o.m=e,o.c=n,o.d=function(e,t,a){o.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:a})},o.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},o.t=function(e,t){if(1&t&&(e=o(e)),8&t)return e
-if(4&t&&"object"==typeof e&&e&&e.__esModule)return e
-var a=Object.create(null)
-if(o.r(a),Object.defineProperty(a,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var n in e)o.d(a,n,function(t){return e[t]}.bind(null,n))
-return a},o.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e}
-return o.d(t,"a",t),t},o.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},o.p=""
-var s=window.webpackJsonp_ember_auto_import_=window.webpackJsonp_ember_auto_import_||[],u=s.push.bind(s)
-s.push=t,s=s.slice()
-for(var l=0;l<s.length;l++)t(s[l])
-var c=u
-return i.push([25,2]),a()}({11:function(e,t){window._eai_r=require,window._eai_d=define},25:function(e,t,a){a(11),e.exports=a(26)},26:function(e,t,a){var n,r,i
-"undefined"!=typeof document&&(a.p=(n=document.querySelectorAll("script"))[n.length-1].src.replace(/\/[^/]*$/,"/")),e.exports=(r=_eai_d,i=_eai_r,window.emberAutoImportDynamic=function(e){return i("_eai_dyn_"+e)},r("deepmerge",[],(function(){return a(27)})),r("faker",[],(function(){return a(28)})),r("highlight.js/lib/highlight",[],(function(){return a(1075)})),r("highlight.js/lib/languages/css",[],(function(){return a(1076)})),r("highlight.js/lib/languages/diff",[],(function(){return a(1077)})),r("highlight.js/lib/languages/handlebars",[],(function(){return a(1078)})),r("highlight.js/lib/languages/htmlbars",[],(function(){return a(1079)})),r("highlight.js/lib/languages/javascript",[],(function(){return a(1080)})),r("highlight.js/lib/languages/json",[],(function(){return a(1081)})),r("highlight.js/lib/languages/shell",[],(function(){return a(1082)})),r("highlight.js/lib/languages/typescript",[],(function(){return a(1083)})),r("highlight.js/lib/languages/xml",[],(function(){return a(1084)})),r("lodash",[],(function(){return a(1085)})),r("lunr",[],(function(){return a(1086)})),r("marked",[],(function(){return a(1087)})),void r("miragejs",[],(function(){return a(1092)})))}});(window.webpackJsonp_ember_auto_import_=window.webpackJsonp_ember_auto_import_||[]).push([[2],[function(e,t){function a(e){return(a="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}var n="Expected a function",r="__lodash_hash_undefined__",i=1/0,o=9007199254740991,s="[object Arguments]",u="[object Function]",l="[object GeneratorFunction]",c="[object Symbol]",d=/\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,p=/^\w*$/,m=/^\./,f=/[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g,h=/\\(\\)?/g,v=/^\[object .+?Constructor\]$/,b=/^(?:0|[1-9]\d*)$/,g="object"==("undefined"==typeof global?"undefined":a(global))&&global&&global.Object===Object&&global,y="object"==("undefined"==typeof self?"undefined":a(self))&&self&&self.Object===Object&&self,k=g||y||Function("return this")()
+a.Normalizations.registered.outerWidth=r("width"),a.Normalizations.registered.outerHeight=r("height")}})),(window.webpackJsonp_ember_auto_import_=window.webpackJsonp_ember_auto_import_||[]).push([[2],[function(e,t){function a(e){return(a="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}var n="Expected a function",r="__lodash_hash_undefined__",i=1/0,o=9007199254740991,s="[object Arguments]",u="[object Function]",l="[object GeneratorFunction]",c="[object Symbol]",d=/\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,p=/^\w*$/,m=/^\./,f=/[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g,h=/\\(\\)?/g,v=/^\[object .+?Constructor\]$/,b=/^(?:0|[1-9]\d*)$/,g="object"==("undefined"==typeof global?"undefined":a(global))&&global&&global.Object===Object&&global,y="object"==("undefined"==typeof self?"undefined":a(self))&&self&&self.Object===Object&&self,k=g||y||Function("return this")()
 function w(e,t,a){switch(a.length){case 0:return e.call(t)
 case 1:return e.call(t,a[0])
 case 2:return e.call(t,a[0],a[1])
@@ -12083,7 +12064,7 @@ return i.push(r),this[t]=i,this.save(),r.reload()}}},{key:"disassociateAllDepend
 t=this.isPolymorphic?{type:e.modelName,id:e.id}:e.id,this.schema[this.schema.toCollectionName(n)].where((function(e){var n=e[a.getForeignKey()]
 return n&&n.find((function(e){return"object"===St(e)?e.type===t.type&&e.id===t.id:e===t}))})).models.forEach((function(t){t.disassociate(e,a),t.save()}))}},{key:"identifier",get:function(){if("string"!=typeof la[this.key]){var e="".concat(Jt(this._container.inflector.singularize(this.key)),"Ids")
 la[this.key]=e}return la[this.key]}}]),t}(ta),da={},pa=function(){function e(){xt(this,e)}return At(e,[{key:"getModelClassFromPath",value:function(e){if(e){if("string"!=typeof da[e]){for(var t,a=e.split("/"),n=a.length-1;n>=0;n--){var r=a[n]
-if(":"!==r[0]){t=r
+if(r.length&&":"!==r[0]){t=r
 break}}da[e]=Wt(Jt(this._container.inflector.singularize(t)))}return da[e]}}},{key:"_getIdForRequest",value:function(e,t){var a
 return e&&e.params&&e.params.id?a=e.params.id:t&&t.data&&t.data.id&&(a=t.data.id),a}},{key:"_getJsonApiDocForRequest",value:function(e,t){var a
 return e&&e.requestBody&&(a=JSON.parse(e.requestBody)),this.serializerOrRegistry.normalize(a,t)}},{key:"_getAttrsForRequest",value:function(e,t){var a=this,n=this._getJsonApiDocForRequest(e,t),r=this._getIdForRequest(e,n),i={}
@@ -12375,7 +12356,7 @@ return(t||a)&&!this._typeIsPluralForModel(e)}},{key:"_modelOrFactoryExistsForTyp
 return t||a}},{key:"_validateTraits",value:function(e,t,a){e.forEach((function(e){if(!t.isTrait(e))throw new Error("'".concat(e,"' trait is not registered in '").concat(a,"' factory"))}))}},{key:"_mergeExtensions",value:function(e,t,a){var n=t.map((function(t){return e[t].extension}))
 return n.push(a||{}),n.reduce((function(e,t){return bt()(e,t)}),{})}},{key:"_mapAssociationsFromAttributes",value:function(e,t){var a=this,n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:{}
 Object.keys(t||{}).filter((function(e){return Yt(t[e])})).forEach((function(r){var i=a.schema.modelClassFor(e).associationFor(r)
-Xt(i&&i instanceof na,"You're using the `association` factory helper on the '".concat(r,"' attribute of your ").concat(e," factory, but that attribute is not a `belongsTo` association.")),Xt(!(i&&i instanceof na&&i.modelName===e),"You're using the association() helper on your ".concat(e," factory for ").concat(r,", which is a belongsTo self-referential relationship. You can't do this as it will lead to infinite recursion. You can move the helper inside of a trait and use it selectively."))
+Xt(i&&i instanceof na,"You're using the `association` factory helper on the '".concat(r,"' attribute of your ").concat(e," factory, but that attribute is not a `belongsTo` association.")),Xt(!(i&&i instanceof na&&i.modelName===e),"You're using the association() helper on your ".concat(e," factory for ").concat(r,", which is a belongsTo self-referential relationship. You can't do this as it will lead to infinite recursion. You can move the helper inside of a trait and use it selectively.")),Xt(!(i&&i.opts&&i.opts.polymorphic),"You're using the association() helper on your ".concat(e," factory for ").concat(r,", which is a polymorphic relationship. This is not currently supported."))
 var o=t[r],s="".concat(Jt(r),"Id")
 n[r]||(t[s]=a.create.apply(a,[i.modelName].concat(Tt(o.traitsAndOverrides))).id),delete t[r]}))}}]),e}(),Va=Ea.extend({serializeIds:"always",normalizeIds:!0,keyForModel:function(e){return Zt(e)},keyForAttribute:function(e){return Zt(e)},keyForRelationship:function(e){return this._container.inflector.pluralize(Zt(e))},keyForEmbeddedRelationship:function(e){return Zt(e)},keyForRelationshipIds:function(e){return"".concat(Zt(this._container.inflector.singularize(e)),"_ids")},keyForForeignKey:function(e){return"".concat(Zt(e),"_id")},keyForPolymorphicForeignKeyId:function(e){return"".concat(Zt(e),"_id")},keyForPolymorphicForeignKeyType:function(e){return"".concat(Zt(e),"_type")},normalize:function(e){var t=this,a=Object.keys(e)[0],n=e[a],r=Jt(a),i=this.schema.modelClassFor(r),o=i.belongsToAssociations,s=i.hasManyAssociations,u=Object.keys(o),l=Object.keys(s),c={data:{type:this._container.inflector.pluralize(a),attributes:{}}}
 n.id&&(c.data.id=n.id)
@@ -12389,3 +12370,22 @@ return("x"===e?t:3&t|8).toString(16)}))}function qa(){for(var e=arguments.length
 return zt(ca,t)}function Ja(){for(var e=arguments.length,t=new Array(e),a=0;a<e;a++)t[a]=arguments[a]
 return zt(na,t)}var Wa={Factory:Dt,Response:Ft,hasMany:qa,belongsTo:Ja}
 t.default=Wa}]])
+var __ember_auto_import__=function(e){function t(t){for(var n,o,s=t[0],u=t[1],l=t[2],d=0,p=[];d<s.length;d++)o=s[d],r[o]&&p.push(r[o][0]),r[o]=0
+for(n in u)Object.prototype.hasOwnProperty.call(u,n)&&(e[n]=u[n])
+for(c&&c(t);p.length;)p.shift()()
+return i.push.apply(i,l||[]),a()}function a(){for(var e,t=0;t<i.length;t++){for(var a=i[t],n=!0,s=1;s<a.length;s++){var u=a[s]
+0!==r[u]&&(n=!1)}n&&(i.splice(t--,1),e=o(o.s=a[0]))}return e}var n={},r={0:0},i=[]
+function o(t){if(n[t])return n[t].exports
+var a=n[t]={i:t,l:!1,exports:{}}
+return e[t].call(a.exports,a,a.exports,o),a.l=!0,a.exports}o.m=e,o.c=n,o.d=function(e,t,a){o.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:a})},o.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},o.t=function(e,t){if(1&t&&(e=o(e)),8&t)return e
+if(4&t&&"object"==typeof e&&e&&e.__esModule)return e
+var a=Object.create(null)
+if(o.r(a),Object.defineProperty(a,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var n in e)o.d(a,n,function(t){return e[t]}.bind(null,n))
+return a},o.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e}
+return o.d(t,"a",t),t},o.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},o.p=""
+var s=window.webpackJsonp_ember_auto_import_=window.webpackJsonp_ember_auto_import_||[],u=s.push.bind(s)
+s.push=t,s=s.slice()
+for(var l=0;l<s.length;l++)t(s[l])
+var c=u
+return i.push([25,2]),a()}({11:function(e,t){window._eai_r=require,window._eai_d=define},25:function(e,t,a){a(11),e.exports=a(26)},26:function(e,t,a){var n,r,i
+"undefined"!=typeof document&&(a.p=(n=document.querySelectorAll("script"))[n.length-1].src.replace(/\/[^/]*$/,"/")),e.exports=(r=_eai_d,i=_eai_r,window.emberAutoImportDynamic=function(e){return i("_eai_dyn_"+e)},r("deepmerge",[],(function(){return a(27)})),r("faker",[],(function(){return a(28)})),r("highlight.js/lib/highlight",[],(function(){return a(1075)})),r("highlight.js/lib/languages/css",[],(function(){return a(1076)})),r("highlight.js/lib/languages/diff",[],(function(){return a(1077)})),r("highlight.js/lib/languages/handlebars",[],(function(){return a(1078)})),r("highlight.js/lib/languages/htmlbars",[],(function(){return a(1079)})),r("highlight.js/lib/languages/javascript",[],(function(){return a(1080)})),r("highlight.js/lib/languages/json",[],(function(){return a(1081)})),r("highlight.js/lib/languages/shell",[],(function(){return a(1082)})),r("highlight.js/lib/languages/typescript",[],(function(){return a(1083)})),r("highlight.js/lib/languages/xml",[],(function(){return a(1084)})),r("lodash",[],(function(){return a(1085)})),r("lunr",[],(function(){return a(1086)})),r("marked",[],(function(){return a(1087)})),void r("miragejs",[],(function(){return a(1092)})))}})
