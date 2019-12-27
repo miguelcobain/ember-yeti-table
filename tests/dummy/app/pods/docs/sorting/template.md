@@ -39,7 +39,9 @@ In the following example we disabled sorting on the second column.
 
 If you need to specify a sort order, you can use the `@sort` argument on the column definitions, with a string of `asc` or `desc`.
 
-Note that updating the `@sort` argument will also update the sorting of the table. Also, if you update an object's property which the table is sorted on, the table sorting will update accordingly.
+Note that updating the `@sort` argument will also update the sorting of the table. 
+
+If you update an object's property which the table is sorted on, the table sorting will update accordingly. This behaviour cant be turned off with `@ignoreDataChanges={{true}}`
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="sorting-sort-property.hbs"}}

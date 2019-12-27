@@ -536,6 +536,45 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
   });
 
+  test('changing a sorted property updates sorting is ignored correctly', async function(assert) {
+    await render(hbs`
+      <YetiTable @data={{this.data}} @ignoreDataChanges={{true}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName" @sort="asc">
+            First name
+          </header.column>
+          <header.column @prop="lastName">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body/>
+
+      </YetiTable>
+    `);
+
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Maria');
+    assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Miguel');
+    assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
+
+    run(() => {
+      set(this.data.objectAt(3), 'firstName', '123');
+    });
+    await settled();
+
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Maria');
+    assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Miguel');
+    assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('123');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
+  });
+
   test('using multiple properties on sort works', async function(assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
