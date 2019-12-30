@@ -1,32 +1,32 @@
-{{#docs-viewer as |viewer|}}
+<DocsViewer as |viewer|>
 
-  {{#viewer.nav as |nav|}}
-    {{nav.section "Introduction"}}
-
-    <li class="mt-8"></li>
-
-    {{nav.item "Quickstart" "docs.quickstart"}}
-    {{nav.item "Why Yeti Table?" "docs.why-yeti-table"}}
-
-    {{nav.section "Guides"}}
+  <viewer.nav as |nav|>
+    <nav.section @label="Introduction"/>
 
     <li class="mt-8"></li>
 
-    {{nav.item "Defining a table" "docs.general"}}
-    {{nav.item "Sorting" "docs.sorting"}}
-    {{nav.item "Filtering" "docs.filtering"}}
-    {{nav.item "Pagination" "docs.pagination"}}
-    {{nav.item "Async data" "docs.async"}}
-    {{nav.item "Styling" "docs.styling"}}
-    {{nav.item "Configuration" "docs.configuration"}}
-  {{/viewer.nav}}
+    <nav.item @label="Quickstart" @route="docs.quickstart"/>
+    <nav.item @label="Why Yeti Table?" @route="docs.why-yeti-table"/>
 
-  {{#viewer.main}}
+    <nav.section @label="Guides"/>
+
+    <li class="mt-8"></li>
+
+    <nav.item @label="Defining a table" @route="docs.general"/>
+    <nav.item @label="Sorting" @route="docs.sorting"/>
+    <nav.item @label="Filtering" @route="docs.filtering"/>
+    <nav.item @label="Pagination" @route="docs.pagination"/>
+    <nav.item @label="Async data" @route="docs.async"/>
+    <nav.item @label="Styling" @route="docs.styling"/>
+    <nav.item @label="Configuration" @route="docs.configuration"/>
+  </viewer.nav>
+
+  <viewer.main>
     <div class="docs-container">
       <div class="docs-section">
         {{outlet}}
       </div>
     </div>
-  {{/viewer.main}}
+  </viewer.main>
 
-{{/docs-viewer}}
+</DocsViewer>

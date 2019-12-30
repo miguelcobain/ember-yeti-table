@@ -2,7 +2,7 @@
 <div class="pagination-controls">
   <div>
     Rows per page:
-    <select disabled={{@table.isLoading}} onchange={{action @table.actions.changePageSize value="target.value"}}>
+    <select disabled={{@table.isLoading}} {{on "change" @table.actions.changePageSize value="target.value"}}>
       {{#each (array 10 15 20 25) as |pageSize|}}
         <option value={{pageSize}} selected={{eq @table.paginationData.pageSize pageSize}}>{{pageSize}}</option>
       {{/each}}
@@ -13,11 +13,11 @@
     {{@table.paginationData.pageStart}} - {{@table.paginationData.pageEnd}} of {{@table.paginationData.totalRows}}
   </div>
 
-  <button class="previous" disabled={{or @table.paginationData.isFirstPage @table.isLoading}} onclick={{action @table.actions.previousPage}}>
+  <button type="button" class="previous" disabled={{or @table.paginationData.isFirstPage @table.isLoading}} {{on "click" @table.actions.previousPage}}>
     <i class="material-icons">keyboard_arrow_left</i>
   </button>
 
-  <button class="next" disabled={{or @table.paginationData.isLastPage @table.isLoading}} onclick={{action @table.actions.nextPage}}>
+  <button type="button" class="next" disabled={{or @table.paginationData.isLastPage @table.isLoading}} {{on "click" @table.actions.nextPage}}>
     <i class="material-icons">keyboard_arrow_right</i>
   </button>
 </div>

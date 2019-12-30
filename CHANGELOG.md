@@ -5,6 +5,8 @@
 
 #### 🏗 Chores
 - updated internal dependencies
+- use `ember-on-modifier`
+- use ember `fn` helper instead of `action` helper
 
 # v1.0.1
 

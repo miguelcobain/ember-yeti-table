@@ -2,6 +2,7 @@ import Component from '@ember/component';
 
 import { className } from '@ember-decorators/component';
 import { or, reads } from '@ember/object/computed';
+import { action } from '@ember/object';
 
 import layout from './template';
 
@@ -75,6 +76,11 @@ class Pagination extends Component {
    * Used to show/hide the previous and next page buttons. Defaults to `true`.
    */
   showButtons = true;
+
+  @action
+  changePageSize(ev) {
+    this.paginationActions.changePageSize(ev.target.value);
+  }
 
 }
 

@@ -2,8 +2,8 @@
 {{#if this.visible}}
   <th
     role={{if this.sortable "button"}}
-    class="{{class}} {{@theme.theadCell}} {{if this.sortable @theme.sorting.columnSortable}} {{if this.isSorted @theme.sorting.columnSorted}} {{if this.isAscSorted @theme.sorting.columnSortedAsc}} {{if this.isDescSorted @theme.sorting.columnSortedDesc}}"
-    onclick={{if this.sortable (action @onClick this)}}
+    class="{{@class}} {{@theme.theadCell}} {{if this.sortable @theme.sorting.columnSortable}} {{if this.isSorted @theme.sorting.columnSorted}} {{if this.isAscSorted @theme.sorting.columnSortedAsc}} {{if this.isDescSorted @theme.sorting.columnSortedDesc}}"
+    onclick={{if this.sortable (fn @onClick this)}}
     ...attributes>
     {{yield (hash
       isSorted=this.isSorted

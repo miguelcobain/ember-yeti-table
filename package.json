@@ -1,6 +1,6 @@
 {
   "name": "ember-yeti-table",
-  "version": "1.1.0",
+  "version": "1.0.1",
   "description": "Lightweight and flexible tables addon.",
   "keywords": [
     "ember-addon",
@@ -31,7 +31,9 @@
     "ember-cli-htmlbars": "^4.2.0",
     "ember-decorators": "^6.1.1",
     "ember-decorators-polyfill": "^1.1.1",
-    "ember-native-class-polyfill": "^1.0.6"
+    "ember-fn-helper-polyfill": "^1.0.2",
+    "ember-native-class-polyfill": "^1.0.6",
+    "ember-on-modifier": "^1.0.0"
   },
   "devDependencies": {
     "@ember/optional-features": "^1.1.0",
@@ -89,9 +91,6 @@
   },
   "engines": {
     "node": "8.* || >= 10.*"
-  },
-  "ember": {
-    "edition": "octane"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",

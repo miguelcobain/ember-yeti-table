@@ -1,10 +1,10 @@
 {{yield (hash
   header=(component "yeti-table/header"
-    columns=this.columns onColumnClick=(action this.onColumnSort)
+    columns=this.columns onColumnClick=(fn this.onColumnSort)
     sortable=this.sortable sortSequence=this.sortSequence parent=this theme=this.mergedTheme
   )
   head=(component "yeti-table/head"
-    columns=this.columns onColumnClick=(action this.onColumnSort)
+    columns=this.columns onColumnClick=(fn this.onColumnSort)
     sortable=this.sortable sortSequence=this.sortSequence theme=this.mergedTheme parent=this
   )
   body=(component "yeti-table/body" data=this.processedData columns=this.columns theme=this.mergedTheme parent=this)
@@ -14,17 +14,17 @@
     theme=this.mergedTheme
     paginationData=this.paginationData
     paginationActions=(hash
-      previousPage=(action this.previousPage)
-      nextPage=(action this.nextPage)
-      goToPage=(action this.goToPage)
-      changePageSize=(action this.changePageSize)
+      previousPage=(fn this.previousPage)
+      nextPage=(fn this.nextPage)
+      goToPage=(fn this.goToPage)
+      changePageSize=(fn this.changePageSize)
     )
   )
   actions=(hash
-    previousPage=(action this.previousPage)
-    nextPage=(action this.nextPage)
-    goToPage=(action this.goToPage)
-    changePageSize=(action this.changePageSize)
+    previousPage=(fn this.previousPage)
+    nextPage=(fn this.nextPage)
+    goToPage=(fn this.goToPage)
+    changePageSize=(fn this.changePageSize)
   )
   paginationData=this.paginationData
   isLoading=this.isLoading

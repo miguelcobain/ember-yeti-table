@@ -1,14 +1,15 @@
-{{#docs-hero
-  logo="ember"
-  slimHeading="Yeti"
-  strongHeading="Table"
-  byline="Lightweight and flexible tables addon."}}
+<DocsHero
+  @logo="ember"
+  @slimHeading="Yeti"
+  @strongHeading="Table"
+  @byline="Lightweight and flexible tables addon.">
   {{svg-jar "yeti" width="100px" class="docs-mt-12"}}
-{{/docs-hero}}
+</DocsHero>
 
 <div class="docs-container docs-md">
   <section class="docs-max-w-md docs-mx-auto docs-pb-8">
 
+    {{!-- template-lint-disable no-curly-component-invocation --}}
     {{#docs-demo class="docs-flex docs-flex-row" as |demo|}}
       {{#demo.example name="index-example.hbs"}}
 
@@ -36,12 +37,12 @@
     {{/docs-demo}}
 
     <div class="docs-my-16 docs-text-right">
-      {{#link-to
-        "docs"
+      <LinkTo
+        @route="docs"
         class="docs-bg-brand docs-hover:docs-bg-black docs-text-white docs-py-2 docs-px-4 docs-no-underline docs-rounded"
-      }}
+      >
         Read the docs →
-      {{/link-to}}
+      </LinkTo>
     </div>
   </section>
 </div>
