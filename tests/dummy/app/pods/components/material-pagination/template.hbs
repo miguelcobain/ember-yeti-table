@@ -2,7 +2,7 @@
 <div class="pagination-controls">
   <div>
     Rows per page:
-    <select disabled={{@table.isLoading}} {{on "change" @table.actions.changePageSize value="target.value"}}>
+    <select disabled={{@table.isLoading}} {{on "change" this.changePageSize}}>
       {{#each (array 10 15 20 25) as |pageSize|}}
         <option value={{pageSize}} selected={{eq @table.paginationData.pageSize pageSize}}>{{pageSize}}</option>
       {{/each}}
