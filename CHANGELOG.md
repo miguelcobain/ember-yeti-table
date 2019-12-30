@@ -1,3 +1,11 @@
+# v1.1.0
+
+#### ✨ Features
+- now you can use `@ignoreDataChanges={{true}}` to prevent yeti from reacting to changes on the underlying data, resorting or refiltering. Useful when doing inline editing in a table.
+
+#### 🏗 Chores
+- updated internal dependencies
+
 # v1.0.1
 
 #### 🐛 Bugfixes
