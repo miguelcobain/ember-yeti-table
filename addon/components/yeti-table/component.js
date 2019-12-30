@@ -206,6 +206,18 @@ class YetiTable extends DidChangeAttrsComponent {
    */
   sortSequence = this.get('config').sortSequence || ['asc', 'desc'];
 
+  /**
+   * Use `@disableObserveData` to prevent yeti from observing changes to the underlying data and resorting or
+   * refiltering. Useful when doing inline editing in a table.
+   *
+   * Defaults to false
+   *
+   * This is an initial render only value. Changing it after the table has been rendered will not be respected.
+   *
+   * @type {boolean}
+   */
+  ignoreDataChanges = false;
+
   @className
   @reads('mergedTheme.table')
   themeClass;
@@ -339,7 +351,7 @@ class YetiTable extends DidChangeAttrsComponent {
             if (!this.isDestroyed) {
               this.set('isLoading', false);
             }
-            // re-throw the non-cancelation error
+            // re-throw the non-cancellation error
             throw e;
           }
         });
@@ -358,16 +370,23 @@ class YetiTable extends DidChangeAttrsComponent {
   didInsertElement() {
     super.didInsertElement(...arguments);
 
-    // Only include columns with a prop
-    // truncate prop names to the first period
-    // get a unique list
-    let columns = this.get('columns')
-      .filter(column => column.get('prop'))
-      .map(column => column.get('prop').split('.')[0])
-      .filter((v, i, a) => a.indexOf(v) === i);
+    let depKeys = '[]';
+    if (this.get('ignoreDataChanges') === false) {
+      // Only include columns with a prop
+      // truncate prop names to the first period
+      // get a unique list
+      let columns = this.get('columns')
+        .filter(column => column.get('prop'))
+        .map(column => column.get('prop').split('.')[0])
+        .filter((v, i, a) => a.indexOf(v) === i);
+
+      if (columns.length > 0) {
+        depKeys = `@each.{${columns.join(',')}}`;
+      }
+    }
 
     let filteredDataDeps = [
-      `resolvedData.@each.{${columns.join(',')}}`,
+      `resolvedData.${depKeys}`,
       'columns.@each.{prop,filterFunction,filter,filterUsing,filterable}',
       'filter',
       'filterUsing',
@@ -386,7 +405,7 @@ class YetiTable extends DidChangeAttrsComponent {
     }));
 
     let sortedDataDeps = [
-      `filteredData.@each.{${columns.join(',')}}`,
+      `filteredData.${depKeys}`,
       'columns.@each.{prop,sort,sortable}',
       'sortFunction',
       'compareFunction'

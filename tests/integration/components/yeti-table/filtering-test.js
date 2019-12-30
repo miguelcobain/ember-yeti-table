@@ -232,6 +232,41 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Tom');
   });
 
+  test('changing a filtered property updates table is ignored correctly', async function(assert) {
+    await render(hbs`
+      <YetiTable @data={{this.data}} @filter="Tom" @ignoreDataChanges={{true}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName">
+            First name
+          </header.column>
+          <header.column @prop="lastName">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body/>
+
+      </YetiTable>
+    `);
+
+    assert.dom('tbody tr').exists({ count: 2 });
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Tom');
+
+    run(() => {
+      set(this.data.objectAt(3), 'firstName', '123');
+    });
+    await settled();
+
+    assert.dom('tbody tr').exists({ count: 2 });
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('123');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Tom');
+  });
+
   test('custom filter function', async function(assert) {
     this.filter = (row, filter) => {
       let [prop, text] = filter.split(':');
