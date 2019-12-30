@@ -1,7 +1,7 @@
 # v1.1.0
 
 #### ✨ Features
-- now you can use `@ignoreDataChanges={{true}}` to prevent yeti from reacting to changes on the underlying data, resorting or refiltering. Useful when doing inline editing in a table.
+- now you can use `@ignoreDataChanges={{true}}` to prevent yeti from reacting to changes on the underlying data, resorting or refiltering. Useful when doing inline editing in a table. [#151](https://github.com/miguelcobain/ember-yeti-table/pull/151)
 
 #### 🏗 Chores
 - updated internal dependencies
