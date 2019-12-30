@@ -7,7 +7,7 @@ import {
   click,
   waitFor
 } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { A } from '@ember/array';
 import RSVP from 'rsvp';
 import { later } from '@ember/runloop';

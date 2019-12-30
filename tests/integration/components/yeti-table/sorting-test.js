@@ -6,7 +6,7 @@ import {
   settled,
   triggerEvent
 } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { A } from '@ember/array';
 import { set, get } from '@ember/object';
 import { compare } from '@ember/utils';
