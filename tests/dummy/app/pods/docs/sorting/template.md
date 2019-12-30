@@ -41,7 +41,7 @@ If you need to specify a sort order, you can use the `@sort` argument on the col
 
 Note that updating the `@sort` argument will also update the sorting of the table. 
 
-If you update an object's property which the table is sorted on, the table sorting will update accordingly. This behaviour cant be turned off with `@ignoreDataChanges={{true}}`
+If you update an object's property which the table is sorted on, the table sorting will update accordingly. This behaviour can be turned off with `@ignoreDataChanges={{true}}`.
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="sorting-sort-property.hbs"}}

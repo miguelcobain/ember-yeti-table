@@ -9,7 +9,7 @@ This allows you to update that argument as you wish, either using an input eleme
 Using the `@filter` argument on the `<YetiTable>` component itself will apply a *global* filter to the rows.
 This means that Yeti Table will only show rows in which any of its columns match that text. 
 
-If you update an object's property, the tables filtered rows will be updated accordingly. This behaviour cant be turned off with `@ignoreDataChanges={{true}}`
+If you update an object's property, the table's filtered rows will be updated accordingly. This behaviour can be turned off with `@ignoreDataChanges={{true}}`.
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="filtering-simple.hbs"}}

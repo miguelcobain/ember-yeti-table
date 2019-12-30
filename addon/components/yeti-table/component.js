@@ -207,7 +207,7 @@ class YetiTable extends DidChangeAttrsComponent {
   sortSequence = this.get('config').sortSequence || ['asc', 'desc'];
 
   /**
-   * Use `@disableObserveData` to prevent yeti from observing changes to the underlying data and resorting or
+   * Use `@ignoreDataChanges` to prevent yeti from observing changes to the underlying data and resorting or
    * refiltering. Useful when doing inline editing in a table.
    *
    * Defaults to false
