@@ -12,6 +12,14 @@ ember install ember-yeti-table
 
 Yeti Table only supports the following Ember versions: **latest 3.4.X**, **latest 3.5.X** and **3.6+**.
 
+### Editor integration
+
+You can get autocomplete and additional information inside [Visual Studio Code](https://code.visualstudio.com/) by installing [els-addon-docs](https://github.com/lifeart/els-addon-docs) addon for [Unstable Ember Language Server](https://marketplace.visualstudio.com/items?itemName=lifeart.vscode-ember-unstable).
+
+Here's a preview:
+![ELS argument info](https://github.com/lifeart/els-addon-docs/raw/master/previews/argument-information.png "ELS argument info")
+
+
 ## Basic usage
 
 To render a table using Yeti Table you basically need two things: data, column definitions and rows.

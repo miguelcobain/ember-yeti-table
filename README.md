@@ -86,10 +86,10 @@ for that column accross all rows.
 
 Check out more advanced features on the [Yeti Table documentation site](https://miguelcobain.github.io/ember-yeti-table).
 
-Editors
+Editor integration
 ------------------------------------------------------------------------------
 
-You can get autocomplete and additional information inside VSCode, installing [els-addon-docs](https://github.com/lifeart/els-addon-docs) addon for [Unstable Ember Language Server](https://marketplace.visualstudio.com/items?itemName=lifeart.vscode-ember-unstable)
+You can get autocomplete and additional information inside [Visual Studio Code](https://code.visualstudio.com/) by installing [els-addon-docs](https://github.com/lifeart/els-addon-docs) addon for [Unstable Ember Language Server](https://marketplace.visualstudio.com/items?itemName=lifeart.vscode-ember-unstable).
 
 
 Credits
