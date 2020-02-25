@@ -1,9 +1,8 @@
 import Component from '@ember/component';
 
-import { tagName, className } from '@ember-decorators/component';
-import { reads } from '@ember/object/computed';
+import { tagName, layout } from '@ember-decorators/component';
 
-import layout from './template';
+import template from './template';
 
 /**
   Renders a `<tfoot>` element and yields the row component.
@@ -20,20 +19,14 @@ import layout from './template';
   @yield {object} footer
   @yield {Component} footer.row
 */
-@tagName('tfoot')
+@tagName('')
+@layout(template)
 class Foot extends Component {
-  layout = layout;
-
   theme;
 
   parent;
 
   columns;
-
-  @className
-  @reads('theme.tfoot')
-  themeClass;
-
 }
 
 export default Foot;

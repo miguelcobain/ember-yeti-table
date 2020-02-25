@@ -1,29 +1,31 @@
-{{#if hasBlock}}
+<tbody class={{@theme.tbody}} ...attributes>
+  {{#if hasBlock}}
 
-  {{#each @data as |rowData index|}}
-    {{yield
-      (hash row=(component "yeti-table/body/row" theme=@theme onClick=this.onRowClick columns=@columns))
-      rowData
-      index}}
-  {{/each}}
+    {{#each @data as |rowData index|}}
+      {{yield
+        (hash row=(component "yeti-table/body/row" theme=@theme onClick=this.onRowClick columns=@columns))
+        rowData
+        index}}
+    {{/each}}
 
-{{else}}
+  {{else}}
 
-  {{#each @data as |rowData|}}
-    <YetiTable::Body::Row
-      @theme={{@theme}}
-      @onClick={{fn this.onRowClick rowData}} @columns={{@columns}} as |row|>
+    {{#each @data as |rowData|}}
+      <YetiTable::Body::Row
+        @theme={{@theme}}
+        @onClick={{fn this.onRowClick rowData}} @columns={{@columns}} as |row|>
 
-      {{#each @columns as |column|}}
-        <row.cell @class={{column.columnClass}}>
-          {{#if column.prop}}
-            {{get rowData column.prop}}
-          {{else}}
-            {{rowData}}
-          {{/if}}
-        </row.cell>
-      {{/each}}
+        {{#each @columns as |column|}}
+          <row.cell @class={{column.columnClass}}>
+            {{#if column.prop}}
+              {{get rowData column.prop}}
+            {{else}}
+              {{rowData}}
+            {{/if}}
+          </row.cell>
+        {{/each}}
 
-    </YetiTable::Body::Row>
-  {{/each}}
-{{/if}}
+      </YetiTable::Body::Row>
+    {{/each}}
+  {{/if}}
+</tbody>

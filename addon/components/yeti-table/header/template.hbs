@@ -1,5 +1,7 @@
-<tr class="{{@trClass}} {{@theme.theadRow}} {{@theme.row}}">
-  {{yield (hash
-    column=(component "yeti-table/head/row/column" sortable=@sortable sortSequence=@sortSequence onClick=(fn this.onColumnClickHeader) parent=@parent theme=@theme)
-  )}}
-</tr>
+<thead class={{@theme.thead}} ...attributes>
+  <tr class="{{@trClass}} {{@theme.theadRow}} {{@theme.row}}">
+    {{yield (hash
+      column=(component "yeti-table/head/row/column" sortable=@sortable sortSequence=@sortSequence onClick=(fn this.onColumnClickHeader) parent=@parent theme=@theme)
+    )}}
+  </tr>
+</thead>

@@ -1,10 +1,9 @@
 import Component from '@ember/component';
 
-import { tagName, className } from '@ember-decorators/component';
+import { tagName, layout } from '@ember-decorators/component';
 import { action } from '@ember/object';
-import { reads } from '@ember/object/computed';
 
-import layout from './template';
+import template from './template';
 
 /**
   Renders a `<thead>` element and yields the column component.
@@ -24,10 +23,9 @@ import layout from './template';
   @yield {object} header
   @yield {Component} header.column       the column component
 */
-@tagName('thead')
+@tagName('')
+@layout(template)
 class Header extends Component {
-  layout = layout;
-
   theme;
 
   sortable;
@@ -41,10 +39,6 @@ class Header extends Component {
   columns;
 
   trClass;
-
-  @className
-  @reads('theme.thead')
-  themeClass;
 
   @action
   onColumnClickHeader(column, e) {

@@ -1,9 +1,9 @@
 import Component from '@ember/component';
 import { A } from '@ember/array';
 
-import { tagName } from '@ember-decorators/component';
+import { tagName, layout } from '@ember-decorators/component';
 
-import layout from './template';
+import template from './template';
 
 /**
   Renders a `<tr>` element and yields cell component.
@@ -21,9 +21,8 @@ import layout from './template';
   @yield {Component} row.cell
 */
 @tagName('')
+@layout(template)
 class FootRow extends Component {
-  layout = layout;
-
   theme;
 
   parent;

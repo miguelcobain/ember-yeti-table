@@ -6,9 +6,9 @@ import {
 } from '@ember/object';
 import { once } from '@ember/runloop';
 
-import { tagName, className } from '@ember-decorators/component';
+import { tagName, layout } from '@ember-decorators/component';
 import { computed, action } from '@ember/object';
-import { filterBy, reads } from '@ember/object/computed';
+import { filterBy } from '@ember/object/computed';
 import defaultTo from 'ember-yeti-table/-private/utils/default-to';
 
 import filterData from 'ember-yeti-table/-private/utils/filtering-utils';
@@ -20,7 +20,7 @@ import {
 
 import { getOwner } from '@ember/application';
 
-import layout from './template';
+import template from './template';
 
 import merge from 'deepmerge';
 
@@ -97,10 +97,9 @@ const didCancel = function(e) {
   @yield {array} table.visibleRows      the rendered rows on the table account for pagination, filtering, etc; when pagination is false, it will be the same length as totalRows
   @yield {object} table.theme           the theme being used
 */
-@tagName('table')
+@tagName('')
+@layout(template)
 class YetiTable extends DidChangeAttrsComponent {
-  layout = layout;
-
   /**
    * An object that contains classes for yeti table to apply when rendering its various table
    * html elements. The theme object your pass in will be deeply merged with yeti-table's default theme
@@ -207,7 +206,7 @@ class YetiTable extends DidChangeAttrsComponent {
   sortSequence = this.get('config').sortSequence || ['asc', 'desc'];
 
   /**
-   * Use `@ignoreDataChanges` to prevent yeti from observing changes to the underlying data and resorting or
+   * Use `@ignoreDataChanges` to prevent yeti table from observing changes to the underlying data and resorting or
    * refiltering. Useful when doing inline editing in a table.
    *
    * Defaults to false
@@ -218,9 +217,17 @@ class YetiTable extends DidChangeAttrsComponent {
    */
   ignoreDataChanges = false;
 
-  @className
-  @reads('mergedTheme.table')
-  themeClass;
+  /**
+   * Use `@renderTableElement` to prevent yeti table from rendering the topmost <table> element.
+   * Might be useful for styling purposes (e.g if you want to place your pagination controls outside
+   * of your table element). If you set this to `false`, you should render the table element yourself
+   * using the yielded `<t.table>` component.
+   *
+   * Defaults to true
+   *
+   * @type {boolean}
+   */
+  renderTableElement = true;
 
   // If the theme is replaced, this will invalidate, but not if any prop under theme is changed
   @computed('theme', 'config.theme')

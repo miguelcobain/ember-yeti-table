@@ -1,9 +1,9 @@
 import Component from '@ember/component';
 import { A } from '@ember/array';
 
-import { tagName } from '@ember-decorators/component';
+import { tagName, layout } from '@ember-decorators/component';
 
-import layout from './template';
+import template from './template';
 
 /**
   Renders a `<tr>` element and yields the column and cell component.
@@ -23,9 +23,8 @@ import layout from './template';
   @yield {Component} cell
 */
 @tagName('')
+@layout(template)
 class HeadRow extends Component {
-  layout = layout;
-
   theme;
 
   parent;

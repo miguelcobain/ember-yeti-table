@@ -1,26 +1,28 @@
-{{#if this.showInfo}}
-  <div class={{@theme.pagination.info}}>
-    Showing {{@paginationData.pageStart}} to {{@paginationData.pageEnd}} of {{@paginationData.totalRows}} entries
-  </div>
-{{/if}}
+<div class={{@theme.pagination.controls}} ...attributes>
+  {{#if this.showInfo}}
+    <div class={{@theme.pagination.info}}>
+      Showing {{@paginationData.pageStart}} to {{@paginationData.pageEnd}} of {{@paginationData.totalRows}} entries
+    </div>
+  {{/if}}
 
-{{#if this.showPageSizeSelector}}
-  <div class={{@theme.pagination.pageSize}}>
-    Rows per page:
-    <select disabled={{@disabled}} {{on "change" this.changePageSize}}>
-      {{#each this.pageSizes as |pageSize|}}
-        <option value={{pageSize}} selected={{yeti-table-eq @paginationData.pageSize pageSize}}>{{pageSize}}</option>
-      {{/each}}
-    </select>
-  </div>
-{{/if}}
+  {{#if this.showPageSizeSelector}}
+    <div class={{@theme.pagination.pageSize}}>
+      Rows per page:
+      <select disabled={{@disabled}} {{on "change" this.changePageSize}}>
+        {{#each this.pageSizes as |pageSize|}}
+          <option value={{pageSize}} selected={{yeti-table-eq @paginationData.pageSize pageSize}}>{{pageSize}}</option>
+        {{/each}}
+      </select>
+    </div>
+  {{/if}}
 
-{{#if this.showButtons}}
-  <button type="button" class={{@theme.pagination.previous}} disabled={{this.shouldDisablePrevious}} {{on "click" @paginationActions.previousPage}}>
-    Previous
-  </button>
+  {{#if this.showButtons}}
+    <button type="button" class={{@theme.pagination.previous}} disabled={{this.shouldDisablePrevious}} {{on "click" @paginationActions.previousPage}}>
+      Previous
+    </button>
 
-  <button type="button" class={{@theme.pagination.next}} disabled={{this.shouldDisableNext}} {{on "click" @paginationActions.nextPage}}>
-    Next
-  </button>
-{{/if}}
+    <button type="button" class={{@theme.pagination.next}} disabled={{this.shouldDisableNext}} {{on "click" @paginationActions.nextPage}}>
+      Next
+    </button>
+  {{/if}}
+</div>

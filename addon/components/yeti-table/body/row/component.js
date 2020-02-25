@@ -1,10 +1,10 @@
 import Component from '@ember/component';
 import { A } from '@ember/array';
 
-import { tagName, className } from '@ember-decorators/component';
-import { reads } from '@ember/object/computed';
+import { tagName, layout } from '@ember-decorators/component';
+import { action } from '@ember/object';
 
-import layout from './template';
+import template from './template';
 
 /**
   Renders a `<tr>` element and yields the cell component.
@@ -43,10 +43,9 @@ import layout from './template';
   @yield {object} row
   @yield {Component} row.cell - the cell component
 */
-@tagName('tr')
+@tagName('')
+@layout(template)
 class BodyRow extends Component {
-  layout = layout;
-
   theme;
 
   columns;
@@ -55,14 +54,6 @@ class BodyRow extends Component {
    * Adds a click action to the row.
    */
   onClick;
-
-  @className
-  @reads('theme.tbodyRow')
-  themeClass;
-
-  @className
-  @reads('theme.row')
-  themeRowClass;
 
   cells = A();
 
@@ -86,7 +77,8 @@ class BodyRow extends Component {
     this.get('cells').removeObject(cell);
   }
 
-  click() {
+  @action
+  handleClick() {
     if (this.get('onClick')) {
       this.get('onClick')(...arguments);
     }

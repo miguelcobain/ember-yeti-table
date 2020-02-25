@@ -604,4 +604,48 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasClass('column-class');
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasClass('cell-class');
   });
+
+  test('@renderTableElement={{false}} and yielded table component render correctly', async function(assert) {
+    await render(hbs`
+      <YetiTable @data={{this.data}} @renderTableElement={{false}} as |table|>
+
+        <table.table>
+          <table.header as |header|>
+            <header.column @prop="firstName">
+              First name
+            </header.column>
+            <header.column @prop="lastName">
+              Last name
+            </header.column>
+            <header.column @prop="points">
+              Points
+            </header.column>
+          </table.header>
+
+          <table.body as |body person|>
+            <body.row as |row|>
+              <row.cell>
+                Custom {{person.firstName}}
+              </row.cell>
+              <row.cell>
+                {{person.lastName}}
+              </row.cell>
+              <row.cell>
+                {{person.points}}
+              </row.cell>
+            </body.row>
+          </table.body>
+        </table.table>
+
+      </YetiTable>
+    `);
+
+    assert.dom('table').exists({ count: 1 });
+    assert.dom('tr').exists({ count: 6 });
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Custom Miguel');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Custom José');
+    assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Custom Maria');
+    assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Custom Tom');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Custom Yehuda');
+  });
 });

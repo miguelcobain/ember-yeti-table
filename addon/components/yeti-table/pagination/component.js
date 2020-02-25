@@ -1,10 +1,10 @@
 import Component from '@ember/component';
 
-import { className } from '@ember-decorators/component';
-import { or, reads } from '@ember/object/computed';
+import { tagName, layout } from '@ember-decorators/component';
+import { or } from '@ember/object/computed';
 import { action } from '@ember/object';
 
-import layout from './template';
+import template from './template';
 
 /**
   Simple pagination controls component that is included to help you get started quickly.
@@ -32,14 +32,10 @@ import layout from './template';
   ```
 */
 
+@tagName('')
+@layout(template)
 class Pagination extends Component {
-  layout = layout;
-
   theme;
-
-  @className
-  @reads('theme.pagination.controls')
-  themeClass;
 
   paginationData;
 

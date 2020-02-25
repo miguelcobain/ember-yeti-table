@@ -1,9 +1,9 @@
 import Component from '@ember/component';
 
-import { tagName } from '@ember-decorators/component';
+import { tagName, layout } from '@ember-decorators/component';
 import { reads } from '@ember/object/computed';
 
-import layout from './template';
+import template from './template';
 
 /**
   Renders a `<td>` element (if its corresponding column definition has `@visible={{true}}`).
@@ -14,9 +14,8 @@ import layout from './template';
   ```
 */
 @tagName('')
+@layout(template)
 class BodyCell extends Component {
-  layout = layout;
-
   theme;
 
   parent;

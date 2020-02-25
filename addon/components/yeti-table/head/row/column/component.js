@@ -4,9 +4,9 @@ import DidChangeAttrsComponent from 'ember-yeti-table/-private/utils/did-change-
 
 import { computed } from '@ember/object';
 import { equal, or } from '@ember/object/computed';
-import { tagName } from '@ember-decorators/component';
+import { tagName, layout } from '@ember-decorators/component';
 
-import layout from './template';
+import template from './template';
 
 /**
   An important component yielded from the header or head.row component that is used to define
@@ -40,9 +40,8 @@ import layout from './template';
   @yield {boolean} column.isDescSorted - `true` if column is sorted descending
 */
 @tagName('')
+@layout(template)
 class Column extends DidChangeAttrsComponent {
-  layout = layout;
-
   theme;
 
   parent;

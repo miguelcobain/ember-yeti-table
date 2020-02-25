@@ -1,9 +1,8 @@
 import Component from '@ember/component';
 
-import { tagName, className } from '@ember-decorators/component';
-import { reads } from '@ember/object/computed';
+import { tagName, layout } from '@ember-decorators/component';
 
-import layout from './template';
+import template from './template';
 
 /**
   Renders a `<tbody>` element and yields the row component, row data and index.
@@ -32,10 +31,9 @@ import layout from './template';
   @yield {object} body
   @yield {Component} body.row - the row component
 */
-@tagName('tbody')
+@tagName('')
+@layout(template)
 class Body extends Component {
-  layout = layout;
-
   theme;
 
   data;
@@ -43,11 +41,6 @@ class Body extends Component {
   columns;
 
   parent;
-
-  @className
-  @reads('theme.tbody')
-  themeClass;
-
   /**
    * Adds a click action to each row, called with the clicked row's data as an argument.
    * Can be used with both the blockless and block invocations.

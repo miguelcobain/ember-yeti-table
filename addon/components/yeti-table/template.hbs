@@ -1,4 +1,5 @@
-{{yield (hash
+{{#let (hash
+  table=(component "yeti-table/table" theme=this.mergedTheme)
   header=(component "yeti-table/header"
     columns=this.columns onColumnClick=(fn this.onColumnSort)
     sortable=this.sortable sortSequence=this.sortSequence parent=this theme=this.mergedTheme
@@ -34,4 +35,15 @@
   totalRows=this.normalizedTotalRows
   visibleRows=this.processedData
   theme=this.mergedTheme
-)}}
+) as |api|}}
+
+  {{#if this.renderTableElement}}
+    <YetiTable::Table @theme={{this.mergedTheme}} ...attributes>
+      {{yield api}}
+    </YetiTable::Table>
+  {{else}}
+    {{yield api}}
+  {{/if}}
+
+{{/let}}
+

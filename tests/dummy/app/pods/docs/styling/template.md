@@ -83,23 +83,23 @@ outside the `<table>` element.
 You can work around this problem by using something like:
 
 ```hbs
-<YetiTable @tagName="" @data={{this.data}} @pagination={{true}} as |t|>
+<YetiTable @data={{this.data}} @pagination={{true}} @renderTableElement={{false}} as |t|>
 
-  <table> {{!-- we render our own table element here --}}
+  <t.table> {{!-- we render the given table component ourselves --}}
     <t.header as |header|>
       ...
     </t.header>
 
     <t.body/>
-  </table>
+  </t.table>
 
   <t.pagination/> {{!-- pagination controls outside the <table> element --}}
 
 </YetiTable>
 ```
 
-Basically we told Yeti Table to not render any element by specifying `@tagName=""`
-and then we render our own `<table>` element inside.
+Basically we told Yeti Table to not render any element by specifying `@renderTableElement={{false}}`
+and then we render our own `<table>` element inside using the `<t.table>` component.
 
 Another possible approach (perhaps semantically more interesting?) to place
 the pagination controls is to use a full-span cell on the table footer.
