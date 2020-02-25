@@ -1,3 +1,14 @@
+# v1.2.0
+
+#### ✨ Features
+- introduced new argument `@renderTableElement={{false}}`. This prevents yeti table from automatically rendering the `<table>` element.
+When you set this argument as `false`, you are responsible for rendering the table element yourself using the yielded `<t.table>` component.
+This is a simple component that is now yielded that just renders the table element with the appropriate theme classes.
+
+#### 🏗 Chores
+- updated internal dependencies
+- migrate all components to be tagless (more in line with glimmer components)
+
 # v1.1.0
 
 #### ✨ Features
