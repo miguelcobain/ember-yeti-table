@@ -1,3 +1,10 @@
+# v1.3.0
+
+#### ✨ Features
+- the yielded columns now have a `name` property. It defaults to the column's trimmed `textContent` value, but it can be
+overrided by using a `@name="your custom name"` argument. This feature can be useful for "introspection" purposes,
+e.g if you want to show a list of the columns to the user.
+
 # v1.2.0
 
 #### ✨ Features

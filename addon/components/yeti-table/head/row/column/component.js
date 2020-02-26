@@ -2,7 +2,7 @@ import { assert } from '@ember/debug';
 import { isArray } from '@ember/array';
 import DidChangeAttrsComponent from 'ember-yeti-table/-private/utils/did-change-attrs-component';
 
-import { computed } from '@ember/object';
+import { computed, action, set } from '@ember/object';
 import { equal, or } from '@ember/object/computed';
 import { tagName, layout } from '@ember-decorators/component';
 
@@ -127,6 +127,13 @@ class Column extends DidChangeAttrsComponent {
    */
   columnClass;
 
+  /**
+   * This property is a human-readable representation of the name of the column.
+   * It defaults to the trimmed `textContent` of the `<th>` element, but can be overrided
+   * by using a `@name="your custom name"` argument.
+   */
+  name;
+
   onClick;
 
   @equal('sort', 'asc') isAscSorted;
@@ -169,6 +176,13 @@ class Column extends DidChangeAttrsComponent {
     super.willDestroyElement(...arguments);
     if (this.get('parent')) {
       this.get('parent').unregisterColumn(this);
+    }
+  }
+
+  @action
+  updateName(element) {
+    if (!this.name) {
+      set(this, 'name', element.textContent.trim());
     }
   }
 }

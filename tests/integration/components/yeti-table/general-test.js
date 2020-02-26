@@ -648,4 +648,78 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Custom Tom');
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Custom Yehuda');
   });
+
+  test('yielded columns have a name property equal to the trimmed textContent of the headers', async function(assert) {
+    await render(hbs`
+      <YetiTable @data={{this.data}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName">
+            First name
+          </header.column>
+          <header.column @prop="lastName">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body/>
+
+        <table.foot as |foot|>
+          <foot.row as |row|>
+            {{#each table.columns as |c|}}
+              <row.cell>
+                {{c.name}}
+              </row.cell>
+            {{/each}}
+          </foot.row>
+        </table.foot>
+
+      </YetiTable>
+    `);
+
+    assert.dom('tfoot > tr > td').exists({ count: 3 });
+    assert.dom('tfoot tr:nth-child(1) td:nth-child(1)').hasText('First name');
+    assert.dom('tfoot tr:nth-child(1) td:nth-child(2)').hasText('Last name');
+    assert.dom('tfoot tr:nth-child(1) td:nth-child(3)').hasText('Points');
+  });
+
+  test('yielded columns have a name property equal to the @name argument, overriding the default', async function(assert) {
+    await render(hbs`
+      <YetiTable @data={{this.data}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName" @name="First name yo!">
+            First name
+          </header.column>
+          <header.column @prop="lastName" @name="Last name yo!">
+            Last name
+          </header.column>
+          <header.column @prop="points" @name="Points yo!">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body/>
+
+        <table.foot as |foot|>
+          <foot.row as |row|>
+            {{#each table.columns as |c|}}
+              <row.cell>
+                {{c.name}}
+              </row.cell>
+            {{/each}}
+          </foot.row>
+        </table.foot>
+
+      </YetiTable>
+    `);
+
+    assert.dom('tfoot > tr > td').exists({ count: 3 });
+    assert.dom('tfoot tr:nth-child(1) td:nth-child(1)').hasText('First name yo!');
+    assert.dom('tfoot tr:nth-child(1) td:nth-child(2)').hasText('Last name yo!');
+    assert.dom('tfoot tr:nth-child(1) td:nth-child(3)').hasText('Points yo!');
+  });
 });
