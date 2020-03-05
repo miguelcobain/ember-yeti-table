@@ -114,13 +114,13 @@ Here is how to do that:
 
   <table.body/>
 
-  <table.foot as |foot|>
+  <table.tfoot as |foot|>
     <foot.row as |row|>
       <row.cell colspan={{table.visibleColumns.length}}>
         <table.pagination/>
       </row.cell>
     </foot.row>
-  </table.foot>
+  </table.tfoot>
 
 </YetiTable>
 ```

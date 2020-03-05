@@ -62,8 +62,8 @@ const didCancel = function(e) {
   ```hbs
   <YetiTable @data={{this.data}} as |table|>
 
-    <table.head as |head|>
-      <head.row as |row|>
+    <table.thead as |thead|>
+      <thead.row as |row|>
         <row.column @prop="firstName">
           First name
         </row.column>
@@ -73,8 +73,8 @@ const didCancel = function(e) {
         <row.column @prop="points">
           Points
         </row.column>
-      </head.row>
-    </table.head>
+      </thead.row>
+    </table.thead>
 
     <table.body/>
 
@@ -83,7 +83,7 @@ const didCancel = function(e) {
 
   @yield {object} table
   @yield {Component} table.header       the table header component (Single row in header)
-  @yield {Component} table.head         the table header component (Allows multiple rows in header)
+  @yield {Component} table.thead        the table header component (Allows multiple rows in header)
   @yield {Component} table.body         the table body component
   @yield {Component} table.foot         the table footer component
   @yield {Component} table.pagination   the pagination controls component

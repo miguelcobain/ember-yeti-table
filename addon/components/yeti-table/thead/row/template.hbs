@@ -1,0 +1,6 @@
+<tr class="{{@trClass}} {{@theme.theadRow}} {{@theme.row}}" ...attributes>
+  {{yield (hash
+    column=(component "ember-yeti-table@yeti-table/thead/row/column/component" sortable=this.sortable sortSequence=@sortSequence onClick=@onColumnClick theme=@theme parent=@parent)
+    cell=(component "ember-yeti-table@yeti-table/thead/row/cell/component" theme=@theme parent=this)
+  )}}
+</tr>

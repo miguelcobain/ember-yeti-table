@@ -80,7 +80,7 @@ module('Integration | Component | yeti-table (theme)', function(hooks) {
     await render(hbs`
       <YetiTable @data={{this.data}} @theme={{theme}} as |table|>
 
-        <table.head as |head|>
+        <table.thead as |head|>
           <head.row as |row|>
             <row.column @prop="firstName">
               First name
@@ -92,17 +92,17 @@ module('Integration | Component | yeti-table (theme)', function(hooks) {
               Points
             </row.column>
           </head.row>
-        </table.head>
+        </table.thead>
 
         <table.body/>
 
-        <table.foot as |foot|>
+        <table.tfoot as |foot|>
           <foot.row as |row|>
             <row.cell colspan={{table.visibleColumns.length}}>
               <table.pagination/>
             </row.cell>
           </foot.row>
-        </table.foot>
+        </table.tfoot>
 
       </YetiTable>
     `);
@@ -140,7 +140,7 @@ module('Integration | Component | yeti-table (theme)', function(hooks) {
     await render(hbs`
       <YetiTable @data={{this.data}} @theme={{theme}} as |table|>
 
-        <table.head as |head|>
+        <table.thead as |head|>
           <head.row as |row|>
             <row.column @prop="firstName" @sort="asc">
               First name
@@ -152,17 +152,17 @@ module('Integration | Component | yeti-table (theme)', function(hooks) {
               Points
             </row.column>
           </head.row>
-        </table.head>
+        </table.thead>
 
         <table.body/>
 
-        <table.foot as |foot|>
+        <table.tfoot as |foot|>
           <foot.row as |row|>
             <row.cell colspan={{table.visibleColumns.length}}>
               <table.pagination/>
             </row.cell>
           </foot.row>
-        </table.foot>
+        </table.tfoot>
 
       </YetiTable>
     `);

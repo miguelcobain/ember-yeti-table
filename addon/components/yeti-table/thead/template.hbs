@@ -1,0 +1,5 @@
+<thead class={{@theme.thead}} ...attributes>
+  {{yield (hash
+    row=(component "ember-yeti-table@yeti-table/thead/row/component" sortable=@sortable sortSequence=@sortSequence onColumnClick=@onColumnClick columns=@columns theme=@theme parent=@parent)
+  )}}
+</thead>

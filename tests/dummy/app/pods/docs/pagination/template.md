@@ -28,13 +28,13 @@ with the yielded state and actions (more on that in the following section).
 
       <table.body/>
 
-      <table.foot as |foot|>
+      <table.tfoot as |foot|>
         <foot.row as |row|>
           <row.cell @visible={{true}} colspan={{table.visibleColumns.length}}>
             <table.pagination/>
           </row.cell>
         </foot.row>
-      </table.foot>
+      </table.tfoot>
 
     </YetiTable>
   {{/demo.example}}

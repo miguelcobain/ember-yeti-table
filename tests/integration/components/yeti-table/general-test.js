@@ -118,6 +118,48 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Custom Yehuda');
   });
 
+  test('tbody block form renders table and test performs each', async function(assert) {
+    await render(hbs`
+      <YetiTable @data={{this.data}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName">
+            First name
+          </header.column>
+          <header.column @prop="lastName">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.tbody as |body data|>
+          {{#each data as |person|}}
+            <body.row as |row|>
+              <row.cell>
+                Custom {{person.firstName}}
+              </row.cell>
+              <row.cell>
+                {{person.lastName}}
+              </row.cell>
+              <row.cell>
+                {{person.points}}
+              </row.cell>
+            </body.row>
+          {{/each}}
+        </table.tbody>
+
+      </YetiTable>
+    `);
+
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Custom Miguel');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Custom José');
+    assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Custom Maria');
+    assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Custom Tom');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Custom Yehuda');
+  });
+
   test('supports nested properties', async function(assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
@@ -164,6 +206,52 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
 
+        <table.thead as |head|>
+          <head.row as |row|>
+            <row.column @prop="firstName">
+              First name
+            </row.column>
+            <row.column @prop="lastName">
+              Last name
+            </row.column>
+            <row.column @prop="points">
+              Points
+            </row.column>
+          </head.row>
+        </table.thead>
+
+        <table.body/>
+
+        <table.tfoot as |foot|>
+          <foot.row as |row|>
+            <row.cell>
+              Footer first Name
+            </row.cell>
+            <row.cell>
+              Footer last Name
+            </row.cell>
+            <row.cell>
+              Footer points
+            </row.cell>
+          </foot.row>
+        </table.tfoot>
+
+      </YetiTable>
+    `);
+
+    assert.dom('table').exists({ count: 1 });
+    assert.dom('thead').exists({ count: 1 });
+    assert.dom('tbody').exists({ count: 1 });
+    assert.dom('tfoot').exists({ count: 1 });
+    assert.dom('tr').exists({ count: 1 + 5 + 1 });
+    assert.dom('th').exists({ count: 3 });
+    assert.dom('td').exists({ count: (5 * 3) + 3 });
+  });
+
+  test('head is correctly deprecated', async function(assert) {
+    await render(hbs`
+      <YetiTable @data={{this.data}} as |table|>
+
         <table.head as |head|>
           <head.row as |row|>
             <row.column @prop="firstName">
@@ -177,6 +265,33 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
             </row.column>
           </head.row>
         </table.head>
+
+        <table.body/>
+
+      </YetiTable>
+    `);
+
+    assert.expectDeprecation();
+
+  });
+
+  test('foot is correctly deprecated', async function(assert) {
+    await render(hbs`
+      <YetiTable @data={{this.data}} as |table|>
+
+        <table.thead as |head|>
+          <head.row as |row|>
+            <row.column @prop="firstName">
+              First name
+            </row.column>
+            <row.column @prop="lastName">
+              Last name
+            </row.column>
+            <row.column @prop="points">
+              Points
+            </row.column>
+          </head.row>
+        </table.thead>
 
         <table.body/>
 
@@ -197,13 +312,8 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
       </YetiTable>
     `);
 
-    assert.dom('table').exists({ count: 1 });
-    assert.dom('thead').exists({ count: 1 });
-    assert.dom('tbody').exists({ count: 1 });
-    assert.dom('tfoot').exists({ count: 1 });
-    assert.dom('tr').exists({ count: 1 + 5 + 1 });
-    assert.dom('th').exists({ count: 3 });
-    assert.dom('td').exists({ count: (5 * 3) + 3 });
+    assert.expectDeprecation();
+
   });
 
   test('trClass applies a class to the header tr element', async function(assert) {
@@ -667,7 +777,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
         <table.body/>
 
-        <table.foot as |foot|>
+        <table.tfoot as |foot|>
           <foot.row as |row|>
             {{#each table.columns as |c|}}
               <row.cell>
@@ -675,7 +785,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
               </row.cell>
             {{/each}}
           </foot.row>
-        </table.foot>
+        </table.tfoot>
 
       </YetiTable>
     `);
@@ -704,7 +814,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
         <table.body/>
 
-        <table.foot as |foot|>
+        <table.tfoot as |foot|>
           <foot.row as |row|>
             {{#each table.columns as |c|}}
               <row.cell>
@@ -712,7 +822,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
               </row.cell>
             {{/each}}
           </foot.row>
-        </table.foot>
+        </table.tfoot>
 
       </YetiTable>
     `);
