@@ -6,8 +6,8 @@
 
 #### ✨ Features
 
-- added a new component tbody. Unlike the current body component which yields a single record and
-  iterates over the array for you, tbody yields the array and you must iterate over the array yourself.
+- added a new component `tbody`. Unlike the current body component which yields a single record and
+  iterates over the array for you, `tbody` yields the array and you must iterate over the array yourself.
 
 #### 🏗 Chores
 
