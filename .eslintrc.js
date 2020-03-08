@@ -1,6 +1,6 @@
 module.exports = {
   globals: {
-    server: true,
+    server: true
   },
   root: true,
   parser: 'babel-eslint',
@@ -11,18 +11,30 @@ module.exports = {
       legacyDecorators: true
     }
   },
-  plugins: [
-    'ember'
-  ],
-  extends: [
-    'eslint:recommended',
-    'plugin:ember/recommended'
-  ],
+  plugins: ['ember', 'prettier', 'qunit', 'import-helpers'],
+  extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:qunit/recommended', 'prettier'],
   env: {
     browser: true
   },
   rules: {
-    'ember/no-jquery': 'error'
+    'ember/no-jquery': 'error',
+    'prettier/prettier': 'error',
+    'import-helpers/order-imports': [
+      'error',
+      {
+        newlinesBetween: 'always',
+        groups: [
+          // Testing modules
+          ['/^qunit/', '/^ember-qunit/', '/^@ember/test-helpers/', '/^ember-exam/'],
+          // Ember.js modules
+          ['/^ember$/', '/^@ember/', '/^ember-data/'],
+          'module',
+          [`/^${require('./package.json').name}\\//`],
+          ['parent', 'sibling', 'index']
+        ],
+        alphabetize: { order: 'asc', ignoreCase: true }
+      }
+    ]
   },
   overrides: [
     // node files
@@ -37,12 +49,7 @@ module.exports = {
         'config/**/*.js',
         'tests/dummy/config/**/*.js'
       ],
-      excludedFiles: [
-        'addon/**',
-        'addon-test-support/**',
-        'app/**',
-        'tests/dummy/app/**'
-      ],
+      excludedFiles: ['addon/**', 'addon-test-support/**', 'app/**', 'tests/dummy/app/**'],
       parserOptions: {
         sourceType: 'script'
       },

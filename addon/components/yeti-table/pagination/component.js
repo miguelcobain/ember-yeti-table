@@ -1,8 +1,7 @@
-import Component from '@ember/component';
-
 import { tagName, layout } from '@ember-decorators/component';
-import { or } from '@ember/object/computed';
+import Component from '@ember/component';
 import { action } from '@ember/object';
+import { or } from '@ember/object/computed';
 
 import template from './template';
 
@@ -54,9 +53,7 @@ class Pagination extends Component {
    * Particularly useful with an array helper, e.g `@pageSizes={{array 10 12 23 50 100}}`
    * Defaults to `[10, 15, 20, 25]`.
    */
-  pageSizes = [
-    10, 15, 20, 25
-  ];
+  pageSizes = [10, 15, 20, 25];
 
   /**
    * Used to show/hide some textual information about the current page. Defaults to `true`.
@@ -77,7 +74,6 @@ class Pagination extends Component {
   changePageSize(ev) {
     this.paginationActions.changePageSize(ev.target.value);
   }
-
 }
 
 export default Pagination;

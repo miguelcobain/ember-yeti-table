@@ -1,36 +1,44 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
 import { render, settled } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
+import { setupRenderingTest } from 'ember-qunit';
+import { module, test } from 'qunit';
+
 import { A } from '@ember/array';
 import { set, get } from '@ember/object';
 import { run } from '@ember/runloop';
+
+import { hbs } from 'ember-cli-htmlbars';
 
 module('Integration | Component | yeti-table (filtering)', function(hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function() {
-    this.data = A([{
-      firstName: 'Miguel',
-      lastName: 'Andrade',
-      points: 1
-    }, {
-      firstName: 'José',
-      lastName: 'Baderous',
-      points: 2
-    }, {
-      firstName: 'Maria',
-      lastName: 'Silva',
-      points: 3
-    }, {
-      firstName: 'Tom',
-      lastName: 'Pale',
-      points: 4
-    }, {
-      firstName: 'Tom',
-      lastName: 'Dale',
-      points: 5
-    }]);
+    this.data = A([
+      {
+        firstName: 'Miguel',
+        lastName: 'Andrade',
+        points: 1
+      },
+      {
+        firstName: 'José',
+        lastName: 'Baderous',
+        points: 2
+      },
+      {
+        firstName: 'Maria',
+        lastName: 'Silva',
+        points: 3
+      },
+      {
+        firstName: 'Tom',
+        lastName: 'Pale',
+        points: 4
+      },
+      {
+        firstName: 'Tom',
+        lastName: 'Dale',
+        points: 5
+      }
+    ]);
   });
 
   test('rendering with filter filters rows', async function(assert) {
@@ -124,7 +132,6 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
   });
 
   test('updating filter on column filters rows', async function(assert) {
-
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
 

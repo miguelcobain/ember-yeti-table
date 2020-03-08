@@ -1,10 +1,10 @@
-import { assert } from '@ember/debug';
+import { tagName, layout } from '@ember-decorators/component';
 import { isArray } from '@ember/array';
-import DidChangeAttrsComponent from 'ember-yeti-table/-private/utils/did-change-attrs-component';
-
+import { assert } from '@ember/debug';
 import { computed, action, set } from '@ember/object';
 import { equal, or } from '@ember/object/computed';
-import { tagName, layout } from '@ember-decorators/component';
+
+import DidChangeAttrsComponent from 'ember-yeti-table/-private/utils/did-change-attrs-component';
 
 import template from './template';
 
@@ -145,12 +145,15 @@ class Column extends DidChangeAttrsComponent {
   @computed('sortSequence')
   get normalizedSortSequence() {
     let sortSequence = this.get('sortSequence');
-    assert('@sortSequence must be either a comma-separated string or an array. Got `${sortSequence}.`', isArray(sortSequence) || typeof sortSequence === 'string');
+    assert(
+      '@sortSequence must be either a comma-separated string or an array. Got `${sortSequence}.`',
+      isArray(sortSequence) || typeof sortSequence === 'string'
+    );
 
     if (isArray(sortSequence)) {
       return sortSequence;
     } else if (typeof sortSequence === 'string') {
-      return sortSequence.split(',').map((s) => s.trim());
+      return sortSequence.split(',').map(s => s.trim());
     } else {
       return [];
     }

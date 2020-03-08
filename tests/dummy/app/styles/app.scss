@@ -1,25 +1,14 @@
 :root {
-  --brand-primary: #5B47B9;
+  --brand-primary: #5b47b9;
 }
 
-@import "material";
-@import "pagination-controls-example";
-@import "material-spinner";
+@import 'material';
+@import 'pagination-controls-example';
+@import 'material-spinner';
 
 body {
-  font-family:
-    'Roboto',
-    'system-ui',
-    'BlinkMacSystemFont',
-    '-apple-system',
-    'Segoe UI',
-    'Oxygen',
-    'Ubuntu',
-    'Cantarell',
-    'Fira Sans',
-    'Droid Sans',
-    'Helvetica Neue',
-    'sans-serif';
+  font-family: 'Roboto', 'system-ui', 'BlinkMacSystemFont', '-apple-system', 'Segoe UI', 'Oxygen', 'Ubuntu', 'Cantarell',
+    'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'sans-serif';
 }
 
 .avatar {

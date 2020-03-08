@@ -1,16 +1,17 @@
-import { isEmpty } from '@ember/utils';
 import { get } from '@ember/object';
+import { isEmpty } from '@ember/utils';
+
 import createRegex from 'ember-yeti-table/-private/utils/create-regex';
 
 function createColumnFilters(columns) {
-  let searcheableColumns = columns.filter((c) => {
-    return !isEmpty(get(c, 'filter')) || !isEmpty(get(c, 'filterFunction'))
+  let searcheableColumns = columns.filter(c => {
+    return !isEmpty(get(c, 'filter')) || !isEmpty(get(c, 'filterFunction'));
   });
 
-  return searcheableColumns.map((c) => {
+  return searcheableColumns.map(c => {
     let regex = createRegex(get(c, 'filter'));
 
-    return (row) => {
+    return row => {
       let value = get(row, get(c, 'prop'));
       let passesRegex = true;
 
@@ -21,7 +22,7 @@ function createColumnFilters(columns) {
       let passesCustom = true;
 
       if (!isEmpty(get(c, 'filterFunction'))) {
-        passesCustom = get(c, 'filterFunction')(value, get(c, 'filterUsing'))
+        passesCustom = get(c, 'filterFunction')(value, get(c, 'filterUsing'));
       }
 
       return passesRegex && passesCustom;
@@ -43,11 +44,11 @@ export default function filterData(data, columns, globalFilter, filterFunction, 
 
   let columnFilters = createColumnFilters(columns);
 
-  return data.filter(((row) => {
+  return data.filter(row => {
     let passesGeneral = true;
 
     if (!isEmpty(globalRegex)) {
-      passesGeneral = columns.some((c) => {
+      passesGeneral = columns.some(c => {
         return globalRegex.test(get(row, get(c, 'prop')));
       });
     }
@@ -55,7 +56,7 @@ export default function filterData(data, columns, globalFilter, filterFunction, 
     let passesColumn = true;
 
     if (!isEmpty(columnFilters)) {
-      passesColumn = columnFilters.every((fn) => fn(row));
+      passesColumn = columnFilters.every(fn => fn(row));
     }
 
     let passesCustom = true;
@@ -64,5 +65,5 @@ export default function filterData(data, columns, globalFilter, filterFunction, 
     }
 
     return passesGeneral && passesColumn && passesCustom;
-  }));
+  });
 }

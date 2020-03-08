@@ -32,6 +32,6 @@ export default function defaultTo(defaultValue) {
       }
 
       return values[key];
-    },
+    }
   });
 }

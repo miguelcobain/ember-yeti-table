@@ -1,51 +1,60 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
 import { click } from '@ember/test-helpers';
+import { setupRenderingTest } from 'ember-qunit';
+import { module, test } from 'qunit';
+
 import { A } from '@ember/array';
+
+import { hbs } from 'ember-cli-htmlbars';
+
 import DEFAULT_THEME from 'ember-yeti-table/-private/themes/default-theme';
 
 module('Integration | Component | yeti-table (general)', function(hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function() {
-    this.data = A([{
-      firstName: 'Miguel',
-      lastName: 'Andrade',
-      points: 1,
-      address: {
-        city: "New York"
+    this.data = A([
+      {
+        firstName: 'Miguel',
+        lastName: 'Andrade',
+        points: 1,
+        address: {
+          city: 'New York'
+        }
+      },
+      {
+        firstName: 'José',
+        lastName: 'Baderous',
+        points: 2,
+        address: {
+          city: 'New York'
+        }
+      },
+      {
+        firstName: 'Maria',
+        lastName: 'Silva',
+        points: 3,
+        address: {
+          city: 'New York'
+        }
+      },
+      {
+        firstName: 'Tom',
+        lastName: 'Dale',
+        points: 4,
+        address: {
+          city: 'Portland'
+        }
+      },
+      {
+        firstName: 'Yehuda',
+        lastName: 'Katz',
+        points: 5,
+        address: {
+          city: 'Portland'
+        }
       }
-    }, {
-      firstName: 'José',
-      lastName: 'Baderous',
-      points: 2,
-      address: {
-        city: "New York"
-      }
-    }, {
-      firstName: 'Maria',
-      lastName: 'Silva',
-      points: 3,
-      address: {
-        city: "New York"
-      }
-    }, {
-      firstName: 'Tom',
-      lastName: 'Dale',
-      points: 4,
-      address: {
-        city: "Portland"
-      }
-    }, {
-      firstName: 'Yehuda',
-      lastName: 'Katz',
-      points: 5,
-      address: {
-        city: "Portland"
-      }
-    }]);
+    ]);
   });
 
   test('body blockless form renders table', async function(assert) {
@@ -245,7 +254,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('tfoot').exists({ count: 1 });
     assert.dom('tr').exists({ count: 1 + 5 + 1 });
     assert.dom('th').exists({ count: 3 });
-    assert.dom('td').exists({ count: (5 * 3) + 3 });
+    assert.dom('td').exists({ count: 5 * 3 + 3 });
   });
 
   test('head is correctly deprecated', async function(assert) {
@@ -272,7 +281,6 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     `);
 
     assert.expectDeprecation();
-
   });
 
   test('foot is correctly deprecated', async function(assert) {
@@ -313,7 +321,6 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     `);
 
     assert.expectDeprecation();
-
   });
 
   test('trClass applies a class to the header tr element', async function(assert) {
@@ -362,7 +369,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     `);
 
     let rows = this.element.querySelectorAll('tbody tr td:nth-child(2)');
-    rows.forEach((r) => {
+    rows.forEach(r => {
       assert.dom(r).hasClass('custom-column-class');
     });
   });
@@ -401,7 +408,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     `);
 
     let rows = this.element.querySelectorAll('tbody tr td:nth-child(2)');
-    rows.forEach((r) => {
+    rows.forEach(r => {
       assert.dom(r).hasClass('custom-column-class');
     });
   });
@@ -409,7 +416,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
   test('onRowClick action is triggered', async function(assert) {
     assert.expect(2);
 
-    this.rowClicked = (p) => {
+    this.rowClicked = p => {
       assert.equal(p.firstName, 'Miguel');
     };
 
@@ -435,7 +442,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
     await click('tbody tr:nth-child(1)');
 
-    this.set('rowClicked', (p) => {
+    this.set('rowClicked', p => {
       assert.equal(p.firstName, 'Tom');
     });
 
@@ -445,7 +452,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
   test('onClick action is triggered on row component', async function(assert) {
     assert.expect(2);
 
-    this.rowClicked = (p) => {
+    this.rowClicked = p => {
       assert.equal(p.firstName, 'Miguel');
     };
 
@@ -483,7 +490,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
 
     await click('tbody tr:nth-child(1)');
 
-    this.set('rowClicked', (p) => {
+    this.set('rowClicked', p => {
       assert.equal(p.firstName, 'Tom');
     });
 
@@ -539,7 +546,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
       line.forEach((data, column) => {
         assert.dom(`tbody tr:nth-child(${row + 1}) td:nth-child(${column + 1})`).hasText(`${data}`);
       });
-    })
+    });
   });
 
   test('column visibility works with blockless body', async function(assert) {
@@ -635,7 +642,6 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
   });
 
   test('yielded columns, visibleColumns, totalRows and visibleRows are correct', async function(assert) {
-
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
 
@@ -673,7 +679,6 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
   });
 
   test('can add arbitrary attributes to columns and cells', async function(assert) {
-
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
 

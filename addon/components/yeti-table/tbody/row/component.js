@@ -1,7 +1,6 @@
-import Component from '@ember/component';
-import { A } from '@ember/array';
-
 import { tagName, layout } from '@ember-decorators/component';
+import { A } from '@ember/array';
+import Component from '@ember/component';
 import { action } from '@ember/object';
 
 import template from './template';

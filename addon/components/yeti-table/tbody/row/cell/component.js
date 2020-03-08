@@ -1,6 +1,5 @@
-import Component from '@ember/component';
-
 import { tagName, layout } from '@ember-decorators/component';
+import Component from '@ember/component';
 import { reads } from '@ember/object/computed';
 
 import template from './template';

@@ -1,9 +1,8 @@
-import Component from '@ember/component';
-
 import { tagName, layout } from '@ember-decorators/component';
+import Component from '@ember/component';
+import { deprecate } from '@ember/debug';
 
 import template from './template';
-import { deprecate } from '@ember/debug';
 
 /**
   Renders a `<thead>` element and yields the row component.
@@ -46,13 +45,10 @@ class THead extends Component {
   init() {
     super.init(...arguments);
 
-    deprecate('The yielded `head` component has been deprecated. Please use `thead` instead.',
-      !this.shouldDeprecate,
-      {
-        id: 'ember-yet-table:Head-component',
-        until: '2.0.0'
-      }
-    );
+    deprecate('The yielded `head` component has been deprecated. Please use `thead` instead.', !this.shouldDeprecate, {
+      id: 'ember-yet-table:Head-component',
+      until: '2.0.0'
+    });
   }
 }
 

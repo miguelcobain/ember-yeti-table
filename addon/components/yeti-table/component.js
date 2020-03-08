@@ -1,30 +1,20 @@
-import DidChangeAttrsComponent from 'ember-yeti-table/-private/utils/did-change-attrs-component';
-import { isEmpty, isPresent } from '@ember/utils';
-import {
-  computed as emberComputed,
-  defineProperty
-} from '@ember/object';
-import { once } from '@ember/runloop';
-
 import { tagName, layout } from '@ember-decorators/component';
+import { getOwner } from '@ember/application';
+import { computed as emberComputed, defineProperty } from '@ember/object';
 import { computed, action } from '@ember/object';
 import { filterBy } from '@ember/object/computed';
-import defaultTo from 'ember-yeti-table/-private/utils/default-to';
-
-import filterData from 'ember-yeti-table/-private/utils/filtering-utils';
-import {
-  sortMultiple,
-  compareValues,
-  mergeSort
-} from 'ember-yeti-table/-private/utils/sorting-utils';
-
-import { getOwner } from '@ember/application';
-
-import template from './template';
+import { once } from '@ember/runloop';
+import { isEmpty, isPresent } from '@ember/utils';
 
 import merge from 'deepmerge';
 
 import DEFAULT_THEME from 'ember-yeti-table/-private/themes/default-theme';
+import defaultTo from 'ember-yeti-table/-private/utils/default-to';
+import DidChangeAttrsComponent from 'ember-yeti-table/-private/utils/did-change-attrs-component';
+import filterData from 'ember-yeti-table/-private/utils/filtering-utils';
+import { sortMultiple, compareValues, mergeSort } from 'ember-yeti-table/-private/utils/sorting-utils';
+
+import template from './template';
 
 /**
  * bring ember-concurrency didCancel helper instead of
@@ -232,7 +222,7 @@ class YetiTable extends DidChangeAttrsComponent {
   // If the theme is replaced, this will invalidate, but not if any prop under theme is changed
   @computed('theme', 'config.theme')
   get mergedTheme() {
-    let configTheme = this.get('config').theme ||  {};
+    let configTheme = this.get('config').theme || {};
     let localTheme = this.get('theme');
     return merge.all([DEFAULT_THEME, configTheme, localTheme]);
   }
@@ -297,7 +287,7 @@ class YetiTable extends DidChangeAttrsComponent {
     pageEnd += 1;
 
     if (totalRows) {
-      pageEnd = Math.min(pageEnd, totalRows)
+      pageEnd = Math.min(pageEnd, totalRows);
     }
 
     return { pageSize, pageNumber, pageStart, pageEnd, isFirstPage, isLastPage, totalRows, totalPages };
@@ -347,21 +337,23 @@ class YetiTable extends DidChangeAttrsComponent {
     if (data !== oldData) {
       if (data && data.then) {
         this.set('isLoading', true);
-        data.then((resolvedData) => {
-          // check if data is still the same promise
-          if (data === this.get('data') && !this.isDestroyed) {
-            this.set('resolvedData', resolvedData);
-            this.set('isLoading', false);
-          }
-        }).catch((e) => {
-          if (!didCancel(e)) {
-            if (!this.isDestroyed) {
+        data
+          .then(resolvedData => {
+            // check if data is still the same promise
+            if (data === this.get('data') && !this.isDestroyed) {
+              this.set('resolvedData', resolvedData);
               this.set('isLoading', false);
             }
-            // re-throw the non-cancellation error
-            throw e;
-          }
-        });
+          })
+          .catch(e => {
+            if (!didCancel(e)) {
+              if (!this.isDestroyed) {
+                this.set('isLoading', false);
+              }
+              // re-throw the non-cancellation error
+              throw e;
+            }
+          });
       } else {
         this.set('resolvedData', data || []);
       }
@@ -400,16 +392,20 @@ class YetiTable extends DidChangeAttrsComponent {
       'filterFunction'
     ];
 
-    defineProperty(this, 'filteredData', emberComputed(...filteredDataDeps, function() {
-      let data = this.get('resolvedData');
-      // only columns that have filterable = true and a prop defined will be considered
-      let columns = this.get('columns').filter((c) => c.get('filterable') && isPresent(c.get('prop')));
-      let filter = this.get('filter');
-      let filterFunction = this.get('filterFunction');
-      let filterUsing = this.get('filterUsing');
+    defineProperty(
+      this,
+      'filteredData',
+      emberComputed(...filteredDataDeps, function() {
+        let data = this.get('resolvedData');
+        // only columns that have filterable = true and a prop defined will be considered
+        let columns = this.get('columns').filter(c => c.get('filterable') && isPresent(c.get('prop')));
+        let filter = this.get('filter');
+        let filterFunction = this.get('filterFunction');
+        let filterUsing = this.get('filterUsing');
 
-      return filterData(data, columns, filter, filterFunction, filterUsing);
-    }));
+        return filterData(data, columns, filter, filterFunction, filterUsing);
+      })
+    );
 
     let sortedDataDeps = [
       `filteredData.${depKeys}`,
@@ -418,21 +414,25 @@ class YetiTable extends DidChangeAttrsComponent {
       'compareFunction'
     ];
 
-    defineProperty(this, 'sortedData', emberComputed(...sortedDataDeps, function() {
-      let data = this.get('filteredData');
-      let sortableColumns = this.get('columns').filter((c) => !isEmpty(c.get('sort')));
-      let sortings = sortableColumns.map((c) => ({ prop: c.get('prop'), direction: c.get('sort') }));
-      let sortFunction = this.get('sortFunction');
-      let compareFunction = this.get('compareFunction');
+    defineProperty(
+      this,
+      'sortedData',
+      emberComputed(...sortedDataDeps, function() {
+        let data = this.get('filteredData');
+        let sortableColumns = this.get('columns').filter(c => !isEmpty(c.get('sort')));
+        let sortings = sortableColumns.map(c => ({ prop: c.get('prop'), direction: c.get('sort') }));
+        let sortFunction = this.get('sortFunction');
+        let compareFunction = this.get('compareFunction');
 
-      if (sortings.length > 0) {
-        data = mergeSort(data, (itemA, itemB) => {
-          return sortFunction(itemA, itemB, sortings, compareFunction);
-        });
-      }
+        if (sortings.length > 0) {
+          data = mergeSort(data, (itemA, itemB) => {
+            return sortFunction(itemA, itemB, sortings, compareFunction);
+          });
+        }
 
-      return data;
-    }));
+        return data;
+      })
+    );
 
     // defining a computed property on didInsertElement doesn't seem
     // to trigger any updates. This forces an update.
@@ -454,32 +454,37 @@ class YetiTable extends DidChangeAttrsComponent {
           }
 
           param.sortData = this.get('columns')
-            .filter((c) => !isEmpty(c.get('sort')))
-            .map((c) => ({ prop: c.get('prop'), direction: c.get('sort') }));
+            .filter(c => !isEmpty(c.get('sort')))
+            .map(c => ({ prop: c.get('prop'), direction: c.get('sort') }));
           param.filterData = {
             filter: this.get('filter'),
             filterUsing: this.get('filterUsing'),
-            columnFilters: this.get('columns').map((c) => ({ filter: c.get('filter'), filterUsing: c.get('filterUsing') }))
+            columnFilters: this.get('columns').map(c => ({
+              filter: c.get('filter'),
+              filterUsing: c.get('filterUsing')
+            }))
           };
 
           let promise = loadData(param);
 
           if (promise && promise.then) {
             this.set('isLoading', true);
-            promise.then((resolvedData) => {
-              if (!this.isDestroyed) {
-                this.set('resolvedData', resolvedData);
-                this.set('isLoading', false);
-              }
-            }).catch((e) => {
-              if (!didCancel(e)) {
+            promise
+              .then(resolvedData => {
                 if (!this.isDestroyed) {
+                  this.set('resolvedData', resolvedData);
                   this.set('isLoading', false);
                 }
-                // re-throw the non-cancelation error
-                throw e;
-              }
-            });
+              })
+              .catch(e => {
+                if (!didCancel(e)) {
+                  if (!this.isDestroyed) {
+                    this.set('isLoading', false);
+                  }
+                  // re-throw the non-cancelation error
+                  throw e;
+                }
+              });
           } else {
             this.set('resolvedData', promise);
           }
@@ -506,8 +511,8 @@ class YetiTable extends DidChangeAttrsComponent {
 
       if (!e.shiftKey) {
         // if not pressed shift, reset other column sortings
-        let columns = this.get('columns').filter((c) => c !== column);
-        columns.forEach((c) => c.set('sort', null));
+        let columns = this.get('columns').filter(c => c !== column);
+        columns.forEach(c => c.set('sort', null));
       }
     } else {
       // use first direction from sort sequence
@@ -519,8 +524,8 @@ class YetiTable extends DidChangeAttrsComponent {
       // shift click adds a new sorting to the existing ones
       if (!e.shiftKey) {
         // if not pressed shift, reset other column sortings
-        let columns = this.get('columns').filter((c) => c !== column);
-        columns.forEach((c) => c.set('sort', null));
+        let columns = this.get('columns').filter(c => c !== column);
+        columns.forEach(c => c.set('sort', null));
       }
     }
     this.runLoadData();
@@ -584,7 +589,10 @@ class YetiTable extends DidChangeAttrsComponent {
 
     let columns = this.get('columns');
     if (columns.includes(column)) {
-      this.set('columns', columns.filter(c => c === column));
+      this.set(
+        'columns',
+        columns.filter(c => c === column)
+      );
     }
   }
 }

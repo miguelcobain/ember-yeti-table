@@ -1,43 +1,47 @@
-import { module, test } from 'qunit';
+import { click, render, settled, triggerEvent } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  click,
-  render,
-  settled,
-  triggerEvent
-} from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
+import { module, test } from 'qunit';
+
 import { A } from '@ember/array';
 import { set, get } from '@ember/object';
-import { compare } from '@ember/utils';
 import { run } from '@ember/runloop';
+import { compare } from '@ember/utils';
+
+import { hbs } from 'ember-cli-htmlbars';
+
 import DEFAULT_THEME from 'ember-yeti-table/-private/themes/default-theme';
 
 module('Integration | Component | yeti-table (sorting)', function(hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function() {
-    this.data = A([{
-      firstName: 'Miguel',
-      lastName: 'Andrade',
-      points: 1
-    }, {
-      firstName: 'José',
-      lastName: 'Baderous',
-      points: 2
-    }, {
-      firstName: 'Maria',
-      lastName: 'Silva',
-      points: 3
-    }, {
-      firstName: 'Tom',
-      lastName: 'Pale',
-      points: 4
-    }, {
-      firstName: 'Tom',
-      lastName: 'Dale',
-      points: 5
-    }]);
+    this.data = A([
+      {
+        firstName: 'Miguel',
+        lastName: 'Andrade',
+        points: 1
+      },
+      {
+        firstName: 'José',
+        lastName: 'Baderous',
+        points: 2
+      },
+      {
+        firstName: 'Maria',
+        lastName: 'Silva',
+        points: 3
+      },
+      {
+        firstName: 'Tom',
+        lastName: 'Pale',
+        points: 4
+      },
+      {
+        firstName: 'Tom',
+        lastName: 'Dale',
+        points: 5
+      }
+    ]);
   });
 
   test('by default all columns are sortable and have the sortable class', async function(assert) {
@@ -693,7 +697,6 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
 
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Miguel');
     assert.dom('tbody tr:nth-child(5) td:nth-child(2)').hasText('Andrade');
-
   });
 
   test('using sort and clicking header afterwards works', async function(assert) {

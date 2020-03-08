@@ -28,13 +28,13 @@ export default {
 
   sorting: {
     // applied to <th> header cells when column is sortable
-    columnSortable:  'yeti-table-sortable',
+    columnSortable: 'yeti-table-sortable',
     // applied to <th> header cells when column is currently sorted
     columnSorted: 'yeti-table-sorted',
     // applied to <th> header cells when column is currently sorted ascending
     columnSortedAsc: 'yeti-table-sorted-asc',
     // applied to <th> header cells when column is currently sorted descending
-    columnSortedDesc: 'yeti-table-sorted-desc',
+    columnSortedDesc: 'yeti-table-sorted-desc'
   },
 
   pagination: {

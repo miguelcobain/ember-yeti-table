@@ -22,7 +22,11 @@
     "lint:js": "eslint .",
     "start": "ember serve",
     "test": "ember test",
-    "test:all": "ember try:each"
+    "test:all": "ember try:each",
+    "eslint-config-check": "eslint --print-config . | eslint-config-prettier-check",
+    "format:prettier": "prettier --write \"**/*.{js,scss,json,yaml,yml}\"",
+    "format:eslint": "eslint --fix \"**/*.js\"",
+    "format:all": "run-s format:prettier format:eslint"
   },
   "dependencies": {
     "@ember/render-modifiers": "^1.0.2",
@@ -79,10 +83,18 @@
     "ember-truth-helpers": "^2.1.0",
     "ember-try": "^1.4.0",
     "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-ember": "^7.8.1",
+    "eslint-plugin-import-helpers": "^1.0.2",
     "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-qunit": "^4.0.0",
     "faker": "^4.1.0",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.8",
     "loader.js": "^4.7.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.19.1",
     "qunit-dom": "^1.0.0",
     "sinon": "^9.0.0"
   },
@@ -97,5 +109,14 @@
     "configPath": "tests/dummy/config",
     "demoURL": "https://miguelcobain.github.io/ember-yeti-table"
   },
-  "homepage": "https://miguelcobain.github.io/ember-yeti-table"
+  "homepage": "https://miguelcobain.github.io/ember-yeti-table",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,scss,json,yaml,yml,md}": "prettier --write",
+    "*.js": "eslint --fix"
+  }
 }

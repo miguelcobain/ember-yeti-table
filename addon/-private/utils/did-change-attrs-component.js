@@ -11,7 +11,6 @@ function isEqual(_, a, b) {
  * Code taken from https://github.com/workmanw/ember-did-change-attrs
  */
 export default class DidChangeAttrsComponent extends Component {
-
   init() {
     super.init(...arguments);
 
@@ -22,7 +21,8 @@ export default class DidChangeAttrsComponent extends Component {
   didReceiveAttrs() {
     let buffer = this.get('_didChangeAttrsBuffer');
 
-    if (buffer === null) { // first run
+    if (buffer === null) {
+      // first run
       let config = this.get('didChangeAttrsConfig');
       let trackedAttrs = config.attrs;
       let initialValues = {};
@@ -59,5 +59,4 @@ export default class DidChangeAttrsComponent extends Component {
       this.didChangeAttrs(changes);
     }
   }
-
 }

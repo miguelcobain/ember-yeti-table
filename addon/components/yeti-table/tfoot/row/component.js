@@ -1,7 +1,6 @@
-import Component from '@ember/component';
-import { A } from '@ember/array';
-
 import { tagName, layout } from '@ember-decorators/component';
+import { A } from '@ember/array';
+import Component from '@ember/component';
 
 import template from './template';
 
@@ -50,8 +49,6 @@ class TFootRow extends Component {
   unregisterCell(cell) {
     this.get('cells').removeObject(cell);
   }
-
 }
-
 
 export default TFootRow;

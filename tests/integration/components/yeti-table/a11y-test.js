@@ -1,34 +1,42 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
+import { setupRenderingTest } from 'ember-qunit';
+import { module, test } from 'qunit';
+
 import { A } from '@ember/array';
+
+import { hbs } from 'ember-cli-htmlbars';
 
 module('Integration | Component | yeti-table (a11y)', function(hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function() {
-    this.data = A([{
-      firstName: 'Miguel',
-      lastName: 'Andrade',
-      points: 1
-    }, {
-      firstName: 'José',
-      lastName: 'Baderous',
-      points: 2
-    }, {
-      firstName: 'Maria',
-      lastName: 'Silva',
-      points: 3
-    }, {
-      firstName: 'Tom',
-      lastName: 'Dale',
-      points: 4
-    }, {
-      firstName: 'Yehuda',
-      lastName: 'Katz',
-      points: 5
-    }]);
+    this.data = A([
+      {
+        firstName: 'Miguel',
+        lastName: 'Andrade',
+        points: 1
+      },
+      {
+        firstName: 'José',
+        lastName: 'Baderous',
+        points: 2
+      },
+      {
+        firstName: 'Maria',
+        lastName: 'Silva',
+        points: 3
+      },
+      {
+        firstName: 'Tom',
+        lastName: 'Dale',
+        points: 4
+      },
+      {
+        firstName: 'Yehuda',
+        lastName: 'Katz',
+        points: 5
+      }
+    ]);
   });
 
   test('only sortable columns have role="button"', async function(assert) {
@@ -56,5 +64,4 @@ module('Integration | Component | yeti-table (a11y)', function(hooks) {
     assert.dom('thead tr th:nth-child(2)').hasAttribute('role', 'button');
     assert.dom('thead tr th:nth-child(3)').hasAttribute('role', 'button');
   });
-
 });

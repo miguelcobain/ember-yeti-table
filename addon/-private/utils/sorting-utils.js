@@ -1,5 +1,5 @@
-import { compare, isNone } from '@ember/utils';
 import { get } from '@ember/object';
+import { compare, isNone } from '@ember/utils';
 
 function merge(left, right, comparator) {
   let mergedArray = [];

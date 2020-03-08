@@ -1,10 +1,8 @@
-import Component from '@ember/component';
-
 import { tagName, layout } from '@ember-decorators/component';
+import Component from '@ember/component';
+import { deprecate } from '@ember/debug';
 
 import template from './template';
-
-import { deprecate } from '@ember/debug';
 
 /**
   Renders a `<tfoot>` element and yields the row component.
@@ -33,15 +31,11 @@ class TFoot extends Component {
   init() {
     super.init(...arguments);
 
-    deprecate('The yielded `foot` component has been deprecated. Please use `tfoot` instead.',
-      !this.shouldDeprecate,
-      {
-        id: 'ember-yet-table:foot-component',
-        until: '2.0.0'
-      }
-    );
+    deprecate('The yielded `foot` component has been deprecated. Please use `tfoot` instead.', !this.shouldDeprecate, {
+      id: 'ember-yet-table:foot-component',
+      until: '2.0.0'
+    });
   }
-
 }
 
 export default TFoot;

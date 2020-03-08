@@ -1,11 +1,10 @@
+import createRegex from 'ember-yeti-table/-private/utils/create-regex';
 import {
   sortMultiple as sortFunction,
   compareValues as compareFunction
 } from 'ember-yeti-table/-private/utils/sorting-utils';
-import createRegex from 'ember-yeti-table/-private/utils/create-regex';
 
 export default function() {
-
   // These comments are here to help you get started. Feel free to delete them.
 
   /*
@@ -40,8 +39,8 @@ export default function() {
 
     if (filter) {
       let regex = createRegex(filter, false, true, true);
-      records = records.filter((item) => {
-        return ['firstName', 'lastName', 'email', 'age'].some((key) => {
+      records = records.filter(item => {
+        return ['firstName', 'lastName', 'email', 'age'].some(key => {
           return regex.test(item.attrs[key]);
         });
       });

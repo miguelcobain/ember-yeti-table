@@ -1,10 +1,10 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
+
 import { timeout } from 'ember-concurrency';
 import { restartableTask } from 'ember-concurrency-decorators';
 
 export default class AsyncController extends Controller {
-
   // BEGIN-SNIPPET async-simple.js
   /**
    * This example would be used on Yeti Table as `@loadData={{perform loadData}}`.
@@ -16,8 +16,8 @@ export default class AsyncController extends Controller {
     yield timeout(250);
 
     let params = {
-      sortBy: sortData.map((s) => s.prop),
-      sortDir: sortData.map((s) => s.direction),
+      sortBy: sortData.map(s => s.prop),
+      sortDir: sortData.map(s => s.direction),
       pageNumber: paginationData.pageNumber,
       pageSize: paginationData.pageSize,
       filter: filterData.filter
@@ -30,7 +30,7 @@ export default class AsyncController extends Controller {
     this.set('totalRows', users.get('meta.totalRows'));
 
     return users;
-  }
+  };
   // END-SNIPPET
 
   // BEGIN-SNIPPET async-simple-es7.js
@@ -41,8 +41,8 @@ export default class AsyncController extends Controller {
   @action
   async loadData({ paginationData, sortData, filterData }) {
     let params = {
-      sortBy: sortData.map((s) => s.prop),
-      sortDir: sortData.map((s) => s.direction),
+      sortBy: sortData.map(s => s.prop),
+      sortDir: sortData.map(s => s.direction),
       pageNumber: paginationData.pageNumber,
       pageSize: paginationData.pageSize,
       filter: filterData.filter
@@ -57,5 +57,4 @@ export default class AsyncController extends Controller {
     return users;
   }
   // END-SNIPPET
-
 }

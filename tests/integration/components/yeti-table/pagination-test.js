@@ -1,8 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
+import { setupRenderingTest } from 'ember-qunit';
+import { module, test } from 'qunit';
+
 import { A } from '@ember/array';
+
+import { hbs } from 'ember-cli-htmlbars';
 import faker from 'faker';
 
 module('Integration | Component | yeti-table (pagination)', function(hooks) {
@@ -11,13 +13,15 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
   hooks.beforeEach(function() {
     let numberOfRows = 40;
 
-    this.data = A(Array.from(Array(numberOfRows), (_, i) => {
-      return {
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
-        points: i
-      };
-    }));
+    this.data = A(
+      Array.from(Array(numberOfRows), (_, i) => {
+        return {
+          firstName: faker.name.firstName(),
+          lastName: faker.name.lastName(),
+          points: i
+        };
+      })
+    );
   });
 
   test('when using pagination, it does not render more than pageSize rows', async function(assert) {
