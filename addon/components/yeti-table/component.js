@@ -54,7 +54,7 @@ const didCancel = function(e) {
       </header.column>
     </table.header>
 
-  <table.body/>
+    <table.body/>
 
   </YetiTable>
   ```
