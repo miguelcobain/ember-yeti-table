@@ -129,13 +129,13 @@ A custom pagination controls component is also included (check the `pagination-c
         </body.row>
       </table.body>
 
-      <tfoot>
-        <tr>
-          <td colspan={{table.visibleColumns.length}}>
+      <table.tfoot as |foot|>
+        <foot.row as |row|>
+          <row.cell colspan={{table.visibleColumns.length}}>
             <MaterialPagination @table={{table}} />
-          </td>
-        </tr>
-      </tfoot>
+          </row.cell>
+        </foot.row>
+      </table.tfoot>
 
       {{#if table.isLoading}}
         <div class="loading-pane">

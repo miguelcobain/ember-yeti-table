@@ -1,3 +1,15 @@
+# v1.4.0
+
+#### 🚨 Breaking Changes
+- all components except `<YetiTable>` are now private and no longer exposed to the application in the global namespace.
+
+#### ✨ Features
+- added a new component tbody. Unlike the current body component which yields a single record and 
+iterates over the array for you, tbody yields the array and you must iterate over the array yourself.
+
+#### 🏗 Chores
+- the head and foot components have been deprecated and replaced with thead and tfoot
+
 # v1.3.0
 
 #### ✨ Features

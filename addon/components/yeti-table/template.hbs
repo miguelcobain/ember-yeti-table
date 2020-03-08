@@ -1,16 +1,56 @@
 {{#let (hash
-  table=(component "yeti-table/table" theme=this.mergedTheme)
-  header=(component "yeti-table/header"
-    columns=this.columns onColumnClick=(fn this.onColumnSort)
-    sortable=this.sortable sortSequence=this.sortSequence parent=this theme=this.mergedTheme
+  table=(component "ember-yeti-table@yeti-table/table/component" theme=this.mergedTheme)
+  header=(component "ember-yeti-table@yeti-table/header/component"
+    columns=this.columns
+    onColumnClick=(fn this.onColumnSort)
+    sortable=this.sortable
+    sortSequence=this.sortSequence
+    parent=this
+    theme=this.mergedTheme
   )
-  head=(component "yeti-table/head"
-    columns=this.columns onColumnClick=(fn this.onColumnSort)
-    sortable=this.sortable sortSequence=this.sortSequence theme=this.mergedTheme parent=this
+  head=(component "ember-yeti-table@yeti-table/thead/component"
+    shouldDeprecate=true
+    columns=this.columns
+    onColumnClick=(fn this.onColumnSort)
+    sortable=this.sortable
+    sortSequence=this.sortSequence
+    theme=this.mergedTheme
+    parent=this
   )
-  body=(component "yeti-table/body" data=this.processedData columns=this.columns theme=this.mergedTheme parent=this)
-  foot=(component "yeti-table/foot" columns=this.columns theme=this.mergedTheme parent=this)
-  pagination=(component "yeti-table/pagination"
+  thead=(component "ember-yeti-table@yeti-table/thead/component"
+    shouldDeprecate=false
+    columns=this.columns
+    onColumnClick=(fn this.onColumnSort)
+    sortable=this.sortable
+    sortSequence=this.sortSequence
+    theme=this.mergedTheme
+    parent=this
+  )
+  body=(component "ember-yeti-table@yeti-table/body/component"
+    data=this.processedData
+    columns=this.columns
+    theme=this.mergedTheme
+    parent=this
+  )
+  tbody=(component "ember-yeti-table@yeti-table/tbody/component"
+    data=this.processedData
+    columns=this.columns
+    theme=this.mergedTheme
+    parent=this
+  )
+  foot=(component "ember-yeti-table@yeti-table/tfoot/component"
+    shouldDeprecate=true
+    columns=this.columns
+    theme=this.mergedTheme
+    parent=this
+  )
+  tfoot=(component "ember-yeti-table@yeti-table/tfoot/component"
+    shouldDeprecate=false
+    columns=this.columns
+    theme=this.mergedTheme
+    parent=this
+  )
+  pagination=(component "ember-yeti-table@yeti-table/pagination/component"
     disabled=this.isLoading
     theme=this.mergedTheme
     paginationData=this.paginationData
@@ -38,9 +78,9 @@
 ) as |api|}}
 
   {{#if this.renderTableElement}}
-    <YetiTable::Table @theme={{this.mergedTheme}} ...attributes>
+    <EmberYetiTable@YetiTable::Table::Component @theme={{this.mergedTheme}} ...attributes>
       {{yield api}}
-    </YetiTable::Table>
+    </EmberYetiTable@YetiTable::Table::Component>
   {{else}}
     {{yield api}}
   {{/if}}

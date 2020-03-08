@@ -42,8 +42,8 @@ Yeti Table "unrolls" all the rows for you. This is useful for simple tables. Her
 You can still add a click handler to the generated rows by passing the `@onRowClick` argument
 to `<table.body/>`. `@onRowClick` adds a click action to each row, called with the clicked row's data as an argument.
 
-You will probably need to make more customizations, and to do so you will need to use `<table.head>`,
-`<table.foot>` and/or `<table.body>` in the block form. This form allows you to:
+You will probably need to make more customizations, and to do so you will need to use `<table.thead>`,
+`<table.tfoot>` and/or `<table.body>` in the block form. This form allows you to:
 
 - Use any component or markup as a cell's content
 - Use the row data across multiple cells of the same row

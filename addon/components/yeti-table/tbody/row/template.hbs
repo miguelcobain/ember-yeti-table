@@ -1,0 +1,6 @@
+{{!-- template-lint-disable no-invalid-interactive --}}
+<tr class="{{@theme.tbodyRow}} {{@theme.row}}" {{on "click" this.handleClick}} role={{if @onClick "button"}} ...attributes>
+  {{yield (hash
+    cell=(component "ember-yeti-table@yeti-table/tbody/row/cell/component" theme=@theme parent=this)
+  )}}
+</tr>

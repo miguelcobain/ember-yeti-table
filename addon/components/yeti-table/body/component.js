@@ -30,6 +30,8 @@ import template from './template';
   Remember that this component's block will be rendered once per each item in the `@data` array.
   @yield {object} body
   @yield {Component} body.row - the row component
+  @yield {Object} rowData - one item in the data array
+  @yield {number} index
 */
 @tagName('')
 @layout(template)

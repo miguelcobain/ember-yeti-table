@@ -69,7 +69,7 @@ You can use the `@filter` argument on `<YetiTable>` and `<header.column>` at the
 
     <YetiTable @data={{this.data}} @filter={{filterText}} as |table|>
 
-      <table.head as |head|>
+      <table.thead as |head|>
         <head.row as |row|>
           <row.column @prop="firstName" @filter={{firstNameFilter}}>
             First name
@@ -103,7 +103,7 @@ You can use the `@filter` argument on `<YetiTable>` and `<header.column>` at the
           </row.cell>
         </head.row>
         
-      </table.head>
+      </table.thead>
 
       <table.body/>
 
