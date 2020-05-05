@@ -15,8 +15,8 @@ import template from './template';
       <row.cell>
         <input
           class="input" type="search" placeholder="Search last name"
-          value={{lastNameFilter}}
-          oninput={{action (mut lastNameFilter) value="target.value"}}>
+          value={{this.lastNameFilter}}
+          oninput={{action (mut this.lastNameFilter) value="target.value"}}>
       </row.cell>
     </head.row>
   </table.thead>

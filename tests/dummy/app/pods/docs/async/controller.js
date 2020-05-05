@@ -35,7 +35,7 @@ export default class AsyncController extends Controller {
 
   // BEGIN-SNIPPET async-simple-es7.js
   /**
-   * This example would be used on Yeti Table as `@loadData={{action "loadData"}}`.
+   * This example would be used on Yeti Table as `@loadData={{this.loadData}}`.
    * This uses async/await functions.
    */
   @action

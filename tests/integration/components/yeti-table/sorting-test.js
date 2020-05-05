@@ -646,7 +646,7 @@ module('Integration | Component | yeti-table (sorting)', function(hooks) {
     });
 
     await render(hbs`
-      <YetiTable @data={{this.data}} @sortFunction={{action customSort}} as |table|>
+      <YetiTable @data={{this.data}} @sortFunction={{this.customSort}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">

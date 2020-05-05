@@ -187,23 +187,23 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
 
         <table.body/>
 
-        <button id="previous" onclick={{action table.actions.previousPage}}>
+        <button id="previous" type="button" {{on "click" table.actions.previousPage}}>
           Previous
         </button>
 
-        <button id="next" onclick={{action table.actions.nextPage}}>
+        <button id="next" type="button" {{on "click" table.actions.nextPage}}>
           Next
         </button>
 
-        <button id="goToPage1" onclick={{action table.actions.goToPage 2}}>
+        <button id="goToPage1" type="button" {{on "click" (fn table.actions.goToPage 2)}}>
           2
         </button>
 
-        <button id="goToPage2" onclick={{action table.actions.goToPage 2000}}>
+        <button id="goToPage2" type="button" {{on "click" (fn table.actions.goToPage 2000)}}>
           2000
         </button>
 
-        <button id="goToPage3" onclick={{action table.actions.goToPage -2000}}>
+        <button id="goToPage3" type="button" {{on "click" (fn table.actions.goToPage -2000)}}>
           -2000
         </button>
 
@@ -257,11 +257,11 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
 
         <table.body/>
 
-        <button id="previous" disabled={{table.paginationData.isFirstPage}} onclick={{action table.actions.previousPage}}>
+        <button id="previous" type="button" disabled={{table.paginationData.isFirstPage}} {{on "click" table.actions.previousPage}}>
           Previous
         </button>
 
-        <button id="next" disabled={{table.paginationData.isLastPage}} onclick={{action table.actions.nextPage}}>
+        <button id="next" type="button" disabled={{table.paginationData.isLastPage}} {{on "click" table.actions.nextPage}}>
           Next
         </button>
 

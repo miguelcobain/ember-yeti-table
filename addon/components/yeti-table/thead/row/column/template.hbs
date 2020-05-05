@@ -3,7 +3,7 @@
   <th
     role={{if this.sortable "button"}}
     class="{{@class}} {{@theme.theadCell}} {{if this.sortable @theme.sorting.columnSortable}} {{if this.isSorted @theme.sorting.columnSorted}} {{if this.isAscSorted @theme.sorting.columnSortedAsc}} {{if this.isDescSorted @theme.sorting.columnSortedDesc}}"
-    onclick={{if this.sortable (fn @onClick this)}}
+    {{on "click" (if this.sortable (fn @onClick this) this.noop)}}
     {{did-insert this.updateName}}
     ...attributes>
     {{yield (hash

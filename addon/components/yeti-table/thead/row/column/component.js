@@ -188,6 +188,8 @@ class Column extends DidChangeAttrsComponent {
       set(this, 'name', element.textContent.trim());
     }
   }
+
+  noop = () => {};
 }
 
 export default Column;

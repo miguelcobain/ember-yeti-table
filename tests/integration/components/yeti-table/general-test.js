@@ -435,7 +435,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
           </header.column>
         </table.header>
 
-        <table.body @onRowClick={{action rowClicked}} />
+        <table.body @onRowClick={{this.rowClicked}} />
 
       </YetiTable>
     `);
@@ -472,7 +472,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
         </table.header>
 
         <table.body as |body person|>
-          <body.row @onClick={{action rowClicked person}} as |row|>
+          <body.row @onClick={{fn this.rowClicked person}} as |row|>
             <row.cell>
               Custom {{person.firstName}}
             </row.cell>

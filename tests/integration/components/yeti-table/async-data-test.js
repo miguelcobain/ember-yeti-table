@@ -512,7 +512,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
 
         <table.body/>
 
-        <button id="next" onclick={{table.actions.nextPage}}>
+        <button id="next" type="button" {{on "click" table.actions.nextPage}}>
           Next
         </button>
 

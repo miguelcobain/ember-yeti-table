@@ -289,7 +289,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     this.set('filterText', 'firstName:tom');
 
     await render(hbs`
-      <YetiTable @data={{this.data}} @filterFunction={{action filter}} @filterUsing={{filterText}} as |table|>
+      <YetiTable @data={{this.data}} @filterFunction={{this.filter}} @filterUsing={{this.filterText}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -328,7 +328,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     this.set('max', 100);
 
     await render(hbs`
-      <YetiTable @data={{this.data}} @filterUsing={{hash min=min max=max}} @filterFunction={{action filter}} as |table|>
+      <YetiTable @data={{this.data}} @filterUsing={{hash min=this.min max=this.max}} @filterFunction={{this.filter}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -373,7 +373,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
           <header.column @prop="lastName">
             Last name
           </header.column>
-          <header.column @prop="points" @filterUsing={{hash min=min max=max}} @filterFunction={{action filter}}>
+          <header.column @prop="points" @filterUsing={{hash min=this.min max=this.max}} @filterFunction={{this.filter}}>
             Points
           </header.column>
         </table.header>
