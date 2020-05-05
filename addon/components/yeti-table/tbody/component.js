@@ -45,7 +45,7 @@ class TBody extends Component {
    * Adds a click action to each row, called with the clicked row's data as an argument.
    * Can be used with both the blockless and block invocations.
    */
-  onRowClick = () => {};
+  onRowClick;
 }
 
 export default TBody;

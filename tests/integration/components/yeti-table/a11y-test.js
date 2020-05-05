@@ -64,4 +64,52 @@ module('Integration | Component | yeti-table (a11y)', function(hooks) {
     assert.dom('thead tr th:nth-child(2)').hasAttribute('role', 'button');
     assert.dom('thead tr th:nth-child(3)').hasAttribute('role', 'button');
   });
+
+  test('not clickable rows do not have role="button"', async function(assert) {
+    await render(hbs`
+      <YetiTable @data={{this.data}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName">
+            First name
+          </header.column>
+          <header.column @prop="lastName">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body/>
+
+      </YetiTable>
+    `);
+
+    assert.dom('tbody tr').hasNoAttribute('role');
+  });
+
+  test('clickable rows have role="button"', async function(assert) {
+    await render(hbs`
+      <YetiTable @data={{this.data}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName">
+            First name
+          </header.column>
+          <header.column @prop="lastName">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body @onRowClick={{fn (mut this.noop) true}}/>
+
+      </YetiTable>
+    `);
+
+    assert.dom('tbody tr').hasAttribute('role');
+  });
 });
