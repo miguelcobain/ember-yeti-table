@@ -1,3 +1,14 @@
+# v1.4.1
+
+#### 🐛 Bugfixes
+
+- `role="button"` was being applied to all `<tr>` elements, even if a click action was not provided.
+
+#### 🏗 Chores
+
+- use ember on modifier on documentation and codebase
+- use `this.` when referencing properties on docs
+
 # v1.4.0
 
 #### 🚨 Breaking Changes
