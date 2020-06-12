@@ -12,7 +12,7 @@ export default class AsyncController extends Controller {
    * Can't use `*loadData()` syntax until this issue is fixed https://github.com/machty/ember-concurrency-decorators/issues/48
    */
   @restartableTask
-  loadDataTask = function*({ paginationData, sortData, filterData }) {
+  loadDataTask = function* ({ paginationData, sortData, filterData }) {
     yield timeout(250);
 
     let params = {

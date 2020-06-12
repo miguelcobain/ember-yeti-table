@@ -8,8 +8,8 @@ const Router = AddonDocsRouter.extend(RouterScroll, {
   rootURL: config.rootURL
 });
 
-Router.map(function() {
-  docsRoute(this, function() {
+Router.map(function () {
+  docsRoute(this, function () {
     this.route('quickstart');
     this.route('why-yeti-table');
     this.route('general');

@@ -4,7 +4,7 @@ import {
   compareValues as compareFunction
 } from 'ember-yeti-table/-private/utils/sorting-utils';
 
-export default function() {
+export default function () {
   // These comments are here to help you get started. Feel free to delete them.
 
   /*

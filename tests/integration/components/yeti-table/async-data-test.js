@@ -13,10 +13,10 @@ import sinon from 'sinon';
 
 import { sortMultiple, compareValues, mergeSort } from 'ember-yeti-table/-private/utils/sorting-utils';
 
-module('Integration | Component | yeti-table (async)', function(hooks) {
+module('Integration | Component | yeti-table (async)', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.data = A([
       {
         firstName: 'Miguel',
@@ -74,7 +74,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     }
   ]);
 
-  test('passing a promise as `data` works after resolving promise', async function(assert) {
+  test('passing a promise as `data` works after resolving promise', async function (assert) {
     this.dataPromise = [];
 
     await render(hbs`
@@ -113,7 +113,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     assert.dom('tbody tr').exists({ count: 5 });
   });
 
-  test('yielded isLoading boolean is true while promise is not resolved', async function(assert) {
+  test('yielded isLoading boolean is true while promise is not resolved', async function (assert) {
     this.dataPromise = [];
 
     await render(hbs`
@@ -158,7 +158,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     assert.dom('.loading-message').doesNotExist();
   });
 
-  test('updating `data` after passing in a promise ignores first promise, respecting order', async function(assert) {
+  test('updating `data` after passing in a promise ignores first promise, respecting order', async function (assert) {
     this.dataPromise = [];
 
     await render(hbs`
@@ -209,7 +209,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(3)').hasText('123');
   });
 
-  test('yielded isLoading boolean is true while loadData promise is not resolved', async function(assert) {
+  test('yielded isLoading boolean is true while loadData promise is not resolved', async function (assert) {
     this.loadData = sinon.spy(() => {
       return new RSVP.Promise(resolve => {
         later(() => {
@@ -251,7 +251,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     assert.dom('.loading-message').doesNotExist();
   });
 
-  test('loadData is called with correct parameters', async function(assert) {
+  test('loadData is called with correct parameters', async function (assert) {
     this.loadData = sinon.spy(() => {
       return new RSVP.Promise(resolve => {
         later(() => {
@@ -299,7 +299,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     );
   });
 
-  test('loadData is called when updating filter', async function(assert) {
+  test('loadData is called when updating filter', async function (assert) {
     assert.expect();
 
     this.loadData = sinon.spy(({ filterData }) => {
@@ -355,7 +355,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     assert.ok(this.loadData.secondCall.calledWithMatch({ filterData: { filter: 'Baderous' } }));
   });
 
-  test('loadData is called when updating sorting', async function(assert) {
+  test('loadData is called when updating sorting', async function (assert) {
     assert.expect();
 
     this.loadData = sinon.spy(({ sortData }) => {
@@ -419,7 +419,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     assert.ok(this.loadData.secondCall.calledWithMatch({ sortData: [{ prop: 'lastName', direction: 'desc' }] }));
   });
 
-  test('loadData is called when clicking a sortable header', async function(assert) {
+  test('loadData is called when clicking a sortable header', async function (assert) {
     assert.expect();
 
     this.loadData = sinon.spy(({ sortData }) => {
@@ -483,7 +483,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     assert.ok(this.loadData.secondCall.calledWithMatch({ sortData: [{ prop: 'firstName', direction: 'asc' }] }));
   });
 
-  test('loadData is called when changing page', async function(assert) {
+  test('loadData is called when changing page', async function (assert) {
     assert.expect();
 
     this.loadData = sinon.spy(({ paginationData }) => {
@@ -569,7 +569,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     );
   });
 
-  test('loadData is called once if updated totalRows on the loadData function', async function(assert) {
+  test('loadData is called once if updated totalRows on the loadData function', async function (assert) {
     this.loadData = sinon.spy(() => {
       return new RSVP.Promise(resolve => {
         later(() => {
@@ -611,7 +611,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     assert.ok(this.loadData.calledOnce, 'loadData was called once');
   });
 
-  test('loadData is called once if we change @filter from undefined to ""', async function(assert) {
+  test('loadData is called once if we change @filter from undefined to ""', async function (assert) {
     this.loadData = sinon.spy(() => {
       return new RSVP.Promise(resolve => {
         later(() => {
@@ -654,7 +654,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     assert.ok(this.loadData.calledOnce, 'loadData was called once');
   });
 
-  test('loadData can be an ember-concurrency restartable task and be cancelled', async function(assert) {
+  test('loadData can be an ember-concurrency restartable task and be cancelled', async function (assert) {
     assert.expect(4);
     let data = this.data;
     let spy = sinon.spy();
@@ -706,7 +706,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     assert.equal(hardWorkCounter, 1, 'only did the "hard work" once');
   });
 
-  test('reloadData from @registerApi reruns the @loadData function', async function(assert) {
+  test('reloadData from @registerApi reruns the @loadData function', async function (assert) {
     this.registerApi = table => (this.tableApi = table);
 
     this.loadData = sinon.spy(() => {
@@ -760,7 +760,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     assert.ok(this.loadData.calledTwice, 'loadData was called twice');
   });
 
-  test('reloadData from yielded action reruns the @loadData function', async function(assert) {
+  test('reloadData from yielded action reruns the @loadData function', async function (assert) {
     this.registerApi = table => (this.tableApi = table);
 
     this.loadData = sinon.spy(() => {

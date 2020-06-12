@@ -6,10 +6,10 @@ import { A } from '@ember/array';
 
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | yeti-table (a11y)', function(hooks) {
+module('Integration | Component | yeti-table (a11y)', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.data = A([
       {
         firstName: 'Miguel',
@@ -39,7 +39,7 @@ module('Integration | Component | yeti-table (a11y)', function(hooks) {
     ]);
   });
 
-  test('only sortable columns have role="button"', async function(assert) {
+  test('only sortable columns have role="button"', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
 
@@ -65,7 +65,7 @@ module('Integration | Component | yeti-table (a11y)', function(hooks) {
     assert.dom('thead tr th:nth-child(3)').hasAttribute('role', 'button');
   });
 
-  test('not clickable rows do not have role="button"', async function(assert) {
+  test('not clickable rows do not have role="button"', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
 
@@ -89,7 +89,7 @@ module('Integration | Component | yeti-table (a11y)', function(hooks) {
     assert.dom('tbody tr').hasNoAttribute('role');
   });
 
-  test('clickable rows have role="button"', async function(assert) {
+  test('clickable rows have role="button"', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
 

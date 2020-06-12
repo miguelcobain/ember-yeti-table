@@ -7,10 +7,10 @@ import { A } from '@ember/array';
 import { hbs } from 'ember-cli-htmlbars';
 import faker from 'faker';
 
-module('Integration | Component | yeti-table (pagination)', function(hooks) {
+module('Integration | Component | yeti-table (pagination)', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     let numberOfRows = 40;
 
     this.data = A(
@@ -24,7 +24,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
     );
   });
 
-  test('when using pagination, it does not render more than pageSize rows', async function(assert) {
+  test('when using pagination, it does not render more than pageSize rows', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} @pagination={{true}} @pageSize={{15}} as |table|>
 
@@ -48,7 +48,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
     assert.dom('tbody tr').exists({ count: 15 });
   });
 
-  test('updating pageSize updates the number of rows', async function(assert) {
+  test('updating pageSize updates the number of rows', async function (assert) {
     this.pageSize = 15;
 
     await render(hbs`
@@ -78,7 +78,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
     assert.dom('tbody tr').exists({ count: 20 });
   });
 
-  test('rendering with initial pageNumber, renders the correct page', async function(assert) {
+  test('rendering with initial pageNumber, renders the correct page', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} @pagination={{true}} @pageSize={{15}} @pageNumber={{2}} as |table|>
 
@@ -104,7 +104,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(3)').hasText('15');
   });
 
-  test('updating pageNumber updates the displayed rows', async function(assert) {
+  test('updating pageNumber updates the displayed rows', async function (assert) {
     this.pageNumber = 1;
 
     await render(hbs`
@@ -136,7 +136,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(3)').hasText('15');
   });
 
-  test('updating pageSize to make the current pageNumber out of bounds also updates the pageNumber', async function(assert) {
+  test('updating pageSize to make the current pageNumber out of bounds also updates the pageNumber', async function (assert) {
     this.pageNumber = 4;
     this.pageSize = 10;
 
@@ -169,7 +169,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(3)').hasText('35');
   });
 
-  test('using yield actions works to change pages', async function(assert) {
+  test('using yield actions works to change pages', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} @pagination={{true}} @pageSize={{15}} as |table|>
 
@@ -239,7 +239,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(3)').hasText('0');
   });
 
-  test('yielded paginationData is correct', async function(assert) {
+  test('yielded paginationData is correct', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} @pagination={{true}} @pageSize={{15}} as |table|>
 
@@ -301,7 +301,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
     assert.dom('div#pageStart').hasText('31 to 40 of 40');
   });
 
-  test('using registered api to update pagination state works', async function(assert) {
+  test('using registered api to update pagination state works', async function (assert) {
     this.registerApi = table => (this.tableApi = table);
 
     await render(hbs`

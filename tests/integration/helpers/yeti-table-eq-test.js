@@ -4,10 +4,10 @@ import { module, test } from 'qunit';
 
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Helper | yeti-table-eq', function(hooks) {
+module('Integration | Helper | yeti-table-eq', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('returns true when two identical arguments are passed in', async function(assert) {
+  test('returns true when two identical arguments are passed in', async function (assert) {
     this.set('inputValue', '1234');
 
     await render(hbs`
@@ -19,7 +19,7 @@ module('Integration | Helper | yeti-table-eq', function(hooks) {
     assert.equal(this.element.textContent.trim(), 'works!');
   });
 
-  test('returns false when two different arguments are passed in', async function(assert) {
+  test('returns false when two different arguments are passed in', async function (assert) {
     this.set('inputValue', '1234');
 
     await render(hbs`

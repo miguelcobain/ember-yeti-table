@@ -21,7 +21,7 @@ import template from './template';
  * including the whole dependency
  */
 const TASK_CANCELATION_NAME = 'TaskCancelation';
-const didCancel = function(e) {
+const didCancel = function (e) {
   return e && e.name === TASK_CANCELATION_NAME;
 };
 
@@ -256,7 +256,7 @@ class YetiTable extends DidChangeAttrsComponent {
     return getOwner(this).resolveRegistration('config:environment')['ember-yeti-table'] || {};
   }
 
-  @computed('loadData', 'sortedData.[]', 'resolvedData.[]')
+  @computed('loadData', 'sortedData.[]', 'resolvedData.[]', 'totalRows')
   get normalizedTotalRows() {
     if (!this.get('loadData')) {
       // sync scenario using @data
@@ -417,7 +417,7 @@ class YetiTable extends DidChangeAttrsComponent {
     defineProperty(
       this,
       'filteredData',
-      emberComputed(...filteredDataDeps, function() {
+      emberComputed(...filteredDataDeps, function () {
         let data = this.get('resolvedData');
         // only columns that have filterable = true and a prop defined will be considered
         let columns = this.get('columns').filter(c => c.get('filterable') && isPresent(c.get('prop')));
@@ -439,7 +439,7 @@ class YetiTable extends DidChangeAttrsComponent {
     defineProperty(
       this,
       'sortedData',
-      emberComputed(...sortedDataDeps, function() {
+      emberComputed(...sortedDataDeps, function () {
         let data = this.get('filteredData');
         let sortableColumns = this.get('columns').filter(c => !isEmpty(c.get('sort')));
         let sortings = sortableColumns.map(c => ({ prop: c.get('prop'), direction: c.get('sort') }));

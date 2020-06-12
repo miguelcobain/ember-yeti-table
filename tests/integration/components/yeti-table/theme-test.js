@@ -8,10 +8,10 @@ import { hbs } from 'ember-cli-htmlbars';
 
 import DEFAULT_THEME from 'ember-yeti-table/-private/themes/default-theme';
 
-module('Integration | Component | yeti-table (theme)', function(hooks) {
+module('Integration | Component | yeti-table (theme)', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.theme = {
       table: 'table-1',
       thead: 'head-1',
@@ -53,7 +53,7 @@ module('Integration | Component | yeti-table (theme)', function(hooks) {
     ]);
   });
 
-  test('renders table with correct theme (header)', async function(assert) {
+  test('renders table with correct theme (header)', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} @theme={{theme}} as |table|>
 
@@ -82,7 +82,7 @@ module('Integration | Component | yeti-table (theme)', function(hooks) {
     assert.dom('tbody tr td').hasClass(this.theme.tbodyCell);
   });
 
-  test('renders table with correct theme (head)', async function(assert) {
+  test('renders table with correct theme (head)', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} @theme={{theme}} as |table|>
 
@@ -133,7 +133,7 @@ module('Integration | Component | yeti-table (theme)', function(hooks) {
     assert.dom('tfoot > tr > td > div > :nth-child(4)').hasClass(DEFAULT_THEME.pagination.next);
   });
 
-  test('deep merge of themes works', async function(assert) {
+  test('deep merge of themes works', async function (assert) {
     this.theme = {
       sorting: {
         columnSortable: 'custom-sortable'

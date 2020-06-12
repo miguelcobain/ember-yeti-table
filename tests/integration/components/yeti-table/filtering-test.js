@@ -8,10 +8,10 @@ import { run } from '@ember/runloop';
 
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | yeti-table (filtering)', function(hooks) {
+module('Integration | Component | yeti-table (filtering)', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.data = A([
       {
         firstName: 'Miguel',
@@ -41,7 +41,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     ]);
   });
 
-  test('rendering with filter filters rows', async function(assert) {
+  test('rendering with filter filters rows', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} @filter="Baderous" as |table|>
 
@@ -67,7 +67,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
   });
 
-  test('updating filter filters rows', async function(assert) {
+  test('updating filter filters rows', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} @filter={{filterText}} as |table|>
 
@@ -103,7 +103,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
   });
 
-  test('rendering with filter on column filters rows', async function(assert) {
+  test('rendering with filter on column filters rows', async function (assert) {
     this.set('filterText', 'Baderous');
 
     await render(hbs`
@@ -131,7 +131,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
   });
 
-  test('updating filter on column filters rows', async function(assert) {
+  test('updating filter on column filters rows', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
 
@@ -168,7 +168,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
   });
 
-  test('rendering with filter on multiple column filters rows correctly', async function(assert) {
+  test('rendering with filter on multiple column filters rows correctly', async function (assert) {
     this.set('filterFirst', 'Tom');
     this.set('filterLast', '');
 
@@ -205,7 +205,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(2)').hasText('Dale');
   });
 
-  test('changing a filtered property updates table', async function(assert) {
+  test('changing a filtered property updates table', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} @filter="Tom" as |table|>
 
@@ -239,7 +239,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Tom');
   });
 
-  test('changing a filtered property updates table is ignored correctly', async function(assert) {
+  test('changing a filtered property updates table is ignored correctly', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} @filter="Tom" @ignoreDataChanges={{true}} as |table|>
 
@@ -274,7 +274,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Tom');
   });
 
-  test('custom filter function', async function(assert) {
+  test('custom filter function', async function (assert) {
     this.filter = (row, filter) => {
       let [prop, text] = filter.split(':');
 
@@ -318,7 +318,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(2)').hasText('Baderous');
   });
 
-  test('custom filter function and filterUsing', async function(assert) {
+  test('custom filter function and filterUsing', async function (assert) {
     this.filter = (row, { min, max }) => {
       let points = get(row, 'points');
       return points >= min && points <= max;
@@ -355,7 +355,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     assert.dom('tbody tr').exists({ count: 3 });
   });
 
-  test('custom filter function and filterUsing on column', async function(assert) {
+  test('custom filter function and filterUsing on column', async function (assert) {
     this.filter = (points, { min, max }) => {
       return points >= min && points <= max;
     };
@@ -391,7 +391,7 @@ module('Integration | Component | yeti-table (filtering)', function(hooks) {
     assert.dom('tbody tr').exists({ count: 3 });
   });
 
-  test('Filtering works when a column header does not have a property', async function(assert) {
+  test('Filtering works when a column header does not have a property', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} @filter="Baderous" as |table|>
 

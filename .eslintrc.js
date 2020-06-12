@@ -34,7 +34,8 @@ module.exports = {
         ],
         alphabetize: { order: 'asc', ignoreCase: true }
       }
-    ]
+    ],
+    'ember/no-get': 'off'
   },
   overrides: [
     // node files

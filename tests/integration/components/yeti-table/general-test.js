@@ -9,10 +9,10 @@ import { hbs } from 'ember-cli-htmlbars';
 
 import DEFAULT_THEME from 'ember-yeti-table/-private/themes/default-theme';
 
-module('Integration | Component | yeti-table (general)', function(hooks) {
+module('Integration | Component | yeti-table (general)', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.data = A([
       {
         firstName: 'Miguel',
@@ -57,7 +57,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     ]);
   });
 
-  test('body blockless form renders table', async function(assert) {
+  test('body blockless form renders table', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
 
@@ -87,7 +87,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('td').exists({ count: 5 * 3 });
   });
 
-  test('body block form renders table', async function(assert) {
+  test('body block form renders table', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
 
@@ -127,7 +127,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Custom Yehuda');
   });
 
-  test('tbody block form renders table and test performs each', async function(assert) {
+  test('tbody block form renders table and test performs each', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
 
@@ -169,7 +169,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Custom Yehuda');
   });
 
-  test('supports nested properties', async function(assert) {
+  test('supports nested properties', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
 
@@ -211,7 +211,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.expectNoDeprecation();
   });
 
-  test('renders table using head and foot components', async function(assert) {
+  test('renders table using head and foot components', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
 
@@ -257,7 +257,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('td').exists({ count: 5 * 3 + 3 });
   });
 
-  test('head is correctly deprecated', async function(assert) {
+  test('head is correctly deprecated', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
 
@@ -283,7 +283,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.expectDeprecation();
   });
 
-  test('foot is correctly deprecated', async function(assert) {
+  test('foot is correctly deprecated', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
 
@@ -323,7 +323,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.expectDeprecation();
   });
 
-  test('trClass applies a class to the header tr element', async function(assert) {
+  test('trClass applies a class to the header tr element', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
 
@@ -347,7 +347,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('thead > tr').hasClass('custom-tr-class');
   });
 
-  test('columnClass applies a class to each column with blockless body', async function(assert) {
+  test('columnClass applies a class to each column with blockless body', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
 
@@ -374,7 +374,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     });
   });
 
-  test('columnClass applies a class to each column with block body', async function(assert) {
+  test('columnClass applies a class to each column with block body', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
 
@@ -413,7 +413,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     });
   });
 
-  test('onRowClick action is triggered', async function(assert) {
+  test('onRowClick action is triggered', async function (assert) {
     assert.expect(2);
 
     this.rowClicked = p => {
@@ -449,7 +449,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     await click('tbody tr:nth-child(4)');
   });
 
-  test('onClick action is triggered on row component', async function(assert) {
+  test('onClick action is triggered on row component', async function (assert) {
     assert.expect(2);
 
     this.rowClicked = p => {
@@ -497,7 +497,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     await click('tbody tr:nth-child(4)');
   });
 
-  test('renders with data with arrays', async function(assert) {
+  test('renders with data with arrays', async function (assert) {
     this.data = [
       ['Miguel', 'Andrade', 1, 2, 3, 4],
       ['José', 'Baderous', 1, 2, 3, 4],
@@ -549,7 +549,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     });
   });
 
-  test('column visibility works with blockless body', async function(assert) {
+  test('column visibility works with blockless body', async function (assert) {
     this.visible = true;
 
     await render(hbs`
@@ -589,7 +589,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('td').exists({ count: 5 * 2 });
   });
 
-  test('column visibility works with block body', async function(assert) {
+  test('column visibility works with block body', async function (assert) {
     this.visible = true;
 
     await render(hbs`
@@ -641,7 +641,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('td').exists({ count: 5 * 2 });
   });
 
-  test('yielded columns, visibleColumns, totalRows and visibleRows are correct', async function(assert) {
+  test('yielded columns, visibleColumns, totalRows and visibleRows are correct', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
 
@@ -678,7 +678,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('#visibleRows').hasText('5');
   });
 
-  test('can add arbitrary attributes to columns and cells', async function(assert) {
+  test('can add arbitrary attributes to columns and cells', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
 
@@ -720,7 +720,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasClass('cell-class');
   });
 
-  test('@renderTableElement={{false}} and yielded table component render correctly', async function(assert) {
+  test('@renderTableElement={{false}} and yielded table component render correctly', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} @renderTableElement={{false}} as |table|>
 
@@ -764,7 +764,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Custom Yehuda');
   });
 
-  test('yielded columns have a name property equal to the trimmed textContent of the headers', async function(assert) {
+  test('yielded columns have a name property equal to the trimmed textContent of the headers', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
 
@@ -801,7 +801,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('tfoot tr:nth-child(1) td:nth-child(3)').hasText('Points');
   });
 
-  test('yielded columns have a name property equal to the @name argument, overriding the default', async function(assert) {
+  test('yielded columns have a name property equal to the @name argument, overriding the default', async function (assert) {
     await render(hbs`
       <YetiTable @data={{this.data}} as |table|>
 
@@ -838,7 +838,7 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('tfoot tr:nth-child(1) td:nth-child(3)').hasText('Points yo!');
   });
 
-  test('@registerApi is called', async function(assert) {
+  test('@registerApi is called', async function (assert) {
     this.registerApi = table => (this.tableApi = table);
 
     await render(hbs`
