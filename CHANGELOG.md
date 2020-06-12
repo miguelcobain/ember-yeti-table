@@ -1,3 +1,11 @@
+# v1.5.0
+
+#### ✨ Features
+
+- new argument `@registerApi` that gets passed the public api of the table. With this object you can call
+  actions to change the state of the table itself. Currently the same as the yielded `table.actions` object.
+- new action called `reloadData`. Invoking this action will rerun the `@loadData` argument to get fresh data.
+
 # v1.4.1
 
 #### 🐛 Bugfixes
