@@ -78,7 +78,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     this.dataPromise = [];
 
     await render(hbs`
-      <YetiTable @data={{dataPromise}} as |table|>
+      <YetiTable @data={{this.dataPromise}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -117,7 +117,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     this.dataPromise = [];
 
     await render(hbs`
-      <YetiTable @data={{dataPromise}} as |table|>
+      <YetiTable @data={{this.dataPromise}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -162,7 +162,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     this.dataPromise = [];
 
     await render(hbs`
-      <YetiTable @data={{dataPromise}} as |table|>
+      <YetiTable @data={{this.dataPromise}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -219,7 +219,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     });
 
     render(hbs`
-      <YetiTable @loadData={{loadData}} as |table|>
+      <YetiTable @loadData={{this.loadData}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -261,7 +261,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     });
 
     await render(hbs`
-      <YetiTable @loadData={{loadData}} @filter="Miguel" as |table|>
+      <YetiTable @loadData={{this.loadData}} @filter="Miguel" as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -317,7 +317,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     });
 
     await render(hbs`
-      <YetiTable @loadData={{loadData}} @filter={{filterText}} as |table|>
+      <YetiTable @loadData={{this.loadData}} @filter={{this.filterText}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -375,13 +375,13 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     });
 
     await render(hbs`
-      <YetiTable @loadData={{loadData}} as |table|>
+      <YetiTable @loadData={{this.loadData}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
             First name
           </header.column>
-          <header.column @prop="lastName" @sort={{sortDir}}>
+          <header.column @prop="lastName" @sort={{this.sortDir}}>
             Last name
           </header.column>
           <header.column @prop="points">
@@ -439,7 +439,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     });
 
     await render(hbs`
-      <YetiTable @loadData={{loadData}} as |table|>
+      <YetiTable @loadData={{this.loadData}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -496,7 +496,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     });
 
     await render(hbs`
-      <YetiTable @loadData={{loadData}} @pagination={{true}} @totalRows={{10}} @pageSize={{5}} as |table|>
+      <YetiTable @loadData={{this.loadData}} @pagination={{true}} @totalRows={{10}} @pageSize={{5}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -580,7 +580,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     });
 
     await render(hbs`
-      <YetiTable @loadData={{loadData}} @pagination={{true}} @pageSize={{10}} @totalRows={{totalRows}} as |table|>
+      <YetiTable @loadData={{this.loadData}} @pagination={{true}} @pageSize={{10}} @totalRows={{this.totalRows}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -621,7 +621,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     });
 
     await render(hbs`
-      <YetiTable @loadData={{loadData}} @filter={{filterText}} as |table|>
+      <YetiTable @loadData={{this.loadData}} @filter={{this.filterText}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -675,7 +675,7 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     this.set('filterText', 'Migu');
 
     render(hbs`
-      <YetiTable @loadData={{perform obj.loadData}} @filter={{filterText}} as |table|>
+      <YetiTable @loadData={{perform this.obj.loadData}} @filter={{this.filterText}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
