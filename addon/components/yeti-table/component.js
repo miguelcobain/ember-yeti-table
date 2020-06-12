@@ -120,6 +120,26 @@ class YetiTable extends DidChangeAttrsComponent {
    */
   loadData;
 
+  publicApi = {
+    previousPage: this.previousPage,
+    nextPage: this.nextPage,
+    goToPage: this.goToPage,
+    changePageSize: this.changePageSize,
+    reloadData: this.runLoadData
+  };
+
+  /**
+   * This function will be called when Yeti Table initializes. It will be called with
+   * an object argument containing the functions for the possible actions you can make
+   * on a table. This object contains the following actions:
+   *   - previousPage
+   *   - nextPage
+   *   - goToPage
+   *   - changePageSize
+   *   - reloadData
+   */
+  registerApi;
+
   /**
    * Use this argument to enable the pagination feature. Default is `false`.
    */
@@ -326,6 +346,8 @@ class YetiTable extends DidChangeAttrsComponent {
     this.didChangeAttrsConfig = {
       attrs: ['filter', 'filterUsing', 'pageSize', 'pageNumber']
     };
+
+    this.registerApi?.(this.publicApi);
   }
 
   didReceiveAttrs() {
@@ -441,10 +463,11 @@ class YetiTable extends DidChangeAttrsComponent {
     this.runLoadData();
   }
 
+  @action
   runLoadData() {
     let loadData = this.get('loadData');
     if (loadData) {
-      let loadDataFunction = () => {
+      let loadDataFunction = async () => {
         let loadData = this.get('loadData');
         if (typeof loadData === 'function') {
           let param = {};
@@ -469,22 +492,21 @@ class YetiTable extends DidChangeAttrsComponent {
 
           if (promise && promise.then) {
             this.set('isLoading', true);
-            promise
-              .then(resolvedData => {
+            try {
+              let resolvedData = await promise;
+              if (!this.isDestroyed) {
+                this.set('resolvedData', resolvedData);
+                this.set('isLoading', false);
+              }
+            } catch (e) {
+              if (!didCancel(e)) {
                 if (!this.isDestroyed) {
-                  this.set('resolvedData', resolvedData);
                   this.set('isLoading', false);
                 }
-              })
-              .catch(e => {
-                if (!didCancel(e)) {
-                  if (!this.isDestroyed) {
-                    this.set('isLoading', false);
-                  }
-                  // re-throw the non-cancelation error
-                  throw e;
-                }
-              });
+                // re-throw the non-cancelation error
+                throw e;
+              }
+            }
           } else {
             this.set('resolvedData', promise);
           }

@@ -2,7 +2,7 @@
   table=(component "ember-yeti-table@yeti-table/table/component" theme=this.mergedTheme)
   header=(component "ember-yeti-table@yeti-table/header/component"
     columns=this.columns
-    onColumnClick=(fn this.onColumnSort)
+    onColumnClick=this.onColumnSort
     sortable=this.sortable
     sortSequence=this.sortSequence
     parent=this
@@ -11,7 +11,7 @@
   head=(component "ember-yeti-table@yeti-table/thead/component"
     shouldDeprecate=true
     columns=this.columns
-    onColumnClick=(fn this.onColumnSort)
+    onColumnClick=this.onColumnSort
     sortable=this.sortable
     sortSequence=this.sortSequence
     theme=this.mergedTheme
@@ -20,7 +20,7 @@
   thead=(component "ember-yeti-table@yeti-table/thead/component"
     shouldDeprecate=false
     columns=this.columns
-    onColumnClick=(fn this.onColumnSort)
+    onColumnClick=this.onColumnSort
     sortable=this.sortable
     sortSequence=this.sortSequence
     theme=this.mergedTheme
@@ -55,18 +55,13 @@
     theme=this.mergedTheme
     paginationData=this.paginationData
     paginationActions=(hash
-      previousPage=(fn this.previousPage)
-      nextPage=(fn this.nextPage)
-      goToPage=(fn this.goToPage)
-      changePageSize=(fn this.changePageSize)
+      previousPage=this.previousPage
+      nextPage=this.nextPage
+      goToPage=this.goToPage
+      changePageSize=this.changePageSize
     )
   )
-  actions=(hash
-    previousPage=(fn this.previousPage)
-    nextPage=(fn this.nextPage)
-    goToPage=(fn this.goToPage)
-    changePageSize=(fn this.changePageSize)
-  )
+  actions=this.publicApi
   paginationData=this.paginationData
   isLoading=this.isLoading
   columns=this.columns

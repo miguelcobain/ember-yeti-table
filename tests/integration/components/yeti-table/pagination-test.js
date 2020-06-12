@@ -1,4 +1,4 @@
-import { render, click } from '@ember/test-helpers';
+import { render, click, settled } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 
@@ -52,7 +52,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
     this.pageSize = 15;
 
     await render(hbs`
-      <YetiTable @data={{this.data}} @pagination={{true}} @pageSize={{pageSize}} as |table|>
+      <YetiTable @data={{this.data}} @pagination={{true}} @pageSize={{this.pageSize}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -108,7 +108,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
     this.pageNumber = 1;
 
     await render(hbs`
-      <YetiTable @data={{this.data}} @pagination={{true}} @pageSize={{15}} @pageNumber={{pageNumber}} as |table|>
+      <YetiTable @data={{this.data}} @pagination={{true}} @pageSize={{15}} @pageNumber={{this.pageNumber}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -141,7 +141,7 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
     this.pageSize = 10;
 
     await render(hbs`
-      <YetiTable @data={{this.data}} @pagination={{true}} @pageSize={{pageSize}} @pageNumber={{pageNumber}} as |table|>
+      <YetiTable @data={{this.data}} @pagination={{true}} @pageSize={{this.pageSize}} @pageNumber={{this.pageNumber}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -299,5 +299,64 @@ module('Integration | Component | yeti-table (pagination)', function(hooks) {
     assert.dom('div#pageSize').hasText('15');
     assert.dom('div#pageNumber').hasText('3 of 3');
     assert.dom('div#pageStart').hasText('31 to 40 of 40');
+  });
+
+  test('using registered api to update pagination state works', async function(assert) {
+    this.registerApi = table => (this.tableApi = table);
+
+    await render(hbs`
+      <YetiTable @data={{this.data}} @pagination={{true}} @pageSize={{15}} @registerApi={{this.registerApi}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName">
+            First name
+          </header.column>
+          <header.column @prop="lastName">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body/>
+
+      </YetiTable>
+    `);
+
+    assert.strictEqual(typeof this.tableApi, 'object', 'table api was registered');
+
+    assert.dom('tbody tr').exists({ count: 15 });
+    assert.dom('tbody tr:nth-child(1) td:nth-child(3)').hasText('0');
+
+    this.tableApi.nextPage();
+    await settled();
+
+    assert.dom('tbody tr').exists({ count: 15 });
+    assert.dom('tbody tr:nth-child(1) td:nth-child(3)').hasText('15');
+
+    this.tableApi.previousPage();
+    await settled();
+
+    assert.dom('tbody tr').exists({ count: 15 });
+    assert.dom('tbody tr:nth-child(1) td:nth-child(3)').hasText('0');
+
+    this.tableApi.goToPage(2);
+    await settled();
+
+    assert.dom('tbody tr').exists({ count: 15 });
+    assert.dom('tbody tr:nth-child(1) td:nth-child(3)').hasText('15');
+
+    this.tableApi.goToPage(2000);
+    await settled();
+
+    assert.dom('tbody tr').exists({ count: 10 });
+    assert.dom('tbody tr:nth-child(1) td:nth-child(3)').hasText('30');
+
+    this.tableApi.goToPage(-2000);
+    await settled();
+
+    assert.dom('tbody tr').exists({ count: 15 });
+    assert.dom('tbody tr:nth-child(1) td:nth-child(3)').hasText('0');
   });
 });

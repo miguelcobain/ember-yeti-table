@@ -705,4 +705,115 @@ module('Integration | Component | yeti-table (async)', function(hooks) {
     assert.ok(spy.secondCall.calledWithMatch({ filterData: { filter: 'Tom' } }));
     assert.equal(hardWorkCounter, 1, 'only did the "hard work" once');
   });
+
+  test('reloadData from @registerApi reruns the @loadData function', async function(assert) {
+    this.registerApi = table => (this.tableApi = table);
+
+    this.loadData = sinon.spy(() => {
+      return new RSVP.Promise(resolve => {
+        later(() => {
+          console.log(this.data);
+          resolve(this.data);
+        }, 150);
+      });
+    });
+
+    await render(hbs`
+      <YetiTable @loadData={{this.loadData}} @registerApi={{this.registerApi}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName">
+            First name
+          </header.column>
+          <header.column @prop="lastName">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body/>
+
+      </YetiTable>
+    `);
+
+    await settled();
+
+    assert.dom('tbody tr').exists({ count: 5 }, 'has only five rows');
+
+    assert.ok(this.loadData.calledOnce, 'loadData was called once');
+
+    this.data.addObject({
+      firstName: 'New',
+      lastName: 'User',
+      points: 12
+    });
+
+    this.tableApi.reloadData();
+    await settled();
+
+    assert.dom('tbody tr').exists({ count: 6 }, 'has an additional row from the reloadData call');
+
+    await clearRender();
+
+    assert.ok(this.loadData.calledTwice, 'loadData was called twice');
+  });
+
+  test('reloadData from yielded action reruns the @loadData function', async function(assert) {
+    this.registerApi = table => (this.tableApi = table);
+
+    this.loadData = sinon.spy(() => {
+      return new RSVP.Promise(resolve => {
+        later(() => {
+          console.log(this.data);
+          resolve(this.data);
+        }, 150);
+      });
+    });
+
+    await render(hbs`
+      <YetiTable @loadData={{this.loadData}} @registerApi={{this.registerApi}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName">
+            First name
+          </header.column>
+          <header.column @prop="lastName">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body/>
+
+        <button id="reload" type="button" disabled={{table.isLoading}} {{on "click" table.actions.reloadData}}>
+          Reload
+        </button>
+
+      </YetiTable>
+    `);
+
+    await settled();
+
+    assert.dom('tbody tr').exists({ count: 5 }, 'has only five rows');
+
+    assert.ok(this.loadData.calledOnce, 'loadData was called once');
+
+    this.data.addObject({
+      firstName: 'New',
+      lastName: 'User',
+      points: 12
+    });
+
+    await click('button#reload');
+
+    assert.dom('tbody tr').exists({ count: 6 }, 'has an additional row from the reloadData call');
+
+    await clearRender();
+
+    assert.ok(this.loadData.calledTwice, 'loadData was called twice');
+  });
 });

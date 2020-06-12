@@ -837,4 +837,35 @@ module('Integration | Component | yeti-table (general)', function(hooks) {
     assert.dom('tfoot tr:nth-child(1) td:nth-child(2)').hasText('Last name yo!');
     assert.dom('tfoot tr:nth-child(1) td:nth-child(3)').hasText('Points yo!');
   });
+
+  test('@registerApi is called', async function(assert) {
+    this.registerApi = table => (this.tableApi = table);
+
+    await render(hbs`
+      <YetiTable @data={{this.data}} @registerApi={{this.registerApi}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName">
+            First name
+          </header.column>
+          <header.column @prop="lastName">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body/>
+
+      </YetiTable>
+    `);
+
+    assert.equal(typeof this.tableApi, 'object', 'table is an object');
+    assert.equal(typeof this.tableApi.nextPage, 'function', 'table.nextPage is a function');
+    assert.equal(typeof this.tableApi.previousPage, 'function', 'table.previousPage is a function');
+    assert.equal(typeof this.tableApi.goToPage, 'function', 'table.goToPage is a function');
+    assert.equal(typeof this.tableApi.changePageSize, 'function', 'table.changePageSize is a function');
+    assert.equal(typeof this.tableApi.reloadData, 'function', 'table.reloadData is a function');
+  });
 });
