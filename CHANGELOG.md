@@ -1,3 +1,9 @@
+# v1.5.1
+
+#### 🐛 Bugfixes
+
+- run the `@registerApi` function in the actions queue to allow things like `@registerApi={{fn (mut this.table)}}`
+
 # v1.5.0
 
 #### ✨ Features
