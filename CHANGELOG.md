@@ -6,6 +6,10 @@
   actions to change the state of the table itself. Currently the same as the yielded `table.actions` object.
 - new action called `reloadData`. Invoking this action will rerun the `@loadData` argument to get fresh data.
 
+#### 🏗 Chores
+
+- update ember version and other dependencies
+
 # v1.4.1
 
 #### 🐛 Bugfixes
