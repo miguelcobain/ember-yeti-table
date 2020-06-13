@@ -302,10 +302,8 @@ module('Integration | Component | yeti-table (pagination)', function (hooks) {
   });
 
   test('using registered api to update pagination state works', async function (assert) {
-    this.registerApi = table => (this.tableApi = table);
-
     await render(hbs`
-      <YetiTable @data={{this.data}} @pagination={{true}} @pageSize={{15}} @registerApi={{this.registerApi}} as |table|>
+      <YetiTable @data={{this.data}} @pagination={{true}} @pageSize={{15}} @registerApi={{fn (mut this.tableApi)}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">

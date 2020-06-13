@@ -707,8 +707,6 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
   });
 
   test('reloadData from @registerApi reruns the @loadData function', async function (assert) {
-    this.registerApi = table => (this.tableApi = table);
-
     this.loadData = sinon.spy(() => {
       return new RSVP.Promise(resolve => {
         later(() => {
@@ -719,7 +717,7 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
     });
 
     await render(hbs`
-      <YetiTable @loadData={{this.loadData}} @registerApi={{this.registerApi}} as |table|>
+      <YetiTable @loadData={{this.loadData}} @registerApi={{fn (mut this.tableApi)}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -761,8 +759,6 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
   });
 
   test('reloadData from yielded action reruns the @loadData function', async function (assert) {
-    this.registerApi = table => (this.tableApi = table);
-
     this.loadData = sinon.spy(() => {
       return new RSVP.Promise(resolve => {
         later(() => {
@@ -773,7 +769,7 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
     });
 
     await render(hbs`
-      <YetiTable @loadData={{this.loadData}} @registerApi={{this.registerApi}} as |table|>
+      <YetiTable @loadData={{this.loadData}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">

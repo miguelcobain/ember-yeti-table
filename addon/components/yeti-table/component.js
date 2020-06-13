@@ -3,7 +3,7 @@ import { getOwner } from '@ember/application';
 import { computed as emberComputed, defineProperty } from '@ember/object';
 import { computed, action } from '@ember/object';
 import { filterBy } from '@ember/object/computed';
-import { once } from '@ember/runloop';
+import { once, scheduleOnce } from '@ember/runloop';
 import { isEmpty, isPresent } from '@ember/utils';
 
 import merge from 'deepmerge';
@@ -347,7 +347,9 @@ class YetiTable extends DidChangeAttrsComponent {
       attrs: ['filter', 'filterUsing', 'pageSize', 'pageNumber']
     };
 
-    this.registerApi?.(this.publicApi);
+    if (this.registerApi) {
+      scheduleOnce('actions', null, this.registerApi, this.publicApi);
+    }
   }
 
   didReceiveAttrs() {

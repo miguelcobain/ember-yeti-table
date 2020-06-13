@@ -6,6 +6,7 @@ import { module, test } from 'qunit';
 import { A } from '@ember/array';
 
 import { hbs } from 'ember-cli-htmlbars';
+import sinon from 'sinon';
 
 import DEFAULT_THEME from 'ember-yeti-table/-private/themes/default-theme';
 
@@ -839,7 +840,7 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
   });
 
   test('@registerApi is called', async function (assert) {
-    this.registerApi = table => (this.tableApi = table);
+    this.registerApi = sinon.spy(table => (this.tableApi = table));
 
     await render(hbs`
       <YetiTable @data={{this.data}} @registerApi={{this.registerApi}} as |table|>
@@ -867,5 +868,6 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
     assert.equal(typeof this.tableApi.goToPage, 'function', 'table.goToPage is a function');
     assert.equal(typeof this.tableApi.changePageSize, 'function', 'table.changePageSize is a function');
     assert.equal(typeof this.tableApi.reloadData, 'function', 'table.reloadData is a function');
+    assert.ok(this.registerApi.calledOnce, '@registerApi is called once');
   });
 });
