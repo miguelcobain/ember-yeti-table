@@ -1,3 +1,9 @@
+# v1.5.2
+
+#### 🐛 Bugfixes
+
+- fix bug where the columns weren't unregistering
+
 # v1.5.1
 
 #### 🐛 Bugfixes
