@@ -615,7 +615,7 @@ class YetiTable extends DidChangeAttrsComponent {
     if (columns.includes(column)) {
       this.set(
         'columns',
-        columns.filter(c => c === column)
+        columns.filter(c => c !== column)
       );
     }
   }
