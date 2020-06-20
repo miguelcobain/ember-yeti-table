@@ -8724,7 +8724,7 @@ this.set("pageNumber",Math.max(t-1,1)),this.runLoadData()}}},{key:"nextPage",val
 n||(this.set("pageNumber",t+1),this.runLoadData())}}},{key:"goToPage",value:function(e){if(this.get("pagination")){var t=this.get("paginationData"),n=t.totalPages
 e=Math.max(e,1),n&&(e=Math.min(e,n)),this.set("pageNumber",e),this.runLoadData()}}},{key:"changePageSize",value:function(e){this.get("pagination")&&(this.set("pageSize",parseInt(e)),this.runLoadData())}},{key:"registerColumn",value:function(e){var t=this.get("columns")
 t.includes(e)||t.push(e)}},{key:"unregisterColumn",value:function(e){var t=this.get("columns")
-t.includes(e)&&this.set("columns",t.filter((function(t){return t===e})))}},{key:"mergedTheme",get:function(){var e=this.get("config").theme||{},t=this.get("theme")
+t.includes(e)&&this.set("columns",t.filter((function(t){return t!==e})))}},{key:"mergedTheme",get:function(){var e=this.get("config").theme||{},t=this.get("theme")
 return n.default.all([a.default,e,t])}},{key:"config",get:function(){return Ember.getOwner(this).resolveRegistration("config:environment")["ember-yeti-table"]||{}}},{key:"normalizedTotalRows",get:function(){return this.get("loadData")?void 0===this.get("totalRows")?this.get("resolvedData.length"):this.get("totalRows"):this.get("sortedData.length")}},{key:"normalizedRows",get:function(){return this.get("loadData")?this.get("resolvedData"):this.get("sortedData")}},{key:"paginationData",get:function(){var e,t,n=this.get("pageSize"),a=this.get("pageNumber"),r=this.get("normalizedTotalRows")
 r&&(t=Math.ceil(r/n),a=Math.min(a,t),e=a===t)
 var i=1===a,o=(a-1)*n,s=o+n-1
