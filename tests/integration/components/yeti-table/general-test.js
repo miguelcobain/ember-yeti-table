@@ -4,6 +4,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 
 import { A } from '@ember/array';
+import { set } from '@ember/object';
 
 import { hbs } from 'ember-cli-htmlbars';
 import sinon from 'sinon';
@@ -643,8 +644,15 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
   });
 
   test('yielded columns, visibleColumns, totalRows and visibleRows are correct', async function (assert) {
+    this.onVisibleRowsChanged = rows => {
+      set(this, 'savedVisibleRows', rows);
+    };
+    this.onFilteredRowsChanged = rows => {
+      set(this, 'savedRows', rows);
+    };
+
     await render(hbs`
-      <YetiTable @data={{this.data}} as |table|>
+      <YetiTable @data={{this.data}} @onVisibleRowsChanged={{this.onVisibleRowsChanged}} @onFilteredRowsChanged={{this.onFilteredRowsChanged}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -670,6 +678,9 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
         <div id="visibleRows">{{table.visibleRows.length}}</div>
 
       </YetiTable>
+      
+        <div id="savedRows">{{this.savedRows.length}}</div>
+        <div id="savedVisibleRows">{{this.savedVisibleRows.length}}</div>
     `);
 
     assert.dom('#totalColumns').hasText('4');
@@ -677,6 +688,8 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
     assert.dom('#rows').hasText('5');
     assert.dom('#totalRows').hasText('5');
     assert.dom('#visibleRows').hasText('5');
+    assert.dom('#savedRows').hasText('5');
+    assert.dom('#savedVisibleRows').hasText('5');
   });
 
   test('can add arbitrary attributes to columns and cells', async function (assert) {

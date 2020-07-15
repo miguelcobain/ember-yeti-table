@@ -120,6 +120,26 @@ class YetiTable extends DidChangeAttrsComponent {
    */
   loadData;
 
+  /**
+   * An optional function to access the filtered rows on the table outside of the Yeti Table component.
+   * By passing in a function to `@onFilteredRowsChanged` you can have access to the filtered
+   * rows when filtering is changed.
+   *
+   * This function will be called with one argument:
+   * - `rows` - the filtered rows
+   */
+  onFilteredRowsChanged;
+
+  /**
+   * An optional function to access the visible rows on the table outside of the Yeti Table component.
+   * By passing in a function to `@onVisibleRowsChanged` you can have access to the current visible
+   * rows.
+   *
+   * This function will be called with one argument:
+   * - `rows` - the current visible rows
+   */
+  onVisibleRowsChanged;
+
   publicApi = {
     previousPage: this.previousPage,
     nextPage: this.nextPage,
@@ -273,15 +293,20 @@ class YetiTable extends DidChangeAttrsComponent {
     }
   }
 
-  @computed('loadData', 'sortedData.[]', 'resolvedData.[]')
+  @computed('loadData', 'onFilteredRowsChanged', 'resolvedData.[]', 'sortedData.[]')
   get normalizedRows() {
+    let rows;
     if (!this.get('loadData')) {
       // sync scenario using @data
-      return this.get('sortedData');
+      rows = this.get('sortedData');
     } else {
       // async scenario. @loadData is present.
-      return this.get('resolvedData');
+      rows = this.get('resolvedData');
     }
+    if (this.onFilteredRowsChanged) {
+      this.onFilteredRowsChanged(rows);
+    }
+    return rows;
   }
 
   @computed('pageSize', 'pageNumber', 'normalizedTotalRows')
@@ -326,14 +351,19 @@ class YetiTable extends DidChangeAttrsComponent {
     return data;
   }
 
-  @computed('pagedData', 'resolvedData', 'loadData')
+  @computed('loadData', 'onVisibleRowsChanged', 'pagedData', 'resolvedData')
   get processedData() {
+    let rows;
     if (this.get('loadData')) {
       // skip processing and return raw data if remote data is enabled via `loadData`
-      return this.get('resolvedData');
+      rows = this.get('resolvedData');
     } else {
-      return this.get('pagedData');
+      rows = this.get('pagedData');
     }
+    if (this.onVisibleRowsChanged) {
+      this.onVisibleRowsChanged(rows);
+    }
+    return rows;
   }
 
   init() {
