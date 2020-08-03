@@ -710,7 +710,6 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
     this.loadData = sinon.spy(() => {
       return new RSVP.Promise(resolve => {
         later(() => {
-          console.log(this.data);
           resolve(this.data);
         }, 150);
       });
@@ -762,7 +761,6 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
     this.loadData = sinon.spy(() => {
       return new RSVP.Promise(resolve => {
         later(() => {
-          console.log(this.data);
           resolve(this.data);
         }, 150);
       });

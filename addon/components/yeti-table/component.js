@@ -1,7 +1,7 @@
 import { tagName, layout } from '@ember-decorators/component';
 import { getOwner } from '@ember/application';
 import { computed as emberComputed, defineProperty } from '@ember/object';
-import { computed, action } from '@ember/object';
+import { computed, action, set } from '@ember/object';
 import { filterBy } from '@ember/object/computed';
 import { once, scheduleOnce } from '@ember/runloop';
 import { isEmpty, isPresent } from '@ember/utils';
@@ -238,6 +238,18 @@ class YetiTable extends DidChangeAttrsComponent {
    * @type {boolean}
    */
   renderTableElement = true;
+
+  /**
+   * The `@isColumnVisible` argument can be used to initialize the column visibility in a programatic way.
+   * For example, let's say you store the initial column visibility in local storage, then you can
+   * use this function to initialize the `visible` column of the specific column. The given function should
+   * return a boolean which will be assigned to the `visible` property of the column. An object representing
+   * the column is passed in. Sou can use column.prop and column.name to know which column your computed
+   * the visibility for.
+   *
+   * @type {Function}
+   */
+  isColumnVisible;
 
   // If the theme is replaced, this will invalidate, but not if any prop under theme is changed
   @computed('theme', 'config.theme')
@@ -600,7 +612,10 @@ class YetiTable extends DidChangeAttrsComponent {
   }
 
   registerColumn(column) {
-    // this.get('columns').addObject(column);
+    if (this.isColumnVisible) {
+      let visible = this.isColumnVisible(column);
+      set(column, 'visible', visible);
+    }
 
     let columns = this.get('columns');
     if (!columns.includes(column)) {
@@ -609,8 +624,6 @@ class YetiTable extends DidChangeAttrsComponent {
   }
 
   unregisterColumn(column) {
-    // this.get('columns').removeObject(column);
-
     let columns = this.get('columns');
     if (columns.includes(column)) {
       this.set(

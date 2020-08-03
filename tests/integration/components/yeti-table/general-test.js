@@ -560,7 +560,7 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
           <header.column @prop="firstName">
             First name
           </header.column>
-          <header.column @prop="lastName" @visible={{visible}}>
+          <header.column @prop="lastName" @visible={{this.visible}}>
             Last name
           </header.column>
           <header.column @prop="points">
@@ -600,7 +600,7 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
           <header.column @prop="firstName">
             First name
           </header.column>
-          <header.column @prop="lastName" @visible={{visible}}>
+          <header.column @prop="lastName" @visible={{this.visible}}>
             Last name
           </header.column>
           <header.column @prop="points">
@@ -633,6 +633,51 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
     assert.dom('td').exists({ count: 5 * 3 });
 
     this.set('visible', false);
+
+    assert.dom('table').exists({ count: 1 });
+    assert.dom('thead').exists({ count: 1 });
+    assert.dom('tbody').exists({ count: 1 });
+    assert.dom('tr').exists({ count: 6 });
+    assert.dom('th').exists({ count: 2 });
+    assert.dom('td').exists({ count: 5 * 2 });
+  });
+
+  test('column visibility works with @isColumnVisible', async function (assert) {
+    this.isColumnVisible = c => {
+      return ['firstName', 'points'].includes(c.prop);
+    };
+
+    await render(hbs`
+      <YetiTable @data={{this.data}} @isColumnVisible={{this.isColumnVisible}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName">
+            First name
+          </header.column>
+          <header.column @prop="lastName">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body as |body person|>
+          <body.row as |row|>
+            <row.cell>
+              {{person.firstName}}
+            </row.cell>
+            <row.cell>
+              {{person.lastName}}
+            </row.cell>
+            <row.cell>
+              {{person.points}}
+            </row.cell>
+          </body.row>
+        </table.body>
+
+      </YetiTable>
+    `);
 
     assert.dom('table').exists({ count: 1 });
     assert.dom('thead').exists({ count: 1 });
