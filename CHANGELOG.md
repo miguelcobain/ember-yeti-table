@@ -1,3 +1,14 @@
+# v1.6.0
+
+#### ✨ Features
+
+- new argument `@isColumnVisible`. This argument can be used to initialize the column visibility in a programatic way.
+  For example, let's say you store the initial column visibility in local storage, then you can
+  use this function to initialize the `visible` column of the specific column. The given function should
+  return a boolean which will be assigned to the `visible` property of the column. An object representing
+  the column is passed in. Sou can use `column.prop` and `column.name` to know which column your computed
+  the visibility for.
+
 # v1.5.2
 
 #### 🐛 Bugfixes
