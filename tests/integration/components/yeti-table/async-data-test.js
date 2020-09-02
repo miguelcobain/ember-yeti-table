@@ -267,7 +267,7 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
           <header.column @prop="firstName">
             First name
           </header.column>
-          <header.column @prop="lastName" @sort="desc">
+          <header.column @prop="lastName" @sort="desc" @filter="Andrade">
             Last name
           </header.column>
           <header.column @prop="points">
@@ -292,7 +292,14 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
       this.loadData.firstCall.calledWithMatch({
         paginationData: undefined,
         sortData: [{ prop: 'lastName', direction: 'desc' }],
-        filterData: { filter: 'Miguel' }
+        filterData: {
+          filter: 'Miguel',
+          columnFilters: [
+            { prop: 'firstName', filter: undefined, filterUsing: undefined },
+            { prop: 'lastName', filter: 'Andrade', filterUsing: undefined },
+            { prop: 'points', filter: undefined, filterUsing: undefined }
+          ]
+        }
       })
     );
   });
