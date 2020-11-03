@@ -495,8 +495,10 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
       });
     });
 
+    this.set('pageNumber', 1);
+
     await render(hbs`
-      <YetiTable @loadData={{this.loadData}} @pagination={{true}} @totalRows={{10}} @pageSize={{5}} as |table|>
+      <YetiTable @loadData={{this.loadData}} @pagination={{true}} @totalRows={{10}} @pageSize={{5}} @pageNumber={{pageNumber}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
