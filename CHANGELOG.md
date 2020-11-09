@@ -1,3 +1,9 @@
+# v1.6.1
+
+#### 🐛 Bugfixes
+
+- fixes bug where the `@loadData` function could be running twice if a `@pageNumber` or `@pageSize` argument was passed in to the component.
+
 # v1.6.0
 
 #### ✨ Features
