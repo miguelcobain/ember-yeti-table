@@ -659,6 +659,94 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
     );
   });
 
+  test('loadData is called when changing page with @onPageNumberChange (see #301)', async function (assert) {
+    assert.expect();
+
+    this.loadData = sinon.spy(({ paginationData }) => {
+      return new RSVP.Promise(resolve => {
+        later(() => {
+          let pages = [this.data, this.data2];
+          resolve(pages[paginationData.pageNumber - 1]);
+        }, 150);
+      });
+    });
+
+    this.set('pageNumber', 1);
+
+    await render(hbs`
+      <YetiTable @loadData={{this.loadData}} @pagination={{true}} @totalRows={{10}} @pageSize={{5}} @pageNumber={{this.pageNumber}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop="firstName">
+            First name
+          </header.column>
+          <header.column @prop="lastName">
+            Last name
+          </header.column>
+          <header.column @prop="points">
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body/>
+
+        <button id="next" type="button" {{on "click" table.actions.nextPage}}>
+          Next
+        </button>
+
+      </YetiTable>
+    `);
+
+    await settled();
+
+    assert.dom('tbody tr').exists({ count: 5 });
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Miguel');
+    assert.dom('tbody tr:nth-child(1) td:nth-child(2)').hasText('Andrade');
+    assert.dom('tbody tr:nth-child(1) td:nth-child(3)').hasText('1');
+
+    assert.ok(this.loadData.calledOnce, 'loadData was called once');
+
+    await click('button#next');
+
+    assert.dom('tbody tr').exists({ count: 5 });
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('A');
+    assert.dom('tbody tr:nth-child(1) td:nth-child(2)').hasText('B');
+    assert.dom('tbody tr:nth-child(1) td:nth-child(3)').hasText('123');
+
+    await clearRender();
+
+    assert.ok(this.loadData.calledTwice, 'loadData was called twice');
+    assert.ok(
+      this.loadData.firstCall.calledWithMatch({
+        paginationData: {
+          pageSize: 5,
+          pageNumber: 1,
+          pageStart: 1,
+          pageEnd: 5,
+          isFirstPage: true,
+          isLastPage: false,
+          totalRows: 10,
+          totalPages: 2
+        }
+      })
+    );
+
+    assert.ok(
+      this.loadData.secondCall.calledWithMatch({
+        paginationData: {
+          pageSize: 5,
+          pageNumber: 2,
+          pageStart: 6,
+          pageEnd: 10,
+          isFirstPage: false,
+          isLastPage: true,
+          totalRows: 10,
+          totalPages: 2
+        }
+      })
+    );
+  });
+
   test('loadData is called once if updated totalRows on the loadData function', async function (assert) {
     this.loadData = sinon.spy(() => {
       return new RSVP.Promise(resolve => {

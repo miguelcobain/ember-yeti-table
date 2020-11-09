@@ -571,7 +571,7 @@ class YetiTable extends DidChangeAttrsComponent {
   previousPage() {
     if (this.get('pagination')) {
       let { pageNumber } = this.get('paginationData');
-      this.set('pageNumber', Math.max(pageNumber - 1, 1));
+      this.setInternalProp('pageNumber', Math.max(pageNumber - 1, 1));
       this.runLoadData();
     }
   }
@@ -582,7 +582,7 @@ class YetiTable extends DidChangeAttrsComponent {
       let { pageNumber, isLastPage } = this.get('paginationData');
 
       if (!isLastPage) {
-        this.set('pageNumber', pageNumber + 1);
+        this.setInternalProp('pageNumber', pageNumber + 1);
         this.runLoadData();
       }
     }
@@ -598,7 +598,7 @@ class YetiTable extends DidChangeAttrsComponent {
         pageNumber = Math.min(pageNumber, totalPages);
       }
 
-      this.set('pageNumber', pageNumber);
+      this.setInternalProp('pageNumber', pageNumber);
       this.runLoadData();
     }
   }
@@ -606,7 +606,7 @@ class YetiTable extends DidChangeAttrsComponent {
   @action
   changePageSize(pageSize) {
     if (this.get('pagination')) {
-      this.set('pageSize', parseInt(pageSize));
+      this.setInternalProp('pageSize', parseInt(pageSize));
       this.runLoadData();
     }
   }

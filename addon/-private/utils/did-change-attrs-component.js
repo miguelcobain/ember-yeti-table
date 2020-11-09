@@ -59,4 +59,16 @@ export default class DidChangeAttrsComponent extends Component {
       this.didChangeAttrs(changes);
     }
   }
+
+  /**
+   * This method sets a property while setting it in the "buffer"
+   * of changed properties as well. This is needed to avoid unnecessary
+   * didChangeAttrs runs.
+   * @param {string} key the key of the prop to set
+   * @param {any} value the value to set
+   */
+  setInternalProp(key, value) {
+    this.set(`_didChangeAttrsBuffer.${key}`, value);
+    this.set(key, value);
+  }
 }
