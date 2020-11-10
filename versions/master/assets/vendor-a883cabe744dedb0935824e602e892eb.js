@@ -8613,7 +8613,7 @@ var t,s,c,d=o(p)
 function p(){return n(this,p),d.apply(this,arguments)}return t=p,s=[{key:"init",value:function(){r(u(p.prototype),"init",this).apply(this,arguments),this._didChangeAttrsBuffer=null,this.didChangeAttrsConfig=void 0===this.didChangeAttrsConfig?[]:this.didChangeAttrsConfig}},{key:"didReceiveAttrs",value:function(){var e=this.get("_didChangeAttrsBuffer")
 if(null===e){for(var t=this.get("didChangeAttrsConfig"),n=t.attrs,a={},r=0;r<n.length;r++){var i=n[r]
 a[i]=this.get(i)}this.set("_didChangeAttrsBuffer",a)}}},{key:"didUpdateAttrs",value:function(){for(var e=this.get("didChangeAttrsConfig"),t=e.isEqual||l,n=e.attrs,a=this.get("_didChangeAttrsBuffer"),r={},i=0;i<n.length;i++){var o=n[i],s=this.get(o),u=a[o]
-t(o,u,s)||(r[o]={previous:u,current:s},a[o]=s)}Object.keys(r).length>0&&this.didChangeAttrs(r)}}],s&&a(t.prototype,s),c&&a(t,c),p}(Ember.Component)
+t(o,u,s)||(r[o]={previous:u,current:s},a[o]=s)}Object.keys(r).length>0&&this.didChangeAttrs(r)}},{key:"setInternalProp",value:function(e,t){this.set("_didChangeAttrsBuffer.".concat(e),t),this.set(e,t)}}],s&&a(t.prototype,s),c&&a(t,c),p}(Ember.Component)
 e.default=c})),define("ember-yeti-table/-private/utils/filtering-utils",["exports","ember-yeti-table/-private/utils/create-regex"],(function(e,t){"use strict"
 Object.defineProperty(e,"__esModule",{value:!0}),e.default=function(e,n,a,r,i){if(Ember.isEmpty(e))return[]
 if(Ember.isEmpty(n))return e
@@ -8720,9 +8720,9 @@ if(n=a[(a.indexOf(n)+1)%a.length],"unsorted"===n&&(n=null),e.set("sort",n),!t.sh
 r.forEach((function(e){return e.set("sort",null)}))}}else{var i=e.get("normalizedSortSequence")[0]
 if(e.set("sort",i),!t.shiftKey){var o=this.get("columns").filter((function(t){return t!==e}))
 o.forEach((function(e){return e.set("sort",null)}))}}this.runLoadData()}},{key:"previousPage",value:function(){if(this.get("pagination")){var e=this.get("paginationData"),t=e.pageNumber
-this.set("pageNumber",Math.max(t-1,1)),this.runLoadData()}}},{key:"nextPage",value:function(){if(this.get("pagination")){var e=this.get("paginationData"),t=e.pageNumber,n=e.isLastPage
-n||(this.set("pageNumber",t+1),this.runLoadData())}}},{key:"goToPage",value:function(e){if(this.get("pagination")){var t=this.get("paginationData"),n=t.totalPages
-e=Math.max(e,1),n&&(e=Math.min(e,n)),this.set("pageNumber",e),this.runLoadData()}}},{key:"changePageSize",value:function(e){this.get("pagination")&&(this.set("pageSize",parseInt(e)),this.runLoadData())}},{key:"registerColumn",value:function(e){if(this.isColumnVisible){var t=this.isColumnVisible(e)
+this.setInternalProp("pageNumber",Math.max(t-1,1)),this.runLoadData()}}},{key:"nextPage",value:function(){if(this.get("pagination")){var e=this.get("paginationData"),t=e.pageNumber,n=e.isLastPage
+n||(this.setInternalProp("pageNumber",t+1),this.runLoadData())}}},{key:"goToPage",value:function(e){if(this.get("pagination")){var t=this.get("paginationData"),n=t.totalPages
+e=Math.max(e,1),n&&(e=Math.min(e,n)),this.setInternalProp("pageNumber",e),this.runLoadData()}}},{key:"changePageSize",value:function(e){this.get("pagination")&&(this.setInternalProp("pageSize",parseInt(e)),this.runLoadData())}},{key:"registerColumn",value:function(e){if(this.isColumnVisible){var t=this.isColumnVisible(e)
 Ember.set(e,"visible",t)}var n=this.get("columns")
 n.includes(e)||n.push(e)}},{key:"unregisterColumn",value:function(e){var t=this.get("columns")
 t.includes(e)&&this.set("columns",t.filter((function(t){return t!==e})))}},{key:"mergedTheme",get:function(){var e=this.get("config").theme||{},t=this.get("theme")
