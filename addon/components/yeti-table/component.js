@@ -3,7 +3,7 @@ import { getOwner } from '@ember/application';
 import { computed as emberComputed, defineProperty } from '@ember/object';
 import { computed, action, set } from '@ember/object';
 import { filterBy } from '@ember/object/computed';
-import { once, scheduleOnce } from '@ember/runloop';
+import { once, next, scheduleOnce } from '@ember/runloop';
 import { isEmpty, isPresent } from '@ember/utils';
 
 import merge from 'deepmerge';
@@ -624,13 +624,17 @@ class YetiTable extends DidChangeAttrsComponent {
   }
 
   unregisterColumn(column) {
-    let columns = this.get('columns');
-    if (columns.includes(column)) {
-      this.set(
-        'columns',
-        columns.filter(c => c !== column)
-      );
-    }
+    next(this, () => {
+      if (!this.isDestroyed) {
+        let columns = this.get('columns');
+        if (columns.includes(column)) {
+          this.set(
+            'columns',
+            columns.filter(c => c !== column)
+          );
+        }
+      }
+    });
   }
 }
 
