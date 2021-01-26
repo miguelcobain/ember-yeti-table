@@ -620,6 +620,8 @@ class YetiTable extends DidChangeAttrsComponent {
     let columns = this.get('columns');
     if (!columns.includes(column)) {
       columns.push(column);
+      let notifyVisibleColumnsPropertyChange = () => this.notifyPropertyChange('visibleColumns');
+      once(notifyVisibleColumnsPropertyChange);
     }
   }
 
