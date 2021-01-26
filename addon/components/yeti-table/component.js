@@ -431,16 +431,24 @@ class YetiTable extends DidChangeAttrsComponent {
     defineProperty(
       this,
       'filteredData',
-      emberComputed(...filteredDataDeps, function () {
-        let data = this.get('resolvedData');
-        // only columns that have filterable = true and a prop defined will be considered
-        let columns = this.get('columns').filter(c => c.get('filterable') && isPresent(c.get('prop')));
-        let filter = this.get('filter');
-        let filterFunction = this.get('filterFunction');
-        let filterUsing = this.get('filterUsing');
+      emberComputed(
+        ...filteredDataDeps,
+        'columns',
+        'filter',
+        'filterFunction',
+        'filterUsing',
+        'resolvedData',
+        function () {
+          let data = this.get('resolvedData');
+          // only columns that have filterable = true and a prop defined will be considered
+          let columns = this.get('columns').filter(c => c.get('filterable') && isPresent(c.get('prop')));
+          let filter = this.get('filter');
+          let filterFunction = this.get('filterFunction');
+          let filterUsing = this.get('filterUsing');
 
-        return filterData(data, columns, filter, filterFunction, filterUsing);
-      })
+          return filterData(data, columns, filter, filterFunction, filterUsing);
+        }
+      )
     );
 
     let sortedDataDeps = [
@@ -453,7 +461,7 @@ class YetiTable extends DidChangeAttrsComponent {
     defineProperty(
       this,
       'sortedData',
-      emberComputed(...sortedDataDeps, function () {
+      emberComputed(...sortedDataDeps, 'columns', 'compareFunction', 'filteredData', 'sortFunction', function () {
         let data = this.get('filteredData');
         let sortableColumns = this.get('columns').filter(c => !isEmpty(c.get('sort')));
         let sortings = sortableColumns.map(c => ({ prop: c.get('prop'), direction: c.get('sort') }));
@@ -620,6 +628,8 @@ class YetiTable extends DidChangeAttrsComponent {
     let columns = this.get('columns');
     if (!columns.includes(column)) {
       columns.push(column);
+      let notifyVisibleColumnsPropertyChange = () => this.notifyPropertyChange('visibleColumns');
+      once(notifyVisibleColumnsPropertyChange);
     }
   }
 
