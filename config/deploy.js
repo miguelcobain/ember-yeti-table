@@ -4,8 +4,11 @@
 module.exports = function (deployTarget) {
   let ENV = {
     build: {},
+    // include other plugin configuration that applies to all deploy targets here
+
     git: {
-      repo: 'git@github.com:miguelcobain/ember-yeti-table.git'
+      enabled: true,
+      repo: 'https://github.com/miguelcobain/ember-yeti-table.git'
     }
   };
 
