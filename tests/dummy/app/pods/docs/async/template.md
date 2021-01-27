@@ -1,4 +1,3 @@
-
 # Async data
 
 ## The `loadData` function
@@ -21,6 +20,7 @@ This function will be invoked whenever new data is needed:
 The argument for the `loadData` function is an object that contains:
 
 - `paginationData` - an object that contains:
+
   - `pageSize` - the current size of the page
   - `pageNumber` - the current page number
   - `pageStart` - the 1-indexed index of the first record of the current page
@@ -35,7 +35,7 @@ The argument for the `loadData` function is an object that contains:
 - `filterData` - an object that contains:
   - `filter` - the current global filter applied to the table
   - `filterUsing` - the current `@filterUsing` property, if existent
-  - `columnFilters` - an array of `{ filter, filterUsing }` objects for each column
+  - `columnFilters` - an array of `{ prop, filter, filterUsing }` objects for each column
 
 With this data you should be able to build the correct request to inform your server of what exact info Yeti Table wants.
 
@@ -78,7 +78,7 @@ A custom pagination controls component is also included (check the `pagination-c
 </aside>
 
 {{#docs-demo as |demo|}}
-  {{#demo.example name="async-simple.hbs"}}
+{{#demo.example name="async-simple.hbs"}}
 
     <div class="docs-flex docs-justify-end">
       <input
@@ -90,7 +90,7 @@ A custom pagination controls component is also included (check the `pagination-c
       @loadData={{perform this.loadDataTask}}
       @filter={{this.filterText}}
       @pagination={{true}} @pageSize={{10}} @totalRows={{this.totalRows}} as |table|>
-      
+
       <table.header as |header|>
         <header.column @prop="avatarUrl" @sortable={{false}}>
           Avatar
@@ -145,11 +145,11 @@ A custom pagination controls component is also included (check the `pagination-c
 
     </YetiTable>
 
-  {{/demo.example}}
+{{/demo.example}}
 
-  {{demo.snippet "async-simple.hbs"}}
-  {{demo.snippet label="load-data-task.js" name="async-simple.js"}}
-  {{demo.snippet label="load-data-async-await.js" name="async-simple-es7.js"}}
-  {{demo.snippet label="pagination-component.hbs" name="async-custom-pagination.hbs"}}
-  {{demo.snippet label="user-model.js" name="user.js"}}
+{{demo.snippet "async-simple.hbs"}}
+{{demo.snippet label="load-data-task.js" name="async-simple.js"}}
+{{demo.snippet label="load-data-async-await.js" name="async-simple-es7.js"}}
+{{demo.snippet label="pagination-component.hbs" name="async-custom-pagination.hbs"}}
+{{demo.snippet label="user-model.js" name="user.js"}}
 {{/docs-demo}}

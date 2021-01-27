@@ -497,6 +497,7 @@ class YetiTable extends DidChangeAttrsComponent {
             filter: this.get('filter'),
             filterUsing: this.get('filterUsing'),
             columnFilters: this.get('columns').map(c => ({
+              prop: c.get('prop'),
               filter: c.get('filter'),
               filterUsing: c.get('filterUsing')
             }))
