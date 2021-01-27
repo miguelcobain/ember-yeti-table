@@ -1,3 +1,15 @@
+# v1.6.2
+
+#### 🐛 Bugfixes
+
+- fix bug that made the `visibleColumns` not updating correctly under ember source >= 3.23
+
+#### 🏗 Chores
+
+- update ember version and other dependencies
+- update `deprecate` usage
+- migrate travis to github actions
+
 # v1.6.1
 
 #### 🐛 Bugfixes
