@@ -2,7 +2,7 @@
 
 #### 🐛 Bugfixes
 
-- fix bug that made the `visibleColumns` not updating correctly under ember source >= 3.23
+- fix bug that made the `visibleColumns` to not update correctly under ember source >= 3.23
 
 #### 🏗 Chores
 
