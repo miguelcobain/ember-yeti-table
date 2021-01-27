@@ -20,13 +20,13 @@ import template from './template';
   ```hbs
   <YetiTable @data={{this.data}} @pagination={{true}} as |table|>
     ...
-    <table.foot as |foot|>
+    <table.tfoot as |foot|>
       <foot.row as |row|>
         <row.cell colspan={{table.visibleColumns.length}}>
           <table.pagination/>
         </row.cell>
       </foot.row>
-    </table.foot>
+    </table.tfoot>
   </YetiTable>
   ```
 */

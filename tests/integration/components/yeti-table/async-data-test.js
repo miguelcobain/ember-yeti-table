@@ -280,8 +280,6 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
       </YetiTable>
     `);
 
-    await settled();
-
     assert.dom('tbody tr').exists({ count: 5 }, 'is not filtered');
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom', 'column 1 is not sorted');
     assert.dom('tbody tr:nth-child(5) td:nth-child(2)').hasText('Dale', 'column 2 is not sorted');
@@ -335,8 +333,6 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
 
       </YetiTable>
     `);
-
-    await settled();
 
     assert.dom('tbody tr').exists({ count: 5 }, 'is not filtered');
 
@@ -393,8 +389,6 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
 
       </YetiTable>
     `);
-
-    await settled();
 
     assert.dom('tbody tr').exists({ count: 5 });
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Miguel');
@@ -458,8 +452,6 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
       </YetiTable>
     `);
 
-    await settled();
-
     assert.dom('tbody tr').exists({ count: 5 });
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Miguel');
     assert.dom('tbody tr:nth-child(1) td:nth-child(2)').hasText('Andrade');
@@ -468,8 +460,6 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
     assert.ok(this.loadData.calledOnce, 'loadData was called once');
 
     await click('thead tr th:nth-child(1)');
-
-    await settled();
 
     assert.dom('tbody tr').exists({ count: 5 });
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
@@ -518,8 +508,6 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
 
       </YetiTable>
     `);
-
-    await settled();
 
     assert.dom('tbody tr').exists({ count: 5 });
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Miguel');
@@ -606,8 +594,6 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
 
       </YetiTable>
     `);
-
-    await settled();
 
     assert.dom('tbody tr').exists({ count: 5 });
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Miguel');
@@ -697,8 +683,6 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
       </YetiTable>
     `);
 
-    await settled();
-
     assert.dom('tbody tr').exists({ count: 5 });
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Miguel');
     assert.dom('tbody tr:nth-child(1) td:nth-child(2)').hasText('Andrade');
@@ -777,8 +761,6 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
       </YetiTable>
     `);
 
-    await settled();
-
     assert.dom('tbody tr').exists({ count: 5 }, 'is not filtered');
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom', 'column 1 is not sorted');
     assert.dom('tbody tr:nth-child(5) td:nth-child(2)').hasText('Dale', 'column 2 is not sorted');
@@ -817,8 +799,6 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
 
       </YetiTable>
     `);
-
-    await settled();
 
     assert.dom('tbody tr').exists({ count: 5 }, 'is not filtered');
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom', 'column 1 is not sorted');
@@ -913,8 +893,6 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
       </YetiTable>
     `);
 
-    await settled();
-
     assert.dom('tbody tr').exists({ count: 5 }, 'has only five rows');
 
     assert.ok(this.loadData.calledOnce, 'loadData was called once');
@@ -967,8 +945,6 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
 
       </YetiTable>
     `);
-
-    await settled();
 
     assert.dom('tbody tr').exists({ count: 5 }, 'has only five rows');
 

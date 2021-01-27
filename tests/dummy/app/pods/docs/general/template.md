@@ -3,12 +3,12 @@
 Your starting point for Yeti Table will be the `@data` argument. It accepts an array of objects
 or a promise that resolves to such an array.
 
-Then you must define your table columns inside the header component, each of them with a `@prop` argument that 
-corresponds to the property key of each object that you want to display for that column. Yeti table uses 
+Then you must define your table columns inside the header component, each of them with a `@prop` argument that
+corresponds to the property key of each object that you want to display for that column. Yeti table uses
 this property for filtering and sorting.
- 
-Yeti Table will update itself based on these property names, e.g if a `firstName` property of an object changes, 
-Yeti Table might need to re-sort or re-filter the rows. NOTE: If the property is a nested property (one that contains 
+
+Yeti Table will update itself based on these property names, e.g if a `firstName` property of an object changes,
+Yeti Table might need to re-sort or re-filter the rows. NOTE: If the property is a nested property (one that contains
 periods), the table will not be updated when this nested property changes. This is due to `@each` only supporting one level
 of properties.
 
@@ -16,8 +16,8 @@ Afterwards, we just need to define our table body. If you use `<table.body/>` in
 Yeti Table "unrolls" all the rows for you. This is useful for simple tables. Here is such an example:
 
 {{#docs-demo as |demo|}}
-  {{#demo.example name="general-simple.hbs"}}
-    <YetiTable @data={{this.data}} as |table|>
+{{#demo.example name="general-simple.hbs"}}
+<YetiTable @data={{this.data}} as |table|>
 
       <table.header as |header|>
         <header.column @prop="firstName">
@@ -34,9 +34,10 @@ Yeti Table "unrolls" all the rows for you. This is useful for simple tables. Her
       <table.body/>
 
     </YetiTable>
-  {{/demo.example}}
 
-  {{demo.snippet "general-simple.hbs"}}
+{{/demo.example}}
+
+{{demo.snippet "general-simple.hbs"}}
 {{/docs-demo}}
 
 You can still add a click handler to the generated rows by passing the `@onRowClick` argument
@@ -55,8 +56,8 @@ You will probably need to make more customizations, and to do so you will need t
 </aside>
 
 {{#docs-demo as |demo|}}
-  {{#demo.example name="general-simple-with-body.hbs"}}
-    <YetiTable @data={{this.data}} as |table|>
+{{#demo.example name="general-simple-with-body.hbs"}}
+<YetiTable @data={{this.data}} as |table|>
 
       <table.header as |header|>
         <header.column>
@@ -84,7 +85,7 @@ You will probably need to make more customizations, and to do so you will need t
         </body.row>
       </table.body>
 
-      <table.foot as |foot|>
+      <table.tfoot as |foot|>
         <foot.row as |row|>
           <row.cell>
             First Name footer
@@ -96,12 +97,13 @@ You will probably need to make more customizations, and to do so you will need t
             Points footer
           </row.cell>
         </foot.row>
-      </table.foot>
+      </table.tfoot>
 
     </YetiTable>
-  {{/demo.example}}
 
-  {{demo.snippet "general-simple-with-body.hbs"}}
+{{/demo.example}}
+
+{{demo.snippet "general-simple-with-body.hbs"}}
 {{/docs-demo}}
 
 Each `<body.row>` component accepts an optional `@onClick` action that will be called if the row is clicked.
@@ -124,10 +126,10 @@ To do that, you should use the `<table.head>` component, which doesn't render th
 Here is an example of such a usage:
 
 {{#docs-demo as |demo|}}
-  {{#demo.example name="general-simple-with-multiple-rows-on-header.hbs"}}
-    <YetiTable @data={{this.data}} as |table|>
+{{#demo.example name="general-simple-with-multiple-rows-on-header.hbs"}}
+<YetiTable @data={{this.data}} as |table|>
 
-      <table.head as |head|>
+      <table.thead as |head|>
         <head.row as |row|>
           <row.column @prop="firstName">
             First name
@@ -151,12 +153,13 @@ Here is an example of such a usage:
             Additional row on header
           </row.cell>
         </head.row>
-      </table.head>
+      </table.thead>
 
       <table.body/>
 
     </YetiTable>
-  {{/demo.example}}
 
-  {{demo.snippet "general-simple-with-multiple-rows-on-header.hbs"}}
+{{/demo.example}}
+
+{{demo.snippet "general-simple-with-multiple-rows-on-header.hbs"}}
 {{/docs-demo}}

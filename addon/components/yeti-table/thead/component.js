@@ -1,6 +1,6 @@
 import { tagName, layout } from '@ember-decorators/component';
+import { deprecate } from '@ember/application/deprecations';
 import Component from '@ember/component';
-import { deprecate } from '@ember/debug';
 
 import template from './template';
 
@@ -46,8 +46,12 @@ class THead extends Component {
     super.init(...arguments);
 
     deprecate('The yielded `head` component has been deprecated. Please use `thead` instead.', !this.shouldDeprecate, {
-      id: 'ember-yet-table:Head-component',
-      until: '2.0.0'
+      id: 'ember-yeti-table:head-component',
+      until: '2.0.0',
+      for: 'ember-yeti-table',
+      since: {
+        enable: '1.4.0'
+      }
     });
   }
 }

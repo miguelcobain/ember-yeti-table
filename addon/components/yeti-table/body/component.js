@@ -1,5 +1,6 @@
 import { tagName, layout } from '@ember-decorators/component';
 import Component from '@ember/component';
+import { action } from '@ember/object';
 
 import template from './template';
 
@@ -47,6 +48,11 @@ class Body extends Component {
    * Can be used with both the blockless and block invocations.
    */
   onRowClick;
+
+  @action
+  handleRowClick(rowData) {
+    this.onRowClick?.(rowData);
+  }
 }
 
 export default Body;

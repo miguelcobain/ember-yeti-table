@@ -13,7 +13,7 @@
     {{#each @data as |rowData|}}
       <EmberYetiTable@YetiTable::Tbody::Row::Component
         @theme={{@theme}}
-        @onClick={{if this.onRowClick (fn this.onRowClick rowData)}} @columns={{@columns}} as |row|>
+        @onClick={{if this.onRowClick (fn this.handleRowClick rowData)}} @columns={{@columns}} as |row|>
 
           {{#each @columns as |column|}}
             <row.cell @class={{column.columnClass}}>

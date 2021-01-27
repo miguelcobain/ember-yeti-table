@@ -1,9 +1,6 @@
 'use strict';
 
 module.exports = {
-  globals: {
-    server: true
-  },
   root: true,
   parser: 'babel-eslint',
   parserOptions: {
@@ -14,7 +11,12 @@ module.exports = {
     }
   },
   plugins: ['ember', 'prettier', 'qunit', 'import-helpers'],
-  extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:qunit/recommended', 'prettier'],
+  extends: [
+    'eslint:recommended',
+    'plugin:ember/recommended',
+    'plugin:prettier/recommended',
+    'plugin:qunit/recommended'
+  ],
   env: {
     browser: true
   },
@@ -37,13 +39,24 @@ module.exports = {
         alphabetize: { order: 'asc', ignoreCase: true }
       }
     ],
-    'ember/no-get': 'off'
+    // remove the following when converting to glimmer components
+    'ember/no-get': 'off',
+    'ember/no-computed-properties-in-native-classes': 'off',
+    'ember/classic-decorator-no-classic-methods': 'off',
+    'ember/no-classic-components': 'off',
+    'ember/classic-decorator-hooks': 'off',
+    'ember/no-component-lifecycle-hooks': 'off',
+    'ember/require-tagless-components': 'off',
+    'ember/require-computed-property-dependencies': 'off',
+    'ember/no-assignment-of-untracked-properties-used-in-tracking-contexts': 'off',
+    'ember/require-super-in-lifecycle-hooks': 'off'
   },
   overrides: [
     // node files
     {
       files: [
         '.eslintrc.js',
+        '.prettierrc.js',
         '.template-lintrc.js',
         'ember-cli-build.js',
         'index.js',
@@ -61,9 +74,7 @@ module.exports = {
         node: true
       },
       plugins: ['node'],
-      rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
-        // add your custom rules and overrides for node files here
-      })
+      extends: ['plugin:node/recommended']
     }
   ]
 };
