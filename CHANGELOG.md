@@ -1,3 +1,9 @@
+# v1.7.0
+
+#### ✨ Features
+
+- `@loadData` function is invoked with a `columnFilters` param which is an array of objects. Those objects now have a `prop` property. This makes it easier to know which column you're filtering on, simplifying custom filtering logic. [#296](https://github.com/miguelcobain/ember-yeti-table/pull/296)
+
 # v1.6.2
 
 #### 🐛 Bugfixes
