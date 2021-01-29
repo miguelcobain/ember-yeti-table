@@ -1,8 +1,6 @@
-import { tagName, layout } from '@ember-decorators/component';
+import { tagName } from '@ember-decorators/component';
 import { deprecate } from '@ember/application/deprecations';
 import Component from '@ember/component';
-
-import template from './template';
 
 /**
   Renders a `<tfoot>` element and yields the row component.
@@ -20,7 +18,6 @@ import template from './template';
   @yield {Component} footer.row
 */
 @tagName('')
-@layout(template)
 class TFoot extends Component {
   theme;
 

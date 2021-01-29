@@ -1,12 +1,10 @@
-import { tagName, layout } from '@ember-decorators/component';
+import { tagName } from '@ember-decorators/component';
 import { isArray } from '@ember/array';
 import { assert } from '@ember/debug';
 import { computed, action, set } from '@ember/object';
 import { equal, or } from '@ember/object/computed';
 
 import DidChangeAttrsComponent from 'ember-yeti-table/-private/utils/did-change-attrs-component';
-
-import template from './template';
 
 /**
   An important component yielded from the header or head.row component that is used to define
@@ -40,7 +38,6 @@ import template from './template';
   @yield {boolean} column.isDescSorted - `true` if column is sorted descending
 */
 @tagName('')
-@layout(template)
 class Column extends DidChangeAttrsComponent {
   theme;
 

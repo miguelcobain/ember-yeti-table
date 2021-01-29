@@ -1,8 +1,6 @@
-import { tagName, layout } from '@ember-decorators/component';
+import { tagName } from '@ember-decorators/component';
 import Component from '@ember/component';
 import { reads } from '@ember/object/computed';
-
-import template from './template';
 
 /**
   Renders a `<td>` element (if its corresponding column definition has `@visible={{true}}`).
@@ -13,7 +11,6 @@ import template from './template';
   ```
 */
 @tagName('')
-@layout(template)
 class TBodyCell extends Component {
   theme;
 

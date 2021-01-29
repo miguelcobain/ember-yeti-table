@@ -1,8 +1,6 @@
-import { tagName, layout } from '@ember-decorators/component';
+import { tagName } from '@ember-decorators/component';
 import { A } from '@ember/array';
 import Component from '@ember/component';
-
-import template from './template';
 
 /**
   Renders a `<tr>` element and yields the column and cell component.
@@ -22,7 +20,6 @@ import template from './template';
   @yield {Component} cell
 */
 @tagName('')
-@layout(template)
 class THeadRow extends Component {
   theme;
 

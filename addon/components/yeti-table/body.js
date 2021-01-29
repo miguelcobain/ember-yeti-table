@@ -1,8 +1,6 @@
-import { tagName, layout } from '@ember-decorators/component';
+import { tagName } from '@ember-decorators/component';
 import Component from '@ember/component';
 import { action } from '@ember/object';
-
-import template from './template';
 
 /**
   Renders a `<tbody>` element and yields the row component, row data and index.
@@ -34,7 +32,6 @@ import template from './template';
   @yield {number} index
 */
 @tagName('')
-@layout(template)
 class Body extends Component {
   theme;
 

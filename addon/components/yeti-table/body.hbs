@@ -3,7 +3,7 @@
 
     {{#each @data as |rowData index|}}
       {{yield
-        (hash row=(component "ember-yeti-table@yeti-table/tbody/row/component" theme=@theme onClick=this.onRowClick columns=@columns))
+        (hash row=(component "ember-yeti-table@yeti-table/tbody/row" theme=@theme onClick=this.onRowClick columns=@columns))
         rowData
         index}}
     {{/each}}
@@ -11,7 +11,7 @@
   {{else}}
 
     {{#each @data as |rowData|}}
-      <EmberYetiTable@YetiTable::Tbody::Row::Component
+      <EmberYetiTable@YetiTable::Tbody::Row
         @theme={{@theme}}
         @onClick={{if this.onRowClick (fn this.handleRowClick rowData)}} @columns={{@columns}} as |row|>
 
@@ -25,7 +25,7 @@
             </row.cell>
           {{/each}}
 
-      </EmberYetiTable@YetiTable::Tbody::Row::Component>
+      </EmberYetiTable@YetiTable::Tbody::Row>
     {{/each}}
   {{/if}}
 </tbody>
