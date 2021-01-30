@@ -1,7 +1,5 @@
-import { tagName, layout } from '@ember-decorators/component';
+import { tagName } from '@ember-decorators/component';
 import Component from '@ember/component';
-
-import template from './template';
 
 /**
   Renders a `<tbody>` element and yields the row component and data. You must iterate each row
@@ -31,7 +29,6 @@ import template from './template';
   @yield {Array} data
 */
 @tagName('')
-@layout(template)
 class TBody extends Component {
   theme;
 

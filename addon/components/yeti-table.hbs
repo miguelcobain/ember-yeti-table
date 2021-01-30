@@ -1,6 +1,6 @@
 {{#let (hash
-  table=(component "ember-yeti-table@yeti-table/table/component" theme=this.mergedTheme)
-  header=(component "ember-yeti-table@yeti-table/header/component"
+  table=(component "ember-yeti-table@yeti-table/table" theme=this.mergedTheme)
+  header=(component "ember-yeti-table@yeti-table/header"
     columns=this.columns
     onColumnClick=this.onColumnSort
     sortable=this.sortable
@@ -8,7 +8,7 @@
     parent=this
     theme=this.mergedTheme
   )
-  head=(component "ember-yeti-table@yeti-table/thead/component"
+  head=(component "ember-yeti-table@yeti-table/thead"
     shouldDeprecate=true
     columns=this.columns
     onColumnClick=this.onColumnSort
@@ -17,7 +17,7 @@
     theme=this.mergedTheme
     parent=this
   )
-  thead=(component "ember-yeti-table@yeti-table/thead/component"
+  thead=(component "ember-yeti-table@yeti-table/thead"
     shouldDeprecate=false
     columns=this.columns
     onColumnClick=this.onColumnSort
@@ -26,31 +26,31 @@
     theme=this.mergedTheme
     parent=this
   )
-  body=(component "ember-yeti-table@yeti-table/body/component"
+  body=(component "ember-yeti-table@yeti-table/body"
     data=this.processedData
     columns=this.columns
     theme=this.mergedTheme
     parent=this
   )
-  tbody=(component "ember-yeti-table@yeti-table/tbody/component"
+  tbody=(component "ember-yeti-table@yeti-table/tbody"
     data=this.processedData
     columns=this.columns
     theme=this.mergedTheme
     parent=this
   )
-  foot=(component "ember-yeti-table@yeti-table/tfoot/component"
+  foot=(component "ember-yeti-table@yeti-table/tfoot"
     shouldDeprecate=true
     columns=this.columns
     theme=this.mergedTheme
     parent=this
   )
-  tfoot=(component "ember-yeti-table@yeti-table/tfoot/component"
+  tfoot=(component "ember-yeti-table@yeti-table/tfoot"
     shouldDeprecate=false
     columns=this.columns
     theme=this.mergedTheme
     parent=this
   )
-  pagination=(component "ember-yeti-table@yeti-table/pagination/component"
+  pagination=(component "ember-yeti-table@yeti-table/pagination"
     disabled=this.isLoading
     theme=this.mergedTheme
     paginationData=this.paginationData
@@ -73,9 +73,9 @@
 ) as |api|}}
 
   {{#if this.renderTableElement}}
-    <EmberYetiTable@YetiTable::Table::Component @theme={{this.mergedTheme}} ...attributes>
+    <EmberYetiTable@YetiTable::Table @theme={{this.mergedTheme}} ...attributes>
       {{yield api}}
-    </EmberYetiTable@YetiTable::Table::Component>
+    </EmberYetiTable@YetiTable::Table>
   {{else}}
     {{yield api}}
   {{/if}}

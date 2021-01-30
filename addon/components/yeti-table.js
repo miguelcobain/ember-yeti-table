@@ -1,4 +1,4 @@
-import { tagName, layout } from '@ember-decorators/component';
+import { tagName } from '@ember-decorators/component';
 import { getOwner } from '@ember/application';
 import { computed as emberComputed, defineProperty } from '@ember/object';
 import { computed, action, set } from '@ember/object';
@@ -13,8 +13,6 @@ import defaultTo from 'ember-yeti-table/-private/utils/default-to';
 import DidChangeAttrsComponent from 'ember-yeti-table/-private/utils/did-change-attrs-component';
 import filterData from 'ember-yeti-table/-private/utils/filtering-utils';
 import { sortMultiple, compareValues, mergeSort } from 'ember-yeti-table/-private/utils/sorting-utils';
-
-import template from './template';
 
 /**
  * bring ember-concurrency didCancel helper instead of
@@ -88,7 +86,6 @@ const didCancel = function (e) {
   @yield {object} table.theme           the theme being used
 */
 @tagName('')
-@layout(template)
 class YetiTable extends DidChangeAttrsComponent {
   /**
    * An object that contains classes for yeti table to apply when rendering its various table

@@ -1,7 +1,5 @@
-import { layout, tagName } from '@ember-decorators/component';
+import { tagName } from '@ember-decorators/component';
 import Component from '@ember/component';
-
-import template from './template';
 
 /**
   A simple component that just renders the `<table>` element with the correct
@@ -31,7 +29,6 @@ import template from './template';
 */
 
 @tagName('')
-@layout(template)
 class Table extends Component {}
 
 export default Table;

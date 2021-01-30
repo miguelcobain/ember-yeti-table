@@ -1,8 +1,6 @@
-import { tagName, layout } from '@ember-decorators/component';
+import { tagName } from '@ember-decorators/component';
 import Component from '@ember/component';
 import { reads } from '@ember/object/computed';
-
-import template from './template';
 
 /**
   An component yielded from the head.row component that is used to define
@@ -26,7 +24,6 @@ import template from './template';
 
  */
 @tagName('')
-@layout(template)
 class THeadCell extends Component {
   theme;
 

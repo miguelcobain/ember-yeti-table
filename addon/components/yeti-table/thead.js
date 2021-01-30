@@ -1,8 +1,6 @@
-import { tagName, layout } from '@ember-decorators/component';
+import { tagName } from '@ember-decorators/component';
 import { deprecate } from '@ember/application/deprecations';
 import Component from '@ember/component';
-
-import template from './template';
 
 /**
   Renders a `<thead>` element and yields the row component.
@@ -23,7 +21,6 @@ import template from './template';
   @yield {Component} head.row
 */
 @tagName('')
-@layout(template)
 class THead extends Component {
   theme;
 

@@ -1,9 +1,7 @@
-import { tagName, layout } from '@ember-decorators/component';
+import { tagName } from '@ember-decorators/component';
 import Component from '@ember/component';
 import { action } from '@ember/object';
 import { or } from '@ember/object/computed';
-
-import template from './template';
 
 /**
   Simple pagination controls component that is included to help you get started quickly.
@@ -32,7 +30,6 @@ import template from './template';
 */
 
 @tagName('')
-@layout(template)
 class Pagination extends Component {
   theme;
 

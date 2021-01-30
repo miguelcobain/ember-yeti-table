@@ -1,8 +1,6 @@
-import { tagName, layout } from '@ember-decorators/component';
+import { tagName } from '@ember-decorators/component';
 import Component from '@ember/component';
 import { action } from '@ember/object';
-
-import template from './template';
 
 /**
   Renders a `<thead>` element and yields the column component.
@@ -23,7 +21,6 @@ import template from './template';
   @yield {Component} header.column       the column component
 */
 @tagName('')
-@layout(template)
 class Header extends Component {
   theme;
 
