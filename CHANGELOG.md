@@ -1,3 +1,13 @@
+# v
+
+#### 🚨 Breaking Changes
+
+- cells no longer support the ability to specify `visible` on the cells themselves. Please set `visible` on the column
+
+#### ✨ Features
+
+- Converted components to user glimmer syntax [#345](https://github.com/miguelcobain/ember-yeti-table/pull/345) [#351](https://github.com/miguelcobain/ember-yeti-table/pull/351)
+
 # v1.7.0
 
 #### ✨ Features

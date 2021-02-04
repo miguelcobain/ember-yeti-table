@@ -1,7 +1,6 @@
-import { tagName } from '@ember-decorators/component';
-import { A } from '@ember/array';
-import Component from '@ember/component';
 import { action } from '@ember/object';
+
+import Component from '@glimmer/component';
 
 /**
   Renders a `<tr>` element and yields the cell component.
@@ -18,7 +17,7 @@ import { action } from '@ember/object';
     </row.cell>
   </body.row>
   ```
-  Remember you can cutomize each `<tr>` class or `@onClick` handler based on the row data
+  Remember you can customize each `<tr>` class or `@onClick` handler based on the row data
   because you have access to it from the body component.
 
   ```hbs
@@ -40,44 +39,36 @@ import { action } from '@ember/object';
   @yield {object} row
   @yield {Component} row.cell - the cell component
 */
-@tagName('')
 class TBodyRow extends Component {
-  theme;
-
-  columns;
-
   /**
    * Adds a click action to the row.
+   *
+   * @argument {function} onClick
    */
-  onClick;
 
-  cells = A();
+  cells = [];
 
   registerCell(cell) {
-    let columns = this.get('columns');
-    let prop = cell.get('prop');
+    let columns = this.args.columns;
+    let index = this.cells.length;
 
-    if (prop) {
-      let column = columns.findBy('prop', prop);
-      cell.set('column', column);
-    } else {
-      let index = this.get('cells.length');
-      let column = columns[index];
-      cell.set('column', column);
-    }
+    let column = columns[index];
 
-    this.get('cells').addObject(cell);
+    this.cells.push(cell);
+
+    return column;
   }
 
   unregisterCell(cell) {
-    this.get('cells').removeObject(cell);
+    let cells = this.cells;
+    let index = cells.indexOf(cell);
+
+    cells.splice(index, 1);
   }
 
   @action
   handleClick() {
-    if (this.get('onClick')) {
-      this.get('onClick')(...arguments);
-    }
+    this.args.onClick?.(...arguments);
   }
 }
 
