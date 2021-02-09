@@ -1,5 +1,4 @@
 import { tagName } from '@ember-decorators/component';
-import { deprecate } from '@ember/application/deprecations';
 import Component from '@ember/component';
 
 /**
@@ -33,24 +32,6 @@ class THead extends Component {
   columns;
 
   onColumnClick;
-
-  /**
-   * Used by the old head yield to indicate deprecation
-   */
-  shouldDeprecate;
-
-  init() {
-    super.init(...arguments);
-
-    deprecate('The yielded `head` component has been deprecated. Please use `thead` instead.', !this.shouldDeprecate, {
-      id: 'ember-yeti-table:head-component',
-      until: '2.0.0',
-      for: 'ember-yeti-table',
-      since: {
-        enable: '1.4.0'
-      }
-    });
-  }
 }
 
 export default THead;

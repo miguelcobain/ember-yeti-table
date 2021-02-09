@@ -1,3 +1,11 @@
+# v
+
+#### 🚨 Breaking Changes
+
+- Support for ember 3.16+ by refactoring component file structure for converting to glimmer [#345](https://github.com/miguelcobain/ember-yeti-table/pull/345)
+- Removed polyfills no longer needed for supporting 3.16+
+- Removed yielded for head and foot from table api (Previously deprecated)
+
 # v1.7.0
 
 #### ✨ Features
