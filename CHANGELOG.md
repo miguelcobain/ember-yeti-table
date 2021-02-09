@@ -5,6 +5,11 @@
 - Support for ember 3.16+ by refactoring component file structure for converting to glimmer [#345](https://github.com/miguelcobain/ember-yeti-table/pull/345)
 - Removed polyfills no longer needed for supporting 3.16+
 - Removed yielded for head and foot from table api (Previously deprecated)
+- cells no longer support the ability to specify `visible` on the cells themselves. Please set `visible` on the column
+
+#### ✨ Features
+
+- Converted components to user glimmer syntax [#345](https://github.com/miguelcobain/ember-yeti-table/pull/345) [#351](https://github.com/miguelcobain/ember-yeti-table/pull/351)
 
 # v1.7.0
 

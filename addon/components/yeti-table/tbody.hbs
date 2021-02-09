@@ -1,6 +1,6 @@
 <tbody class={{@theme.tbody}} ...attributes>
   {{yield
-    (hash row=(component "ember-yeti-table@yeti-table/tbody/row" theme=@theme onClick=this.onRowClick columns=@columns))
+    (hash row=(component "ember-yeti-table@yeti-table/tbody/row" theme=@theme onClick=@onRowClick columns=@columns))
     @data
   }}
 </tbody>

@@ -1,5 +1,4 @@
-import { tagName } from '@ember-decorators/component';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
 /**
   Renders a `<tbody>` element and yields the row component and data. You must iterate each row
@@ -28,21 +27,14 @@ import Component from '@ember/component';
   @yield {Component} body.row - the row component
   @yield {Array} data
 */
-@tagName('')
+// eslint-disable-next-line ember/no-empty-glimmer-component-classes
 class TBody extends Component {
-  theme;
-
-  data;
-
-  columns;
-
-  parent;
-
   /**
    * Adds a click action to each row, called with the clicked row's data as an argument.
    * Can be used with both the blockless and block invocations.
+   *
+   * @argument {fucntion} onRowClick
    */
-  onRowClick;
 }
 
 export default TBody;
