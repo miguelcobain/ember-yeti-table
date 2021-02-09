@@ -1,6 +1,6 @@
-import { tagName } from '@ember-decorators/component';
-import Component from '@ember/component';
 import { action } from '@ember/object';
+
+import Component from '@glimmer/component';
 
 /**
   Renders a `<tbody>` element and yields the row component, row data and index.
@@ -31,24 +31,17 @@ import { action } from '@ember/object';
   @yield {Object} rowData - one item in the data array
   @yield {number} index
 */
-@tagName('')
 class Body extends Component {
-  theme;
-
-  data;
-
-  columns;
-
-  parent;
   /**
    * Adds a click action to each row, called with the clicked row's data as an argument.
    * Can be used with both the blockless and block invocations.
+   *
+   * @argument {function} onRowClick
    */
-  onRowClick;
 
   @action
   handleRowClick(rowData) {
-    this.onRowClick?.(rowData);
+    this.args.onRowClick?.(rowData);
   }
 }
 
