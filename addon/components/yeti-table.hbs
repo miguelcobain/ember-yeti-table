@@ -8,17 +8,7 @@
     parent=this
     theme=this.mergedTheme
   )
-  head=(component "ember-yeti-table@yeti-table/thead"
-    shouldDeprecate=true
-    columns=this.columns
-    onColumnClick=this.onColumnSort
-    sortable=this.sortable
-    sortSequence=this.sortSequence
-    theme=this.mergedTheme
-    parent=this
-  )
   thead=(component "ember-yeti-table@yeti-table/thead"
-    shouldDeprecate=false
     columns=this.columns
     onColumnClick=this.onColumnSort
     sortable=this.sortable
@@ -38,14 +28,7 @@
     theme=this.mergedTheme
     parent=this
   )
-  foot=(component "ember-yeti-table@yeti-table/tfoot"
-    shouldDeprecate=true
-    columns=this.columns
-    theme=this.mergedTheme
-    parent=this
-  )
   tfoot=(component "ember-yeti-table@yeti-table/tfoot"
-    shouldDeprecate=false
     columns=this.columns
     theme=this.mergedTheme
     parent=this
