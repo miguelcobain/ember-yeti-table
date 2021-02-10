@@ -21,7 +21,10 @@ import Component from '@glimmer/component';
 // eslint-disable-next-line ember/no-empty-glimmer-component-classes
 class THead extends Component {
   /**
-   * @argument {function} onColumnClick - action that is called when the column header is clicked
+   * Adds a click action to the thead, called with the clicked column as an argument.
+   *
+   * @argument onColumnClick - action that is called when the column header is clicked
+   * @type Function
    */
 }
 

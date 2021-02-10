@@ -43,7 +43,8 @@ class TBodyRow extends Component {
   /**
    * Adds a click action to the row.
    *
-   * @argument {function} onClick
+   * @argument onClick
+   * @type Function
    */
 
   cells = [];
