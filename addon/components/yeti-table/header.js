@@ -1,6 +1,6 @@
-import { tagName } from '@ember-decorators/component';
-import Component from '@ember/component';
 import { action } from '@ember/object';
+
+import Component from '@glimmer/component';
 
 /**
   Renders a `<thead>` element and yields the column component.
@@ -20,26 +20,11 @@ import { action } from '@ember/object';
   @yield {object} header
   @yield {Component} header.column       the column component
 */
-@tagName('')
 class Header extends Component {
-  theme;
-
-  sortable;
-
-  sortSequence;
-
-  onColumnClick;
-
-  parent;
-
-  columns;
-
-  trClass;
-
   @action
   onColumnClickHeader(column, e) {
-    if (this.get('onColumnClick') && column.get('sortable')) {
-      this.get('onColumnClick')(column, e);
+    if (this.args.onColumnClick && column.sortable) {
+      this.args.onColumnClick(column, e);
     }
   }
 }

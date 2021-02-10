@@ -1,5 +1,4 @@
-import { tagName } from '@ember-decorators/component';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
 /**
   A simple component that just renders the `<table>` element with the correct
@@ -28,7 +27,7 @@ import Component from '@ember/component';
   ```
 */
 
-@tagName('')
+// eslint-disable-next-line ember/no-empty-glimmer-component-classes
 class Table extends Component {}
 
 export default Table;
