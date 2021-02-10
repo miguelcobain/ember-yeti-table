@@ -1,6 +1,4 @@
-import { tagName } from '@ember-decorators/component';
-import { A } from '@ember/array';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
 /**
   Renders a `<tr>` element and yields the column and cell component.
@@ -19,42 +17,32 @@ import Component from '@ember/component';
   @yield {Component} column
   @yield {Component} cell
 */
-@tagName('')
 class THeadRow extends Component {
-  theme;
-
-  parent;
-
-  columns;
-
-  sortable = true;
-
-  sort = null;
-
-  sortSequence;
-
-  onColumnClick;
-
-  cells = A();
+  cells = [];
 
   registerCell(cell) {
-    let columns = this.get('columns');
-    let prop = cell.get('prop');
+    let column;
 
-    if (prop) {
-      let column = columns.findBy('prop', prop);
-      cell.set('column', column);
+    if (cell.prop) {
+      column = this.args.columns.findBy('prop', cell.prop);
+      cell.column = column;
     } else {
-      let index = this.get('cells.length');
-      let column = columns[index];
-      cell.set('column', column);
+      let index = this.cells.length;
+      column = this.args.columns[index];
+
+      return column;
     }
 
-    this.get('cells').addObject(cell);
+    this.cells.push(cell);
+
+    return column;
   }
 
   unregisterCell(cell) {
-    this.get('cells').removeObject(cell);
+    let cells = this.cells;
+    let index = cells.indexOf(cell);
+
+    cells.splice(index, 1);
   }
 }
 
