@@ -1,6 +1,4 @@
-import { tagName } from '@ember-decorators/component';
-import Component from '@ember/component';
-import { reads } from '@ember/object/computed';
+import Component from '@glimmer/component';
 
 /**
   Renders a `<td>` element and yields for the developer to supply content.
@@ -16,33 +14,19 @@ import { reads } from '@ember/object/computed';
   ```
 
  */
-@tagName('')
+
 class TFootCell extends Component {
-  theme;
+  column;
 
-  parent;
+  constructor() {
+    super(...arguments);
 
-  /**
-   * Controls the visibility of the current cell. Keep in mind that this property
-   * won't just hide the column using css. The DOM for the column will be removed.
-   * Defaults to the `visible` argument of the corresponding column.
-   */
-  @reads('column.visible')
-  visible;
-
-  init() {
-    super.init(...arguments);
-
-    if (this.get('parent')) {
-      this.get('parent').registerCell(this);
-    }
+    this.column = this.args.parent?.registerCell(this);
   }
 
-  willDestroyElement() {
-    super.willDestroyElement(...arguments);
-    if (this.get('parent')) {
-      this.get('parent').unregisterCell(this);
-    }
+  willDestroy() {
+    super.willDestroy(...arguments);
+    this.args.parent?.unregisterCell(this);
   }
 }
 

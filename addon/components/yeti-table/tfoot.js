@@ -1,5 +1,4 @@
-import { tagName } from '@ember-decorators/component';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
 /**
   Renders a `<tfoot>` element and yields the row component.
@@ -16,13 +15,8 @@ import Component from '@ember/component';
   @yield {object} footer
   @yield {Component} footer.row
 */
-@tagName('')
-class TFoot extends Component {
-  theme;
 
-  parent;
-
-  columns;
-}
+// eslint-disable-next-line ember/no-empty-glimmer-component-classes
+class TFoot extends Component {}
 
 export default TFoot;
