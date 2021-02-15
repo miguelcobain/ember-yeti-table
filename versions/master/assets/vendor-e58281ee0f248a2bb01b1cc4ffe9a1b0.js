@@ -8787,9 +8787,23 @@ var a,s,d,p=o(m)
 function m(){var e,a
 return t(this,m),c(l(a=p.apply(this,arguments)),"column",void 0),a.column=null===(e=a.args.parent)||void 0===e?void 0:e.registerCell(l(a)),a}return a=m,(s=[{key:"willDestroy",value:function(){var e
 r(u(m.prototype),"willDestroy",this).apply(this,arguments),null===(e=this.args.parent)||void 0===e||e.unregisterCell(this)}}])&&n(a.prototype,s),d&&n(a,d),m}(a.default),m=Ember._setComponentTemplate(d,p)
-e.default=m})),define("ember-yeti-table/components/yeti-table/tfoot",["exports","@ember-decorators/component"],(function(e,a){"use strict"
-var t
-function n(e,a){if(!(e instanceof a))throw new TypeError("Cannot call a class as a function")}function r(e,a){return(r=Object.setPrototypeOf||function(e,a){return e.__proto__=a,e})(e,a)}function i(e){var a=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1
+e.default=m})),define("ember-yeti-table/components/yeti-table/tfoot",["exports","@glimmer/component"],(function(e,a){"use strict"
+function t(e,a){if(!(e instanceof a))throw new TypeError("Cannot call a class as a function")}function n(e,a){return(n=Object.setPrototypeOf||function(e,a){return e.__proto__=a,e})(e,a)}function r(e){var a=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1
+if(Reflect.construct.sham)return!1
+if("function"==typeof Proxy)return!0
+try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(e){return!1}}()
+return function(){var t,n=o(e)
+if(a){var r=o(this).constructor
+t=Reflect.construct(n,arguments,r)}else t=n.apply(this,arguments)
+return i(this,t)}}function i(e,a){return!a||"object"!==_typeof(a)&&"function"!=typeof a?function(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called")
+return e}(e):a}function o(e){return(o=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0
+var s=Ember.HTMLBars.template({id:"zwLGZ3pQ",block:'{"symbols":["@theme","&attrs","@parent","@columns","&default"],"statements":[[11,"tfoot"],[16,0,[32,1,["tfoot"]]],[17,2],[12],[2,"\\n  "],[18,5,[[30,[36,1],null,[["row"],[[30,[36,0],["ember-yeti-table@yeti-table/tfoot/row"],[["columns","theme","parent"],[[32,4],[32,1],[32,3]]]]]]]]],[2,"\\n"],[13]],"hasEval":false,"upvars":["component","hash"]}',moduleName:"ember-yeti-table/components/yeti-table/tfoot.hbs"}),l=function(e){(function(e,a){if("function"!=typeof a&&null!==a)throw new TypeError("Super expression must either be null or a function")
+e.prototype=Object.create(a&&a.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),a&&n(e,a)})(i,e)
+var a=r(i)
+function i(){return t(this,i),a.apply(this,arguments)}return i}(a.default),u=Ember._setComponentTemplate(s,l)
+e.default=u})),define("ember-yeti-table/components/yeti-table/tfoot/row",["exports","@glimmer/component"],(function(e,a){"use strict"
+function t(e,a){if(!(e instanceof a))throw new TypeError("Cannot call a class as a function")}function n(e,a){for(var t=0;t<a.length;t++){var n=a[t]
+n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}function r(e,a){return(r=Object.setPrototypeOf||function(e,a){return e.__proto__=a,e})(e,a)}function i(e){var a=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1
 if(Reflect.construct.sham)return!1
 if("function"==typeof Proxy)return!0
 try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(e){return!1}}()
@@ -8798,17 +8812,20 @@ if(a){var r=l(this).constructor
 t=Reflect.construct(n,arguments,r)}else t=n.apply(this,arguments)
 return o(this,t)}}function o(e,a){return!a||"object"!==_typeof(a)&&"function"!=typeof a?s(e):a}function s(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called")
 return e}function l(e){return(l=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function u(e,a,t){return a in e?Object.defineProperty(e,a,{value:t,enumerable:!0,configurable:!0,writable:!0}):e[a]=t,e}Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0
-var c=Ember.HTMLBars.template({id:"zwLGZ3pQ",block:'{"symbols":["@theme","&attrs","@parent","@columns","&default"],"statements":[[11,"tfoot"],[16,0,[32,1,["tfoot"]]],[17,2],[12],[2,"\\n  "],[18,5,[[30,[36,1],null,[["row"],[[30,[36,0],["ember-yeti-table@yeti-table/tfoot/row"],[["columns","theme","parent"],[[32,4],[32,1],[32,3]]]]]]]]],[2,"\\n"],[13]],"hasEval":false,"upvars":["component","hash"]}',moduleName:"ember-yeti-table/components/yeti-table/tfoot.hbs"}),d=(0,a.tagName)("")(t=function(e){(function(e,a){if("function"!=typeof a&&null!==a)throw new TypeError("Super expression must either be null or a function")
-e.prototype=Object.create(a&&a.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),a&&r(e,a)})(t,Ember.Component)
-var a=i(t)
-function t(){var e
-n(this,t)
-for(var r=arguments.length,i=new Array(r),o=0;o<r;o++)i[o]=arguments[o]
-return u(s(e=a.call.apply(a,[this].concat(i))),"theme",void 0),u(s(e),"parent",void 0),u(s(e),"columns",void 0),e}return t}())||t,p=Ember._setComponentTemplate(c,d)
-e.default=p})),define("ember-yeti-table/components/yeti-table/tfoot/row",["exports","@ember-decorators/component"],(function(e,a){"use strict"
-var t
-function n(e,a){if(!(e instanceof a))throw new TypeError("Cannot call a class as a function")}function r(e,a){for(var t=0;t<a.length;t++){var n=a[t]
-n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}function i(e,a){return(i=Object.setPrototypeOf||function(e,a){return e.__proto__=a,e})(e,a)}function o(e){var a=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1
+var c=Ember.HTMLBars.template({id:"9TbzehO9",block:'{"symbols":["@theme","@class","&attrs","&default"],"statements":[[11,"tr"],[16,0,[31,[[32,2]," ",[32,1,["tfootRow"]]," ",[32,1,["row"]]]]],[17,3],[12],[2,"\\n  "],[18,4,[[30,[36,1],null,[["cell"],[[30,[36,0],["ember-yeti-table@yeti-table/tfoot/row/cell"],[["theme","parent"],[[32,1],[32,0]]]]]]]]],[2,"\\n"],[13],[2,"\\n"]],"hasEval":false,"upvars":["component","hash"]}',moduleName:"ember-yeti-table/components/yeti-table/tfoot/row.hbs"}),d=function(e){(function(e,a){if("function"!=typeof a&&null!==a)throw new TypeError("Super expression must either be null or a function")
+e.prototype=Object.create(a&&a.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),a&&r(e,a)})(d,e)
+var a,o,l,c=i(d)
+function d(){var e
+t(this,d)
+for(var a=arguments.length,n=new Array(a),r=0;r<a;r++)n[r]=arguments[r]
+return u(s(e=c.call.apply(c,[this].concat(n))),"cells",[]),e}return a=d,(o=[{key:"registerCell",value:function(e){var a=this.args.columns[this.cells.length]
+return this.cells.push(e),a}},{key:"unregisterCell",value:function(e){var a=this.cells,t=a.indexOf(e)
+a.splice(t,1)}}])&&n(a.prototype,o),l&&n(a,l),d}(a.default),p=Ember._setComponentTemplate(c,d)
+e.default=p})),define("ember-yeti-table/components/yeti-table/tfoot/row/cell",["exports","@glimmer/component"],(function(e,a){"use strict"
+function t(e,a){if(!(e instanceof a))throw new TypeError("Cannot call a class as a function")}function n(e,a){for(var t=0;t<a.length;t++){var n=a[t]
+n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}function r(e,a,t){return(r="undefined"!=typeof Reflect&&Reflect.get?Reflect.get:function(e,a,t){var n=function(e,a){for(;!Object.prototype.hasOwnProperty.call(e,a)&&null!==(e=u(e)););return e}(e,a)
+if(n){var r=Object.getOwnPropertyDescriptor(n,a)
+return r.get?r.get.call(t):r.value}})(e,a,t||e)}function i(e,a){return(i=Object.setPrototypeOf||function(e,a){return e.__proto__=a,e})(e,a)}function o(e){var a=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1
 if(Reflect.construct.sham)return!1
 if("function"==typeof Proxy)return!0
 try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(e){return!1}}()
@@ -8817,38 +8834,13 @@ if(a){var r=u(this).constructor
 t=Reflect.construct(n,arguments,r)}else t=n.apply(this,arguments)
 return s(this,t)}}function s(e,a){return!a||"object"!==_typeof(a)&&"function"!=typeof a?l(e):a}function l(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called")
 return e}function u(e){return(u=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function c(e,a,t){return a in e?Object.defineProperty(e,a,{value:t,enumerable:!0,configurable:!0,writable:!0}):e[a]=t,e}Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0
-var d=Ember.HTMLBars.template({id:"9TbzehO9",block:'{"symbols":["@theme","@class","&attrs","&default"],"statements":[[11,"tr"],[16,0,[31,[[32,2]," ",[32,1,["tfootRow"]]," ",[32,1,["row"]]]]],[17,3],[12],[2,"\\n  "],[18,4,[[30,[36,1],null,[["cell"],[[30,[36,0],["ember-yeti-table@yeti-table/tfoot/row/cell"],[["theme","parent"],[[32,1],[32,0]]]]]]]]],[2,"\\n"],[13],[2,"\\n"]],"hasEval":false,"upvars":["component","hash"]}',moduleName:"ember-yeti-table/components/yeti-table/tfoot/row.hbs"}),p=(0,a.tagName)("")(t=function(e){(function(e,a){if("function"!=typeof a&&null!==a)throw new TypeError("Super expression must either be null or a function")
-e.prototype=Object.create(a&&a.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),a&&i(e,a)})(d,Ember.Component)
-var a,t,s,u=o(d)
-function d(){var e
-n(this,d)
-for(var a=arguments.length,t=new Array(a),r=0;r<a;r++)t[r]=arguments[r]
-return c(l(e=u.call.apply(u,[this].concat(t))),"theme",void 0),c(l(e),"parent",void 0),c(l(e),"columns",void 0),c(l(e),"cells",Ember.A()),e}return a=d,(t=[{key:"registerCell",value:function(e){var a=this.get("columns"),t=e.get("prop")
-if(t){var n=a.findBy("prop",t)
-e.set("column",n)}else{var r=a[this.get("cells.length")]
-e.set("column",r)}this.get("cells").addObject(e)}},{key:"unregisterCell",value:function(e){this.get("cells").removeObject(e)}}])&&r(a.prototype,t),s&&r(a,s),d}())||t,m=Ember._setComponentTemplate(d,p)
-e.default=m})),define("ember-yeti-table/components/yeti-table/tfoot/row/cell",["exports","@ember-decorators/component"],(function(e,a){"use strict"
-var t,n,r,i,o
-function s(e,a,t,n){t&&Object.defineProperty(e,a,{enumerable:t.enumerable,configurable:t.configurable,writable:t.writable,value:t.initializer?t.initializer.call(n):void 0})}function l(e,a){if(!(e instanceof a))throw new TypeError("Cannot call a class as a function")}function u(e,a){for(var t=0;t<a.length;t++){var n=a[t]
-n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}function c(e,a,t){return(c="undefined"!=typeof Reflect&&Reflect.get?Reflect.get:function(e,a,t){var n=function(e,a){for(;!Object.prototype.hasOwnProperty.call(e,a)&&null!==(e=h(e)););return e}(e,a)
-if(n){var r=Object.getOwnPropertyDescriptor(n,a)
-return r.get?r.get.call(t):r.value}})(e,a,t||e)}function d(e,a){return(d=Object.setPrototypeOf||function(e,a){return e.__proto__=a,e})(e,a)}function p(e){var a=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1
-if(Reflect.construct.sham)return!1
-if("function"==typeof Proxy)return!0
-try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(e){return!1}}()
-return function(){var t,n=h(e)
-if(a){var r=h(this).constructor
-t=Reflect.construct(n,arguments,r)}else t=n.apply(this,arguments)
-return m(this,t)}}function m(e,a){return!a||"object"!==_typeof(a)&&"function"!=typeof a?f(e):a}function f(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called")
-return e}function h(e){return(h=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function v(e,a,t){return a in e?Object.defineProperty(e,a,{value:t,enumerable:!0,configurable:!0,writable:!0}):e[a]=t,e}Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0
-var g,b,y,k,w,j,S=Ember.HTMLBars.template({id:"MsHg4zCu",block:'{"symbols":["@theme","@class","&attrs","&default"],"statements":[[6,[37,0],[[32,0,["visible"]]],null,[["default"],[{"statements":[[2,"  "],[11,"td"],[16,0,[31,[[32,2]," ",[32,1,["tfootCell"]]]]],[17,3],[12],[2,"\\n    "],[18,4,null],[2,"\\n  "],[13],[2,"\\n"]],"parameters":[]}]]]],"hasEval":false,"upvars":["if"]}',moduleName:"ember-yeti-table/components/yeti-table/tfoot/row/cell.hbs"}),_=(t=(0,a.tagName)(""),n=Ember.computed.reads("column.visible"),t((g=(i=function(e){(function(e,a){if("function"!=typeof a&&null!==a)throw new TypeError("Super expression must either be null or a function")
-e.prototype=Object.create(a&&a.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),a&&d(e,a)})(i,Ember.Component)
-var a,t,n,r=p(i)
-function i(){var e
-l(this,i)
-for(var a=arguments.length,t=new Array(a),n=0;n<a;n++)t[n]=arguments[n]
-return v(f(e=r.call.apply(r,[this].concat(t))),"theme",void 0),v(f(e),"parent",void 0),s(f(e),"visible",o,f(e)),e}return a=i,(t=[{key:"init",value:function(){c(h(i.prototype),"init",this).apply(this,arguments),this.get("parent")&&this.get("parent").registerCell(this)}},{key:"willDestroyElement",value:function(){c(h(i.prototype),"willDestroyElement",this).apply(this,arguments),this.get("parent")&&this.get("parent").unregisterCell(this)}}])&&u(a.prototype,t),n&&u(a,n),i}()).prototype,b="visible",y=[n],k={configurable:!0,enumerable:!0,writable:!0,initializer:null},j={},Object.keys(k).forEach((function(e){j[e]=k[e]})),j.enumerable=!!j.enumerable,j.configurable=!!j.configurable,("value"in j||j.initializer)&&(j.writable=!0),j=y.slice().reverse().reduce((function(e,a){return a(g,b,e)||e}),j),w&&void 0!==j.initializer&&(j.value=j.initializer?j.initializer.call(w):void 0,j.initializer=void 0),void 0===j.initializer&&(Object.defineProperty(g,b,j),j=null),o=j,r=i))||r),M=Ember._setComponentTemplate(S,_)
-e.default=M})),define("ember-yeti-table/components/yeti-table/thead",["exports","@glimmer/component"],(function(e,a){"use strict"
+var d=Ember.HTMLBars.template({id:"IM1yNDDB",block:'{"symbols":["@theme","@class","&attrs","&default"],"statements":[[6,[37,0],[[32,0,["column","visible"]]],null,[["default"],[{"statements":[[2,"  "],[11,"td"],[16,0,[31,[[32,2]," ",[32,1,["tfootCell"]]]]],[17,3],[12],[2,"\\n    "],[18,4,null],[2,"\\n  "],[13],[2,"\\n"]],"parameters":[]}]]]],"hasEval":false,"upvars":["if"]}',moduleName:"ember-yeti-table/components/yeti-table/tfoot/row/cell.hbs"}),p=function(e){(function(e,a){if("function"!=typeof a&&null!==a)throw new TypeError("Super expression must either be null or a function")
+e.prototype=Object.create(a&&a.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),a&&i(e,a)})(m,e)
+var a,s,d,p=o(m)
+function m(){var e,a
+return t(this,m),c(l(a=p.apply(this,arguments)),"column",void 0),a.column=null===(e=a.args.parent)||void 0===e?void 0:e.registerCell(l(a)),a}return a=m,(s=[{key:"willDestroy",value:function(){var e
+r(u(m.prototype),"willDestroy",this).apply(this,arguments),null===(e=this.args.parent)||void 0===e||e.unregisterCell(this)}}])&&n(a.prototype,s),d&&n(a,d),m}(a.default),m=Ember._setComponentTemplate(d,p)
+e.default=m})),define("ember-yeti-table/components/yeti-table/thead",["exports","@glimmer/component"],(function(e,a){"use strict"
 function t(e,a){if(!(e instanceof a))throw new TypeError("Cannot call a class as a function")}function n(e,a){return(n=Object.setPrototypeOf||function(e,a){return e.__proto__=a,e})(e,a)}function r(e){var a=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1
 if(Reflect.construct.sham)return!1
 if("function"==typeof Proxy)return!0
