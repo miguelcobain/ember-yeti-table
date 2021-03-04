@@ -1,10 +1,15 @@
-import { tagName } from '@ember-decorators/component';
 import { isArray } from '@ember/array';
 import { assert } from '@ember/debug';
-import { computed, action, set } from '@ember/object';
+import { action } from '@ember/object';
+import { dependentKeyCompat } from '@ember/object/compat';
 import { equal, or } from '@ember/object/computed';
 
-import DidChangeAttrsComponent from 'ember-yeti-table/-private/utils/did-change-attrs-component';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+
+// Can be removed when yeti-table component is altered to user glimmer
+
+// import DidChangeAttrsComponent from 'ember-yeti-table/-private/utils/did-change-attrs-component';
 
 /**
   An important component yielded from the header or head.row component that is used to define
@@ -37,11 +42,10 @@ import DidChangeAttrsComponent from 'ember-yeti-table/-private/utils/did-change-
   @yield {boolean} column.isAscSorted - `true` if column is sorted ascending
   @yield {boolean} column.isDescSorted - `true` if column is sorted descending
 */
-@tagName('')
-class Column extends DidChangeAttrsComponent {
-  theme;
-
-  parent;
+class Column extends Component {
+  getArgWithDefault(prop, value) {
+    return this.args[prop] === undefined ? value : this.args[prop];
+  }
 
   /**
    * An important argument that Yeti Table uses to tie this column to a certain property on
@@ -56,41 +60,83 @@ class Column extends DidChangeAttrsComponent {
    *
    * If you don't need sorting, filtering or automatic table unrolling (using the blockless
    * body component), then this property is optional.
+   *
+   * @argument prop
+   * @type {String}
    */
-  prop;
+  @dependentKeyCompat
+  get prop() {
+    return this.args.prop;
+  }
 
+  @tracked
+  _visible;
   /**
    * Set to `false` to hide the entire column across all rows. Keep in mind that this property
    * won't just hide the column using css. The DOM for the column will be removed. Defaults to `true`.
+   *
+   * @argument visible
+   * @type {Boolean}
    */
-  visible = true;
+  @dependentKeyCompat
+  get visible() {
+    return this._visible === undefined ? this.getArgWithDefault('visible', true) : this._visible;
+  }
+  set visible(value) {
+    this._visible = value;
+  }
 
   /**
    * Used to turn off sorting clicking on this column (clicks won't toggle sorting anymore).
    * Useful on avatar columns, for example, where a sorting order doesn't really make sense.
    * Defaults to the `<YetiTable>` `@sortable` argument (which in turn defaults to `true`).
+   *
+   * @argument sortable
+   * @type Boolean
    */
-  sortable = true;
+  @dependentKeyCompat
+  get sortable() {
+    return this.getArgWithDefault('sortable', true);
+  }
 
+  @tracked
+  _sort;
   /**
    * Optionally use an `asc` or `desc` string on this argument to turn on ascending or descending sorting
    * on this column. Useful to turn on default sortings on the table.
+
+   * @argument sort
+   * @type {String}
    */
-  sort = null;
+  @dependentKeyCompat
+  get sort() {
+    return this._sort === undefined ? this.getArgWithDefault('sort', null) : this._sort;
+  }
+  set sort(value) {
+    this._sort = value;
+  }
 
   /**
    * Use `@sortSequence` to customize the sequence in which the sorting order will cycle when
    * clicking on this column header. You can either pass in a comma-separated string or an array
    * of strings. Accepted values are `'asc'`, `'desc'` and `'unsorted'`. The default value is `['asc', 'desc']`
    * or whatever the global table sortSequence value is.
+   *
+   * @argument sortSequence
+   * @type Array
    */
-  sortSequence;
 
   /**
    * Used to turn off filtering for this column. When `false`, Yeti Table won't look for
    * values on this column. Defaults to `true`.
+   *
+   * @argument filterable
+   * @type {Boolean}
    */
-  filterable = true;
+  @dependentKeyCompat
+  get filterable() {
+    return this.getArgWithDefault('filterable', true);
+  }
 
   /**
    * The column filter. If passed in, Yeti Table will search this column for rows that contain this
@@ -98,8 +144,14 @@ class Column extends DidChangeAttrsComponent {
    *
    * The column definitions `@filter` argument is subtractive, meaning that it will filter out rows
    * from the subset that passes the general `@filter`.
+   *
+   * @argument filter
+   * @type {String}
    */
-  filter;
+  @dependentKeyCompat
+  get filter() {
+    return this.args.filter;
+  }
 
   /**
    * An optional function to customize the filtering logic *on this column*. This function should return true
@@ -109,29 +161,63 @@ class Column extends DidChangeAttrsComponent {
    * This function will be called with two arguments:
    * - `value` - the current data cell to use for filtering
    * - `filterUsing` - the value you passed in as `@filterUsing`
+   *
+   * @argument filterFunction
+   * @type {Function}
    */
-  filterFunction;
+  @dependentKeyCompat
+  get filterFunction() {
+    return this.args.filterFunction;
+  }
 
   /**
    * If you `@filterFunction` function depends on a different value (other that `@filter`)
    * to show, pass it in this argument. Yeti Table uses this argument to know when to recalculate
    * the fitlered rows.
+   *
+   * @argument filterUsing
+   * @type {String}
    */
-  filterUsing;
+  @dependentKeyCompat
+  get filterUsing() {
+    return this.args.filterUsing;
+  }
 
   /**
    * Used to add a class to all the cells in this column.
+   *
+   * @argument columnClass
+   * @type {String}
    */
-  columnClass;
+  @dependentKeyCompat
+  get columnClass() {
+    return this.args.columnClass;
+  }
 
+  @tracked
+  _name;
   /**
    * This property is a human-readable representation of the name of the column.
-   * It defaults to the trimmed `textContent` of the `<th>` element, but can be overrided
+   * It defaults to the trimmed `textContent` of the `<th>` element, but can be overridden
    * by using a `@name="your custom name"` argument.
    */
-  name;
+  @dependentKeyCompat
+  get name() {
+    return this._name || this.args.name;
+  }
+  set name(value) {
+    this._name = value;
+  }
 
-  onClick;
+  /**
+   * An optional function to be invoked whenever this column is clicked
+   *
+   * This function will be called with two arguments:
+   * - `column` - the column that was clicked
+   *
+   * @argument onClick
+   * @type {Function}
+   */
 
   @equal('sort', 'asc') isAscSorted;
 
@@ -139,9 +225,8 @@ class Column extends DidChangeAttrsComponent {
 
   @or('isAscSorted', 'isDescSorted') isSorted;
 
-  @computed('sortSequence')
   get normalizedSortSequence() {
-    let sortSequence = this.get('sortSequence');
+    let sortSequence = this.args.sortSequence;
     assert(
       '@sortSequence must be either a comma-separated string or an array. Got `${sortSequence}.`',
       isArray(sortSequence) || typeof sortSequence === 'string'
@@ -156,33 +241,26 @@ class Column extends DidChangeAttrsComponent {
     }
   }
 
-  init() {
-    super.init(...arguments);
+  constructor() {
+    super(...arguments);
 
-    this.didChangeAttrsConfig = {
-      attrs: ['filter', 'filterUsing', 'sort']
-    };
-
-    if (this.get('parent')) {
-      this.get('parent').registerColumn(this);
-    }
+    this.args.parent?.registerColumn(this);
   }
 
-  didChangeAttrs() {
-    this.get('parent').runLoadData();
+  @action
+  runLoadData() {
+    this.args.parent?.runLoadData();
   }
 
-  willDestroyElement() {
-    super.willDestroyElement(...arguments);
-    if (this.get('parent')) {
-      this.get('parent').unregisterColumn(this);
-    }
+  willDestroy() {
+    super.willDestroy(...arguments);
+    this.args.parent?.unregisterColumn(this);
   }
 
   @action
   updateName(element) {
-    if (!this.name) {
-      set(this, 'name', element.textContent.trim());
+    if (!this.args.name) {
+      this.name = element.textContent.trim();
     }
   }
 
