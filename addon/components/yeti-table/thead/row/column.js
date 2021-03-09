@@ -1,15 +1,12 @@
 import { isArray } from '@ember/array';
 import { assert } from '@ember/debug';
 import { action } from '@ember/object';
+// Can be removed when yeti-table component is altered to user glimmer
 import { dependentKeyCompat } from '@ember/object/compat';
 import { equal, or } from '@ember/object/computed';
 
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-
-// Can be removed when yeti-table component is altered to user glimmer
-
-// import DidChangeAttrsComponent from 'ember-yeti-table/-private/utils/did-change-attrs-component';
+import { localCopy } from 'tracked-toolbox';
 
 /**
   An important component yielded from the header or head.row component that is used to define
@@ -43,10 +40,6 @@ import { tracked } from '@glimmer/tracking';
   @yield {boolean} column.isDescSorted - `true` if column is sorted descending
 */
 class Column extends Component {
-  getArgWithDefault(prop, value) {
-    return this.args[prop] === undefined ? value : this.args[prop];
-  }
-
   /**
    * An important argument that Yeti Table uses to tie this column to a certain property on
    * each row object of the original `@data` (or `@loadFunction`) that was passed in.
@@ -69,8 +62,6 @@ class Column extends Component {
     return this.args.prop;
   }
 
-  @tracked
-  _visible;
   /**
    * Set to `false` to hide the entire column across all rows. Keep in mind that this property
    * won't just hide the column using css. The DOM for the column will be removed. Defaults to `true`.
@@ -79,12 +70,8 @@ class Column extends Component {
    * @type {Boolean}
    */
   @dependentKeyCompat
-  get visible() {
-    return this._visible === undefined ? this.getArgWithDefault('visible', true) : this._visible;
-  }
-  set visible(value) {
-    this._visible = value;
-  }
+  @localCopy('args.visible', true)
+  visible;
 
   /**
    * Used to turn off sorting clicking on this column (clicks won't toggle sorting anymore).
@@ -95,12 +82,9 @@ class Column extends Component {
    * @type Boolean
    */
   @dependentKeyCompat
-  get sortable() {
-    return this.getArgWithDefault('sortable', true);
-  }
+  @localCopy('args.sortable', true)
+  sortable;
 
-  @tracked
-  _sort;
   /**
    * Optionally use an `asc` or `desc` string on this argument to turn on ascending or descending sorting
    * on this column. Useful to turn on default sortings on the table.
@@ -109,12 +93,8 @@ class Column extends Component {
    * @type {String}
    */
   @dependentKeyCompat
-  get sort() {
-    return this._sort === undefined ? this.getArgWithDefault('sort', null) : this._sort;
-  }
-  set sort(value) {
-    this._sort = value;
-  }
+  @localCopy('args.sort')
+  sort;
 
   /**
    * Use `@sortSequence` to customize the sequence in which the sorting order will cycle when
@@ -134,9 +114,8 @@ class Column extends Component {
    * @type {Boolean}
    */
   @dependentKeyCompat
-  get filterable() {
-    return this.getArgWithDefault('filterable', true);
-  }
+  @localCopy('args.filterable', true)
+  filterable;
 
   /**
    * The column filter. If passed in, Yeti Table will search this column for rows that contain this
@@ -194,20 +173,14 @@ class Column extends Component {
     return this.args.columnClass;
   }
 
-  @tracked
-  _name;
   /**
    * This property is a human-readable representation of the name of the column.
    * It defaults to the trimmed `textContent` of the `<th>` element, but can be overridden
    * by using a `@name="your custom name"` argument.
    */
   @dependentKeyCompat
-  get name() {
-    return this._name || this.args.name;
-  }
-  set name(value) {
-    this._name = value;
-  }
+  @localCopy('args.name')
+  name;
 
   /**
    * An optional function to be invoked whenever this column is clicked
