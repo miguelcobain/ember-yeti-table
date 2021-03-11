@@ -83,8 +83,8 @@ Check out more advanced features on the [Yeti Table documentation site](https://
 
 ## Compatibility
 
-- Ember.js v3.16 or above
-- Ember CLI v3.16 or above
+- Ember.js v3.20 or above
+- Ember CLI v3.20 or above
 
 ## Editor integration
 
