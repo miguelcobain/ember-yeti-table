@@ -1,3 +1,3 @@
-<table class={{@theme.table}} ...attributes>
+<table class={{@theme.table}} ...attributes {{did-insert @parent.createProperties}} {{did-insert @parent.registerApi}}>
   {{yield}}
 </table>
