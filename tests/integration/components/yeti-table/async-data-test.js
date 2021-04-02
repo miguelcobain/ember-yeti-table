@@ -880,8 +880,12 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
       });
     });
 
+    this.register = api => {
+      this.tableApi = api;
+    };
+
     await render(hbs`
-      <YetiTable @loadData={{this.loadData}} @registerApi={{fn (mut this.tableApi)}} as |table|>
+      <YetiTable @loadData={{this.loadData}} @registerApi={{fn this.register}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">

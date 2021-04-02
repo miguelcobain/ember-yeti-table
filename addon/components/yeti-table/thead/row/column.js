@@ -1,7 +1,7 @@
 import { isArray } from '@ember/array';
 import { assert } from '@ember/debug';
 import { action } from '@ember/object';
-// Can be removed when yeti-table component is altered to user glimmer
+// Required as long as computeds are used on yeti-table.js
 import { dependentKeyCompat } from '@ember/object/compat';
 import { equal, or } from '@ember/object/computed';
 

@@ -69,7 +69,7 @@ module('Integration | Component | yeti-table (filtering)', function (hooks) {
 
   test('updating filter filters rows', async function (assert) {
     await render(hbs`
-      <YetiTable @data={{this.data}} @filter={{filterText}} as |table|>
+      <YetiTable @data={{this.data}} @filter={{this.filterText}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -96,7 +96,8 @@ module('Integration | Component | yeti-table (filtering)', function (hooks) {
     assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
 
-    this.set('filterText', 'Baderous');
+    set(this, 'filterText', 'Baderous');
+    await settled();
 
     assert.dom('tbody tr').exists({ count: 1 });
 
