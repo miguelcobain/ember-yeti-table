@@ -1,6 +1,6 @@
 {
   "name": "ember-yeti-table",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "Lightweight and flexible tables addon.",
   "keywords": [
     "ember-addon",
@@ -35,7 +35,7 @@
     "format:all": "run-s format:prettier format:eslint"
   },
   "dependencies": {
-    "@ember/render-modifiers": "^1.0.2",
+    "@ember/render-modifiers": "^1.0.2 || ^2.0.0",
     "deepmerge": "^4.2.2",
     "ember-auto-import": "^1.10.1",
     "ember-cli-babel": "^7.23.1",
