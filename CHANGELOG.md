@@ -11,6 +11,18 @@
 
 - Converted components to user glimmer syntax [#345](https://github.com/miguelcobain/ember-yeti-table/pull/345) [#351](https://github.com/miguelcobain/ember-yeti-table/pull/351)
 
+# v1.7.2
+
+#### 🏗 Chores
+
+- use `(has-block)` helper fix erroring on ember v4
+
+# v1.7.1
+
+#### 🏗 Chores
+
+- relax `@ember/render-modifiers` dependency to `^1.0.2 || ^2.0.0`
+
 # v1.7.0
 
 #### ✨ Features
