@@ -67,6 +67,13 @@ class Pagination extends Component {
    */
   showButtons = true;
 
+   /**
+    * Default english labels.
+    */
+   previousLabel = "Previous";
+   nextLabel = "Next";
+   rowselectorLabel = "Rows per page:";
+
   @action
   changePageSize(ev) {
     this.paginationActions.changePageSize(ev.target.value);
