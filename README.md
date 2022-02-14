@@ -2,15 +2,13 @@
 
 Yeti Table provides a new expressive way to build tables in Ember with flexibility in mind.
 
-Installation
-------------------------------------------------------------------------------
+## Installation
 
 ```
 ember install ember-yeti-table
 ```
 
-Why Yeti Table?
-------------------------------------------------------------------------------
+## Why Yeti Table?
 
 Perhaps the biggest difference compared to other table solution is that Yeti Table uses templates to define your columns.
 In many other table solutions you need to define columns in javascript.
@@ -21,8 +19,7 @@ This fact has many implications on the whole API of Yeti Table.
 
 Yeti table currently weights around `6.17kb` (minified and gzipped).
 
-Features
-------------------------------------------------------------------------------
+## Features
 
 Yeti Table was built with the needs of a real production app in mind. Out of the box, it supports:
 
@@ -32,9 +29,7 @@ Yeti Table was built with the needs of a real production app in mind. Out of the
 - **Server side data** - Allows your server to drive the table pagination, filtering and sorting if you choose to. Useful when the dataset is too large to fetch.
 - **Customization** - Does not provide any styles. You can customize pretty much everything about how the tables are rendered on your templates. This includes custom css classes, click handlers and custom filtering and sorting logic.
 
-
-Usage
-------------------------------------------------------------------------------
+## Usage
 
 Your starting point for Yeti Table will be the `@data` argument. It accepts an array of objects
 or a promise that resolves to such an array.
@@ -86,54 +81,52 @@ for that column accross all rows.
 
 Check out more advanced features on the [Yeti Table documentation site](https://miguelcobain.github.io/ember-yeti-table).
 
-Editor integration
-------------------------------------------------------------------------------
+## Compatibility
+
+- Ember.js v3.20 or above
+- Ember CLI v3.20 or above
+
+## Editor integration
 
 You can get autocomplete and additional information inside [Visual Studio Code](https://code.visualstudio.com/) by installing [els-addon-docs](https://github.com/lifeart/els-addon-docs) addon for [Unstable Ember Language Server](https://marketplace.visualstudio.com/items?itemName=lifeart.vscode-ember-unstable).
 
-
-Credits
-------------------------------------------------------------------------------
+## Credits
 
 Credits to the amazing [Ember Table](https://github.com/Addepar/ember-table) addon.
 
 Yeti Table was also inpired by [DataTables](https://datatables.net/) in a lot of its features.
 
-Contributing
-------------------------------------------------------------------------------
+## Contributing
 
 ### Installation
 
-* `git clone <repository-url>`
-* `cd ember-yeti-table`
-* `npm install`
+- `git clone <repository-url>`
+- `cd ember-yeti-table`
+- `npm install`
 
 ### Linting
 
-* `npm run lint:hbs`
-* `npm run lint:js`
-* `npm run lint:js -- --fix`
+- `npm run lint:hbs`
+- `npm run lint:js`
+- `npm run lint:js -- --fix`
 
 ### Running tests
 
-* `ember test` – Runs the test suite on the current Ember version
-* `ember test --server` – Runs the test suite in "watch mode"
-* `ember try:each` – Runs the test suite against multiple Ember versions
+- `ember test` – Runs the test suite on the current Ember version
+- `ember test --server` – Runs the test suite in "watch mode"
+- `ember try:each` – Runs the test suite against multiple Ember versions
 
 ### Running the dummy application
 
-* `ember serve`
-* Visit the dummy application at [http://localhost:4200](http://localhost:4200).
+- `ember serve`
+- Visit the dummy application at [http://localhost:4200](http://localhost:4200).
 
 For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
 
-Contributing
-------------------------------------------------------------------------------
+## Contributing
 
 See the [Contributing](CONTRIBUTING.md) guide for details.
 
-
-License
-------------------------------------------------------------------------------
+## License
 
 This project is licensed under the [MIT License](LICENSE.md).

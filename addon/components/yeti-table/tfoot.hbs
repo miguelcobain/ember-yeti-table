@@ -1,0 +1,5 @@
+<tfoot class={{@theme.tfoot}} ...attributes>
+  {{yield (hash
+    row=(component "ember-yeti-table@yeti-table/tfoot/row" columns=@columns theme=@theme parent=@parent)
+  )}}
+</tfoot>

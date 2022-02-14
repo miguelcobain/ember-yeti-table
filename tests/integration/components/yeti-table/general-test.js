@@ -208,8 +208,6 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
     assert.dom('tbody tr:nth-child(3) td:nth-child(3)').hasText('New York');
     assert.dom('tbody tr:nth-child(4) td:nth-child(3)').hasText('Portland');
     assert.dom('tbody tr:nth-child(5) td:nth-child(3)').hasText('Portland');
-
-    assert.expectNoDeprecation();
   });
 
   test('renders table using head and foot components', async function (assert) {
@@ -256,72 +254,6 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
     assert.dom('tr').exists({ count: 1 + 5 + 1 });
     assert.dom('th').exists({ count: 3 });
     assert.dom('td').exists({ count: 5 * 3 + 3 });
-  });
-
-  test('head is correctly deprecated', async function (assert) {
-    await render(hbs`
-      <YetiTable @data={{this.data}} as |table|>
-
-        <table.head as |head|>
-          <head.row as |row|>
-            <row.column @prop="firstName">
-              First name
-            </row.column>
-            <row.column @prop="lastName">
-              Last name
-            </row.column>
-            <row.column @prop="points">
-              Points
-            </row.column>
-          </head.row>
-        </table.head>
-
-        <table.body/>
-
-      </YetiTable>
-    `);
-
-    assert.expectDeprecation();
-  });
-
-  test('foot is correctly deprecated', async function (assert) {
-    await render(hbs`
-      <YetiTable @data={{this.data}} as |table|>
-
-        <table.thead as |head|>
-          <head.row as |row|>
-            <row.column @prop="firstName">
-              First name
-            </row.column>
-            <row.column @prop="lastName">
-              Last name
-            </row.column>
-            <row.column @prop="points">
-              Points
-            </row.column>
-          </head.row>
-        </table.thead>
-
-        <table.body/>
-
-        <table.foot as |foot|>
-          <foot.row as |row|>
-            <row.cell>
-              Footer first Name
-            </row.cell>
-            <row.cell>
-              Footer last Name
-            </row.cell>
-            <row.cell>
-              Footer points
-            </row.cell>
-          </foot.row>
-        </table.foot>
-
-      </YetiTable>
-    `);
-
-    assert.expectDeprecation();
   });
 
   test('trClass applies a class to the header tr element', async function (assert) {

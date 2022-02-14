@@ -1,0 +1,31 @@
+<tbody class={{@theme.tbody}} ...attributes>
+  {{#if (has-block)}}
+
+    {{#each @data as |rowData index|}}
+      {{yield
+        (hash row=(component "ember-yeti-table@yeti-table/tbody/row" theme=@theme onClick=@onRowClick columns=@columns))
+        rowData
+        index}}
+    {{/each}}
+
+  {{else}}
+
+    {{#each @data as |rowData|}}
+      <EmberYetiTable@YetiTable::Tbody::Row
+        @theme={{@theme}}
+        @onClick={{if @onRowClick (fn this.handleRowClick rowData)}} @columns={{@columns}} as |row|>
+
+          {{#each @columns as |column|}}
+            <row.cell @class={{column.columnClass}}>
+              {{#if column.prop}}
+                {{get rowData column.prop}}
+              {{else}}
+                {{rowData}}
+              {{/if}}
+            </row.cell>
+          {{/each}}
+
+      </EmberYetiTable@YetiTable::Tbody::Row>
+    {{/each}}
+  {{/if}}
+</tbody>
