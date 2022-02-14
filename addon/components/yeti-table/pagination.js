@@ -73,7 +73,8 @@ class Pagination extends Component {
    previousLabel = "Previous";
    nextLabel = "Next";
    rowselectorLabel = "Rows per page:";
-
+   paginationStatusLabel = "Showing {pageStart} to {pageEnd} of {totalRows} entries";
+  
   @action
   changePageSize(ev) {
     this.paginationActions.changePageSize(ev.target.value);
