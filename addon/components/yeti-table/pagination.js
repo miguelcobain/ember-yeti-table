@@ -1,7 +1,8 @@
-import { tagName } from '@ember-decorators/component';
-import Component from '@ember/component';
 import { action } from '@ember/object';
 import { or } from '@ember/object/computed';
+
+import Component from '@glimmer/component';
+import { localCopy } from 'tracked-toolbox';
 
 /**
   Simple pagination controls component that is included to help you get started quickly.
@@ -29,20 +30,19 @@ import { or } from '@ember/object/computed';
   ```
 */
 
-@tagName('')
 export default class Pagination extends Component {
-  theme;
+  // theme;
 
-  paginationData;
+  // paginationData;
 
-  paginationActions;
+  // paginationActions;
 
-  disabled;
+  // disabled;
 
-  @or('paginationData.isFirstPage', 'disabled')
+  @or('args.paginationData.isFirstPage', 'args.disabled')
   shouldDisablePrevious;
 
-  @or('paginationData.isLastPage', 'disabled')
+  @or('args.paginationData.isLastPage', 'args.disabled')
   shouldDisableNext;
 
   /**
@@ -50,25 +50,29 @@ export default class Pagination extends Component {
    * Particularly useful with an array helper, e.g `@pageSizes={{array 10 12 23 50 100}}`
    * Defaults to `[10, 15, 20, 25]`.
    */
-  pageSizes = [10, 15, 20, 25];
+  @localCopy('args.pageSizes', [10, 15, 20, 25])
+  pageSizes;
 
   /**
    * Used to show/hide some textual information about the current page. Defaults to `true`.
    */
-  showInfo = true;
+  @localCopy('args.showInfo', true)
+  showInfo;
 
   /**
    * Used to show/hide the page size selector. Defaults to `true`.
    */
-  showPageSizeSelector = true;
+  @localCopy('args.showInfo', true)
+  showPageSizeSelector;
 
   /**
    * Used to show/hide the previous and next page buttons. Defaults to `true`.
    */
-  showButtons = true;
+  @localCopy('args.showInfo', true)
+  showButtons;
 
   @action
   changePageSize(ev) {
-    this.paginationActions.changePageSize(ev.target.value);
+    this.args.paginationActions.changePageSize(ev.target.value);
   }
 }
