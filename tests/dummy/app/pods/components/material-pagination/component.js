@@ -1,15 +1,10 @@
-import { tagName } from '@ember-decorators/component';
-import Component from '@ember/component';
 import { action } from '@ember/object';
 
-@tagName('')
-class MaterialPagination extends Component {
-  table;
+import Component from '@glimmer/component';
 
+export default class MaterialPagination extends Component {
   @action
   changePageSize(ev) {
-    this.table.actions.changePageSize(ev.target.value);
+    this.args.table.actions.changePageSize(ev.target.value);
   }
 }
-
-export default MaterialPagination;
