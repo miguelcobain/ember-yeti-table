@@ -1,6 +1,6 @@
 import { tagName, layout } from '@ember-decorators/component';
-import { deprecate } from '@ember/application/deprecations';
 import Component from '@ember/component';
+import { deprecate } from '@ember/debug';
 
 import template from './template';
 
