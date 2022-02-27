@@ -21,7 +21,7 @@ import Component from '@glimmer/component';
   @yield {object} cell
 
  */
-class THeadCell extends Component {
+export default class THeadCell extends Component {
   // Assigned when the cell is registered
   column = undefined;
 
@@ -35,5 +35,3 @@ class THeadCell extends Component {
     this.args.parent?.unregisterCell(this);
   }
 }
-
-export default THeadCell;

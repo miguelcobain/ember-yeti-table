@@ -30,7 +30,7 @@ import { or } from '@ember/object/computed';
 */
 
 @tagName('')
-class Pagination extends Component {
+export default class Pagination extends Component {
   theme;
 
   paginationData;
@@ -72,5 +72,3 @@ class Pagination extends Component {
     this.paginationActions.changePageSize(ev.target.value);
   }
 }
-
-export default Pagination;

@@ -28,7 +28,7 @@ import Component from '@glimmer/component';
   @yield {Array} data
 */
 // eslint-disable-next-line ember/no-empty-glimmer-component-classes
-class TBody extends Component {
+export default class TBody extends Component {
   /**
    * Adds a click action to each row, called with the clicked row's data as an argument.
    * Can be used with both the blockless and block invocations.
@@ -37,5 +37,3 @@ class TBody extends Component {
    * @type Function
    */
 }
-
-export default TBody;

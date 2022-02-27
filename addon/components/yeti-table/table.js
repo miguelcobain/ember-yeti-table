@@ -28,6 +28,4 @@ import Component from '@glimmer/component';
 */
 
 // eslint-disable-next-line ember/no-empty-glimmer-component-classes
-class Table extends Component {}
-
-export default Table;
+export default class Table extends Component {}

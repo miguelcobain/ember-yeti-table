@@ -39,7 +39,7 @@ import Component from '@glimmer/component';
   @yield {object} row
   @yield {Component} row.cell - the cell component
 */
-class TBodyRow extends Component {
+export default class TBodyRow extends Component {
   /**
    * Adds a click action to the row.
    *
@@ -72,5 +72,3 @@ class TBodyRow extends Component {
     this.args.onClick?.(...arguments);
   }
 }
-
-export default TBodyRow;

@@ -8,7 +8,7 @@ import Component from '@glimmer/component';
   </row.cell>
   ```
 */
-class TBodyCell extends Component {
+export default class TBodyCell extends Component {
   // Assigned when the cell is registered
   column = undefined;
 
@@ -22,5 +22,3 @@ class TBodyCell extends Component {
     this.args.parent?.unregisterCell(this);
   }
 }
-
-export default TBodyCell;

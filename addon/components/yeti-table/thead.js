@@ -19,7 +19,7 @@ import Component from '@glimmer/component';
   @yield {Component} head.row
 */
 // eslint-disable-next-line ember/no-empty-glimmer-component-classes
-class THead extends Component {
+export default class THead extends Component {
   /**
    * Adds a click action to the thead, called with the clicked column as an argument.
    *
@@ -27,5 +27,3 @@ class THead extends Component {
    * @type Function
    */
 }
-
-export default THead;

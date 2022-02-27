@@ -17,7 +17,7 @@ import Component from '@glimmer/component';
   @yield {Component} column
   @yield {Component} cell
 */
-class THeadRow extends Component {
+export default class THeadRow extends Component {
   cells = [];
 
   registerCell(cell) {
@@ -45,5 +45,3 @@ class THeadRow extends Component {
     cells.splice(index, 1);
   }
 }
-
-export default THeadRow;

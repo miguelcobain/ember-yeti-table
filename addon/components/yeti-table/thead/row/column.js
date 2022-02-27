@@ -39,7 +39,7 @@ import { localCopy } from 'tracked-toolbox';
   @yield {boolean} column.isAscSorted - `true` if column is sorted ascending
   @yield {boolean} column.isDescSorted - `true` if column is sorted descending
 */
-class Column extends Component {
+export default class Column extends Component {
   /**
    * An important argument that Yeti Table uses to tie this column to a certain property on
    * each row object of the original `@data` (or `@loadFunction`) that was passed in.
@@ -239,5 +239,3 @@ class Column extends Component {
 
   noop = () => {};
 }
-
-export default Column;

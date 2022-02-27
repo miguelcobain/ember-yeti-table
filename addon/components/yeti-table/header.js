@@ -20,7 +20,7 @@ import Component from '@glimmer/component';
   @yield {object} header
   @yield {Component} header.column       the column component
 */
-class Header extends Component {
+export default class Header extends Component {
   @action
   onColumnClickHeader(column, e) {
     if (this.args.onColumnClick && column.sortable) {
@@ -28,5 +28,3 @@ class Header extends Component {
     }
   }
 }
-
-export default Header;

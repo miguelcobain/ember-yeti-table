@@ -31,7 +31,7 @@ import Component from '@glimmer/component';
   @yield {Object} rowData - one item in the data array
   @yield {number} index
 */
-class Body extends Component {
+export default class Body extends Component {
   /**
    * Adds a click action to each row, called with the clicked row's data as an argument.
    * Can be used with both the blockless and block invocations.
@@ -45,5 +45,3 @@ class Body extends Component {
     this.args.onRowClick?.(rowData);
   }
 }
-
-export default Body;

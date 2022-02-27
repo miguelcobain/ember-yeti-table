@@ -16,7 +16,7 @@ import Component from '@glimmer/component';
   @yield {Component} row.cell
 */
 
-class TFootRow extends Component {
+export default class TFootRow extends Component {
   cells = [];
   registerCell(cell) {
     let columns = this.args.columns;
@@ -32,5 +32,3 @@ class TFootRow extends Component {
     cells.splice(index, 1);
   }
 }
-
-export default TFootRow;

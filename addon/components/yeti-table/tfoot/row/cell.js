@@ -15,7 +15,7 @@ import Component from '@glimmer/component';
 
  */
 
-class TFootCell extends Component {
+export default class TFootCell extends Component {
   column;
 
   constructor() {
@@ -29,5 +29,3 @@ class TFootCell extends Component {
     this.args.parent?.unregisterCell(this);
   }
 }
-
-export default TFootCell;

@@ -86,7 +86,7 @@ const didCancel = function (e) {
   @yield {object} table.theme           the theme being used
 */
 @tagName('')
-class YetiTable extends DidChangeAttrsComponent {
+export default class YetiTable extends DidChangeAttrsComponent {
   /**
    * An object that contains classes for yeti table to apply when rendering its various table
    * html elements. The theme object your pass in will be deeply merged with yeti-table's default theme
@@ -624,5 +624,3 @@ class YetiTable extends DidChangeAttrsComponent {
     }
   }
 }
-
-export default YetiTable;
