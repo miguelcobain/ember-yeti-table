@@ -11,6 +11,12 @@
 
 - Converted components to user glimmer syntax [#345](https://github.com/miguelcobain/ember-yeti-table/pull/345) [#351](https://github.com/miguelcobain/ember-yeti-table/pull/351)
 
+# v1.7.3
+
+#### 🐛 Bugfixes
+
+- import `deprecate` from `@ember/debug` instead of `@ember/application/deprecations`. This was causing runtime errors on ember 4.x.
+
 # v1.7.2
 
 #### 🏗 Chores
