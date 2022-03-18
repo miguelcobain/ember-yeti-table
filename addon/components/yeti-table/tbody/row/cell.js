@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 
 /**
   Renders a `<td>` element (if its corresponding column definition has `@visible={{true}}`).
@@ -9,12 +10,16 @@ import Component from '@glimmer/component';
   ```
 */
 export default class TBodyCell extends Component {
-  // Assigned when the cell is registered
-  column = undefined;
+  @tracked
+  index;
+
+  get column() {
+    return this.args.columns[this.index];
+  }
 
   constructor() {
     super(...arguments);
-    this.column = this.args.parent?.registerCell(this);
+    this.index = this.args.parent?.registerCell(this);
   }
 
   willDestroy() {

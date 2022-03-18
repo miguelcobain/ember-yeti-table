@@ -1,5 +1,5 @@
 {{#let (hash
-  table=(component "ember-yeti-table@yeti-table/table" theme=this.mergedTheme)
+  table=(component "ember-yeti-table@yeti-table/table" theme=this.mergedTheme parent=this)
   header=(component "ember-yeti-table@yeti-table/header"
     columns=this.columns
     onColumnClick=this.onColumnSort
@@ -56,7 +56,11 @@
 ) as |api|}}
 
   {{#if this.renderTableElement}}
-    <EmberYetiTable@YetiTable::Table @theme={{this.mergedTheme}} ...attributes>
+    <EmberYetiTable@YetiTable::Table
+      @theme={{this.mergedTheme}}
+      @parent={{this}}
+      {{did-update this.fetchData @data}}
+      {{did-update this.runLoadData @pageNumber @filter}} ...attributes>
       {{yield api}}
     </EmberYetiTable@YetiTable::Table>
   {{else}}
@@ -64,4 +68,3 @@
   {{/if}}
 
 {{/let}}
-

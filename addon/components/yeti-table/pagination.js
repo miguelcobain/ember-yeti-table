@@ -1,5 +1,4 @@
 import { action } from '@ember/object';
-import { or } from '@ember/object/computed';
 
 import Component from '@glimmer/component';
 import { localCopy } from 'tracked-toolbox';
@@ -39,11 +38,13 @@ export default class Pagination extends Component {
 
   // disabled;
 
-  @or('args.paginationData.isFirstPage', 'args.disabled')
-  shouldDisablePrevious;
+  get shouldDisablePrevious() {
+    return this.args.paginationData.isFirstPage || this.args.disabled;
+  }
 
-  @or('args.paginationData.isLastPage', 'args.disabled')
-  shouldDisableNext;
+  get shouldDisableNext() {
+    return this.args.paginationData.isLastPage || this.args.disabled;
+  }
 
   /**
    * Array of page sizes to populate the page size `<select>`.

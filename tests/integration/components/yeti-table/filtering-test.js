@@ -69,7 +69,7 @@ module('Integration | Component | yeti-table (filtering)', function (hooks) {
 
   test('updating filter filters rows', async function (assert) {
     await render(hbs`
-      <YetiTable @data={{this.data}} @filter={{filterText}} as |table|>
+      <YetiTable @data={{this.data}} @filter={{this.filterText}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -113,7 +113,7 @@ module('Integration | Component | yeti-table (filtering)', function (hooks) {
           <header.column @prop="firstName">
             First name
           </header.column>
-          <header.column @prop="lastName" @filter={{filterText}}>
+          <header.column @prop="lastName" @filter={{this.filterText}}>
             Last name
           </header.column>
           <header.column @prop="points">
@@ -139,7 +139,7 @@ module('Integration | Component | yeti-table (filtering)', function (hooks) {
           <header.column @prop="firstName">
             First name
           </header.column>
-          <header.column @prop="lastName" @filter={{filterText}}>
+          <header.column @prop="lastName" @filter={{this.filterText}}>
             Last name
           </header.column>
           <header.column @prop="points">
@@ -176,10 +176,10 @@ module('Integration | Component | yeti-table (filtering)', function (hooks) {
       <YetiTable @data={{this.data}} as |table|>
 
         <table.header as |header|>
-          <header.column @prop="firstName" @filter={{filterFirst}}>
+          <header.column @prop="firstName" @filter={{this.filterFirst}}>
             First name
           </header.column>
-          <header.column @prop="lastName" @filter={{filterLast}}>
+          <header.column @prop="lastName" @filter={{this.filterLast}}>
             Last name
           </header.column>
           <header.column @prop="points">

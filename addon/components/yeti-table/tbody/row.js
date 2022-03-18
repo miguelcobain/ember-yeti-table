@@ -50,14 +50,9 @@ export default class TBodyRow extends Component {
   cells = [];
 
   registerCell(cell) {
-    let columns = this.args.columns;
     let index = this.cells.length;
-
-    let column = columns[index];
-
     this.cells.push(cell);
-
-    return column;
+    return index;
   }
 
   unregisterCell(cell) {

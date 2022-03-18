@@ -1,5 +1,5 @@
 <tr class="{{@class}} {{@theme.tfootRow}} {{@theme.row}}" ...attributes>
   {{yield (hash
-    cell=(component "ember-yeti-table@yeti-table/tfoot/row/cell" theme=@theme parent=this)
+    cell=(component "ember-yeti-table@yeti-table/tfoot/row/cell" theme=@theme parent=this columns=@columns)
   )}}
 </tr>

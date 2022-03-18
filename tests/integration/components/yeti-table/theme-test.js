@@ -55,7 +55,7 @@ module('Integration | Component | yeti-table (theme)', function (hooks) {
 
   test('renders table with correct theme (header)', async function (assert) {
     await render(hbs`
-      <YetiTable @data={{this.data}} @theme={{theme}} as |table|>
+      <YetiTable @data={{this.data}} @theme={{this.theme}} as |table|>
 
         <table.header as |header|>
           <header.column @prop="firstName">
@@ -84,7 +84,7 @@ module('Integration | Component | yeti-table (theme)', function (hooks) {
 
   test('renders table with correct theme (head)', async function (assert) {
     await render(hbs`
-      <YetiTable @data={{this.data}} @theme={{theme}} as |table|>
+      <YetiTable @data={{this.data}} @theme={{this.theme}} as |table|>
 
         <table.thead as |head|>
           <head.row as |row|>
@@ -144,7 +144,7 @@ module('Integration | Component | yeti-table (theme)', function (hooks) {
     };
 
     await render(hbs`
-      <YetiTable @data={{this.data}} @theme={{theme}} as |table|>
+      <YetiTable @data={{this.data}} @theme={{this.theme}} as |table|>
 
         <table.thead as |head|>
           <head.row as |row|>

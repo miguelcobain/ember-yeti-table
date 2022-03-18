@@ -1,4 +1,4 @@
-import { render } from '@ember/test-helpers';
+import { render, waitFor } from '@ember/test-helpers';
 import { click } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
 import { module, test } from 'qunit';
@@ -735,6 +735,7 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
 
     assert.dom('table').exists({ count: 1 });
     assert.dom('tr').exists({ count: 6 });
+    await waitFor('tbody tr:nth-child(1) td:nth-child(1)');
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Custom Miguel');
     assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Custom José');
     assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Custom Maria');

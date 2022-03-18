@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 
 /**
   Renders a `<td>` element and yields for the developer to supply content.
@@ -16,12 +17,17 @@ import Component from '@glimmer/component';
  */
 
 export default class TFootCell extends Component {
-  column;
+  @tracked
+  index;
+
+  get column() {
+    return this.args.columns[this.index];
+  }
 
   constructor() {
     super(...arguments);
 
-    this.column = this.args.parent?.registerCell(this);
+    this.index = this.args.parent?.registerCell(this);
   }
 
   willDestroy() {

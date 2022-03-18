@@ -1,9 +1,6 @@
 import { isArray } from '@ember/array';
 import { assert } from '@ember/debug';
 import { action } from '@ember/object';
-// Can be removed when yeti-table component is altered to user glimmer
-import { dependentKeyCompat } from '@ember/object/compat';
-import { equal, or } from '@ember/object/computed';
 
 import Component from '@glimmer/component';
 import { localCopy } from 'tracked-toolbox';
@@ -57,7 +54,6 @@ export default class Column extends Component {
    * @argument prop
    * @type {String}
    */
-  @dependentKeyCompat
   get prop() {
     return this.args.prop;
   }
@@ -69,7 +65,6 @@ export default class Column extends Component {
    * @argument visible
    * @type {Boolean}
    */
-  @dependentKeyCompat
   @localCopy('args.visible', true)
   visible;
 
@@ -81,7 +76,6 @@ export default class Column extends Component {
    * @argument sortable
    * @type Boolean
    */
-  @dependentKeyCompat
   @localCopy('args.sortable', true)
   sortable;
 
@@ -92,7 +86,6 @@ export default class Column extends Component {
    * @argument sort
    * @type {String}
    */
-  @dependentKeyCompat
   @localCopy('args.sort')
   sort;
 
@@ -113,7 +106,6 @@ export default class Column extends Component {
    * @argument filterable
    * @type {Boolean}
    */
-  @dependentKeyCompat
   @localCopy('args.filterable', true)
   filterable;
 
@@ -127,7 +119,6 @@ export default class Column extends Component {
    * @argument filter
    * @type {String}
    */
-  @dependentKeyCompat
   get filter() {
     return this.args.filter;
   }
@@ -144,7 +135,6 @@ export default class Column extends Component {
    * @argument filterFunction
    * @type {Function}
    */
-  @dependentKeyCompat
   get filterFunction() {
     return this.args.filterFunction;
   }
@@ -157,7 +147,6 @@ export default class Column extends Component {
    * @argument filterUsing
    * @type {String}
    */
-  @dependentKeyCompat
   get filterUsing() {
     return this.args.filterUsing;
   }
@@ -168,7 +157,6 @@ export default class Column extends Component {
    * @argument columnClass
    * @type {String}
    */
-  @dependentKeyCompat
   get columnClass() {
     return this.args.columnClass;
   }
@@ -178,7 +166,6 @@ export default class Column extends Component {
    * It defaults to the trimmed `textContent` of the `<th>` element, but can be overridden
    * by using a `@name="your custom name"` argument.
    */
-  @dependentKeyCompat
   @localCopy('args.name')
   name;
 
@@ -192,11 +179,17 @@ export default class Column extends Component {
    * @type {Function}
    */
 
-  @equal('sort', 'asc') isAscSorted;
+  get isAscSorted() {
+    return this.sort === 'asc';
+  }
 
-  @equal('sort', 'desc') isDescSorted;
+  get isDescSorted() {
+    return this.sort === 'desc';
+  }
 
-  @or('isAscSorted', 'isDescSorted') isSorted;
+  get isSorted() {
+    return this.isAscSorted || this.isDescSorted;
+  }
 
   get normalizedSortSequence() {
     let sortSequence = this.args.sortSequence;
