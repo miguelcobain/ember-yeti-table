@@ -1,3 +1,9 @@
+# v1.7.1
+
+#### ✨ Features
+
+- The column's `@filterFunction` now gets an extra argument passed in with the row.
+
 # v1.7.0
 
 #### ✨ Features

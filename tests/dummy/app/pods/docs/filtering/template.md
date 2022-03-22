@@ -132,6 +132,7 @@ The `@filterFunction` function on `<header.column>` arguments are:
 
 - `value` - the current data **cell** to use for filtering
 - `filterUsing` - the value you passed in as `@filterUsing`
+- `row` - the current data row to use for filtering
 
 This allows for advanced filtering logic. See the following example:
 

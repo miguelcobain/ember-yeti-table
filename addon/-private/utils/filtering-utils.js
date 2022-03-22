@@ -22,7 +22,7 @@ function createColumnFilters(columns) {
       let passesCustom = true;
 
       if (!isEmpty(get(c, 'filterFunction'))) {
-        passesCustom = get(c, 'filterFunction')(value, get(c, 'filterUsing'));
+        passesCustom = get(c, 'filterFunction')(value, get(c, 'filterUsing'), row);
       }
 
       return passesRegex && passesCustom;
