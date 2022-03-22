@@ -11,6 +11,12 @@
 
 - Converted components to user glimmer syntax [#345](https://github.com/miguelcobain/ember-yeti-table/pull/345) [#351](https://github.com/miguelcobain/ember-yeti-table/pull/351)
 
+# v1.7.4
+
+#### ✨ Features
+
+- The column's `@filterFunction` now gets an extra argument passed in with the row.
+
 # v1.7.3
 
 #### 🐛 Bugfixes
