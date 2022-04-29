@@ -1,5 +1,9 @@
 {{#if this.column.visible}}
   <td class="{{@class}} {{this.column.columnClass}} {{@theme.tbodyCell}}" ...attributes>
-    {{yield}}
+    {{yield
+      (hash
+        prop=this.column.prop
+      )
+    }}
   </td>
 {{/if}}

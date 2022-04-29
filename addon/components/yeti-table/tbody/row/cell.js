@@ -7,7 +7,15 @@ import Component from '@glimmer/component';
     {{person.firstName}}
   </row.cell>
   ```
-*/
+
+ If the prop name was used when the column header was defined, it is yielded in a hash
+ ```hbs
+ <row.cell as |column|>
+   {{get person column.prop}}
+ </row.cell>
+ ```
+
+ */
 class TBodyCell extends Component {
   // Assigned when the cell is registered
   column = undefined;

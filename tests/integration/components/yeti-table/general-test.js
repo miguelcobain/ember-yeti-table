@@ -109,8 +109,8 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
             <row.cell>
               Custom {{person.firstName}}
             </row.cell>
-            <row.cell>
-              {{person.lastName}}
+            <row.cell as |column|>
+              {{get person column.prop}}
             </row.cell>
             <row.cell>
               {{person.points}}
