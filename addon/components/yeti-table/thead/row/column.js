@@ -215,7 +215,7 @@ export default class Column extends Component {
 
   @action
   runLoadData() {
-    this.args.parent?.runLoadData();
+    // this.args.parent?.runLoadData();
   }
 
   willDestroy() {

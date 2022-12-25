@@ -6,38 +6,51 @@ import { A } from '@ember/array';
 import { set, get } from '@ember/object';
 import { run } from '@ember/runloop';
 
+import { tracked } from '@glimmer/tracking';
 import { hbs } from 'ember-cli-htmlbars';
+
+class Person {
+  @tracked firstName;
+  @tracked lastName;
+  @tracked points;
+
+  constructor({ firstName, lastName, points }) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.points = points;
+  }
+}
 
 module('Integration | Component | yeti-table (filtering)', function (hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function () {
     this.data = A([
-      {
+      new Person({
         firstName: 'Miguel',
         lastName: 'Andrade',
         points: 1
-      },
-      {
+      }),
+      new Person({
         firstName: 'José',
         lastName: 'Baderous',
         points: 2
-      },
-      {
+      }),
+      new Person({
         firstName: 'Maria',
         lastName: 'Silva',
         points: 3
-      },
-      {
+      }),
+      new Person({
         firstName: 'Tom',
         lastName: 'Pale',
         points: 4
-      },
-      {
+      }),
+      new Person({
         firstName: 'Tom',
         lastName: 'Dale',
         points: 5
-      }
+      })
     ]);
   });
 

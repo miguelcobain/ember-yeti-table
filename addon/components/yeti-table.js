@@ -1,12 +1,14 @@
 import { getOwner } from '@ember/application';
 import { action } from '@ember/object';
-import { once, scheduleOnce } from '@ember/runloop';
+import { scheduleOnce } from '@ember/runloop';
 import { isEmpty, isPresent } from '@ember/utils';
 
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import merge from 'deepmerge';
-import { localCopy, cached } from 'tracked-toolbox';
+import { modifier } from 'ember-modifier';
+import { trackedFunction } from 'ember-resources/util/function';
+import { localCopy, cached, dedupeTracked } from 'tracked-toolbox';
 
 import DEFAULT_THEME from 'ember-yeti-table/-private/themes/default-theme';
 import filterData from 'ember-yeti-table/-private/utils/filtering-utils';
@@ -130,7 +132,7 @@ export default class YetiTable extends Component {
     nextPage: this.nextPage,
     goToPage: this.goToPage,
     changePageSize: this.changePageSize,
-    reloadData: this.runLoadData
+    reloadData: this.reloadData
   };
 
   /**
@@ -184,6 +186,11 @@ export default class YetiTable extends Component {
    * @argument totalRows
    * @type {number}
    */
+  totalRows;
+
+  updateTotalRows = modifier(([totalRows]) => {
+    this.totalRows = totalRows;
+  });
 
   /**
    * The global filter. If passed in, Yeti Table will search all the rows that contain this
@@ -192,8 +199,16 @@ export default class YetiTable extends Component {
    * @argument filter
    * @type {String}
    */
-  @localCopy('args.filter', '')
-  filter;
+  @dedupeTracked((a, b) => a.value === b.value)
+  filter = '';
+
+  updateFilter = modifier(([filter]) => {
+    if (!filter) {
+      filter = '';
+    }
+
+    this.filter = filter;
+  });
 
   /**
    * An optional function to customize the filtering logic. This function should return true
@@ -271,7 +286,7 @@ export default class YetiTable extends Component {
    * @type {boolean}
    */
   @localCopy('args.ignoreDataChanges', getConfigWithDefault('ignoreDataChanges', false))
-  ignoreDataChanges = false;
+  ignoreDataChanges;
 
   /**
    * Use `@renderTableElement` to prevent yeti table from rendering the topmost <table> element.
@@ -307,9 +322,6 @@ export default class YetiTable extends Component {
     return merge.all([DEFAULT_THEME, configTheme, localTheme]);
   }
 
-  @tracked
-  isLoading = false;
-
   @cached
   get visibleColumns() {
     return this.columns.filter(c => c.visible === true);
@@ -323,12 +335,12 @@ export default class YetiTable extends Component {
       return this.sortedData?.length;
     } else {
       // async scenario. @loadData is present.
-      if (this.args.totalRows === undefined) {
+      if (this.totalRows === undefined) {
         // @totalRows was not passed in. Use the returned data set length.
-        return this.resolvedData?.length;
+        return 0; // || this.resolvedData.value?.length;
       } else {
         // @totalRows was passed in.
-        return this.args.totalRows;
+        return this.totalRows;
       }
     }
   }
@@ -339,7 +351,7 @@ export default class YetiTable extends Component {
       return this.sortedData;
     } else {
       // async scenario. @loadData is present.
-      return this.resolvedData;
+      return this.resolvedData.value;
     }
   }
 
@@ -388,14 +400,11 @@ export default class YetiTable extends Component {
   get processedData() {
     if (this.args.loadData) {
       // skip processing and return raw data if remote data is enabled via `loadData`
-      return this.resolvedData;
+      return this.resolvedData.value;
     } else {
       return this.pagedData;
     }
   }
-
-  @tracked
-  resolvedData = [];
 
   @tracked
   columns = [];
@@ -409,7 +418,7 @@ export default class YetiTable extends Component {
     // only columns that have filterable = true and a prop defined will be considered
     let columns = this.columns.filter(c => c.filterable && isPresent(c.prop));
 
-    return filterData(this.resolvedData, columns, this.filter, this.args.filterFunction, this.args.filterUsing);
+    return filterData(this.resolvedData.value, columns, this.filter, this.args.filterFunction, this.args.filterUsing);
   }
 
   @cached
@@ -434,98 +443,61 @@ export default class YetiTable extends Component {
       scheduleOnce('actions', null, this.args.registerApi, this.publicApi);
     }
 
-    this.fetchData();
+    this.totalRows = this.args.totalRows;
   }
 
-  @action
-  async fetchData() {
-    let oldData = this._oldData;
+  resolvedData = trackedFunction(this, [], async () => {
+    let loadData = this.args.loadData;
     let data = this.args.data;
 
-    if (data !== oldData) {
-      if (data && data.then) {
-        try {
-          this.isLoading = true;
-          let resolvedData = await data;
-          // check if data is still the same promise
-          if (data === this.args.data && !this.isDestroyed) {
-            this.resolvedData = resolvedData;
-          }
-        } catch (e) {
-          if (!didCancel(e)) {
-            // re-throw the non-cancellation error
-            throw e;
-          }
-        } finally {
-          if (!this.isDestroyed) {
-            this.isLoading = false;
-          }
-        }
-      } else {
-        this.resolvedData = data || [];
-      }
+    if (this.columns.length == 0) {
+      return [];
     }
 
-    this._oldData = data;
+    if (typeof loadData === 'function') {
+      let param = {};
+
+      if (this.pagination) {
+        param.paginationData = this.paginationData;
+      }
+
+      param.sortData = this.columns.filter(c => !isEmpty(c.sort)).map(c => ({ prop: c.prop, direction: c.sort }));
+      param.filterData = {
+        filter: this.filter,
+        filterUsing: this.filterUsing,
+        columnFilters: this.columns.map(c => ({
+          prop: c.prop,
+          filter: c.filter,
+          filterUsing: c.filterUsing
+        }))
+      };
+
+      data = loadData(param);
+    }
+
+    if (data?.then) {
+      try {
+        let resolvedData = await data;
+        return resolvedData;
+      } catch (e) {
+        if (!didCancel(e)) {
+          // re-throw the non-cancellation error
+          throw e;
+        }
+      }
+    } else {
+      return data || [];
+    }
+  });
+
+  @action
+  async reloadData() {
+    return await this.resolvedData.retry();
   }
 
   @action
   createProperties() {
     this.columns = this.columnsBuffer;
-    this.runLoadData();
-  }
-
-  @action
-  runLoadData() {
-    let loadData = this.args.loadData;
-    if (loadData) {
-      let loadDataFunction = async () => {
-        let loadData = this.args.loadData;
-        if (typeof loadData === 'function') {
-          let param = {};
-
-          if (this.pagination) {
-            param.paginationData = this.paginationData;
-          }
-
-          param.sortData = this.columns.filter(c => !isEmpty(c.sort)).map(c => ({ prop: c.prop, direction: c.sort }));
-          param.filterData = {
-            filter: this.filter,
-            filterUsing: this.filterUsing,
-            columnFilters: this.columns.map(c => ({
-              prop: c.prop,
-              filter: c.filter,
-              filterUsing: c.filterUsing
-            }))
-          };
-
-          let promise = loadData(param);
-
-          if (promise && promise.then) {
-            this.isLoading = true;
-            try {
-              let resolvedData = await promise;
-              if (!this.isDestroyed) {
-                this.resolvedData = resolvedData;
-                this.isLoading = false;
-              }
-            } catch (e) {
-              if (!didCancel(e)) {
-                if (!this.isDestroyed) {
-                  this.isLoading = false;
-                }
-                // re-throw the non-cancelation error
-                throw e;
-              }
-            }
-          } else {
-            this.resolvedData = promise;
-          }
-        }
-      };
-
-      once(loadDataFunction);
-    }
   }
 
   @action
@@ -561,7 +533,6 @@ export default class YetiTable extends Component {
         columns.forEach(c => (c.sort = null));
       }
     }
-    this.runLoadData();
   }
 
   @action
@@ -569,7 +540,6 @@ export default class YetiTable extends Component {
     if (this.pagination) {
       let { pageNumber } = this.paginationData;
       this.pageNumber = Math.max(pageNumber - 1, 1);
-      this.runLoadData();
     }
   }
 
@@ -580,7 +550,6 @@ export default class YetiTable extends Component {
 
       if (!isLastPage) {
         this.pageNumber = pageNumber + 1;
-        this.runLoadData();
       }
     }
   }
@@ -596,7 +565,6 @@ export default class YetiTable extends Component {
       }
 
       this.pageNumber = pageNumber;
-      this.runLoadData();
     }
   }
 
@@ -604,7 +572,6 @@ export default class YetiTable extends Component {
   changePageSize(pageSize) {
     if (this.pagination) {
       this.pageSize = parseInt(pageSize);
-      this.runLoadData();
     }
   }
 

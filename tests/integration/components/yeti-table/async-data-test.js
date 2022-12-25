@@ -533,6 +533,7 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
     await clearRender();
 
     assert.ok(this.loadData.calledTwice, 'loadData was called twice');
+
     assert.ok(
       this.loadData.firstCall.calledWithMatch({
         paginationData: {

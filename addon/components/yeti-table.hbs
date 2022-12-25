@@ -46,7 +46,7 @@
   )
   actions=this.publicApi
   paginationData=this.paginationData
-  isLoading=this.isLoading
+  isLoading=this.resolvedData.isPending
   columns=this.columns
   visibleColumns=this.visibleColumns
   rows=this.normalizedRows
@@ -59,8 +59,8 @@
     <EmberYetiTable@YetiTable::Table
       @theme={{this.mergedTheme}}
       @parent={{this}}
-      {{did-update this.fetchData @data}}
-      {{did-update this.runLoadData @pageNumber @filter}} ...attributes>
+      {{this.updateTotalRows @totalRows}}
+      {{this.updateFilter @filter}} ...attributes>
       {{yield api}}
     </EmberYetiTable@YetiTable::Table>
   {{else}}

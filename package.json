@@ -37,11 +37,12 @@
   "dependencies": {
     "@ember/render-modifiers": "^1.0.2 || ^2.0.0",
     "deepmerge": "^4.2.2",
-    "ember-auto-import": "^1.10.1",
+    "ember-auto-import": "^2.5.0",
     "ember-cli-babel": "^7.23.1",
     "ember-cli-htmlbars": "^5.3.1",
-    "ember-decorators": "^6.1.1",
-    "tracked-toolbox": "^1.2.3"
+    "ember-modifier": "^4.0.0",
+    "ember-resources": "^5.6.0",
+    "tracked-toolbox": "^2.0.0"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
@@ -100,7 +101,8 @@
     "prettier": "^2.2.1",
     "qunit": "^2.14.0",
     "qunit-dom": "^1.6.0",
-    "sinon": "^9.2.4"
+    "sinon": "^9.2.4",
+    "webpack": "^5.75.0"
   },
   "resolutions": {
     "ember-cli-clipboard": "0.13.0"
