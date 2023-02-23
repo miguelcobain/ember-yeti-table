@@ -4,8 +4,7 @@
     role={{if this.sortable "button"}}
     class="{{@class}} {{@theme.theadCell}} {{if this.sortable @theme.sorting.columnSortable}} {{if this.isSorted @theme.sorting.columnSorted}} {{if this.isAscSorted @theme.sorting.columnSortedAsc}} {{if this.isDescSorted @theme.sorting.columnSortedDesc}}"
     {{on "click" (if this.sortable (fn @onClick this) this.noop)}}
-    {{did-insert this.updateName}}
-    {{did-update this.runLoadData @filterText @filter @filterUsing @sort}}
+    {{this.updateName}}
     ...attributes>
     {{yield (hash
       isSorted=this.isSorted

@@ -1,6 +1,7 @@
 import { getOwner } from '@ember/application';
 import { action } from '@ember/object';
 import { scheduleOnce } from '@ember/runloop';
+import { schedule } from '@ember/runloop';
 import { isEmpty, isPresent } from '@ember/utils';
 
 import Component from '@glimmer/component';
@@ -188,7 +189,10 @@ export default class YetiTable extends Component {
    */
   totalRows;
 
-  updateTotalRows = modifier(([totalRows]) => {
+  // we keep `totalRows` updated manually in an untracked property
+  // to allow the user to update it in a loadData call and avoid
+  // a re-run of the main tracked function
+  updateTotalRows = modifier((el, [totalRows]) => {
     this.totalRows = totalRows;
   });
 
@@ -199,10 +203,13 @@ export default class YetiTable extends Component {
    * @argument filter
    * @type {String}
    */
-  @dedupeTracked((a, b) => a.value === b.value)
+  @dedupeTracked
   filter = '';
 
-  updateFilter = modifier(([filter]) => {
+  // we need some control of how we update the filter property, hence this modifier
+  // in this case, any falsy value will be considered as en empty string, which will then
+  // be deduped.
+  updateFilter = modifier((el, [filter]) => {
     if (!filter) {
       filter = '';
     }
@@ -332,12 +339,12 @@ export default class YetiTable extends Component {
   get normalizedTotalRows() {
     if (!this.args.loadData) {
       // sync scenario using @data
-      return this.sortedData?.length;
+      return this.previousResolvedData?.length;
     } else {
       // async scenario. @loadData is present.
       if (this.totalRows === undefined) {
-        // @totalRows was not passed in. Use the returned data set length.
-        return 0; // || this.resolvedData.value?.length;
+        // @totalRows was not passed in. Use the latest returned data set length as a fallback
+        return this.previousResolvedData?.length || 0;
       } else {
         // @totalRows was passed in.
         return this.totalRows;
@@ -355,6 +362,18 @@ export default class YetiTable extends Component {
     }
   }
 
+  get pageStart() {
+    return (this.pageNumber - 1) * this.pageSize + 1;
+  }
+
+  get pageEnd() {
+    return this.pageStart + this.pageSize - 1;
+  }
+
+  get isFirstPage() {
+    return this.pageNumber === 1;
+  }
+
   get paginationData() {
     let pageSize = this.pageSize;
     let pageNumber = this.pageNumber;
@@ -367,14 +386,9 @@ export default class YetiTable extends Component {
       isLastPage = pageNumber === totalPages;
     }
 
-    let isFirstPage = pageNumber === 1;
-    let pageStart = (pageNumber - 1) * pageSize;
-
-    let pageEnd = pageStart + pageSize - 1;
-
-    // make pageStart and pageEnd 1-indexed
-    pageStart += 1;
-    pageEnd += 1;
+    let isFirstPage = this.isFirstPage;
+    let pageStart = this.pageStart;
+    let pageEnd = this.pageEnd;
 
     if (totalRows) {
       pageEnd = Math.min(pageEnd, totalRows);
@@ -383,43 +397,8 @@ export default class YetiTable extends Component {
     return { pageSize, pageNumber, pageStart, pageEnd, isFirstPage, isLastPage, totalRows, totalPages };
   }
 
-  @cached
-  get pagedData() {
-    let pagination = this.pagination;
-    let data = this.sortedData;
-
-    if (pagination) {
-      let { pageStart, pageEnd } = this.paginationData;
-      data = data.slice(pageStart - 1, pageEnd); // slice excludes last element so we don't need to subtract 1
-    }
-
-    return data;
-  }
-
-  @cached
-  get processedData() {
-    if (this.args.loadData) {
-      // skip processing and return raw data if remote data is enabled via `loadData`
-      return this.resolvedData.value;
-    } else {
-      return this.pagedData;
-    }
-  }
-
   @tracked
   columns = [];
-
-  // an untracked property that serves as a buffer to collect columns during rendering
-  // will be set to this.columns after rendering
-  columnsBuffer = [];
-
-  @cached
-  get filteredData() {
-    // only columns that have filterable = true and a prop defined will be considered
-    let columns = this.columns.filter(c => c.filterable && isPresent(c.prop));
-
-    return filterData(this.resolvedData.value, columns, this.filter, this.args.filterFunction, this.args.filterUsing);
-  }
 
   @cached
   get sortedData() {
@@ -442,62 +421,101 @@ export default class YetiTable extends Component {
     if (typeof this.args.registerApi === 'function') {
       scheduleOnce('actions', null, this.args.registerApi, this.publicApi);
     }
-
-    this.totalRows = this.args.totalRows;
   }
 
+  @dedupeTracked previousResolvedData = null;
+
   resolvedData = trackedFunction(this, [], async () => {
-    let loadData = this.args.loadData;
     let data = this.args.data;
 
     if (this.columns.length == 0) {
       return [];
     }
 
-    if (typeof loadData === 'function') {
-      let param = {};
-
-      if (this.pagination) {
-        param.paginationData = this.paginationData;
-      }
-
-      param.sortData = this.columns.filter(c => !isEmpty(c.sort)).map(c => ({ prop: c.prop, direction: c.sort }));
-      param.filterData = {
-        filter: this.filter,
-        filterUsing: this.filterUsing,
-        columnFilters: this.columns.map(c => ({
-          prop: c.prop,
-          filter: c.filter,
-          filterUsing: c.filterUsing
-        }))
-      };
-
-      data = loadData(param);
+    // call loadData if exists
+    if (typeof this.args.loadData === 'function') {
+      let params = this.computeLoadDataParams();
+      data = this.args.loadData(params);
     }
 
+    // resolve the data promise (either from the @loadData call or @data)
     if (data?.then) {
       try {
-        let resolvedData = await data;
-        return resolvedData;
+        data = await data;
       } catch (e) {
         if (!didCancel(e)) {
           // re-throw the non-cancellation error
           throw e;
         }
       }
-    } else {
-      return data || [];
     }
+
+    data = data || [];
+
+    this.previousResolvedData = data;
+
+    // if we're not using @loadData: filter, sort and paginate
+    if (!this.args.loadData) {
+      data = this.filterData(data);
+      data = this.sortData(data);
+      data = this.paginateData(data);
+    }
+
+    return data;
   });
+
+  computeLoadDataParams() {
+    let params = {};
+
+    if (this.pagination) {
+      params.paginationData = this.paginationData;
+    }
+
+    params.sortData = this.columns.filter(c => !isEmpty(c.sort)).map(c => ({ prop: c.prop, direction: c.sort }));
+    params.filterData = {
+      filter: this.filter,
+      filterUsing: this.filterUsing,
+      columnFilters: this.columns.map(c => ({
+        prop: c.prop,
+        filter: c.filter,
+        filterUsing: c.filterUsing
+      }))
+    };
+
+    return params;
+  }
+
+  filterData(data) {
+    // only columns that have filterable = true and a prop defined will be considered
+    let columns = this.columns.filter(c => c.filterable && isPresent(c.prop));
+
+    return filterData(data, columns, this.filter, this.args.filterFunction, this.args.filterUsing);
+  }
+
+  sortData(data) {
+    let sortableColumns = this.columns.filter(c => !isEmpty(c.sort));
+    let sortings = sortableColumns.map(c => ({ prop: c.prop, direction: c.sort }));
+
+    if (sortings.length > 0) {
+      data = mergeSort(data, (itemA, itemB) => {
+        return this.sortFunction(itemA, itemB, sortings, this.compareFunction);
+      });
+    }
+
+    return data;
+  }
+
+  paginateData(data) {
+    if (this.pagination) {
+      data = data.slice(this.pageStart - 1, this.pageEnd); // slice excludes last element so we don't need to subtract 1
+    }
+
+    return data;
+  }
 
   @action
   async reloadData() {
     return await this.resolvedData.retry();
-  }
-
-  @action
-  createProperties() {
-    this.columns = this.columnsBuffer;
   }
 
   @action
@@ -538,18 +556,17 @@ export default class YetiTable extends Component {
   @action
   previousPage() {
     if (this.pagination) {
-      let { pageNumber } = this.paginationData;
-      this.pageNumber = Math.max(pageNumber - 1, 1);
+      this.pageNumber = Math.max(this.pageNumber - 1, 1);
     }
   }
 
   @action
   nextPage() {
     if (this.pagination) {
-      let { pageNumber, isLastPage } = this.paginationData;
+      let { isLastPage } = this.paginationData;
 
       if (!isLastPage) {
-        this.pageNumber = pageNumber + 1;
+        this.pageNumber = this.pageNumber + 1;
       }
     }
   }
@@ -576,14 +593,15 @@ export default class YetiTable extends Component {
   }
 
   registerColumn(column) {
-    if (typeof this.args.isColumnVisible === 'function') {
-      column.visible = this.args.isColumnVisible(column);
-    }
+    schedule('afterRender', this, function () {
+      if (typeof this.args.isColumnVisible === 'function') {
+        column.visible = this.args.isColumnVisible(column);
+      }
 
-    let columns = this.columnsBuffer;
-    if (!columns.includes(column)) {
-      this.columnsBuffer.push(column);
-    }
+      if (!this.columns.includes(column)) {
+        this.columns = [...this.columns, column];
+      }
+    });
   }
 
   unregisterColumn(column) {

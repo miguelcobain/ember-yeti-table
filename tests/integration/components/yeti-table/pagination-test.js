@@ -277,6 +277,7 @@ module('Integration | Component | yeti-table (pagination)', function (hooks) {
     assert.dom('button#previous').isDisabled();
     assert.dom('button#next').isNotDisabled();
     assert.dom('div#pageSize').hasText('15');
+
     assert.dom('div#pageNumber').hasText('1 of 3');
     assert.dom('div#pageStart').hasText('1 to 15 of 40');
 

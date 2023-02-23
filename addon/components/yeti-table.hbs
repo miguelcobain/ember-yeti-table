@@ -17,13 +17,13 @@
     parent=this
   )
   body=(component "ember-yeti-table@yeti-table/body"
-    data=this.processedData
+    data=this.resolvedData.value
     columns=this.columns
     theme=this.mergedTheme
     parent=this
   )
   tbody=(component "ember-yeti-table@yeti-table/tbody"
-    data=this.processedData
+    data=this.resolvedData.value
     columns=this.columns
     theme=this.mergedTheme
     parent=this
@@ -51,7 +51,7 @@
   visibleColumns=this.visibleColumns
   rows=this.normalizedRows
   totalRows=this.normalizedTotalRows
-  visibleRows=this.processedData
+  visibleRows=this.resolvedData.value
   theme=this.mergedTheme
 ) as |api|}}
 

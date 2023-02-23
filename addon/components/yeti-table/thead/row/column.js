@@ -1,8 +1,8 @@
 import { isArray } from '@ember/array';
 import { assert } from '@ember/debug';
-import { action } from '@ember/object';
 
 import Component from '@glimmer/component';
+import { modifier } from 'ember-modifier';
 import { localCopy } from 'tracked-toolbox';
 
 /**
@@ -213,22 +213,16 @@ export default class Column extends Component {
     this.args.parent?.registerColumn(this);
   }
 
-  @action
-  runLoadData() {
-    // this.args.parent?.runLoadData();
-  }
-
   willDestroy() {
     super.willDestroy(...arguments);
     this.args.parent?.unregisterColumn(this);
   }
 
-  @action
-  updateName(element) {
+  updateName = modifier(element => {
     if (!this.args.name) {
       this.name = element.textContent.trim();
     }
-  }
+  });
 
   noop = () => {};
 }

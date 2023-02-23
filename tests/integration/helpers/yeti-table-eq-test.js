@@ -11,7 +11,7 @@ module('Integration | Helper | yeti-table-eq', function (hooks) {
     this.set('inputValue', '1234');
 
     await render(hbs`
-      {{#if (yeti-table-eq inputValue "1234")}}
+      {{#if (yeti-table-eq this.inputValue "1234")}}
         works!
       {{/if}}
     `);
@@ -23,7 +23,7 @@ module('Integration | Helper | yeti-table-eq', function (hooks) {
     this.set('inputValue', '1234');
 
     await render(hbs`
-      {{#if (yeti-table-eq inputValue 1234)}}
+      {{#if (yeti-table-eq this.inputValue 1234)}}
         works!
       {{else}}
         not work

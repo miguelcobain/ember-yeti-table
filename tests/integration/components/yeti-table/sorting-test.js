@@ -155,10 +155,10 @@ module('Integration | Component | yeti-table (sorting)', function (hooks) {
       <YetiTable @data={{this.data}} as |table|>
 
         <table.header as |header|>
-          <header.column @prop="firstName" @sort={{firstNameSort}}>
+          <header.column @prop="firstName" @sort={{this.firstNameSort}}>
             First name
           </header.column>
-          <header.column @prop="lastName" @sort={{lastNameSort}}>
+          <header.column @prop="lastName" @sort={{this.lastNameSort}}>
             Last name
           </header.column>
           <header.column @prop="points">
@@ -194,7 +194,7 @@ module('Integration | Component | yeti-table (sorting)', function (hooks) {
       <YetiTable @data={{this.data}} as |table|>
 
         <table.header as |header|>
-          <header.column @prop="firstName" @sort={{sort}}>
+          <header.column @prop="firstName" @sort={{this.sort}}>
             First name
           </header.column>
           <header.column @prop="lastName">
