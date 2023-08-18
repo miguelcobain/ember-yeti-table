@@ -111,6 +111,8 @@ module('Integration | Component | yeti-table (filtering)', function (hooks) {
 
     this.set('filterText', 'Baderous');
 
+    await settled();
+
     assert.dom('tbody tr').exists({ count: 1 });
 
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
@@ -211,6 +213,7 @@ module('Integration | Component | yeti-table (filtering)', function (hooks) {
     assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Tom');
 
     this.set('filterLast', 'Dale');
+    await settled();
 
     assert.dom('tbody tr').exists({ count: 1 });
 
@@ -244,7 +247,7 @@ module('Integration | Component | yeti-table (filtering)', function (hooks) {
     assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Tom');
 
     run(() => {
-      set(this.data.objectAt(3), 'firstName', '123');
+      this.data.objectAt(3).firstName = 123;
     });
     await settled();
 
@@ -326,6 +329,7 @@ module('Integration | Component | yeti-table (filtering)', function (hooks) {
     assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Tom');
 
     this.set('filterText', 'lastName:baderous');
+    await settled();
 
     assert.dom('tbody tr').exists({ count: 1 });
     assert.dom('tbody tr:nth-child(1) td:nth-child(2)').hasText('Baderous');

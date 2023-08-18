@@ -8,7 +8,9 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import merge from 'deepmerge';
 import { modifier } from 'ember-modifier';
+import { use } from 'ember-resources';
 import { trackedFunction } from 'ember-resources/util/function';
+import { keepLatest } from 'ember-resources/util/keep-latest';
 import { localCopy, cached, dedupeTracked } from 'tracked-toolbox';
 
 import DEFAULT_THEME from 'ember-yeti-table/-private/themes/default-theme';
@@ -339,12 +341,12 @@ export default class YetiTable extends Component {
   get normalizedTotalRows() {
     if (!this.args.loadData) {
       // sync scenario using @data
-      return this.previousResolvedData?.length;
+      return this.latestData?.length || 0;
     } else {
       // async scenario. @loadData is present.
       if (this.totalRows === undefined) {
         // @totalRows was not passed in. Use the latest returned data set length as a fallback
-        return this.previousResolvedData?.length || 0;
+        return this.previousResolvedData.length || 0;
       } else {
         // @totalRows was passed in.
         return this.totalRows;
@@ -355,10 +357,10 @@ export default class YetiTable extends Component {
   get normalizedRows() {
     if (!this.args.loadData) {
       // sync scenario using @data
-      return this.sortedData;
+      return this.latestData;
     } else {
       // async scenario. @loadData is present.
-      return this.resolvedData.value;
+      return this.processedData;
     }
   }
 
@@ -400,21 +402,6 @@ export default class YetiTable extends Component {
   @tracked
   columns = [];
 
-  @cached
-  get sortedData() {
-    let data = this.filteredData;
-    let sortableColumns = this.columns.filter(c => !isEmpty(c.sort));
-    let sortings = sortableColumns.map(c => ({ prop: c.prop, direction: c.sort }));
-
-    if (sortings.length > 0) {
-      data = mergeSort(data, (itemA, itemB) => {
-        return this.sortFunction(itemA, itemB, sortings, this.compareFunction);
-      });
-    }
-
-    return data;
-  }
-
   constructor() {
     super(...arguments);
 
@@ -423,9 +410,9 @@ export default class YetiTable extends Component {
     }
   }
 
-  @dedupeTracked previousResolvedData = null;
+  previousResolvedData = [];
 
-  resolvedData = trackedFunction(this, [], async () => {
+  resolvedData = trackedFunction(this, async () => {
     let data = this.args.data;
 
     if (this.columns.length == 0) {
@@ -450,11 +437,26 @@ export default class YetiTable extends Component {
       }
     }
 
+    if (this.isDestroyed) {
+      return;
+    }
+
     data = data || [];
 
     this.previousResolvedData = data;
 
-    // if we're not using @loadData: filter, sort and paginate
+    return data;
+  });
+
+  @use latestData = keepLatest({
+    value: () => this.resolvedData.value ?? [],
+    when: () => this.resolvedData.isPending
+  });
+
+  @cached
+  get processedData() {
+    let data = this.latestData ?? [];
+
     if (!this.args.loadData) {
       data = this.filterData(data);
       data = this.sortData(data);
@@ -462,7 +464,7 @@ export default class YetiTable extends Component {
     }
 
     return data;
-  });
+  }
 
   computeLoadDataParams() {
     let params = {};

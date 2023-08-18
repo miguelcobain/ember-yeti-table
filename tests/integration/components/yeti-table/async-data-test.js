@@ -6,8 +6,7 @@ import { A } from '@ember/array';
 import { later } from '@ember/runloop';
 
 import { hbs } from 'ember-cli-htmlbars';
-import { timeout } from 'ember-concurrency';
-import { restartableTask } from 'ember-concurrency-decorators';
+import { timeout, restartableTask } from 'ember-concurrency';
 import RSVP from 'rsvp';
 import sinon from 'sinon';
 
@@ -192,6 +191,8 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
 
     assert.dom('tbody tr').doesNotExist();
 
+    await settled();
+
     this.set(
       'dataPromise',
       new RSVP.Promise(resolve => {
@@ -200,9 +201,9 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
         }, 10);
       })
     );
-
+    // debugger;
     await settled();
-
+    // debugger;
     assert.dom('tbody tr').exists({ count: 5 });
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('A');
     assert.dom('tbody tr:nth-child(1) td:nth-child(2)').hasText('B');
@@ -551,7 +552,7 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
     );
 
     assert.ok(
-      this.loadData.secondCall.calledWithMatch({
+      this.loadData.secondCall?.calledWithMatch({
         paginationData: {
           pageSize: 5,
           pageNumber: 2,
@@ -871,6 +872,8 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
     assert.ok(spy.firstCall.calledWithMatch({ filterData: { filter: 'Migu' } }));
     assert.ok(spy.secondCall.calledWithMatch({ filterData: { filter: 'Tom' } }));
     assert.equal(hardWorkCounter, 1, 'only did the "hard work" once');
+
+    await clearRender();
   });
 
   test('reloadData from @registerApi reruns the @loadData function', async function (assert) {

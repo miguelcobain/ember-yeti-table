@@ -645,14 +645,13 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
         <div id="totalRows">{{table.totalRows}}</div>
         <div id="rows">{{table.rows.length}}</div>
         <div id="visibleRows">{{table.visibleRows.length}}</div>
-
       </YetiTable>
     `);
 
     assert.dom('#totalColumns').hasText('4');
     assert.dom('#visibleColumns').hasText('3');
-    assert.dom('#rows').hasText('5');
     assert.dom('#totalRows').hasText('5');
+    assert.dom('#rows').hasText('5');
     assert.dom('#visibleRows').hasText('5');
   });
 
