@@ -18,6 +18,7 @@ import Component from '@glimmer/component';
   </table.thead>
   ```
 
+  @class THeadCell
   @yield {object} cell
 
  */

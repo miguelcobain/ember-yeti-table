@@ -17,6 +17,8 @@ import Component from '@glimmer/component';
     </header.column>
   </table.header>
   ```
+
+  @class Header
   @yield {object} header
   @yield {Component} header.column       the column component
 */

@@ -25,6 +25,8 @@ import Component from '@glimmer/component';
 
   </YetiTable>
   ```
+
+  @class Table
 */
 
 // eslint-disable-next-line ember/no-empty-glimmer-component-classes

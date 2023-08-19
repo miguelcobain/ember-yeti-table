@@ -36,6 +36,7 @@ import Component from '@glimmer/component';
   </table.body>
   ```
 
+  @class TBodyRow
   @yield {object} row
   @yield {Component} row.cell - the cell component
 */

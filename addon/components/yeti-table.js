@@ -17,10 +17,8 @@ import DEFAULT_THEME from 'ember-yeti-table/-private/themes/default-theme';
 import filterData from 'ember-yeti-table/-private/utils/filtering-utils';
 import { sortMultiple, compareValues, mergeSort } from 'ember-yeti-table/-private/utils/sorting-utils';
 
-/**
- * bring ember-concurrency didCancel helper instead of
- * including the whole dependency
- */
+// bring ember-concurrency didCancel helper instead of
+// including the whole dependency
 const TASK_CANCELATION_NAME = 'TaskCancelation';
 const didCancel = function (e) {
   return e && e.name === TASK_CANCELATION_NAME;
@@ -77,7 +75,7 @@ const getConfigWithDefault = function (key, defaultValue) {
 
   </YetiTable>
   ```
-
+  @class YetiTable
   @yield {object} table
   @yield {Component} table.header       the table header component (Single row in header)
   @yield {Component} table.thead        the table header component (Allows multiple rows in header)
@@ -364,18 +362,6 @@ export default class YetiTable extends Component {
     }
   }
 
-  get pageStart() {
-    return (this.pageNumber - 1) * this.pageSize + 1;
-  }
-
-  get pageEnd() {
-    return this.pageStart + this.pageSize - 1;
-  }
-
-  get isFirstPage() {
-    return this.pageNumber === 1;
-  }
-
   get paginationData() {
     let pageSize = this.pageSize;
     let pageNumber = this.pageNumber;
@@ -388,9 +374,9 @@ export default class YetiTable extends Component {
       isLastPage = pageNumber === totalPages;
     }
 
-    let isFirstPage = this.isFirstPage;
-    let pageStart = this.pageStart;
-    let pageEnd = this.pageEnd;
+    let isFirstPage = pageNumber === 1;
+    let pageStart = (pageNumber - 1) * pageSize + 1;
+    let pageEnd = pageStart + pageSize - 1;
 
     if (totalRows) {
       pageEnd = Math.min(pageEnd, totalRows);
@@ -509,7 +495,8 @@ export default class YetiTable extends Component {
 
   paginateData(data) {
     if (this.pagination) {
-      data = data.slice(this.pageStart - 1, this.pageEnd); // slice excludes last element so we don't need to subtract 1
+      let { pageStart, pageEnd } = this.paginationData;
+      data = data.slice(pageStart - 1, pageEnd); // slice excludes last element so we don't need to subtract 1
     }
 
     return data;

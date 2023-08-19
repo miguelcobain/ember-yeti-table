@@ -26,6 +26,8 @@ import Component from '@glimmer/component';
   <table.body/>
   ```
   Remember that this component's block will be rendered once per each item in the `@data` array.
+
+  @class Body
   @yield {object} body
   @yield {Component} body.row - the row component
   @yield {Object} rowData - one item in the data array

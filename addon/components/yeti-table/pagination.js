@@ -27,6 +27,8 @@ import { localCopy } from 'tracked-toolbox';
     </table.tfoot>
   </YetiTable>
   ```
+
+  @class Pagination
 */
 
 export default class Pagination extends Component {
@@ -50,26 +52,38 @@ export default class Pagination extends Component {
    * Array of page sizes to populate the page size `<select>`.
    * Particularly useful with an array helper, e.g `@pageSizes={{array 10 12 23 50 100}}`
    * Defaults to `[10, 15, 20, 25]`.
+   *
+   * @argument pageSizes
+   * @type {Number}
    */
   @localCopy('args.pageSizes', [10, 15, 20, 25])
   pageSizes;
 
   /**
    * Used to show/hide some textual information about the current page. Defaults to `true`.
+   *
+   * @argument showInfo
+   * @type {Boolean}
    */
   @localCopy('args.showInfo', true)
   showInfo;
 
   /**
    * Used to show/hide the page size selector. Defaults to `true`.
+   *
+   * @argument showPageSizeSelector
+   * @type {Boolean}
    */
-  @localCopy('args.showInfo', true)
+  @localCopy('args.showPageSizeSelector', true)
   showPageSizeSelector;
 
   /**
    * Used to show/hide the previous and next page buttons. Defaults to `true`.
+   *
+   * @argument showButtons
+   * @type {Boolean}
    */
-  @localCopy('args.showInfo', true)
+  @localCopy('args.showButtons', true)
   showButtons;
 
   @action

@@ -2,12 +2,13 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
 /**
+  @class TBodyCell
+
   Renders a `<td>` element (if its corresponding column definition has `@visible={{true}}`).
   ```hbs
   <row.cell>
     {{person.firstName}}
   </row.cell>
-  ```
 */
 export default class TBodyCell extends Component {
   @tracked

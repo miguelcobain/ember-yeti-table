@@ -23,6 +23,7 @@ import Component from '@glimmer/component';
 
  This component does not provide a blockless variation
 
+  @class TBody
   @yield {object} body
   @yield {Component} body.row - the row component
   @yield {Array} data

@@ -20,7 +20,7 @@ function generateDefaultProject() {
 }
 
 module.exports = function (defaults) {
-  let app = new EmberAddon(defaults, {
+  const app = new EmberAddon(defaults, {
     'ember-cli-favicon': {
       faviconsConfig: {
         path: '/ADDON_DOCS_ROOT_URL'

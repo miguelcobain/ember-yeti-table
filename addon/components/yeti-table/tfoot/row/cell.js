@@ -13,7 +13,7 @@ import { tracked } from '@glimmer/tracking';
     </foot.row>
   </table.tfoot>
   ```
-
+  @class TFootCell
  */
 
 export default class TFootCell extends Component {

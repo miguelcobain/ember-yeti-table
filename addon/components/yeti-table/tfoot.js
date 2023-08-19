@@ -12,6 +12,7 @@ import Component from '@glimmer/component';
   </table.tfoot>
   ```
 
+  @class TTFoot
   @yield {object} footer
   @yield {Component} footer.row
 */

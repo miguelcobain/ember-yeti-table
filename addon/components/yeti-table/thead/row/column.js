@@ -31,6 +31,7 @@ import { localCopy } from 'tracked-toolbox';
   </table.thead>
   ```
 
+  @class Column
   @yield {object} column
   @yield {boolean} column.isSorted - `true` if column is sorted ascending or descending
   @yield {boolean} column.isAscSorted - `true` if column is sorted ascending
@@ -165,6 +166,9 @@ export default class Column extends Component {
    * This property is a human-readable representation of the name of the column.
    * It defaults to the trimmed `textContent` of the `<th>` element, but can be overridden
    * by using a `@name="your custom name"` argument.
+   *
+   * @argument name
+   * @type {String}
    */
   @localCopy('args.name')
   name;
