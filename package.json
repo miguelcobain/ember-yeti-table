@@ -35,7 +35,8 @@
     "start": "ember serve",
     "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\"",
     "test:ember": "ember test",
-    "test:ember-compatibility": "ember try:each"
+    "test:ember-compatibility": "ember try:each",
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {
@@ -43,8 +44,8 @@
     }
   },
   "lint-staged": {
-    "*.{js,scss,json,yaml,yml,md}": "prettier --write",
-    "*.js": "eslint --fix"
+    "*.{js,gjs,scss,json,yaml,yml,md}": "prettier --write",
+    "*.js,gjs": "eslint --fix"
   },
   "resolutions": {
     "ember-cli-clipboard": "0.13.0"
@@ -109,7 +110,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-qunit": "^7.3.4",
     "faker": "^5.5.3",
-    "husky": "^4.3.8",
+    "husky": "^8.0.0",
     "lint-staged": "^10.5.4",
     "loader.js": "^4.7.0",
     "prettier": "^3.0.2",
