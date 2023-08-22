@@ -40,7 +40,24 @@ import Component from '@glimmer/component';
   @yield {object} row
   @yield {Component} row.cell - the cell component
 */
+// template imports
+import { hash } from '@ember/helper';
+import { on } from '@ember/modifier';
+import Cell from 'ember-yeti-table/components/yeti-table/tbody/row/cell';
+
 export default class TBodyRow extends Component {
+  <template>
+    {{! template-lint-disable no-invalid-interactive }}
+    <tr
+      class='{{@theme.tbodyRow}} {{@theme.row}}'
+      {{on 'click' this.handleClick}}
+      role={{if @onClick 'button'}}
+      ...attributes
+    >
+      {{yield (hash cell=(component Cell theme=@theme parent=this columns=@columns))}}
+    </tr>
+  </template>
+
   /**
    * Adds a click action to the row.
    *

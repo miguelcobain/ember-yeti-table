@@ -33,7 +33,44 @@ import Component from '@glimmer/component';
   @yield {Object} rowData - one item in the data array
   @yield {number} index
 */
+
+// template imports
+import { fn, get, hash } from '@ember/helper';
+import TBodyRow from 'ember-yeti-table/components/yeti-table/tbody/row';
+
 export default class Body extends Component {
+  <template>
+    <tbody class={{@theme.tbody}} ...attributes>
+      {{#if (has-block)}}
+
+        {{#each @data as |rowData index|}}
+          {{yield (hash row=(component TBodyRow theme=@theme onClick=@onRowClick columns=@columns)) rowData index}}
+        {{/each}}
+
+      {{else}}
+
+        {{#each @data as |rowData|}}
+          <TBodyRow
+            @theme={{@theme}}
+            @onClick={{if @onRowClick (fn this.handleRowClick rowData)}}
+            @columns={{@columns}}
+            as |row|
+          >
+
+            {{#each @columns as |column|}}
+              <row.cell @class={{column.columnClass}}>
+                {{#if column.prop}}
+                  {{get rowData column.prop}}
+                {{else}}
+                  {{rowData}}
+                {{/if}}
+              </row.cell>
+            {{/each}}
+          </TBodyRow>
+        {{/each}}
+      {{/if}}
+    </tbody>
+  </template>
   /**
    * Adds a click action to each row, called with the clicked row's data as an argument.
    * Can be used with both the blockless and block invocations.

@@ -37,7 +37,29 @@ import { localCopy } from 'tracked-toolbox';
   @yield {boolean} column.isAscSorted - `true` if column is sorted ascending
   @yield {boolean} column.isDescSorted - `true` if column is sorted descending
 */
+import { on } from '@ember/modifier';
+import { fn, hash } from '@ember/helper';
+
 export default class Column extends Component {
+  <template>
+    {{! template-lint-disable no-invalid-interactive }}
+    {{#if this.visible}}
+      <th
+        role={{if this.sortable 'button'}}
+        class='{{@class}}
+          {{@theme.theadCell}}
+          {{if this.sortable @theme.sorting.columnSortable}}
+          {{if this.isSorted @theme.sorting.columnSorted}}
+          {{if this.isAscSorted @theme.sorting.columnSortedAsc}}
+          {{if this.isDescSorted @theme.sorting.columnSortedDesc}}'
+        {{on 'click' (if this.sortable (fn @onClick this) this.noop)}}
+        {{this.updateName}}
+        ...attributes
+      >
+        {{yield (hash isSorted=this.isSorted isAscSorted=this.isAscSorted isDescSorted=this.isDescSorted)}}
+      </th>
+    {{/if}}
+  </template>
   /**
    * An important argument that Yeti Table uses to tie this column to a certain property on
    * each row object of the original `@data` (or `@loadFunction`) that was passed in.

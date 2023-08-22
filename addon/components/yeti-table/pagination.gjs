@@ -30,8 +30,56 @@ import { localCopy } from 'tracked-toolbox';
 
   @class Pagination
 */
+import { on } from '@ember/modifier';
+import eq from 'ember-yeti-table/-private/helpers/yeti-table-eq';
 
 export default class Pagination extends Component {
+  <template>
+    <div class={{@theme.pagination.controls}} ...attributes>
+      {{#if this.showInfo}}
+        <div class={{@theme.pagination.info}}>
+          Showing
+          {{@paginationData.pageStart}}
+          to
+          {{@paginationData.pageEnd}}
+          of
+          {{@paginationData.totalRows}}
+          entries
+        </div>
+      {{/if}}
+
+      {{#if this.showPageSizeSelector}}
+        <div class={{@theme.pagination.pageSize}}>
+          Rows per page:
+          <select disabled={{@disabled}} {{on 'change' this.changePageSize}}>
+            {{#each this.pageSizes as |pageSize|}}
+              <option value={{pageSize}} selected={{eq @paginationData.pageSize pageSize}}>{{pageSize}}</option>
+            {{/each}}
+          </select>
+        </div>
+      {{/if}}
+
+      {{#if this.showButtons}}
+        <button
+          type='button'
+          class={{@theme.pagination.previous}}
+          disabled={{this.shouldDisablePrevious}}
+          {{on 'click' @paginationActions.previousPage}}
+        >
+          Previous
+        </button>
+
+        <button
+          type='button'
+          class={{@theme.pagination.next}}
+          disabled={{this.shouldDisableNext}}
+          {{on 'click' @paginationActions.nextPage}}
+        >
+          Next
+        </button>
+      {{/if}}
+    </div>
+  </template>
   // theme;
 
   // paginationData;

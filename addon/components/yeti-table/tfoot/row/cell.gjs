@@ -17,6 +17,14 @@ import { tracked } from '@glimmer/tracking';
  */
 
 export default class TFootCell extends Component {
+  <template>
+    {{#if this.column.visible}}
+      <td class='{{@class}} {{@theme.tfootCell}}' ...attributes>
+        {{yield}}
+      </td>
+    {{/if}}
+  </template>
+
   @tracked
   index;
 
