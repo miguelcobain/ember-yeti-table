@@ -18,7 +18,25 @@ import Component from '@glimmer/component';
   @yield {Component} column
   @yield {Component} cell
 */
+
+import Column from 'ember-yeti-table/components/yeti-table/thead/row/column';
+import Cell from 'ember-yeti-table/components/yeti-table/thead/row/cell';
+import { hash } from '@ember/helper';
+
 export default class THeadRow extends Component {
+  <template>
+    <tr class='{{@trClass}} {{@theme.theadRow}} {{@theme.row}}' ...attributes>
+      {{yield
+        (hash
+          column=(component
+            Column sortable=@sortable sortSequence=@sortSequence onClick=@onColumnClick theme=@theme parent=@parent
+          )
+          cell=(component Cell theme=@theme parent=this)
+        )
+      }}
+    </tr>
+  </template>
+
   cells = [];
 
   registerCell(cell) {

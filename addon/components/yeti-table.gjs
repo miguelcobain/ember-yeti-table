@@ -92,7 +92,83 @@ const getConfigWithDefault = function (key, defaultValue) {
   @yield {array} table.visibleRows      the rendered rows on the table account for pagination, filtering, etc; when pagination is false, it will be the same length as totalRows
   @yield {object} table.theme           the theme being used
 */
+// template imports
+import { hash } from '@ember/helper';
+import Table from 'ember-yeti-table/components/yeti-table/table';
+import Header from 'ember-yeti-table/components/yeti-table/header';
+import THead from 'ember-yeti-table/components/yeti-table/thead';
+import Body from 'ember-yeti-table/components/yeti-table/body';
+import TBody from 'ember-yeti-table/components/yeti-table/tbody';
+import TFoot from 'ember-yeti-table/components/yeti-table/tfoot';
+import Pagination from 'ember-yeti-table/components/yeti-table/pagination';
+
 export default class YetiTable extends Component {
+  <template>
+    {{#let
+      (hash
+        table=(component Table theme=this.mergedTheme parent=this)
+        header=(component
+          Header
+          columns=this.columns
+          onColumnClick=this.onColumnSort
+          sortable=this.sortable
+          sortSequence=this.sortSequence
+          parent=this
+          theme=this.mergedTheme
+        )
+        thead=(component
+          THead
+          columns=this.columns
+          onColumnClick=this.onColumnSort
+          sortable=this.sortable
+          sortSequence=this.sortSequence
+          theme=this.mergedTheme
+          parent=this
+        )
+        body=(component Body data=this.processedData columns=this.columns theme=this.mergedTheme parent=this)
+        tbody=(component TBody data=this.processedData columns=this.columns theme=this.mergedTheme parent=this)
+        tfoot=(component TFoot columns=this.columns theme=this.mergedTheme parent=this)
+        pagination=(component
+          Pagination
+          disabled=this.isLoading
+          theme=this.mergedTheme
+          paginationData=this.paginationData
+          paginationActions=(hash
+            previousPage=this.previousPage
+            nextPage=this.nextPage
+            goToPage=this.goToPage
+            changePageSize=this.changePageSize
+          )
+        )
+        actions=this.publicApi
+        paginationData=this.paginationData
+        isLoading=this.resolvedData.isPending
+        columns=this.columns
+        visibleColumns=this.visibleColumns
+        rows=this.normalizedRows
+        totalRows=this.normalizedTotalRows
+        visibleRows=this.processedData
+        theme=this.mergedTheme
+      )
+      as |api|
+    }}
+
+      {{#if this.renderTableElement}}
+        <Table
+          @theme={{this.mergedTheme}}
+          @parent={{this}}
+          {{this.updateTotalRows @totalRows}}
+          {{this.updateFilter @filter}}
+          ...attributes
+        >
+          {{yield api}}
+        </Table>
+      {{else}}
+        {{yield api}}
+      {{/if}}
+
+    {{/let}}
+  </template>
   /**
    * An object that contains classes for yeti table to apply when rendering its various table
    * html elements. The theme object your pass in will be deeply merged with yeti-table's default theme

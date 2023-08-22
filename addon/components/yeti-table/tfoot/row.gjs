@@ -17,7 +17,15 @@ import Component from '@glimmer/component';
   @yield {Component} row.cell
 */
 
+import { hash } from '@ember/helper';
+import Cell from 'ember-yeti-table/components/yeti-table/tfoot/row/cell';
+
 export default class TFootRow extends Component {
+  <template>
+    <tr class='{{@class}} {{@theme.tfootRow}} {{@theme.row}}' ...attributes>
+      {{yield (hash cell=(component Cell theme=@theme parent=this columns=@columns))}}
+    </tr>
+  </template>
   cells = [];
 
   registerCell(cell) {

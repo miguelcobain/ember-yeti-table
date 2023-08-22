@@ -28,8 +28,16 @@ import Component from '@glimmer/component';
   @yield {Component} body.row - the row component
   @yield {Array} data
 */
+import { hash } from '@ember/helper';
+import TBodyRow from 'ember-yeti-table/components/yeti-table/tbody/row';
+
 // eslint-disable-next-line ember/no-empty-glimmer-component-classes
 export default class TBody extends Component {
+  <template>
+    <tbody class={{@theme.tbody}} ...attributes>
+      {{yield (hash row=(component TBodyRow theme=@theme onClick=@onRowClick columns=@columns)) @data}}
+    </tbody>
+  </template>
   /**
    * Adds a click action to each row, called with the clicked row's data as an argument.
    * Can be used with both the blockless and block invocations.

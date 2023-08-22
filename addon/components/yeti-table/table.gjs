@@ -29,5 +29,8 @@ import Component from '@glimmer/component';
   @class Table
 */
 
-// eslint-disable-next-line ember/no-empty-glimmer-component-classes
-export default class Table extends Component {}
+<template>
+  <table class={{@theme.table}} ...attributes>
+    {{yield}}
+  </table>
+</template>
