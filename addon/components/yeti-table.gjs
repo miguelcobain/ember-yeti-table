@@ -7,7 +7,6 @@ import { isEmpty, isPresent } from '@ember/utils';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import merge from 'deepmerge';
-import { modifier } from 'ember-modifier';
 import { use } from 'ember-resources';
 import { trackedFunction } from 'ember-resources/util/function';
 import { keepLatest } from 'ember-resources/util/keep-latest';
@@ -152,15 +151,11 @@ export default class YetiTable extends Component {
       )
       as |api|
     }}
+      {{this.updateTotalRows @totalRows}}
+      {{this.updateFilter @filter}}
 
       {{#if this.renderTableElement}}
-        <Table
-          @theme={{this.mergedTheme}}
-          @parent={{this}}
-          {{this.updateTotalRows @totalRows}}
-          {{this.updateFilter @filter}}
-          ...attributes
-        >
+        <Table @theme={{this.mergedTheme}} @parent={{this}} ...attributes>
           {{yield api}}
         </Table>
       {{else}}
@@ -268,9 +263,10 @@ export default class YetiTable extends Component {
   // we keep `totalRows` updated manually in an untracked property
   // to allow the user to update it in a loadData call and avoid
   // a re-run of the main tracked function
-  updateTotalRows = modifier((el, [totalRows]) => {
+  @action
+  updateTotalRows(totalRows) {
     this.totalRows = totalRows;
-  });
+  }
 
   /**
    * The global filter. If passed in, Yeti Table will search all the rows that contain this
@@ -285,13 +281,10 @@ export default class YetiTable extends Component {
   // we need some control of how we update the filter property, hence this modifier
   // in this case, any falsy value will be considered as en empty string, which will then
   // be deduped.
-  updateFilter = modifier((el, [filter]) => {
-    if (!filter) {
-      filter = '';
-    }
-
-    this.filter = filter;
-  });
+  @action
+  updateFilter(filter) {
+    this.filter = filter || '';
+  }
 
   /**
    * An optional function to customize the filtering logic. This function should return true
