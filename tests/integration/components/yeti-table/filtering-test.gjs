@@ -3,7 +3,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 
 import { get } from '@ember/object';
-import { run } from '@ember/runloop';
 
 import { tracked } from '@glimmer/tracking';
 
@@ -268,9 +267,7 @@ module('Integration | Component | yeti-table (filtering)', function (hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Tom');
     assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Tom');
 
-    run(() => {
-      testParams.data[3].firstName = 123;
-    });
+    testParams.data[3].firstName = 123;
     await settled();
 
     assert.dom('tbody tr').exists({ count: 1 });
@@ -302,9 +299,7 @@ module('Integration | Component | yeti-table (filtering)', function (hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Tom');
     assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Tom');
 
-    run(() => {
-      testParams.data[3].firstName = '123';
-    });
+    testParams.data[3].firstName = '123';
     await settled();
 
     assert.dom('tbody tr').exists({ count: 2 });

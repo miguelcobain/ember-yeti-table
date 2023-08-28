@@ -3,6 +3,7 @@ import { action } from '@ember/object';
 import { scheduleOnce } from '@ember/runloop';
 import { schedule } from '@ember/runloop';
 import { isEmpty, isPresent } from '@ember/utils';
+import { later } from '@ember/runloop';
 
 import { notifyPropertyChange } from '@ember/object';
 import Component from '@glimmer/component';
@@ -154,6 +155,7 @@ export default class YetiTable extends Component {
     }}
       {{this.updateTotalRows @totalRows}}
       {{this.updateFilter @filter}}
+      {{this.processedDataHelper}}
 
       {{#if this.renderTableElement}}
         <Table @theme={{this.mergedTheme}} @parent={{this}} ...attributes>
@@ -511,17 +513,57 @@ export default class YetiTable extends Component {
     when: () => this.resolvedData.isPending
   });
 
-  @cached
-  get processedData() {
+  @tracked
+  processedData;
+
+  get processedDataHelper() {
     let data = this.latestData ?? [];
 
     if (!this.args.loadData) {
-      data = this.filterData(data);
-      data = this.sortData(data);
-      data = this.paginateData(data);
+      this.processData(data);
+    } else {
+      this.processedData = data;
     }
+    return '';
+  }
 
-    return data;
+  processData(data) {
+    // only columns that have filterable = true and a prop defined will be considered
+    let columns = this.columns.filter(c => c.filterable && isPresent(c.prop));
+
+    let sortableColumns = this.columns.filter(c => !isEmpty(c.sort));
+    let sortings = sortableColumns.map(c => ({ prop: c.prop, direction: c.sort }));
+
+    let filterFunction = this.args.filterFunction;
+    let filterUsing = this.args.filterUsing;
+    let filter = this.filter;
+
+    let paginationData = this.paginationData;
+    let pagination = this.pagination;
+
+    let processTheData = () => {
+      // filter the data
+      data = filterData(data, columns, filter, filterFunction, filterUsing);
+      // Sort the data
+      if (sortings.length > 0) {
+        data = mergeSort(data, (itemA, itemB) => {
+          return this.sortFunction(itemA, itemB, sortings, this.compareFunction);
+        });
+      }
+      // Paginate the Data
+      if (pagination) {
+        let { pageStart, pageEnd } = paginationData;
+        data = data.slice(pageStart - 1, pageEnd); // slice excludes last element so we don't need to subtract 1
+      }
+
+      this.processedData = data;
+    };
+
+    if (this.ignoreDataChanges) {
+      later(processTheData, 0);
+    } else {
+      processTheData();
+    }
   }
 
   computeLoadDataParams() {
@@ -534,7 +576,7 @@ export default class YetiTable extends Component {
     params.sortData = this.columns.filter(c => !isEmpty(c.sort)).map(c => ({ prop: c.prop, direction: c.sort }));
     params.filterData = {
       filter: this.filter,
-      filterUsing: this.filterUsing,
+      filterUsing: this.args.filterUsing,
       columnFilters: this.columns.map(c => ({
         prop: c.prop,
         filter: c.filter,
@@ -545,27 +587,7 @@ export default class YetiTable extends Component {
     return params;
   }
 
-  filterData(data) {
-    // only columns that have filterable = true and a prop defined will be considered
-    let columns = this.columns.filter(c => c.filterable && isPresent(c.prop));
-
-    return filterData(data, columns, this.filter, this.args.filterFunction, this.args.filterUsing);
-  }
-
-  sortData(data) {
-    let sortableColumns = this.columns.filter(c => !isEmpty(c.sort));
-    let sortings = sortableColumns.map(c => ({ prop: c.prop, direction: c.sort }));
-
-    if (sortings.length > 0) {
-      data = mergeSort(data, (itemA, itemB) => {
-        return this.sortFunction(itemA, itemB, sortings, this.compareFunction);
-      });
-    }
-
-    return data;
-  }
-
-  paginateData(data) {
+  paginateData(data, pagination) {
     if (this.pagination) {
       let { pageStart, pageEnd } = this.paginationData;
       data = data.slice(pageStart - 1, pageEnd); // slice excludes last element so we don't need to subtract 1

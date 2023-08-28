@@ -4,8 +4,7 @@ import { module, test } from 'qunit';
 
 import { tracked } from '@glimmer/tracking';
 
-import { get, notifyPropertyChange } from '@ember/object';
-import { run } from '@ember/runloop';
+import { get, set } from '@ember/object';
 import { compare } from '@ember/utils';
 
 import DEFAULT_THEME from 'ember-yeti-table/-private/themes/default-theme';
@@ -550,10 +549,7 @@ module('Integration | Component | yeti-table (sorting)', function (hooks) {
     assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
 
-    run(() => {
-      testParams.data[3].firstName = '123';
-      notifyPropertyChange(testParams.data[3], 'firstName');
-    });
+    set(testParams.data[3], 'firstName', '123');
     await settled();
 
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('123');
@@ -590,9 +586,7 @@ module('Integration | Component | yeti-table (sorting)', function (hooks) {
     assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
 
-    run(() => {
-      testParams.data[3].firstName = '123';
-    });
+    set(testParams.data[3], 'firstName', '123');
     await settled();
 
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
