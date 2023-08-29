@@ -4,6 +4,7 @@ import { scheduleOnce } from '@ember/runloop';
 import { schedule } from '@ember/runloop';
 import { isEmpty, isPresent } from '@ember/utils';
 
+import { notifyPropertyChange } from '@ember/object';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import merge from 'deepmerge';
@@ -266,6 +267,8 @@ export default class YetiTable extends Component {
   @action
   updateTotalRows(totalRows) {
     this.totalRows = totalRows;
+    notifyPropertyChange(this, 'normalizedTotalRows');
+    notifyPropertyChange(this, 'paginationData');
   }
 
   /**
