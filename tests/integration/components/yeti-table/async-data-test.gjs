@@ -773,7 +773,7 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
     );
   });
 
-  test('loadData is called once if updated totalRows on the loadData function', async function (assert) {
+  test('loadData is called once if updated totalRows on the loadData function and totalRows is correct', async function (assert) {
     testParams.loadData = sinon.spy(() => {
       return new RSVP.Promise(resolve => {
         later(() => {
@@ -805,6 +805,7 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
         </table.header>
 
         <table.body />
+        <div id='totalRows'>{{table.totalRows}}</div>
 
       </YetiTable>
     </template>);
@@ -814,6 +815,7 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
     assert.dom('tbody tr:nth-child(5) td:nth-child(2)').hasText('Dale', 'column 2 is not sorted');
     assert.dom('tbody tr:nth-child(5) td:nth-child(3)').hasText('5', 'column 3 is not sorted');
 
+    assert.dom('#totalRows').hasText('5');
     await clearRender();
 
     assert.ok(testParams.loadData.calledOnce, 'loadData was called once');
