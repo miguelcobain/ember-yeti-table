@@ -19,10 +19,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: 8
       - name: Install Node
         uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
           cache: pnpm
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
@@ -38,9 +42,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: 8
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
           cache: pnpm
       - name: Remove lockfile
         run: rm pnpm-lock.yaml
@@ -69,10 +77,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: 8
       - name: Install Node
         uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
           cache: pnpm
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
