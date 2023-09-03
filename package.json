@@ -24,16 +24,16 @@
     "format:all": "run-s format:prettier format:eslint",
     "format:eslint": "eslint --fix \"**/*.js\"",
     "format:prettier": "prettier --write \"**/*.{js,scss,json,yaml,yml}\"",
-    "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
+    "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
     "lint:css": "stylelint \"**/*.css\"",
-    "lint:css:fix": "concurrently \"npm:lint:css -- --fix\"",
-    "lint:fix": "concurrently \"npm:lint:*:fix\" --names \"fix:\"",
+    "lint:css:fix": "concurrently \"pnpm:lint:css -- --fix\"",
+    "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\"",
     "lint:hbs": "ember-template-lint .",
     "lint:hbs:fix": "ember-template-lint . --fix",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "start": "ember serve",
-    "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\"",
+    "test": "concurrently \"pnpm:lint\" \"pnpm:test:*\" --names \"lint,test:\"",
     "test:ember": "ember test",
     "test:ember-compatibility": "ember try:each"
   },
@@ -119,7 +119,9 @@
     "ember-source": "^4.0.0"
   },
   "engines": {
-    "node": "14.* || 16.* || >= 18"
+    "node": "14.* || 16.* || >= 18",
+    "yarn": "Please use pnpm i",
+    "npm": "Please use pnpm i"
   },
   "ember": {
     "edition": "octane"
