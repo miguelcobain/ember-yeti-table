@@ -8,24 +8,16 @@ module.exports = {
     sourceType: 'module',
     requireConfigFile: false,
     babelOptions: {
-      plugins: [
-        ['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }]
-      ]
+      plugins: [['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }]]
     }
   },
-  plugins: ['ember', 'prettier', 'qunit', 'import-helpers'],
-  extends: [
-    'eslint:recommended',
-    'plugin:ember/recommended',
-    'plugin:prettier/recommended',
-    'plugin:qunit/recommended'
-  ],
+  plugins: ['ember', 'qunit', 'import-helpers'],
+  extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:qunit/recommended'],
   env: {
     browser: true
   },
   rules: {
     'ember/no-jquery': 'error',
-    'prettier/prettier': 'error',
     'import-helpers/order-imports': [
       'error',
       {
