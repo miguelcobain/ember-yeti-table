@@ -120,9 +120,7 @@
     "ember-source": "^4.0.0"
   },
   "engines": {
-    "node": "14.* || 16.* || >= 18",
-    "yarn": "Please use pnpm i",
-    "npm": "Please use pnpm i"
+    "node": "14.* || 16.* || >= 18"
   },
   "ember": {
     "edition": "octane"
