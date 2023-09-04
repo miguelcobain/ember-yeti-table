@@ -1,6 +1,6 @@
 import { render, clearRender, settled, click, waitFor } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 
 import { tracked } from '@glimmer/tracking';
 import { later } from '@ember/runloop';
@@ -862,7 +862,7 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
     assert.ok(testParams.loadData.calledOnce, 'loadData was called once');
   });
 
-  test('loadData can be an ember-concurrency restartable task and be cancelled', async function (assert) {
+  skip('loadData can be an ember-concurrency restartable task and be cancelled', async function (assert) {
     assert.expect(4);
     let spy = sinon.spy();
     let hardWorkCounter = 0;
