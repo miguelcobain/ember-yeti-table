@@ -18,7 +18,9 @@
 - switch from npm to pnpm
 
 - Notes:
-- is eslint-plugin-template-imports really needed? With template imports this might be a conflict. Removed for now,
+- is eslint-plugin-template-imports really needed? With template imports this might be a conflict. Removed for now
+- the updateFilter and updateTotalRows use plain old functions as helpers. This requires 4.5+. Could rewrite as custom helpers if want to go back to 3.28
+-
 
 # v1.7.4
 
