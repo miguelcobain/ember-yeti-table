@@ -1,22 +1,90 @@
 import { getOwner } from '@ember/application';
-import { action } from '@ember/object';
-import { scheduleOnce } from '@ember/runloop';
-import { schedule } from '@ember/runloop';
+import { action, notifyPropertyChange } from '@ember/object';
+import { later, schedule, scheduleOnce } from '@ember/runloop';
 import { isEmpty, isPresent } from '@ember/utils';
-import { later } from '@ember/runloop';
-
-import { notifyPropertyChange } from '@ember/object';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import merge from 'deepmerge';
 import { use } from 'ember-resources';
 import { trackedFunction } from 'ember-resources/util/function';
 import { keepLatest } from 'ember-resources/util/keep-latest';
-import { localCopy, cached, dedupeTracked } from 'tracked-toolbox';
+import { cached, dedupeTracked, localCopy } from 'tracked-toolbox';
 
 import DEFAULT_THEME from 'ember-yeti-table/-private/themes/default-theme';
 import filterData from 'ember-yeti-table/-private/utils/filtering-utils';
-import { sortMultiple, compareValues, mergeSort } from 'ember-yeti-table/-private/utils/sorting-utils';
+import { compareValues, mergeSort, sortMultiple } from 'ember-yeti-table/-private/utils/sorting-utils';
+import Helper from '@ember/component/helper';
+/**
+ The primary Yeti Table component. This component represents the root of the
+ table, and manages high level state of all of its subcomponents.
+
+ ```hbs
+ <YetiTable @data={{this.data}} as |table|>
+
+ <table.header as |header|>
+ <header.column @prop="firstName">
+ First name
+ </header.column>
+ <header.column @prop="lastName">
+ Last name
+ </header.column>
+ <header.column @prop="points">
+ Points
+ </header.column>
+ </table.header>
+
+ <table.body/>
+
+ </YetiTable>
+ ```
+
+ ```hbs
+ <YetiTable @data={{this.data}} as |table|>
+
+ <table.thead as |thead|>
+ <thead.row as |row|>
+ <row.column @prop="firstName">
+ First name
+ </row.column>
+ <row.column @prop="lastName">
+ Last name
+ </row.column>
+ <row.column @prop="points">
+ Points
+ </row.column>
+ </thead.row>
+ </table.thead>
+
+ <table.body/>
+
+ </YetiTable>
+ ```
+ @class YetiTable
+ @yield {object} table
+ @yield {Component} table.header       the table header component (Single row in header)
+ @yield {Component} table.thead        the table header component (Allows multiple rows in header)
+ @yield {Component} table.body         the table body component
+ @yield {Component} table.tfoot        the table footer component
+ @yield {Component} table.pagination   the pagination controls component
+ @yield {object} table.actions         an object that contains actions to interact with the table
+ @yield {object} table.paginationData  object that represents the current pagination state
+ @yield {boolean} table.isLoading      boolean that is `true` when data is being loaded
+ @yield {array} table.columns          the columns on the table
+ @yield {array} table.visibleColumns   the visible columns on the table
+ @yield {array} table.rows             an array of all the rows yeti table knows of. In the sync case, it will contain the entire dataset. In the async case, it will be the same as `table.visibleRows`
+ @yield {number} table.totalRows       the total number of rows on the table (regardless of pagination). Important argument in the async case to inform yeti table of the total number of rows in the dataset.
+ @yield {array} table.visibleRows      the rendered rows on the table account for pagination, filtering, etc; when pagination is false, it will be the same length as totalRows
+ @yield {object} table.theme           the theme being used
+ */
+// template imports
+import { hash } from '@ember/helper';
+import Table from 'ember-yeti-table/components/yeti-table/table';
+import Header from 'ember-yeti-table/components/yeti-table/header';
+import THead from 'ember-yeti-table/components/yeti-table/thead';
+import Body from 'ember-yeti-table/components/yeti-table/body';
+import TBody from 'ember-yeti-table/components/yeti-table/tbody';
+import TFoot from 'ember-yeti-table/components/yeti-table/tfoot';
+import Pagination from 'ember-yeti-table/components/yeti-table/pagination';
 
 // bring ember-concurrency didCancel helper instead of
 // including the whole dependency
@@ -31,77 +99,43 @@ const getConfigWithDefault = function (key, defaultValue) {
   };
 };
 
-/**
-  The primary Yeti Table component. This component represents the root of the
-  table, and manages high level state of all of its subcomponents.
+// we keep `totalRows` updated manually in an untracked property
+// to allow the user to update it in a loadData call and avoid
+// a re-run of the main tracked function
+class UpdateTotalRows extends Helper {
+  compute(positional, { context }) {
+    context.totalRows = positional[0];
+    notifyPropertyChange(context, 'normalizedTotalRows');
+    notifyPropertyChange(context, 'paginationData');
+    return '';
+  }
+}
 
-  ```hbs
-  <YetiTable @data={{this.data}} as |table|>
+// we need some control of how we update the filter property, hence this modifier
+// in this case, any falsy value will be considered as en empty string, which will then
+// be deduped.
+class UpdateFilter extends Helper {
+  compute(positional, { context }) {
+    context.filter = positional[0] || '';
+    return '';
+  }
+}
 
-    <table.header as |header|>
-      <header.column @prop="firstName">
-        First name
-      </header.column>
-      <header.column @prop="lastName">
-        Last name
-      </header.column>
-      <header.column @prop="points">
-        Points
-      </header.column>
-    </table.header>
+class ProcessedData extends Helper {
+  compute(positional, { loadData, context }) {
+    let data = context.latestData ?? [];
 
-    <table.body/>
-
-  </YetiTable>
-  ```
-
-  ```hbs
-  <YetiTable @data={{this.data}} as |table|>
-
-    <table.thead as |thead|>
-      <thead.row as |row|>
-        <row.column @prop="firstName">
-          First name
-        </row.column>
-        <row.column @prop="lastName">
-          Last name
-        </row.column>
-        <row.column @prop="points">
-          Points
-        </row.column>
-      </thead.row>
-    </table.thead>
-
-    <table.body/>
-
-  </YetiTable>
-  ```
-  @class YetiTable
-  @yield {object} table
-  @yield {Component} table.header       the table header component (Single row in header)
-  @yield {Component} table.thead        the table header component (Allows multiple rows in header)
-  @yield {Component} table.body         the table body component
-  @yield {Component} table.tfoot        the table footer component
-  @yield {Component} table.pagination   the pagination controls component
-  @yield {object} table.actions         an object that contains actions to interact with the table
-  @yield {object} table.paginationData  object that represents the current pagination state
-  @yield {boolean} table.isLoading      boolean that is `true` when data is being loaded
-  @yield {array} table.columns          the columns on the table
-  @yield {array} table.visibleColumns   the visible columns on the table
-  @yield {array} table.rows             an array of all the rows yeti table knows of. In the sync case, it will contain the entire dataset. In the async case, it will be the same as `table.visibleRows`
-  @yield {number} table.totalRows       the total number of rows on the table (regardless of pagination). Important argument in the async case to inform yeti table of the total number of rows in the dataset.
-  @yield {array} table.visibleRows      the rendered rows on the table account for pagination, filtering, etc; when pagination is false, it will be the same length as totalRows
-  @yield {object} table.theme           the theme being used
-*/
-// template imports
-import { hash } from '@ember/helper';
-import Table from 'ember-yeti-table/components/yeti-table/table';
-import Header from 'ember-yeti-table/components/yeti-table/header';
-import THead from 'ember-yeti-table/components/yeti-table/thead';
-import Body from 'ember-yeti-table/components/yeti-table/body';
-import TBody from 'ember-yeti-table/components/yeti-table/tbody';
-import TFoot from 'ember-yeti-table/components/yeti-table/tfoot';
-import Pagination from 'ember-yeti-table/components/yeti-table/pagination';
+    if (!loadData) {
+      context.processData(data);
+    } else {
+      /* eslint-disable ember/no-side-effects */
+      // This is instrumental to ignoreDataChanges working
+      context.processedData = data;
+      /* eslint-enable */
+    }
+    return '';
+  }
+}
 
 export default class YetiTable extends Component {
   <template>
@@ -153,9 +187,9 @@ export default class YetiTable extends Component {
       )
       as |api|
     }}
-      {{this.updateTotalRows @totalRows}}
-      {{this.updateFilter @filter}}
-      {{this.processedDataHelper}}
+      {{UpdateTotalRows @totalRows context=this}}
+      {{UpdateFilter @filter context=this}}
+      {{ProcessedData loadData=@loadData context=this}}
 
       {{#if this.renderTableElement}}
         <Table @theme={{this.mergedTheme}} @parent={{this}} ...attributes>
@@ -266,12 +300,12 @@ export default class YetiTable extends Component {
   // we keep `totalRows` updated manually in an untracked property
   // to allow the user to update it in a loadData call and avoid
   // a re-run of the main tracked function
-  @action
-  updateTotalRows(totalRows) {
-    this.totalRows = totalRows;
-    notifyPropertyChange(this, 'normalizedTotalRows');
-    notifyPropertyChange(this, 'paginationData');
-  }
+  // @action
+  // updateTotalRows(totalRows) {
+  //   this.totalRows = totalRows;
+  //   notifyPropertyChange(this, 'normalizedTotalRows');
+  //   notifyPropertyChange(this, 'paginationData');
+  // }
 
   /**
    * The global filter. If passed in, Yeti Table will search all the rows that contain this
@@ -286,10 +320,10 @@ export default class YetiTable extends Component {
   // we need some control of how we update the filter property, hence this modifier
   // in this case, any falsy value will be considered as en empty string, which will then
   // be deduped.
-  @action
-  updateFilter(filter) {
-    this.filter = filter || '';
-  }
+  // @action
+  // updateFilter(filter) {
+  //   this.filter = filter || '';
+  // }
 
   /**
    * An optional function to customize the filtering logic. This function should return true
@@ -516,19 +550,19 @@ export default class YetiTable extends Component {
   @tracked
   processedData;
 
-  get processedDataHelper() {
-    let data = this.latestData ?? [];
-
-    if (!this.args.loadData) {
-      this.processData(data);
-    } else {
-      /* eslint-disable ember/no-side-effects */
-      // This is instrumental to ignoreDataChanges working
-      this.processedData = data;
-      /* eslint-enable */
-    }
-    return '';
-  }
+  // get processedDataHelper() {
+  //   let data = this.latestData ?? [];
+  //
+  //   if (!this.args.loadData) {
+  //     this.processData(data);
+  //   } else {
+  //     /* eslint-disable ember/no-side-effects */
+  //     // This is instrumental to ignoreDataChanges working
+  //     this.processedData = data;
+  //     /* eslint-enable */
+  //   }
+  //   return '';
+  // }
 
   processData(data) {
     // only columns that have filterable = true and a prop defined will be considered
