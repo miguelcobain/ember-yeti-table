@@ -1,5 +1,3 @@
-import Component from '@glimmer/component';
-
 /**
   A simple component that just renders the `<table>` element with the correct
   theme classes.

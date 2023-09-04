@@ -522,7 +522,10 @@ export default class YetiTable extends Component {
     if (!this.args.loadData) {
       this.processData(data);
     } else {
+      /* eslint-disable ember/no-side-effects */
+      // This is instrumental to ignoreDataChanges working
       this.processedData = data;
+      /* eslint-enable */
     }
     return '';
   }
@@ -587,7 +590,7 @@ export default class YetiTable extends Component {
     return params;
   }
 
-  paginateData(data, pagination) {
+  paginateData(data) {
     if (this.pagination) {
       let { pageStart, pageEnd } = this.paginationData;
       data = data.slice(pageStart - 1, pageEnd); // slice excludes last element so we don't need to subtract 1

@@ -910,7 +910,7 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
     assert.ok(spy.calledTwice, 'load data was called twice (but one was cancelled)');
     assert.ok(spy.firstCall.calledWithMatch({ filterData: { filter: 'Migu' } }));
     assert.ok(spy.secondCall.calledWithMatch({ filterData: { filter: 'Tom' } }));
-    assert.equal(hardWorkCounter, 1, 'only did the "hard work" once');
+    assert.strictEqual(hardWorkCounter, 1, 'only did the "hard work" once');
 
     await clearRender();
   });

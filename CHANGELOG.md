@@ -4,12 +4,21 @@
 
 - Support for ember 3.16+ by refactoring component file structure for converting to glimmer [#345](https://github.com/miguelcobain/ember-yeti-table/pull/345)
 - Removed polyfills no longer needed for supporting 3.16+
+- Dropped support for Node 14.
 - Removed yielded for head and foot from table api (Previously deprecated)
 - cells no longer support the ability to specify `visible` on the cells themselves. Please set `visible` on the column
+- many booleans passed in if undefined are not treated as true instead of false (ex column.visible)
+-
 
 #### ✨ Features
 
 - Converted components to user glimmer syntax [#345](https://github.com/miguelcobain/ember-yeti-table/pull/345) [#351](https://github.com/miguelcobain/ember-yeti-table/pull/351)
+- Converted components to use template imports
+- Updated husky/prettier/linters
+- switch from npm to pnpm
+
+- Notes:
+- is eslint-plugin-template-imports really needed? With template imports this might be a conflict. Removed for now,
 
 # v1.7.4
 

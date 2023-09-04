@@ -1,23 +1,21 @@
-import { A } from '@ember/array';
 import Controller from '@ember/controller';
-import { computed, action } from '@ember/object';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
 import faker from 'faker';
 
 export default class FilteringController extends Controller {
+  @tracked
   numberOfRows = 10;
 
-  @computed('numberOfRows')
   get data() {
-    return A(
-      Array.from(Array(this.get('numberOfRows')), () => {
-        return {
-          firstName: faker.name.firstName(),
-          lastName: faker.name.lastName(),
-          points: faker.random.number({ min: 0, max: 100 })
-        };
-      })
-    );
+    return Array.from(Array(this.numberOfRows), () => {
+      return {
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        points: faker.random.number({ min: 0, max: 100 })
+      };
+    });
   }
 
   // BEGIN-SNIPPET filtering-custom.js

@@ -10,7 +10,6 @@ import { compare } from '@ember/utils';
 import DEFAULT_THEME from 'ember-yeti-table/-private/themes/default-theme';
 
 import YetiTable from 'ember-yeti-table/components/yeti-table';
-import { on } from '@ember/modifier';
 
 class TestParams {
   @tracked

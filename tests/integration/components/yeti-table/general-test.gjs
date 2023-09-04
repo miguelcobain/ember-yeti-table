@@ -375,7 +375,7 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
     assert.expect(2);
 
     testParams.rowClicked = p => {
-      assert.equal(p.firstName, 'Miguel');
+      assert.strictEqual(p.firstName, 'Miguel');
     };
 
     await render(<template>
@@ -401,7 +401,7 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
     await click('tbody tr:nth-child(1)');
 
     testParams.rowClicked = p => {
-      assert.equal(p.firstName, 'Tom');
+      assert.strictEqual(p.firstName, 'Tom');
     };
 
     await click('tbody tr:nth-child(4)');
@@ -411,7 +411,7 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
     assert.expect(2);
 
     testParams.rowClicked = p => {
-      assert.equal(p.firstName, 'Miguel');
+      assert.strictEqual(p.firstName, 'Miguel');
     };
 
     await render(<template>
@@ -450,7 +450,7 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
     await click('tbody tr:nth-child(1)');
 
     testParams.rowClicked = p => {
-      assert.equal(p.firstName, 'Tom');
+      assert.strictEqual(p.firstName, 'Tom');
     };
 
     await click('tbody tr:nth-child(4)');
@@ -870,12 +870,12 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
       </YetiTable>
     </template>);
 
-    assert.equal(typeof testParams.tableApi, 'object', 'table is an object');
-    assert.equal(typeof testParams.tableApi.nextPage, 'function', 'table.nextPage is a function');
-    assert.equal(typeof testParams.tableApi.previousPage, 'function', 'table.previousPage is a function');
-    assert.equal(typeof testParams.tableApi.goToPage, 'function', 'table.goToPage is a function');
-    assert.equal(typeof testParams.tableApi.changePageSize, 'function', 'table.changePageSize is a function');
-    assert.equal(typeof testParams.tableApi.reloadData, 'function', 'table.reloadData is a function');
+    assert.strictEqual(typeof testParams.tableApi, 'object', 'table is an object');
+    assert.strictEqual(typeof testParams.tableApi.nextPage, 'function', 'table.nextPage is a function');
+    assert.strictEqual(typeof testParams.tableApi.previousPage, 'function', 'table.previousPage is a function');
+    assert.strictEqual(typeof testParams.tableApi.goToPage, 'function', 'table.goToPage is a function');
+    assert.strictEqual(typeof testParams.tableApi.changePageSize, 'function', 'table.changePageSize is a function');
+    assert.strictEqual(typeof testParams.tableApi.reloadData, 'function', 'table.reloadData is a function');
     assert.ok(testParams.registerApi.calledOnce, '@registerApi is called once');
   });
 });

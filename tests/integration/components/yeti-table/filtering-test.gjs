@@ -359,7 +359,7 @@ module('Integration | Component | yeti-table (filtering)', function (hooks) {
 
   test('custom filter function and filterUsing', async function (assert) {
     testParams.filter = (row, { min, max }) => {
-      let points = get(row, 'points');
+      let points = row.points;
       return points >= min && points <= max;
     };
 

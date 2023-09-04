@@ -1,16 +1,16 @@
 import { A } from '@ember/array';
 import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
 import faker from 'faker';
 
 export default class SortingController extends Controller {
+  @tracked
   numberOfRows = 5;
 
-  @computed('numberOfRows')
   get data() {
     return A(
-      Array.from(Array(this.get('numberOfRows')), () => {
+      Array.from(Array(this.numberOfRows), () => {
         return {
           firstName: faker.name.firstName(),
           lastName: faker.name.lastName(),
@@ -20,7 +20,6 @@ export default class SortingController extends Controller {
     );
   }
 
-  @computed
   get advancedSortingData() {
     return [
       {

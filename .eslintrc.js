@@ -11,40 +11,13 @@ module.exports = {
       plugins: [['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }]]
     }
   },
-  plugins: ['ember', 'qunit', 'import-helpers'],
+  plugins: ['ember', 'qunit'],
   extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:qunit/recommended'],
   env: {
     browser: true
   },
   rules: {
-    'ember/no-jquery': 'error',
-    'import-helpers/order-imports': [
-      'error',
-      {
-        newlinesBetween: 'always',
-        groups: [
-          // Testing modules
-          ['/^qunit/', '/^ember-qunit/', '/^@ember/test-helpers/', '/^ember-exam/'],
-          // Ember.js modules
-          ['/^ember$/', '/^@ember/', '/^ember-data/'],
-          'module',
-          [`/^${require('./package.json').name}\\//`],
-          ['parent', 'sibling', 'index']
-        ],
-        alphabetize: { order: 'asc', ignoreCase: true }
-      }
-    ],
-    // remove the following when converting to glimmer components
-    'ember/no-get': 'off',
-    'ember/no-computed-properties-in-native-classes': 'off',
-    'ember/classic-decorator-no-classic-methods': 'off',
-    'ember/no-classic-components': 'off',
-    'ember/classic-decorator-hooks': 'off',
-    'ember/no-component-lifecycle-hooks': 'off',
-    'ember/require-tagless-components': 'off',
-    'ember/require-computed-property-dependencies': 'off',
-    'ember/no-assignment-of-untracked-properties-used-in-tracking-contexts': 'off',
-    'ember/require-super-in-lifecycle-hooks': 'off'
+    'ember/no-jquery': 'error'
   },
   overrides: [
     // node files

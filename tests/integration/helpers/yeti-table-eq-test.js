@@ -16,7 +16,7 @@ module('Integration | Helper | yeti-table-eq', function (hooks) {
       {{/if}}
     `);
 
-    assert.equal(this.element.textContent.trim(), 'works!');
+    assert.strictEqual(this.element.textContent.trim(), 'works!');
   });
 
   test('returns false when two different arguments are passed in', async function (assert) {
@@ -30,6 +30,6 @@ module('Integration | Helper | yeti-table-eq', function (hooks) {
       {{/if}}
     `);
 
-    assert.equal(this.element.textContent.trim(), 'not work');
+    assert.strictEqual(this.element.textContent.trim(), 'not work');
   });
 });

@@ -1,5 +1,3 @@
-import Component from '@glimmer/component';
-
 /**
   Renders a `<thead>` element and yields the row component.
 

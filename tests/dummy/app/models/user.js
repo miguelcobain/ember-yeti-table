@@ -1,6 +1,5 @@
 import { attr } from '@ember-data/model';
 import Model from '@ember-data/model';
-import { computed } from '@ember/object';
 
 // BEGIN-SNIPPET user.js
 export default class User extends Model {
@@ -13,7 +12,6 @@ export default class User extends Model {
   @attr('string') city;
   @attr('string') avatarUrl;
 
-  @computed('firstName', 'lastName')
   get name() {
     return `${this.firstName} ${this.lastName}`;
   }

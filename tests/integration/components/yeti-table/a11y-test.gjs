@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 
 import YetiTable from 'ember-yeti-table/components/yeti-table';
-import { fn, mut } from '@ember/helper';
+import { fn } from '@ember/helper';
 
 module('Integration | Component | yeti-table (a11y)', function (hooks) {
   setupRenderingTest(hooks);

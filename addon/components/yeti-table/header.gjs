@@ -24,7 +24,7 @@ import Component from '@glimmer/component';
 */
 
 import THead from 'ember-yeti-table/components/yeti-table/thead/row/column';
-import { fn, hash } from '@ember/helper';
+import { hash } from '@ember/helper';
 
 export default class Header extends Component {
   <template>
@@ -36,7 +36,7 @@ export default class Header extends Component {
               THead
               sortable=@sortable
               sortSequence=@sortSequence
-              onClick=(fn this.onColumnClickHeader)
+              onClick=this.onColumnClickHeader
               parent=@parent
               theme=@theme
             )
