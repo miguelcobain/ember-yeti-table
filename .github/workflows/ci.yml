@@ -67,13 +67,19 @@ jobs:
       fail-fast: false
       matrix:
         try-scenario:
+          - ember-lts-3.28
           - ember-lts-4.4
           - ember-lts-4.8
+          - ember-lts-4.12
           - ember-release
-          - ember-beta
-          - ember-canary
           - embroider-safe
           - embroider-optimized
+        allow-failure: [false]
+        include:
+          - try-scenario: ember-beta
+            allow-failure: true
+          - try-scenario: ember-canary
+            allow-failure: true
 
     steps:
       - uses: actions/checkout@v3
