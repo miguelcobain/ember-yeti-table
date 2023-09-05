@@ -10,7 +10,7 @@ import sinon from 'sinon';
 import DEFAULT_THEME from 'ember-yeti-table/-private/themes/default-theme';
 
 import YetiTable from 'ember-yeti-table/components/yeti-table';
-import { fn } from '@ember/helper';
+import { fn, get } from '@ember/helper';
 
 class TestParams {
   @tracked
@@ -131,8 +131,8 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
               Custom
               {{person.firstName}}
             </row.cell>
-            <row.cell>
-              {{person.lastName}}
+            <row.cell as |column|>
+              {{get person column.prop}}
             </row.cell>
             <row.cell>
               {{person.points}}

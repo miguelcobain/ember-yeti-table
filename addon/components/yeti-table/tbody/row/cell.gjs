@@ -9,12 +9,22 @@ import { tracked } from '@glimmer/tracking';
   <row.cell>
     {{person.firstName}}
   </row.cell>
+
+  If the prop name was used when the column header was defined, it is yielded in a hash
+  ```hbs
+  <row.cell as |column|>
+    {{get person column.prop}}
+  </row.cell>
+  ```
 */
+
+import { hash } from '@ember/helper';
+
 export default class TBodyCell extends Component {
   <template>
     {{#if this.column.visible}}
       <td class='{{@class}} {{this.column.columnClass}} {{@theme.tbodyCell}}' ...attributes>
-        {{yield}}
+        {{yield (hash prop=this.column.prop)}}
       </td>
     {{/if}}
   </template>
@@ -23,7 +33,7 @@ export default class TBodyCell extends Component {
   index;
 
   get column() {
-    return this.args.columns[this.index];
+    return this.args.columns[this.index] || {};
   }
 
   constructor() {

@@ -16,6 +16,7 @@
 - Converted components to use template imports
 - Updated husky/prettier/linters
 - switch from npm to pnpm
+- yield prop name in TBody/Row/Cell
 
 # v1.7.4
 
