@@ -12,7 +12,7 @@ export default class StylingController extends Controller {
       return {
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
-        points: faker.random.number({ min: 0, max: 100 })
+        points: faker.datatype.number({ min: 0, max: 100 })
       };
     });
   }

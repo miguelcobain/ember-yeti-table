@@ -56,8 +56,8 @@ devDependencies:
     specifier: ^2.9.3
     version: 2.9.4(@babel/core@7.22.10)(@glint/template@1.0.0-beta.3)(ember-source@4.12.0)
   "@embroider/test-setup":
-    specifier: ^2.1.1
-    version: 2.1.1
+    specifier: ^3.0.1
+    version: 3.0.1
   "@glimmer/component":
     specifier: ^1.0.0
     version: 1.1.2(@babel/core@7.22.10)
@@ -127,9 +127,6 @@ devDependencies:
   ember-data:
     specifier: ~4.12.0
     version: 4.12.3(@babel/core@7.22.10)(@ember/string@3.1.1)(@glimmer/tracking@1.1.2)(@glint/template@1.0.0-beta.3)(ember-source@4.12.0)(webpack@5.88.2)
-  ember-fetch:
-    specifier: ^8.1.2
-    version: 8.1.2
   ember-load-initializers:
     specifier: ^2.1.2
     version: 2.1.2(@babel/core@7.22.10)
@@ -184,6 +181,9 @@ devDependencies:
   loader.js:
     specifier: ^4.7.0
     version: 4.7.0
+  miragejs:
+    specifier: ^0.1.47
+    version: 0.1.47
   prettier:
     specifier: ^3.0.2
     version: 3.0.2
@@ -2412,12 +2412,23 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@embroider/test-setup@2.1.1:
+  /@embroider/test-setup@3.0.1:
     resolution:
       {
-        integrity: sha512-t81a2z2OEFAOZVbV7wkgiDuCyZ3ajD7J7J+keaTfNSRiXoQgeFFASEECYq1TCsH8m/R+xHMRiY59apF2FIeFhw==,
+        integrity: sha512-t7R2f10iZDSNw3ovWAPM63GRQTu63uihpVh6CvHev5XkLt8B7tdxcxGyO6RbdF5Hu+pbsUu8sD0kAlR1gopmxg==,
       }
     engines: { node: 12.* || 14.* || >= 16 }
+    peerDependencies:
+      "@embroider/compat": ^3.0.0
+      "@embroider/core": ^3.0.0
+      "@embroider/webpack": ^3.0.0
+    peerDependenciesMeta:
+      "@embroider/compat":
+        optional: true
+      "@embroider/core":
+        optional: true
+      "@embroider/webpack":
+        optional: true
     dependencies:
       lodash: 4.17.21
       resolve: 1.22.4

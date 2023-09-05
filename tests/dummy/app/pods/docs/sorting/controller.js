@@ -14,7 +14,7 @@ export default class SortingController extends Controller {
         return {
           firstName: faker.name.firstName(),
           lastName: faker.name.lastName(),
-          points: faker.random.number({ min: 0, max: 100 })
+          points: faker.datatype.number({ min: 0, max: 100 })
         };
       })
     );
@@ -25,27 +25,27 @@ export default class SortingController extends Controller {
       {
         firstName: 'Tom',
         lastName: 'Pale',
-        points: faker.random.number({ min: 0, max: 100 })
+        points: faker.datatype.number({ min: 0, max: 100 })
       },
       {
         firstName: 'Tom',
         lastName: 'Dale',
-        points: faker.random.number({ min: 0, max: 100 })
+        points: faker.datatype.number({ min: 0, max: 100 })
       },
       {
         firstName: 'Yehuda',
         lastName: 'Katz',
-        points: faker.random.number({ min: 0, max: 100 })
+        points: faker.datatype.number({ min: 0, max: 100 })
       },
       {
         firstName: 'Yehuda',
         lastName: 'Catz',
-        points: faker.random.number({ min: 0, max: 100 })
+        points: faker.datatype.number({ min: 0, max: 100 })
       },
       {
         firstName: 'Tom',
         lastName: 'Dayle',
-        points: faker.random.number({ min: 0, max: 100 })
+        points: faker.datatype.number({ min: 0, max: 100 })
       }
     ];
   }
