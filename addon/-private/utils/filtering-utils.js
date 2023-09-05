@@ -1,4 +1,5 @@
 import { isEmpty } from '@ember/utils';
+import { get } from '@ember/object';
 
 import createRegex from 'ember-yeti-table/-private/utils/create-regex';
 
@@ -11,7 +12,7 @@ function createColumnFilters(columns) {
     let regex = createRegex(c.filter);
 
     return row => {
-      let value = row[c.prop];
+      let value = get(row, c.prop);
       let passesRegex = true;
 
       if (!isEmpty(c.filter)) {
@@ -48,7 +49,7 @@ export default function filterData(data, columns, globalFilter, filterFunction, 
 
     if (!isEmpty(globalRegex)) {
       passesGeneral = columns.some(c => {
-        return globalRegex.test(row[c.prop]);
+        return globalRegex.test(get(row, c.prop));
       });
     }
 

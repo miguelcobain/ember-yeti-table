@@ -139,6 +139,49 @@ module('Integration | Component | yeti-table (filtering)', function (hooks) {
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
   });
 
+  test('updating filter filters rows with nested property names', async function (assert) {
+    testParams.data.forEach(item => {
+      item.lastName = {
+        nestedName: item.lastName
+      };
+    });
+    await render(<template>
+      <YetiTable @data={{testParams.data}} @filter={{testParams.filterText}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop='firstName'>
+            First name
+          </header.column>
+          <header.column @prop='lastName.nestedName'>
+            Last name
+          </header.column>
+          <header.column @prop='points'>
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body />
+
+      </YetiTable>
+    </template>);
+
+    assert.dom('tbody tr').exists({ count: 5 });
+
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('Miguel');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('José');
+    assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Maria');
+    assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
+
+    testParams.filterText = 'Baderous';
+
+    await settled();
+
+    assert.dom('tbody tr').exists({ count: 1 });
+
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
+  });
+
   test('rendering with filter on column filters rows', async function (assert) {
     testParams.filterText = 'Baderous';
 

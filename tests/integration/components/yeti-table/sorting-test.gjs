@@ -165,6 +165,39 @@ module('Integration | Component | yeti-table (sorting)', function (hooks) {
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
   });
 
+  test('default sort works with nested property names', async function (assert) {
+    testParams.data.forEach(item => {
+      item.firstName = {
+        nestedName: item.firstName
+      };
+    });
+    await render(<template>
+      <YetiTable @data={{testParams.data}} as |table|>
+
+        <table.header as |header|>
+          <header.column @prop='firstName.nestedName' @sort='asc'>
+            First name
+          </header.column>
+          <header.column @prop='lastName'>
+            Last name
+          </header.column>
+          <header.column @prop='points'>
+            Points
+          </header.column>
+        </table.header>
+
+        <table.body />
+
+      </YetiTable>
+    </template>);
+
+    assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
+    assert.dom('tbody tr:nth-child(2) td:nth-child(1)').hasText('Maria');
+    assert.dom('tbody tr:nth-child(3) td:nth-child(1)').hasText('Miguel');
+    assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
+    assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
+  });
+
   test('updating sort property works', async function (assert) {
     testParams.firstNameSort = 'asc';
 
