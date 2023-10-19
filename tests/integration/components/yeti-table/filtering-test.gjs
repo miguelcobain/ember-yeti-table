@@ -118,6 +118,8 @@ module('Integration | Component | yeti-table (filtering)', function (hooks) {
         </table.header>
 
         <table.body />
+        <div>rows length <span data-test-row-length>{{table.rows.length}}</span></div>
+        <div>Total rows <span data-test-total-rows>{{table.totalRows}}</span></div>
 
       </YetiTable>
     </template>);
@@ -130,6 +132,9 @@ module('Integration | Component | yeti-table (filtering)', function (hooks) {
     assert.dom('tbody tr:nth-child(4) td:nth-child(1)').hasText('Tom');
     assert.dom('tbody tr:nth-child(5) td:nth-child(1)').hasText('Tom');
 
+    assert.dom('[data-test-row-length]').hasText('5');
+    assert.dom('[data-test-total-rows]').hasText('5');
+
     testParams.filterText = 'Baderous';
 
     await settled();
@@ -137,6 +142,9 @@ module('Integration | Component | yeti-table (filtering)', function (hooks) {
     assert.dom('tbody tr').exists({ count: 1 });
 
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('José');
+
+    assert.dom('[data-test-row-length]').hasText('1');
+    assert.dom('[data-test-total-rows]').hasText('1');
   });
 
   test('updating filter filters rows with nested property names', async function (assert) {

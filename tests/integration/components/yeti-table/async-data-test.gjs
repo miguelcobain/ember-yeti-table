@@ -219,9 +219,9 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
         resolve(testParams.data2);
       }, 10);
     });
-    // debugger;
+
     await settled();
-    // debugger;
+
     assert.dom('tbody tr').exists({ count: 5 });
     assert.dom('tbody tr:nth-child(1) td:nth-child(1)').hasText('A');
     assert.dom('tbody tr:nth-child(1) td:nth-child(2)').hasText('B');

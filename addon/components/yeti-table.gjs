@@ -447,7 +447,7 @@ export default class YetiTable extends Component {
   get normalizedTotalRows() {
     if (!this.args.loadData) {
       // sync scenario using @data
-      return this.latestData?.length || 0;
+      return this.processedDataRows?.length || 0;
     } else {
       // async scenario. @loadData is present.
       if (this.totalRows === undefined) {
@@ -463,7 +463,7 @@ export default class YetiTable extends Component {
   get normalizedRows() {
     if (!this.args.loadData) {
       // sync scenario using @data
-      return this.latestData;
+      return this.processedDataRows;
     } else {
       // async scenario. @loadData is present.
       return this.processedData;
@@ -550,19 +550,8 @@ export default class YetiTable extends Component {
   @tracked
   processedData;
 
-  // get processedDataHelper() {
-  //   let data = this.latestData ?? [];
-  //
-  //   if (!this.args.loadData) {
-  //     this.processData(data);
-  //   } else {
-  //     /* eslint-disable ember/no-side-effects */
-  //     // This is instrumental to ignoreDataChanges working
-  //     this.processedData = data;
-  //     /* eslint-enable */
-  //   }
-  //   return '';
-  // }
+  @tracked
+  processedDataRows;
 
   processData(data) {
     // only columns that have filterable = true and a prop defined will be considered
@@ -575,9 +564,6 @@ export default class YetiTable extends Component {
     let filterUsing = this.args.filterUsing;
     let filter = this.filter;
 
-    let paginationData = this.paginationData;
-    let pagination = this.pagination;
-
     let processTheData = () => {
       // filter the data
       data = filterData(data, columns, filter, filterFunction, filterUsing);
@@ -587,9 +573,12 @@ export default class YetiTable extends Component {
           return this.sortFunction(itemA, itemB, sortings, this.compareFunction);
         });
       }
+
+      this.processedDataRows = data;
+
       // Paginate the Data
-      if (pagination) {
-        let { pageStart, pageEnd } = paginationData;
+      if (this.pagination) {
+        let { pageStart, pageEnd } = this.paginationData;
         data = data.slice(pageStart - 1, pageEnd); // slice excludes last element so we don't need to subtract 1
       }
 
