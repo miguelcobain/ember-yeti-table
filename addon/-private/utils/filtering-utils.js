@@ -1,28 +1,28 @@
-import { get } from '@ember/object';
 import { isEmpty } from '@ember/utils';
+import { get } from '@ember/object';
 
 import createRegex from 'ember-yeti-table/-private/utils/create-regex';
 
 function createColumnFilters(columns) {
   let searcheableColumns = columns.filter(c => {
-    return !isEmpty(get(c, 'filter')) || !isEmpty(get(c, 'filterFunction'));
+    return !isEmpty(c.filter) || !isEmpty(c.filterFunction);
   });
 
   return searcheableColumns.map(c => {
-    let regex = createRegex(get(c, 'filter'));
+    let regex = createRegex(c.filter);
 
     return row => {
-      let value = get(row, get(c, 'prop'));
+      let value = get(row, c.prop);
       let passesRegex = true;
 
-      if (!isEmpty(get(c, 'filter'))) {
+      if (!isEmpty(c.filter)) {
         passesRegex = regex.test(value);
       }
 
       let passesCustom = true;
 
-      if (!isEmpty(get(c, 'filterFunction'))) {
-        passesCustom = get(c, 'filterFunction')(value, get(c, 'filterUsing'));
+      if (!isEmpty(c.filterFunction)) {
+        passesCustom = c.filterFunction(value, c.filterUsing);
       }
 
       return passesRegex && passesCustom;
@@ -49,7 +49,7 @@ export default function filterData(data, columns, globalFilter, filterFunction, 
 
     if (!isEmpty(globalRegex)) {
       passesGeneral = columns.some(c => {
-        return globalRegex.test(get(row, get(c, 'prop')));
+        return globalRegex.test(get(row, c.prop));
       });
     }
 

@@ -1,11 +1,14 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
 import { timeout } from 'ember-concurrency';
 import { restartableTask } from 'ember-concurrency-decorators';
 
 export default class AsyncController extends Controller {
   // BEGIN-SNIPPET async-simple.js
+  @tracked
+  totalRows;
   /**
    * This example would be used on Yeti Table as `@loadData={{perform loadData}}`.
    * This uses ember-concurrency and ember-concurrency-decorators.
@@ -27,7 +30,7 @@ export default class AsyncController extends Controller {
 
     // we need to inform Yeti Table about the total number of rows
     // for pagination to work correctly. Check out the pagination guide.
-    this.set('totalRows', users.get('meta.totalRows'));
+    this.totalRows = users.meta?.totalRows;
 
     return users;
   };
@@ -52,7 +55,7 @@ export default class AsyncController extends Controller {
 
     // we need to inform Yeti Table about the total number of rows
     // for pagination to work correctly. Check out the pagination guide.
-    this.set('totalRows', users.get('meta.totalRows'));
+    this.totalRows = users.meta?.totalRows;
 
     return users;
   }

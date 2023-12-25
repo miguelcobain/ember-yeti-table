@@ -17,8 +17,7 @@ Yeti Table only supports the following Ember versions: **latest 3.4.X**, **lates
 You can get autocomplete and additional information inside [Visual Studio Code](https://code.visualstudio.com/) by installing [els-addon-docs](https://github.com/lifeart/els-addon-docs) addon for [Unstable Ember Language Server](https://marketplace.visualstudio.com/items?itemName=lifeart.vscode-ember-unstable).
 
 Here's a preview:
-![ELS argument info](https://github.com/lifeart/els-addon-docs/raw/master/previews/argument-information.png "ELS argument info")
-
+![ELS argument info](https://github.com/lifeart/els-addon-docs/raw/master/previews/argument-information.png 'ELS argument info')
 
 ## Basic usage
 
@@ -28,7 +27,7 @@ Unlike most table solutions, in Yeti Table the column and row definitions **happ
 For the data, let's use an array of objects defined in your component:
 
 ```js
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
 export default class DemoComponent extends Component {
   data = [

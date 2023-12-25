@@ -1,10 +1,33 @@
+import { createServer } from 'miragejs';
 import createRegex from 'ember-yeti-table/-private/utils/create-regex';
 import {
   sortMultiple as sortFunction,
   compareValues as compareFunction
 } from 'ember-yeti-table/-private/utils/sorting-utils';
 
-export default function () {
+export default function (config) {
+  let { environment, trackRequests, inflector, models, factories, serializers, scenarios } = config;
+
+  let finalConfig = {
+    environment,
+    trackRequests,
+    identityManagers: {},
+    inflector,
+
+    factories,
+    fixtures: {},
+    models,
+    serializers,
+
+    routes,
+
+    scenarios
+  };
+
+  return createServer(finalConfig);
+}
+
+function routes() {
   // These comments are here to help you get started. Feel free to delete them.
 
   /*

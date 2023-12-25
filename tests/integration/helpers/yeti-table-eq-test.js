@@ -11,25 +11,25 @@ module('Integration | Helper | yeti-table-eq', function (hooks) {
     this.set('inputValue', '1234');
 
     await render(hbs`
-      {{#if (yeti-table-eq inputValue "1234")}}
+      {{#if (yeti-table-eq this.inputValue "1234")}}
         works!
       {{/if}}
     `);
 
-    assert.equal(this.element.textContent.trim(), 'works!');
+    assert.strictEqual(this.element.textContent.trim(), 'works!');
   });
 
   test('returns false when two different arguments are passed in', async function (assert) {
     this.set('inputValue', '1234');
 
     await render(hbs`
-      {{#if (yeti-table-eq inputValue 1234)}}
+      {{#if (yeti-table-eq this.inputValue 1234)}}
         works!
       {{else}}
         not work
       {{/if}}
     `);
 
-    assert.equal(this.element.textContent.trim(), 'not work');
+    assert.strictEqual(this.element.textContent.trim(), 'not work');
   });
 });
