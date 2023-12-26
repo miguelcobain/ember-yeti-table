@@ -1,15 +1,10 @@
 /* eslint-env node */
 'use strict';
 
-module.exports = function (deployTarget) {
+module.exports = function(deployTarget) {
   let ENV = {
-    build: {},
+    build: {}
     // include other plugin configuration that applies to all deploy targets here
-
-    git: {
-      enabled: true,
-      repo: 'https://github.com/miguelcobain/ember-yeti-table.git'
-    }
   };
 
   if (deployTarget === 'development') {
