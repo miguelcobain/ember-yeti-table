@@ -1,11 +1,14 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import { inject as service } from '@ember/service';
 
 import { timeout } from 'ember-concurrency';
 import { restartableTask } from 'ember-concurrency-decorators';
 
 export default class AsyncController extends Controller {
+  @service store;
+
   // BEGIN-SNIPPET async-simple.js
   @tracked
   totalRows;

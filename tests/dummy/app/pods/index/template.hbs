@@ -10,8 +10,8 @@
   <section class="docs-max-w-md docs-mx-auto docs-pb-8">
 
     {{!-- template-lint-disable no-curly-component-invocation --}}
-    {{#docs-demo class="docs-flex docs-flex-row" as |demo|}}
-      {{#demo.example name="index-example.hbs"}}
+    <DocsDemo class="docs-flex docs-flex-row" as |demo|>
+      <demo.example @name="index-example.hbs">
 
         <YetiTable @data={{this.data}} as |t|>
 
@@ -31,10 +31,10 @@
 
         </YetiTable>
 
-      {{/demo.example}}
+      </demo.example>
 
-      {{demo.snippet "index-example.hbs"}}
-    {{/docs-demo}}
+      <demo.snippet @name="index-example.hbs" />
+    </DocsDemo>
 
     <div class="docs-my-16 docs-text-right">
       <LinkTo

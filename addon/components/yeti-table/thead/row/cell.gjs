@@ -12,7 +12,13 @@ import Component from '@glimmer/component';
         <input
           class="input" type="search" placeholder="Search last name"
           value={{this.lastNameFilter}}
-          oninput={{action (mut this.lastNameFilter) value="target.value"}}>
+          {{on "input"
+            (pipe
+              (pick "target.value")
+              (fn (mut this.lastNameFilter))
+            )
+          }}
+          >
       </row.cell>
     </head.row>
   </table.thead>

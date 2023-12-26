@@ -2,7 +2,7 @@ import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
-import faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 export default class FilteringController extends Controller {
   @tracked
@@ -11,9 +11,9 @@ export default class FilteringController extends Controller {
   get data() {
     return Array.from(Array(this.numberOfRows), () => {
       return {
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
-        points: faker.datatype.number({ min: 0, max: 100 })
+        firstName: faker.person.firstName(),
+        lastName: faker.person.lastName(),
+        points: faker.number.int({ min: 0, max: 100 })
       };
     });
   }

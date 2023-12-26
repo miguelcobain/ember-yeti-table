@@ -4,7 +4,7 @@ import { module, test } from 'qunit';
 
 import { tracked } from '@glimmer/tracking';
 
-import faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 class TestParams {
   @tracked
@@ -33,8 +33,8 @@ module('Integration | Component | yeti-table (pagination)', function (hooks) {
 
     testParams.data = Array.from(Array(numberOfRows), (_, i) => {
       return {
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
+        firstName: faker.person.firstName(),
+        lastName: faker.person.lastName(),
         points: i
       };
     });

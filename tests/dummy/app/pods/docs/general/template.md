@@ -15,8 +15,8 @@ of properties.
 Afterwards, we just need to define our table body. If you use `<table.body/>` in the blockless form,
 Yeti Table "unrolls" all the rows for you. This is useful for simple tables. Here is such an example:
 
-{{#docs-demo as |demo|}}
-{{#demo.example name="general-simple.hbs"}}
+<DocsDemo as |demo|>
+<demo.example @name="general-simple.hbs">
 <YetiTable @data={{this.data}} as |table|>
 
       <table.header as |header|>
@@ -35,10 +35,10 @@ Yeti Table "unrolls" all the rows for you. This is useful for simple tables. Her
 
     </YetiTable>
 
-{{/demo.example}}
+</demo.example>
 
-{{demo.snippet "general-simple.hbs"}}
-{{/docs-demo}}
+<demo.snippet @name="general-simple.hbs" />
+</DocsDemo>
 
 You can still add a click handler to the generated rows by passing the `@onRowClick` argument
 to `<table.body/>`. `@onRowClick` adds a click action to each row, called with the clicked row's data as an argument.
@@ -55,8 +55,8 @@ You will probably need to make more customizations, and to do so you will need t
   Notice that if you don't need automatic unrolling, sorting or filtering, the `prop` property is optional.
 </aside>
 
-{{#docs-demo as |demo|}}
-{{#demo.example name="general-simple-with-body.hbs"}}
+<DocsDemo as |demo|>
+<demo.example @name="general-simple-with-body.hbs">
 <YetiTable @data={{this.data}} as |table|>
 
       <table.header as |header|>
@@ -101,10 +101,10 @@ You will probably need to make more customizations, and to do so you will need t
 
     </YetiTable>
 
-{{/demo.example}}
+</demo.example>
 
-{{demo.snippet "general-simple-with-body.hbs"}}
-{{/docs-demo}}
+<demo.snippet @name="general-simple-with-body.hbs" />
+</DocsDemo>
 
 Each `<body.row>` component accepts an optional `@onClick` action that will be called if the row is clicked.
 
@@ -125,8 +125,8 @@ This will probably be your most common use case, but sometimes you might need to
 To do that, you should use the `<table.head>` component, which doesn't render that single `<tr>` and let's you render the rows yourself.
 Here is an example of such a usage:
 
-{{#docs-demo as |demo|}}
-{{#demo.example name="general-simple-with-multiple-rows-on-header.hbs"}}
+<DocsDemo as |demo|>
+<demo.example @name="general-simple-with-multiple-rows-on-header.hbs">
 <YetiTable @data={{this.data}} as |table|>
 
       <table.thead as |head|>
@@ -159,7 +159,7 @@ Here is an example of such a usage:
 
     </YetiTable>
 
-{{/demo.example}}
+</demo.example>
 
-{{demo.snippet "general-simple-with-multiple-rows-on-header.hbs"}}
-{{/docs-demo}}
+<demo.snippet @name="general-simple-with-multiple-rows-on-header.hbs" />
+</DocsDemo>

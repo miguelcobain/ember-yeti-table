@@ -10,8 +10,8 @@ You can customize the page size and change from 15 to any value you need using t
 Yeti Table provides a component with basic pagination controls, but encourages you to build your own
 with the yielded state and actions (more on that in the following section).
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name="pagination-simple.hbs"}}
+<DocsDemo as |demo|>
+  <demo.example @name="pagination-simple.hbs">
     <YetiTable @data={{this.data}} @pagination={{true}} @pageSize={{10}} as |table|>
 
       <table.header as |header|>
@@ -37,10 +37,10 @@ with the yielded state and actions (more on that in the following section).
       </table.tfoot>
 
     </YetiTable>
-  {{/demo.example}}
+  </demo.example>
 
-  {{demo.snippet "pagination-simple.hbs"}}
-{{/docs-demo}}
+  <demo.snippet @name="pagination-simple.hbs" />
+</DocsDemo>
 
 By using `colspan={{table.visibleColumns.length}}` we can make sure that the footer cell always spans across
 all columns. Keep in mind that you need to use `@visible={{true}}` on the cell, to make sure it always stays visible

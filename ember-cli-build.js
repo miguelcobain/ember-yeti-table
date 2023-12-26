@@ -31,7 +31,10 @@ module.exports = function (defaults) {
         main: generateDefaultProject()
       }
     },
-    snippetSearchPaths: ['addon', 'tests/dummy/app']
+    snippetSearchPaths: ['addon', 'tests/dummy/app'],
+    'ember-composable-helpers': {
+      only: ['pipe', 'pick']
+    }
   });
 
   /*

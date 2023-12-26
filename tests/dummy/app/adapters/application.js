@@ -1,3 +1,3 @@
 import JSONAPIAdapter from '@ember-data/adapter/json-api';
 
-export default JSONAPIAdapter;
+export default class ApplicationSerializer extends JSONAPIAdapter {}

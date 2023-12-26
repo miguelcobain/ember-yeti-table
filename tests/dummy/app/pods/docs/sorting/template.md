@@ -11,8 +11,8 @@ If you want to disable sorting on all columns, instead of doing it on each colum
 
 In the following example we disabled sorting on the second column.
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name="sorting-simple.hbs"}}
+<DocsDemo as |demo|>
+  <demo.example @name="sorting-simple.hbs">
     <YetiTable @data={{this.data}} as |table|>
 
       <table.header as |header|>
@@ -30,10 +30,10 @@ In the following example we disabled sorting on the second column.
       <table.body/>
 
     </YetiTable>
-  {{/demo.example}}
+  </demo.example>
 
-  {{demo.snippet "sorting-simple.hbs"}}
-{{/docs-demo}}
+  <demo.snippet @name="sorting-simple.hbs" />
+</DocsDemo>
 
 ## The `@sort` argument
 
@@ -43,8 +43,8 @@ Note that updating the `@sort` argument will also update the sorting of the tabl
 
 If you update an object's property which the table is sorted on, the table sorting will update accordingly. This behaviour can be turned off with `@ignoreDataChanges={{true}}`.
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name="sorting-sort-property.hbs"}}
+<DocsDemo as |demo|>
+  <demo.example @name="sorting-sort-property.hbs">
     <YetiTable @data={{this.data}} as |table|>
 
       <table.header as |header|>
@@ -62,10 +62,10 @@ If you update an object's property which the table is sorted on, the table sorti
       <table.body/>
 
     </YetiTable>
-  {{/demo.example}}
+  </demo.example>
 
-  {{demo.snippet "sorting-sort-property.hbs"}}
-{{/docs-demo}}
+  <demo.snippet @name="sorting-sort-property.hbs" />
+</DocsDemo>
 
 ## Customization
 
@@ -77,8 +77,8 @@ Yeti table provides two approaches for this customization:
 
 In the following example we're showing `(sorted desc)` or `(sorted asc)` text depending on the sorting status of the column.
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name="sorting-custom.hbs"}}
+<DocsDemo as |demo|>
+  <demo.example @name="sorting-custom.hbs">
     <YetiTable @data={{this.data}} as |table|>
 
       <table.header as |header|>
@@ -99,10 +99,10 @@ In the following example we're showing `(sorted desc)` or `(sorted asc)` text de
       <table.body/>
 
     </YetiTable>
-  {{/demo.example}}
+  </demo.example>
 
-  {{demo.snippet "sorting-custom.hbs"}}
-{{/docs-demo}}
+  <demo.snippet @name="sorting-custom.hbs" />
+</DocsDemo>
 
 ## Multiple sorting
 
@@ -112,8 +112,8 @@ In this case you can just use the `@sort` property on multiple columns.
 Let's say we want to sort by `firstName` ascending and then by `lastName` descending. We could pass in `@sort="asc"`
 to the first name column and `@sort="desc"` to the last name column.
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name="sorting-advanced.hbs"}}
+<DocsDemo as |demo|>
+  <demo.example @name="sorting-advanced.hbs">
     <YetiTable @data={{this.advancedSortingData}} as |table|>
 
       <table.header as |header|>
@@ -131,10 +131,10 @@ to the first name column and `@sort="desc"` to the last name column.
       <table.body/>
 
     </YetiTable>
-  {{/demo.example}}
+  </demo.example>
 
-  {{demo.snippet "sorting-advanced.hbs"}}
-{{/docs-demo}}
+  <demo.snippet @name="sorting-advanced.hbs" />
+</DocsDemo>
 
 Notice that the last names are sorting descending for the same first name.
 

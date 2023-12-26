@@ -11,14 +11,14 @@ This means that Yeti Table will only show rows in which any of its columns match
 
 If you update an object's property, the table's filtered rows will be updated accordingly. This behaviour can be turned off with `@ignoreDataChanges={{true}}`.
 
-{{#docs-demo as |demo|}}
-{{#demo.example name="filtering-simple.hbs"}}
+<DocsDemo as |demo|>
+<demo.example @name="filtering-simple.hbs">
 
-<div class="docs-flex docs-justify-end">
-<input
-class="input" type="search" placeholder="Search..."
-value={{this.filterText}} oninput={{action (mut this.filterText) value="target.value"}}>
-</div>
+    <div class="docs-flex docs-justify-end">
+    <input
+      class="input" type="search" placeholder="Search..."
+      value={{this.filterText}} {{on "input" (pipe (pick "target.value") (fn (mut this.filterText)))}}>
+    </div>
 
     <YetiTable @data={{this.data}} @filter={{this.filterText}} as |table|>
 
@@ -38,10 +38,10 @@ value={{this.filterText}} oninput={{action (mut this.filterText) value="target.v
 
     </YetiTable>
 
-{{/demo.example}}
+</demo.example>
 
-{{demo.snippet "filtering-simple.hbs"}}
-{{/docs-demo}}
+<demo.snippet @name="filtering-simple.hbs" />
+</DocsDemo>
 
 ## Single column filtering
 
@@ -60,13 +60,13 @@ You can use the `@filter` argument on `<YetiTable>` and `<header.column>` at the
   because we wanted to place the filter inputs on an additional header row.
 </aside>
 
-{{#docs-demo as |demo|}}
-{{#demo.example name="filtering-column-provided.hbs"}}
+<DocsDemo as |demo|>
+<demo.example @name="filtering-column-provided.hbs">
 
     <div class="docs-flex docs-justify-end">
       <input
         class="input" type="search" placeholder="Search..."
-        value={{filterText}} oninput={{action (mut this.filterText) value="target.value"}}>
+        value={{this.filterText}} {{on "input" (pipe (pick "target.value") (fn (mut this.filterText)))}}>
     </div>
 
     <YetiTable @data={{this.data}} @filter={{this.filterText}} as |table|>
@@ -89,19 +89,19 @@ You can use the `@filter` argument on `<YetiTable>` and `<header.column>` at the
               <input
                 class="input" type="search" placeholder="Search first name"
                 value={{this.firstNameFilter}}
-                oninput={{action (mut this.firstNameFilter) value="target.value"}}>
+                {{on "input" (pipe (pick "target.value") (fn (mut this.firstNameFilter)))}}>
           </row.cell>
           <row.cell>
               <input
                 class="input" type="search" placeholder="Search last name"
                 value={{this.lastNameFilter}}
-                oninput={{action (mut this.lastNameFilter) value="target.value"}}>
+                {{on "input" (pipe (pick "target.value") (fn (mut this.lastNameFilter)))}}>
           </row.cell>
           <row.cell>
               <input
                 class="input" type="search" placeholder="Search points"
                 value={{this.pointsFilter}}
-                oninput={{action (mut this.pointsFilter) value="target.value"}}>
+                {{on "input" (pipe (pick "target.value") (fn (mut this.pointsFilter)))}}>
           </row.cell>
         </head.row>
 
@@ -111,10 +111,10 @@ You can use the `@filter` argument on `<YetiTable>` and `<header.column>` at the
 
     </YetiTable>
 
-{{/demo.example}}
+</demo.example>
 
-{{demo.snippet "filtering-column-provided.hbs"}}
-{{/docs-demo}}
+<demo.snippet @name="filtering-column-provided.hbs" />
+</DocsDemo>
 
 ## Advanced filtering
 
@@ -135,21 +135,23 @@ The `@filterFunction` function on `<header.column>` arguments are:
 
 This allows for advanced filtering logic. See the following example:
 
-{{#docs-demo as |demo|}}
-{{#demo.example name="filtering-custom.hbs"}}
+<DocsDemo as |demo|>
+<demo.example @name="filtering-custom.hbs">
 
     <div class="docs-flex docs-justify-end">
       <div>
         Min points:
         <input
           class="input" type="number" min="0" max={{this.max}}
-          value={{this.min}} oninput={{action (mut this.min) value="target.value"}}>
+          value={{this.min}}
+          {{on "input" (pipe (pick "target.value") (fn (mut this.min)))}}>
       </div>
       <div>
         Max points:
         <input
           class="input" type="number" min={{this.min}} max="100"
-          value={{this.max}} oninput={{action (mut this.max) value="target.value"}}>
+          value={{this.max}}
+          {{on "input" (pipe (pick "target.value") (fn (mut this.max)))}}>
       </div>
     </div>
 
@@ -164,7 +166,7 @@ This allows for advanced filtering logic. See the following example:
         </header.column>
         <header.column @prop="points"
           @filterFunction={{this.filterPoints}}
-          @filterUsing={{hash min=min max=max}}>
+          @filterUsing={{hash min=this.min max=this.max}}>
           Points
         </header.column>
       </table.header>
@@ -173,8 +175,8 @@ This allows for advanced filtering logic. See the following example:
 
     </YetiTable>
 
-{{/demo.example}}
+</demo.example>
 
-{{demo.snippet "filtering-custom.hbs"}}
-{{demo.snippet label="component.js" name="filtering-custom.js"}}
-{{/docs-demo}}
+<demo.snippet @name="filtering-custom.hbs" />
+<demo.snippet @name="filtering-custom.js" @label="component.js" />
+</DocsDemo>

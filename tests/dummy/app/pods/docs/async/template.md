@@ -77,13 +77,14 @@ A custom pagination controls component is also included (check the `pagination-c
   if you're interested.
 </aside>
 
-{{#docs-demo as |demo|}}
-{{#demo.example name="async-simple.hbs"}}
+<DocsDemo as |demo|>
+<demo.example @name="async-simple.hbs">
 
     <div class="docs-flex docs-justify-end">
       <input
         class="input" type="search" placeholder="Search..."
-        value={{this.filterText}} oninput={{action (mut this.filterText) value="target.value"}}>
+        value={{this.filterText}} 
+        {{on "input" (pipe (pick "target.value") (fn (mut this.filterText)))}}>
     </div>
 
     <YetiTable
@@ -145,11 +146,11 @@ A custom pagination controls component is also included (check the `pagination-c
 
     </YetiTable>
 
-{{/demo.example}}
+</demo.example>
 
-{{demo.snippet "async-simple.hbs"}}
-{{demo.snippet label="load-data-task.js" name="async-simple.js"}}
-{{demo.snippet label="load-data-async-await.js" name="async-simple-es7.js"}}
-{{demo.snippet label="pagination-component.hbs" name="async-custom-pagination.hbs"}}
-{{demo.snippet label="user-model.js" name="user.js"}}
-{{/docs-demo}}
+<demo.snippet @name="async-simple.hbs" />
+<demo.snippet @name="async-simple.js" @label="load-data-task.js" />
+<demo.snippet @name="async-simple-es7.js" @label="load-data-async-await.js" />
+<demo.snippet @name="async-custom-pagination.hbs" @label="pagination-component.hbs" />
+<demo.snippet @name="user.js" @label="user-model.js" />
+</DocsDemo>
