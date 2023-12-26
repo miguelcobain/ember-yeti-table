@@ -516,19 +516,18 @@ export default class YetiTable extends Component {
     // call loadData if exists
     if (typeof this.args.loadData === 'function') {
       let params = this.computeLoadDataParams();
-      data = this.args.loadData(params);
-    }
 
-    // resolve the data promise (either from the @loadData call or @data)
-    if (data?.then) {
       try {
-        data = await data;
+        data = await this.args.loadData(params);
       } catch (e) {
         if (!didCancel(e)) {
           // re-throw the non-cancellation error
           throw e;
         }
       }
+    } else if (data?.then) {
+      // resolve the data promise (either from the @loadData call or @data)
+      data = await data;
     }
 
     if (this.isDestroyed) {

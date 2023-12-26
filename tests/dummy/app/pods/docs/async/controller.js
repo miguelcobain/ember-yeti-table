@@ -3,8 +3,7 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 
-import { timeout } from 'ember-concurrency';
-import { restartableTask } from 'ember-concurrency-decorators';
+import { restartableTask, timeout } from 'ember-concurrency';
 
 export default class AsyncController extends Controller {
   @service store;
@@ -14,11 +13,10 @@ export default class AsyncController extends Controller {
   totalRows;
   /**
    * This example would be used on Yeti Table as `@loadData={{perform loadData}}`.
-   * This uses ember-concurrency and ember-concurrency-decorators.
-   * Can't use `*loadData()` syntax until this issue is fixed https://github.com/machty/ember-concurrency-decorators/issues/48
+   * This uses ember-concurrency's decorators.
    */
   @restartableTask
-  loadDataTask = function* ({ paginationData, sortData, filterData }) {
+  *loadDataTask({ paginationData, sortData, filterData }) {
     yield timeout(250);
 
     let params = {
@@ -36,7 +34,7 @@ export default class AsyncController extends Controller {
     this.totalRows = users.meta?.totalRows;
 
     return users;
-  };
+  }
   // END-SNIPPET
 
   // BEGIN-SNIPPET async-simple-es7.js
