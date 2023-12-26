@@ -9,7 +9,7 @@ import Component from '@glimmer/component';
         First name
         {{if column.isAscSorted "(sorted asc)"}}
         {{if column.isDescSorted "(sorted desc)"}}
-      </head.column>
+      </row.column>
     </head.row>
   </table.thead>
   ```
