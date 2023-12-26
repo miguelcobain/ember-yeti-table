@@ -8,7 +8,6 @@
 - Removed yielded for head and foot from table api (Previously deprecated)
 - cells no longer support the ability to specify `visible` on the cells themselves. Please set `visible` on the column
 - many booleans arguments if undefined are now treated as true instead of false (ex column.visible)
--
 
 #### ✨ Features
 
