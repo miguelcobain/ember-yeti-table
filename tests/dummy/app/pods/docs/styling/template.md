@@ -41,7 +41,7 @@ For example, if you wish to override just the `tbodyRow` class you can do the fo
 
 This should provide enough flexibility to customize how Yeti Table renders classes.
 You can also define a global theme in your `config/environment.js` file. Check out the 
-{{#docs-link "docs.configuration"}}Configuration{{/docs-link}} page for more information.
+<DocsLink @route="docs.configuration">Configuration</DocsLink> page for more information.
 
 ## Examples
 
