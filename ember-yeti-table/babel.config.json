@@ -1,0 +1,14 @@
+{
+  "plugins": [
+    ["@babel/plugin-transform-typescript", { "allExtensions": true, "onlyRemoveTypeImports": true, "allowDeclareFields": true }],
+    "@embroider/addon-dev/template-colocation-plugin",
+    "@babel/plugin-transform-class-static-block",
+    ["babel-plugin-ember-template-compilation", {
+      "targetFormat": "hbs",
+      "transforms": []
+    }],
+    "./node_modules/ember-concurrency/lib/babel-plugin-transform-ember-concurrency-async-tasks",
+    ["@babel/plugin-proposal-decorators", { "version": "legacy" }],
+    "@babel/plugin-proposal-class-properties"
+  ]
+}

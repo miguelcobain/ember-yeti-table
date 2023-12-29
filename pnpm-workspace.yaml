@@ -1,0 +1,3 @@
+packages:
+  - 'ember-yeti-table'
+  - 'test-app'

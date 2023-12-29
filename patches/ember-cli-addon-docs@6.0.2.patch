@@ -1,0 +1,13 @@
+diff --git a/index.js b/index.js
+index f91f1ea4d0c64c41595f7b27dca4d6618145cd0d..be9a6b5df08e0635b73e70d497ae82503f014a68 100644
+--- a/index.js
++++ b/index.js
+@@ -386,7 +386,7 @@ module.exports = {
+     let addon;
+     if (this._documentingAddonAt()) {
+       addon = this.project.addons.find(
+-        (a) => a.root === this._documentingAddonAt(),
++        (a) => a.root === this._documentingAddonAt() || a.root.endsWith('ember-yeti-table'),
+       );
+       if (!addon) {
+         throw new Error(
