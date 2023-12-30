@@ -43,7 +43,7 @@ import Component from '@glimmer/component';
 // template imports
 import { hash } from '@ember/helper';
 import { on } from '@ember/modifier';
-import Cell from 'ember-yeti-table/components/yeti-table/tbody/row/cell';
+import Cell from './row/cell.gjs';
 
 export default class TBodyRow extends Component {
   <template>

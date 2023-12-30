@@ -1,7 +1,7 @@
 import { isEmpty } from '@ember/utils';
 import { get } from '@ember/object';
 
-import createRegex from 'ember-yeti-table/utils/create-regex';
+import createRegex from './create-regex.js';
 
 function createColumnFilters(columns) {
   let searcheableColumns = columns.filter(c => {

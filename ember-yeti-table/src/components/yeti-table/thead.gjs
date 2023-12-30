@@ -18,7 +18,7 @@
   @yield {Component} head.row
 */
 import { hash } from '@ember/helper';
-import THead from 'ember-yeti-table/components/yeti-table/thead/row';
+import THead from './thead/row.gjs';
 
 // eslint-disable-next-line ember/no-empty-glimmer-component-classes
 <template>

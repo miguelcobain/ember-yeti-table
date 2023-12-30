@@ -19,8 +19,8 @@ import Component from '@glimmer/component';
   @yield {Component} cell
 */
 
-import Column from 'ember-yeti-table/components/yeti-table/thead/row/column';
-import Cell from 'ember-yeti-table/components/yeti-table/thead/row/cell';
+import Column from './row/column.gjs';
+import Cell from './row/cell.gjs';
 import { hash } from '@ember/helper';
 
 export default class THeadRow extends Component {

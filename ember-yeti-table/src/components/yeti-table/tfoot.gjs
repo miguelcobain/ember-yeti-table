@@ -17,7 +17,7 @@ import Component from '@glimmer/component';
   @yield {Component} footer.row
 */
 import { hash } from '@ember/helper';
-import TFootRow from 'ember-yeti-table/components/yeti-table/tfoot/row';
+import TFootRow from './tfoot/row.gjs';
 
 // eslint-disable-next-line ember/no-empty-glimmer-component-classes
 export default class TFoot extends Component {

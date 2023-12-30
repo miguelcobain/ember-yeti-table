@@ -78,13 +78,13 @@ import Helper from '@ember/component/helper';
  */
 // template imports
 import { hash } from '@ember/helper';
-import Table from 'ember-yeti-table/components/yeti-table/table';
-import Header from 'ember-yeti-table/components/yeti-table/header';
-import THead from 'ember-yeti-table/components/yeti-table/thead';
-import Body from 'ember-yeti-table/components/yeti-table/body';
-import TBody from 'ember-yeti-table/components/yeti-table/tbody';
-import TFoot from 'ember-yeti-table/components/yeti-table/tfoot';
-import Pagination from 'ember-yeti-table/components/yeti-table/pagination';
+import Table from './yeti-table/table.gjs';
+import Header from './yeti-table/header.gjs';
+import THead from './yeti-table/thead.gjs';
+import Body from './yeti-table/body.gjs';
+import TBody from './yeti-table/tbody.gjs';
+import TFoot from './yeti-table/tfoot.gjs';
+import Pagination from './yeti-table/pagination.gjs';
 
 // bring ember-concurrency didCancel helper instead of
 // including the whole dependency

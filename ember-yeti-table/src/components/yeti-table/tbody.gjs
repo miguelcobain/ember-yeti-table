@@ -29,7 +29,7 @@ import Component from '@glimmer/component';
   @yield {Array} data
 */
 import { hash } from '@ember/helper';
-import TBodyRow from 'ember-yeti-table/components/yeti-table/tbody/row';
+import TBodyRow from './tbody/row.gjs';
 
 // eslint-disable-next-line ember/no-empty-glimmer-component-classes
 export default class TBody extends Component {

@@ -36,7 +36,7 @@ import Component from '@glimmer/component';
 
 // template imports
 import { fn, get, hash } from '@ember/helper';
-import TBodyRow from 'ember-yeti-table/components/yeti-table/tbody/row';
+import TBodyRow from './tbody/row.gjs';
 
 export default class Body extends Component {
   <template>

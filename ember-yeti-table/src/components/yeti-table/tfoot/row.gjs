@@ -18,7 +18,7 @@ import Component from '@glimmer/component';
 */
 
 import { hash } from '@ember/helper';
-import Cell from 'ember-yeti-table/components/yeti-table/tfoot/row/cell';
+import Cell from './row/cell.gjs';
 
 export default class TFootRow extends Component {
   <template>
