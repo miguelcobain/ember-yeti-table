@@ -371,8 +371,8 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
     });
   });
 
+  // eslint-disable-next-line qunit/require-expect
   test('onRowClick action is triggered', async function (assert) {
-    // eslint-disable-next-line qunit/require-expect
     assert.expect(2);
 
     testParams.rowClicked = p => {
@@ -408,8 +408,8 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
     await click('tbody tr:nth-child(4)');
   });
 
+  // eslint-disable-next-line qunit/require-expect
   test('onClick action is triggered on row component', async function (assert) {
-    // eslint-disable-next-line qunit/require-expect
     assert.expect(2);
 
     testParams.rowClicked = p => {

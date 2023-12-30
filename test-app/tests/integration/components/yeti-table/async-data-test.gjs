@@ -860,8 +860,8 @@ module('Integration | Component | yeti-table (async)', function (hooks) {
     assert.ok(testParams.loadData.calledOnce, 'loadData was called once');
   });
 
+  // eslint-disable-next-line qunit/require-expect
   test('loadData can be an ember-concurrency restartable task and be cancelled', async function (assert) {
-    // eslint-disable-next-line qunit/require-expect
     assert.expect(4);
     let spy = sinon.spy();
     let hardWorkCounter = 0;
