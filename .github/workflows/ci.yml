@@ -26,13 +26,8 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v3
         with:
-<<<<<<< HEAD:.github/workflows/ci.yml
           node-version: 16.x
           cache: pnpm
-=======
-          node-version: 18
-          cache: npm
->>>>>>> ee43162 (v4.12.2...v5.5.0):test-app/.github/workflows/ci.yml
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
       - name: Lint
@@ -53,15 +48,10 @@ jobs:
           version: 8
       - uses: actions/setup-node@v3
         with:
-<<<<<<< HEAD:.github/workflows/ci.yml
           node-version: 16.x
           cache: pnpm
       - name: Remove lockfile
         run: rm pnpm-lock.yaml
-=======
-          node-version: 18
-          cache: npm
->>>>>>> ee43162 (v4.12.2...v5.5.0):test-app/.github/workflows/ci.yml
       - name: Install Dependencies
         run: pnpm install
       - name: Run Tests
@@ -77,13 +67,10 @@ jobs:
       fail-fast: false
       matrix:
         try-scenario:
-<<<<<<< HEAD:.github/workflows/ci.yml
-          - ember-lts-3.28
           - ember-lts-4.4
-=======
->>>>>>> ee43162 (v4.12.2...v5.5.0):test-app/.github/workflows/ci.yml
           - ember-lts-4.8
           - ember-lts-4.12
+          - ember-lts-5.4
           - ember-release
           - embroider-safe
           - embroider-optimized
@@ -103,13 +90,8 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v3
         with:
-<<<<<<< HEAD:.github/workflows/ci.yml
           node-version: 16.x
           cache: pnpm
-=======
-          node-version: 18
-          cache: npm
->>>>>>> ee43162 (v4.12.2...v5.5.0):test-app/.github/workflows/ci.yml
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
       - name: Run Tests
