@@ -33,7 +33,7 @@
     "lint:js:fix": "eslint . --fix",
     "lint:deps": "ember dependency-lint",
     "start": "concurrently 'ember serve' 'pnpm _syncPnpm --watch' --names 'serve,sync'",
-    "test": "concurrently \"pnpm:lint\" \"pnpm:test:*\" --names \"lint,test:\"",
+    "test": "concurrently \"pnpm:lint\" \"pnpm:test:*(!ember-compatibility)\" --names \"lint,test:\"",
     "test:ember": "pnpm _syncPnpm && ember test",
     "test:ember-compatibility": "ember try:each",
     "_syncPnpm": "DEBUG=sync-pnpm pnpm sync-dependencies-meta-injected"
