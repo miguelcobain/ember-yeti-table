@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   ember-cli-addon-docs@6.0.2:
-    hash: snhawhjabu5qnxkwjvsg5oov7y
+    hash: ohathrqjpep5wuwdu2w6rnrwf4
     path: patches/ember-cli-addon-docs@6.0.2.patch
 
 importers:
@@ -149,7 +149,7 @@ importers:
         version: 5.5.0
       ember-cli-addon-docs:
         specifier: ^6.0.2
-        version: 6.0.2(patch_hash=snhawhjabu5qnxkwjvsg5oov7y)(@babel/core@7.23.7)(@ember/test-helpers@3.2.1)(@glint/template@1.2.1)(ember-data@4.12.3)(ember-source@5.5.0)(webpack@5.89.0)
+        version: 6.0.2(patch_hash=ohathrqjpep5wuwdu2w6rnrwf4)(@babel/core@7.23.7)(@ember/test-helpers@3.2.1)(@glint/template@1.2.1)(ember-data@4.12.3)(ember-source@5.5.0)(webpack@5.89.0)
       ember-cli-addon-docs-yuidoc:
         specifier: ^1.0.0
         version: 1.0.0
@@ -7675,7 +7675,7 @@ packages:
       - supports-color
     dev: true
 
-  /ember-cli-addon-docs@6.0.2(patch_hash=snhawhjabu5qnxkwjvsg5oov7y)(@babel/core@7.23.7)(@ember/test-helpers@3.2.1)(@glint/template@1.2.1)(ember-data@4.12.3)(ember-source@5.5.0)(webpack@5.89.0):
+  /ember-cli-addon-docs@6.0.2(patch_hash=ohathrqjpep5wuwdu2w6rnrwf4)(@babel/core@7.23.7)(@ember/test-helpers@3.2.1)(@glint/template@1.2.1)(ember-data@4.12.3)(ember-source@5.5.0)(webpack@5.89.0):
     resolution: {integrity: sha512-pHcrMttJV5pH6QKvHUhoCLxraxJFVvyVRwXuU09yXcmrNI5jSaqnOCyif2wa/ibTQvejt/kwsAn1yHB4bZVs4w==}
     engines: {node: 16.* || >= 18}
     peerDependencies:
