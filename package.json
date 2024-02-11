@@ -16,11 +16,13 @@
     "test": "pnpm --filter '*' test"
   },
   "devDependencies": {
-    "concurrently": "^8.0.1"
+    "@babel/core": "^7.23.9",
+    "@babel/plugin-proposal-decorators": "^7.23.9",
+    "concurrently": "^8.2.2"
   },
   "pnpm": {
     "patchedDependencies": {
-      "ember-cli-addon-docs@6.0.2": "patches/ember-cli-addon-docs@6.0.2.patch"
+      "ember-cli-addon-docs@7.0.1": "patches/ember-cli-addon-docs@7.0.1.patch"
     }
   }
 }

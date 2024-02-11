@@ -6,8 +6,8 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import merge from 'deepmerge';
 import { use } from 'ember-resources';
-import { trackedFunction } from 'ember-resources/util/function';
-import { keepLatest } from 'ember-resources/util/keep-latest';
+import { trackedFunction } from 'reactiveweb/function';
+import { keepLatest } from 'reactiveweb/keep-latest';
 import { cached, dedupeTracked, localCopy } from 'tracked-toolbox';
 
 import DEFAULT_THEME from '../themes/default-theme';
