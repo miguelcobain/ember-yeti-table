@@ -280,6 +280,48 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
     assert.dom('td').exists({ count: 5 * 3 + 3 });
   });
 
+  test('renders additional header row using thead::row::cell component', async function (assert) {
+await render(<template>
+      <YetiTable @data={{testParams.data}} as |table|>
+
+        <table.thead as |head|>
+          <head.row as |row|>
+            <row.column @prop='firstName'>
+              First name
+            </row.column>
+            <row.column @prop='lastName'>
+              Last name
+            </row.column>
+            <row.column @prop='points'>
+              Points
+            </row.column>
+          </head.row>
+          <head.row as |row|>
+            <row.cell>
+              <input name="firstName">
+            </row.cell>
+            <row.cell>
+              <input name="lastName">
+            </row.cell>
+            <row.cell>
+              <input name="points">
+            </row.cell>
+          </head.row>
+        </table.thead>
+
+        <table.body />
+      </YetiTable>
+    </template>);
+
+    assert.dom('thead tr').exists({ count: 2 }, 'renders two header rows');
+    assert
+      .dom('thead tr:first-child th:first-child')
+      .hasText('First name', 'renders content of column headers');
+    assert
+      .dom('thead tr:last-child th input[name="firstName"]')
+      .exists({ count: 1 }, 'renders content of additional header row');
+  });
+
   test('trClass applies a class to the header tr element', async function (assert) {
     await render(<template>
       <YetiTable @data={{testParams.data}} as |table|>
