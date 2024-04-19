@@ -1,5 +1,24 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import { hash } from '@ember/helper';
+import type { Theme } from 'ember-yeti-table/components/yeti-table/thead/row/column';
+import type Column from 'ember-yeti-table/components/yeti-table/thead/row/column';
+import type TBodyRow from 'ember-yeti-table/components/yeti-table/tbody/row';
+
+export interface TBodyCellSignature {
+  Args: {
+    columns: Column[];
+    parent: TBodyRow;
+    class?: string;
+    theme: Theme;
+  };
+  Blocks: {
+    default: [{
+      prop?: string;
+    }];
+  },
+  Element: HTMLTableCellElement;
+}
 
 /**
   @class TBodyCell
@@ -17,10 +36,7 @@ import { tracked } from '@glimmer/tracking';
   </row.cell>
   ```
 */
-
-import { hash } from '@ember/helper';
-
-export default class TBodyCell extends Component {
+export default class TBodyCell extends Component<TBodyCellSignature> {
   <template>
     {{#if this.column.visible}}
       <td class='{{@class}} {{this.column.columnClass}} {{@theme.tbodyCell}}' ...attributes>
@@ -30,19 +46,19 @@ export default class TBodyCell extends Component {
   </template>
 
   @tracked
-  index;
+  index: number;
 
-  get column() {
-    return this.args.columns[this.index] || {};
+  get column(): Column {
+    return this.args.columns[this.index] || {} as Column;
   }
 
-  constructor() {
-    super(...arguments);
+  constructor(owner: unknown, args: TBodyCellSignature['Args']) {
+    super(owner, args);
     this.index = this.args.parent?.registerCell(this);
   }
 
   willDestroy() {
-    super.willDestroy(...arguments);
+    super.willDestroy();
     this.args.parent?.unregisterCell(this);
   }
 }

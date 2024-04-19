@@ -42,7 +42,7 @@ export default {
     // babel.config.json.
     babel({
       babelHelpers: 'bundled',
-      extensions: ['.js', '.gjs'],
+      extensions: ['.js', '.gjs', '.gts', '.ts'],
     }),
 
     // Ensure that standalone .hbs files are properly integrated as Javascript.

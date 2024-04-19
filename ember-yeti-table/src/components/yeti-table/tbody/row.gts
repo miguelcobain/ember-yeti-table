@@ -1,6 +1,21 @@
 import { action } from '@ember/object';
-
 import Component from '@glimmer/component';
+import type { WithBoundArgs } from '@glint/template';
+import type Column from '../thead/row/column.gts';
+
+export interface TBodyRowSignature {
+  Args: {
+    onClick?: (rowData: TableData) => void;
+    theme: Theme;
+    columns: Column[];
+  };
+  Blocks: {
+    default: [{
+      cell: WithBoundArgs<typeof Cell, 'theme' | 'parent' | 'columns'>;
+    }]
+  };
+  Element: HTMLTableRowElement;
+}
 
 /**
   Renders a `<tr>` element and yields the cell component.
@@ -43,9 +58,11 @@ import Component from '@glimmer/component';
 // template imports
 import { hash } from '@ember/helper';
 import { on } from '@ember/modifier';
-import Cell from './row/cell.gjs';
+import Cell from './row/cell.gts';
+import type { Theme } from '../thead/row/column.gts';
+import type { TableData } from '../body.gts';
 
-export default class TBodyRow extends Component {
+export default class TBodyRow extends Component<TBodyRowSignature> {
   <template>
     {{! template-lint-disable no-invalid-interactive }}
     <tr
@@ -65,15 +82,15 @@ export default class TBodyRow extends Component {
    * @type Function
    */
 
-  cells = [];
+  cells: Cell[] = [];
 
-  registerCell(cell) {
+  registerCell(cell: Cell) {
     let index = this.cells.length;
     this.cells.push(cell);
     return index;
   }
 
-  unregisterCell(cell) {
+  unregisterCell(cell: Cell) {
     let cells = this.cells;
     let index = cells.indexOf(cell);
 
@@ -81,7 +98,9 @@ export default class TBodyRow extends Component {
   }
 
   @action
-  handleClick() {
-    this.args.onClick?.(...arguments);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  handleClick(args: any) {
+    this.args.onClick?.(args);
   }
 }
+

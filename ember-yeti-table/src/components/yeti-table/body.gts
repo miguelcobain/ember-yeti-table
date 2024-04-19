@@ -1,6 +1,31 @@
 import { action } from '@ember/object';
-
 import Component from '@glimmer/component';
+import { fn, get, hash } from '@ember/helper';
+import TBodyRow from './tbody/row.gts';
+import type { Theme } from './thead/row/column.gts';
+import type Column from './thead/row/column.gts';
+import type { ContentValue, WithBoundArgs } from '@glint/template';
+
+export type TableData = Record<string, ContentValue>;
+
+export interface BodySignature {
+  Blocks: {
+    default: [
+      {
+        row: WithBoundArgs<typeof TBodyRow, 'theme' | 'onClick' | 'columns'>;
+      },
+      TableData,
+      number
+    ]
+  },
+  Args: {
+    onRowClick?: (rowData: TableData) => void,
+    data: TableData[],
+    columns: Column[],
+    theme: Theme,
+  },
+  Element: HTMLTableSectionElement,
+}
 
 /**
   Renders a `<tbody>` element and yields the row component, row data and index.
@@ -33,12 +58,7 @@ import Component from '@glimmer/component';
   @yield {Object} rowData - one item in the data array
   @yield {number} index
 */
-
-// template imports
-import { fn, get, hash } from '@ember/helper';
-import TBodyRow from './tbody/row.gjs';
-
-export default class Body extends Component {
+export default class Body extends Component<BodySignature> {
   <template>
     <tbody class={{@theme.tbody}} ...attributes>
       {{#if (has-block)}}
@@ -62,7 +82,7 @@ export default class Body extends Component {
                 {{#if column.prop}}
                   {{get rowData column.prop}}
                 {{else}}
-                  {{rowData}}
+                  {{this.stringify rowData}}
                 {{/if}}
               </row.cell>
             {{/each}}
@@ -71,6 +91,11 @@ export default class Body extends Component {
       {{/if}}
     </tbody>
   </template>
+
+  stringify = (str: unknown) => {
+    return String(str);
+  }
+
   /**
    * Adds a click action to each row, called with the clicked row's data as an argument.
    * Can be used with both the blockless and block invocations.
@@ -78,9 +103,8 @@ export default class Body extends Component {
    * @argument onRowClick
    * @type Function
    */
-
   @action
-  handleRowClick(rowData) {
+  handleRowClick(rowData: TableData) {
     this.args.onRowClick?.(rowData);
   }
 }

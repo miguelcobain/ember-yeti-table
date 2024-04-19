@@ -1,4 +1,19 @@
 import Component from '@glimmer/component';
+import Column from './column.gts'
+import type THeadRow from '../row.gts'
+import type { Theme } from './column.gts'
+
+export interface THeadCellSignature {
+  Args: {
+    parent?: THeadRow;
+    class?: string;
+    theme?: Theme;
+  };
+  Blocks: {
+    default: [];
+  };
+  Element: HTMLTableCellElement;
+}
 
 /**
   An component yielded from the head.row component that is used to define
@@ -28,7 +43,19 @@ import Component from '@glimmer/component';
   @yield {object} cell
 
  */
-export default class THeadCell extends Component {
+export default class THeadCell extends Component<THeadCellSignature> {
+  private column?: Column;
+
+  constructor(owner: unknown, args: THeadCellSignature['Args']) {
+    super(owner, args);
+    this.column = args.parent?.registerCell(this);
+  }
+
+  willDestroy() {
+    super.willDestroy();
+    this.args.parent?.unregisterCell(this);
+  }
+
   <template>
     {{#if this.column.visible}}
       <th class='{{@class}} {{@theme.theadCell}}' ...attributes>
@@ -36,17 +63,4 @@ export default class THeadCell extends Component {
       </th>
     {{/if}}
   </template>
-
-  // Assigned when the cell is registered
-  column = undefined;
-
-  constructor() {
-    super(...arguments);
-    this.column = this.args.parent?.registerCell(this);
-  }
-
-  willDestroy() {
-    super.willDestroy(...arguments);
-    this.args.parent?.unregisterCell(this);
-  }
 }

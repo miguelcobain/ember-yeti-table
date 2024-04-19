@@ -3,13 +3,73 @@ import { assert } from '@ember/debug';
 
 import Component from '@glimmer/component';
 import { modifier } from 'ember-modifier';
+import { on } from  '@ember/modifier';
+// @ts-expect-error: tracked-toolbox is not typed
 import { localCopy } from 'tracked-toolbox';
+import { fn, hash } from '@ember/helper';
+import type { TableData } from 'ember-yeti-table/components/yeti-table/body';
+import type YetiTable from 'ember-yeti-table/components/yeti-table';
+
+export interface Theme {
+  theadCell: string,
+  tfoot: string,
+  thead: string,
+  tbodyRow: string,
+  table: string,
+  theadRow: string,
+  tbodyCell: string,
+  tbody: string,
+  tfootCell: string,
+  pagination: {
+    controls: string,
+    previous: string,
+    next: string,
+    info: string,
+    pageSize: string,
+  },
+  tfootRow: string,
+  row: string,
+  sorting: {
+    columnSortable: string,
+    columnSorted: string,
+    columnSortedAsc: string,
+    columnSortedDesc: string,
+  }
+}
+
+export interface ColumnSignature {
+  Args: {
+    parent: YetiTable,
+    prop?: string,
+    class?: string,
+    sortSequence?: string | string[],
+    columnClass?: string,
+    visible?: boolean,
+    filterFunction?: (value: TableData, filterUsing: string) => boolean,
+    filterUsing?: string,
+    sortable?: boolean,
+    name?: string,
+    sort?: 'asc' | 'desc',
+    filterable?: boolean,
+    filter?: string,
+    theme: Theme,
+    onClick: (column: Column, e: MouseEvent) => void,
+  },
+  Element: HTMLTableCellElement,
+  Blocks: {
+    default: [{
+      isSorted: boolean,
+      isAscSorted: boolean,
+      isDescSorted: boolean,
+    }]
+  }
+}
 
 /**
   An important component yielded from the header or head.row component that is used to define
   a column of the table.
 
-  ```hbs
+  ```
   <table.header as |header|>
     <header.column @prop="firstName" as |column|>
       First name
@@ -37,10 +97,7 @@ import { localCopy } from 'tracked-toolbox';
   @yield {boolean} column.isAscSorted - `true` if column is sorted ascending
   @yield {boolean} column.isDescSorted - `true` if column is sorted descending
 */
-import { on } from '@ember/modifier';
-import { fn, hash } from '@ember/helper';
-
-export default class Column extends Component {
+export default class Column extends Component<ColumnSignature> {
   <template>
     {{! template-lint-disable no-invalid-interactive }}
     {{#if this.visible}}
@@ -77,7 +134,7 @@ export default class Column extends Component {
    * @argument prop
    * @type {String}
    */
-  get prop() {
+  public get prop(): string | undefined {
     return this.args.prop;
   }
 
@@ -89,7 +146,7 @@ export default class Column extends Component {
    * @type {Boolean}
    */
   @localCopy('args.visible', true)
-  visible;
+  visible!: boolean;
 
   /**
    * Used to turn off sorting clicking on this column (clicks won't toggle sorting anymore).
@@ -100,7 +157,7 @@ export default class Column extends Component {
    * @type Boolean
    */
   @localCopy('args.sortable', true)
-  sortable;
+  sortable!: boolean;
 
   /**
    * Optionally use an `asc` or `desc` string on this argument to turn on ascending or descending sorting
@@ -110,7 +167,7 @@ export default class Column extends Component {
    * @type {String}
    */
   @localCopy('args.sort')
-  sort;
+  sort?: 'asc' | 'desc' | null;
 
   /**
    * Use `@sortSequence` to customize the sequence in which the sorting order will cycle when
@@ -130,7 +187,7 @@ export default class Column extends Component {
    * @type {Boolean}
    */
   @localCopy('args.filterable', true)
-  filterable;
+  filterable!: boolean;
 
   /**
    * The column filter. If passed in, Yeti Table will search this column for rows that contain this
@@ -193,7 +250,7 @@ export default class Column extends Component {
    * @type {String}
    */
   @localCopy('args.name')
-  name;
+  name?: string;
 
   /**
    * An optional function to be invoked whenever this column is clicked
@@ -220,33 +277,33 @@ export default class Column extends Component {
   get normalizedSortSequence() {
     let sortSequence = this.args.sortSequence;
     assert(
-      '@sortSequence must be either a comma-separated string or an array. Got `${sortSequence}.`',
+      `@sortSequence must be either a comma-separated string or an array. Got ${sortSequence}.`,
       isArray(sortSequence) || typeof sortSequence === 'string'
     );
 
     if (isArray(sortSequence)) {
       return sortSequence;
     } else if (typeof sortSequence === 'string') {
-      return sortSequence.split(',').map(s => s.trim());
+      return (sortSequence as string).split(',').map(s => s.trim());
     } else {
       return [];
     }
   }
 
-  constructor() {
-    super(...arguments);
+  constructor(owner: unknown, args: ColumnSignature['Args']) {
+    super(owner, args);
 
-    this.args.parent?.registerColumn(this);
+    args.parent?.registerColumn(this);
   }
 
   willDestroy() {
-    super.willDestroy(...arguments);
+    super.willDestroy();
     this.args.parent?.unregisterColumn(this);
   }
 
   updateName = modifier(element => {
     if (!this.args.name) {
-      this.name = element.textContent.trim();
+      this.name = (element.textContent ?? '').trim();
     }
   });
 

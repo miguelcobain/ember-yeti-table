@@ -1,3 +1,16 @@
+import type { TOC } from "@ember/component/template-only";
+import type { Theme } from "ember-yeti-table/components/yeti-table/thead/row/column";
+
+interface YetiTableTableSignature {
+  Args: {
+    theme: Theme;
+  };
+  Blocks: {
+    default: [];
+  };
+  Element: HTMLTableElement;
+}
+
 /**
   A simple component that just renders the `<table>` element with the correct
   theme classes.
@@ -26,9 +39,10 @@
 
   @class Table
 */
-
-<template>
+const table: TOC<YetiTableTableSignature> = <template>
   <table class={{@theme.table}} ...attributes>
     {{yield}}
   </table>
 </template>
+
+export default table;

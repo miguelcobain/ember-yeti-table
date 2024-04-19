@@ -1,5 +1,21 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import type { Theme } from '../../thead/row/column.gts'
+import type Column from '../../thead/row/column.gts'
+import type TFootRow from '../row.gts'
+
+export interface TFootCellSignature {
+  Args: {
+    parent: TFootRow;
+    columns: Column[];
+    class?: string;
+    theme?: Theme;
+  };
+  Blocks: {
+    default: [];
+  };
+  Element: HTMLTableCellElement;
+}
 
 /**
   Renders a `<td>` element and yields for the developer to supply content.
@@ -15,8 +31,7 @@ import { tracked } from '@glimmer/tracking';
   ```
   @class TFootCell
  */
-
-export default class TFootCell extends Component {
+export default class TFootCell extends Component<TFootCellSignature> {
   <template>
     {{#if this.column.visible}}
       <td class='{{@class}} {{@theme.tfootCell}}' ...attributes>
@@ -26,20 +41,19 @@ export default class TFootCell extends Component {
   </template>
 
   @tracked
-  index;
+  index?: number;
 
   get column() {
-    return this.args.columns[this.index];
+    return this.args.columns[this.index ?? 0];
   }
 
-  constructor() {
-    super(...arguments);
-
+  constructor(owner: unknown, args: TFootCellSignature['Args']) {
+    super(owner, args);
     this.index = this.args.parent?.registerCell(this);
   }
 
   willDestroy() {
-    super.willDestroy(...arguments);
+    super.willDestroy();
     this.args.parent?.unregisterCell(this);
   }
 }
