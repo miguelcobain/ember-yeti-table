@@ -45,7 +45,7 @@ export interface ColumnSignature {
     sortSequence?: string | string[],
     columnClass?: string,
     visible?: boolean,
-    filterFunction?: (value: TableData, filterUsing: string) => boolean,
+    filterFunction?: (value: string, filterUsing: string) => boolean,
     filterUsing?: string,
     sortable?: boolean,
     name?: string,

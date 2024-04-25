@@ -4,6 +4,7 @@ import THead from './thead/row.gts';
 import type { Theme } from './thead/row/column.gts';
 import type { WithBoundArgs } from '@glint/template';
 import type Column from './thead/row/column.gts';
+import type YetiTable from '../yeti-table.gts';
 
 export interface THeadSignature {
   Args: {
@@ -12,7 +13,7 @@ export interface THeadSignature {
     sortSequence: string[];
     onColumnClick: (column: Column,e: MouseEvent) => void;
     columns: Column[];
-    parent: unknown;
+    parent: YetiTable;
   },
   Blocks: {
     default: [{

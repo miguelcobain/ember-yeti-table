@@ -6,14 +6,14 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import merge from 'deepmerge';
 import { use } from 'ember-resources';
-import { trackedFunction } from 'ember-resources';
-import { keepLatest } from 'ember-resources/util/keep-latest';
+import { trackedFunction } from 'reactiveweb/function';
+import { keepLatest } from 'reactiveweb/keep-latest';
 // @ts-expect-error - tracked-toolbox is not typed
 import { cached, dedupeTracked, localCopy } from 'tracked-toolbox';
 
-import DEFAULT_THEME from '../themes/default-theme.js';
-import filterData from '../utils/filtering-utils.js';
-import { compareValues, mergeSort, sortMultiple, type SortFunction, type ComparatorFunction } from '../utils/sorting-utils.js';
+import DEFAULT_THEME from '../themes/default-theme.ts';
+import filterData from '../utils/filtering-utils.ts';
+import { compareValues, mergeSort, sortMultiple, type SortProps, type ComparatorFunction, type SortFunction } from '../utils/sorting-utils.ts';
 
 export interface FilterData {
   data: unknown[];
@@ -199,8 +199,8 @@ export interface YetiTableSignature {
     filterFunction?: FilterFunction;
     filterUsing?: string;
     sortable?: boolean;
-    sortFunction?: SortFunction;
-    compareFunction?: ComparatorFunction<unknown, unknown>;
+    sortFunction?: SortProps;
+    compareFunction?: ComparatorFunction<unknown>;
     sortSequence?: SortSequence;
     ignoreDataChanges?: boolean;
     renderTableElement?: boolean;
@@ -470,7 +470,7 @@ export default class YetiTable extends Component<YetiTableSignature> {
    * @type {Function}
    */
   @localCopy('args.sortFunction', () => sortMultiple)
-  sortFunction!: SortFunction;
+  sortFunction!: SortFunction<unknown>;
 
   /**
    * Use `@compareFunction` if you just want to customize how two values relate to each other (not the entire row).
@@ -481,7 +481,7 @@ export default class YetiTable extends Component<YetiTableSignature> {
    * @type {Function}
    */
   @localCopy('args.compareFunction', () => compareValues)
-  compareFunction!: ComparatorFunction<unknown, unknown>;
+  compareFunction!: ComparatorFunction<unknown>;
 
   /**
    * Use `@sortSequence` to customize the sequence in which the sorting order will cycle when

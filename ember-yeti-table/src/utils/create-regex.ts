@@ -5,11 +5,11 @@ const ESCAPE_REGEX = new RegExp(
   'g'
 );
 
-function escapeRegex(val) {
+function escapeRegex(val: string) {
   return val.replace(ESCAPE_REGEX, '\\$1');
 }
 
-export default function createRegex(search, regex = false, smart = true, caseInsensitive = true) {
+export default function createRegex(search: string, regex = false, smart = true, caseInsensitive = true) {
   if (isBlank(search)) {
     return;
   }
@@ -28,7 +28,7 @@ export default function createRegex(search, regex = false, smart = true, caseIns
     let a = words.map(word => {
       if (word.charAt(0) === '"') {
         let m = word.match(/^"(.*)"$/);
-        word = m ? m[1] : word;
+        word = m ? m[1]! : word;
       }
 
       return word.replace('"', '');

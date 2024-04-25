@@ -5,6 +5,7 @@ import Component from '@glimmer/component';
 import { localCopy } from 'tracked-toolbox';
 import type { Theme } from './thead/row/column.gts';
 import type { PaginationActions, PaginationData } from '../yeti-table.gts';
+import { helper } from '@ember/component/helper';
 
 export interface PaginationSignature {
   Blocks: {
@@ -70,7 +71,7 @@ export default class Pagination extends Component<PaginationSignature> {
           Rows per page:
           <select disabled={{@disabled}} {{on 'change' this.changePageSize}}>
             {{#each this.pageSizes as |pageSize|}}
-              <option value={{pageSize}} selected={{eq @paginationData.pageSize pageSize}}>{{pageSize}}</option>
+              <option value={{pageSize}} selected={{this.isPaginationNumberSelected @paginationData.pageSize pageSize}}>{{pageSize}}</option>
             {{/each}}
           </select>
         </div>
@@ -104,6 +105,11 @@ export default class Pagination extends Component<PaginationSignature> {
   // paginationActions;
 
   // disabled;
+
+  // helper function used, needed while working with ember <= 4.4. Works without helper function in ember > 4.4
+  isPaginationNumberSelected = helper(([number]) => {
+    return number === this.args.paginationData.pageSize;
+  });
 
   get shouldDisablePrevious() {
     return this.args.paginationData.isFirstPage || this.args.disabled;
