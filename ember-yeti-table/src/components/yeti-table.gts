@@ -1,4 +1,4 @@
-import { getOwner } from '@ember/application';
+import { getOwner } from '@ember/owner';
 import { action, notifyPropertyChange } from '@ember/object';
 import { later, schedule, scheduleOnce } from '@ember/runloop';
 import { isEmpty, isPresent } from '@ember/utils';
@@ -91,8 +91,8 @@ import Body, { type TableData } from './yeti-table/body.gts';
 import TBody from './yeti-table/tbody.gts';
 import TFoot from './yeti-table/tfoot.gts';
 import Pagination from './yeti-table/pagination.gts';
-import type Column from './yeti-table/thead/row/column';
-import type { Theme } from './yeti-table/thead/row/column';
+import type Column from './yeti-table/thead/row/column.gts';
+import type { Theme } from './yeti-table/thead/row/column.gts';
 import type { WithBoundArgs } from '@glint/template';
 
 // bring ember-concurrency didCancel helper instead of
@@ -547,7 +547,7 @@ export default class YetiTable extends Component<YetiTableSignature> {
     return this.columns.filter(c => c.visible === true);
   }
 
-  config: Config = (getOwner(this)?.lookup('config:environment') as Record<string, unknown>)['ember-yeti-table'] || {};
+  config: Config;
 
   get normalizedTotalRows() {
     if (!this.args.loadData) {
@@ -607,6 +607,9 @@ export default class YetiTable extends Component<YetiTableSignature> {
     if (typeof this.args.registerApi === 'function') {
       scheduleOnce('actions', null, this.args.registerApi, this.publicApi);
     }
+
+    this.config = (getOwner(this)?.lookup('config:environment') as Record<string, unknown>)['ember-yeti-table'] || {};
+
   }
 
   previousResolvedData: TableData[] = [];

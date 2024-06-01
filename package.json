@@ -16,13 +16,17 @@
     "test": "pnpm --filter '*' test"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.9",
-    "@babel/plugin-proposal-decorators": "^7.23.9",
+    "@babel/core": "^7.24.6",
+    "@babel/plugin-proposal-decorators": "^7.24.6",
     "concurrently": "^8.2.2"
   },
   "pnpm": {
     "patchedDependencies": {
       "ember-cli-addon-docs@7.0.1": "patches/ember-cli-addon-docs@7.0.1.patch"
     }
+  },
+  "volta": {
+    "node": "18.20.2",
+    "pnpm": "8.15.8"
   }
 }
