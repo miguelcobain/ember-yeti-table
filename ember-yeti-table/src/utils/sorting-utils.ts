@@ -1,19 +1,25 @@
 import { get } from '@ember/object';
 import { compare, isNone } from '@ember/utils';
+import type { IterableElement } from 'type-fest';
 
-function merge(left, right, comparator) {
-  let mergedArray = [];
+export type ComparatorFunction<T> = (a: T, b: T) => number;
+
+export type SortProps = { prop?: string, direction?: 'asc' | 'desc' | null }[];
+export type SortFunction<T> = (itemA: T, itemB: T, sorts: SortProps, compare: ComparatorFunction<T>) => number;
+
+function merge<T extends Array<unknown>>(left: T, right: T, comparator: ComparatorFunction<IterableElement<T>>): T {
+  let mergedArray: T = [] as unknown as T;
   let leftIndex = 0;
   let rightIndex = 0;
 
   while (leftIndex < left.length && rightIndex < right.length) {
-    let comparison = comparator(left[leftIndex], right[rightIndex]);
+    let comparison = comparator(left[leftIndex] as IterableElement<T>, right[rightIndex] as IterableElement<T>);
 
     if (comparison <= 0) {
-      mergedArray.push(left[leftIndex]);
+      mergedArray.push(left[leftIndex]!);
       leftIndex++;
     } else {
-      mergedArray.push(right[rightIndex]);
+      mergedArray.push(right[rightIndex]!);
       rightIndex++;
     }
   }
@@ -42,24 +48,24 @@ function merge(left, right, comparator) {
  * @param {Comparator} comparator The comparator function to compare elements with.
  * @return {Array} A sorted array
  */
-export function mergeSort(array, comparator = compare) {
+export function mergeSort<T extends Array<unknown>>(array: T, comparator: ComparatorFunction<IterableElement<T>> = compare): T {
   if (array.length <= 1) {
     return array;
   }
 
   let middleIndex = Math.floor(array.length / 2);
-  let leftArray = mergeSort(array.slice(0, middleIndex), comparator);
-  let rightArray = mergeSort(array.slice(middleIndex), comparator);
+  let leftArray = mergeSort(array.slice(0, middleIndex) as T, comparator);
+  let rightArray = mergeSort(array.slice(middleIndex) as T, comparator);
 
-  return merge(leftArray, rightArray, comparator);
+  return merge(leftArray as T, rightArray  as T, comparator);
 }
 
-export function sortMultiple(itemA, itemB, sorts, compare) {
+export function sortMultiple<T>(itemA: T, itemB: T, sorts: SortProps, compare: ComparatorFunction<T>) {
   let compareValue;
 
   for (let { prop, direction } of sorts) {
-    let valueA = get(itemA, prop);
-    let valueB = get(itemB, prop);
+    let valueA = get(itemA, prop!) as T;
+    let valueB = get(itemB, prop!) as T;
 
     compareValue = direction === 'asc' ? compare(valueA, valueB) : -compare(valueA, valueB);
 
@@ -71,15 +77,15 @@ export function sortMultiple(itemA, itemB, sorts, compare) {
   return compareValue;
 }
 
-function isExactlyNaN(value) {
+function isExactlyNaN(value: unknown) {
   return typeof value === 'number' && isNaN(value);
 }
 
-function isEmpty(value) {
+function isEmpty(value: unknown) {
   return isNone(value) || isExactlyNaN(value);
 }
 
-function orderEmptyValues(itemA, itemB) {
+function orderEmptyValues<T>(itemA:T, itemB:T) {
   let aIsEmpty = isEmpty(itemA);
   let bIsEmpty = isEmpty(itemB);
 
@@ -96,7 +102,7 @@ function orderEmptyValues(itemA, itemB) {
   }
 }
 
-export function compareValues(itemA, itemB) {
+export function compareValues<T>(itemA: T, itemB: T) {
   if (isEmpty(itemA) || isEmpty(itemB)) {
     return orderEmptyValues(itemA, itemB);
   }

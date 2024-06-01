@@ -1,18 +1,22 @@
 import { isEmpty } from '@ember/utils';
 import { get } from '@ember/object';
 
-import createRegex from './create-regex.js';
+import createRegex from './create-regex.ts';
+import type Column from '../components/yeti-table/thead/row/column.ts';
+import type { TableData } from '../components/yeti-table/body.ts';
+import type { FilterFunction } from '../components/yeti-table.ts';
+import type THeadRow from '../components/yeti-table/thead/row.ts';
 
-function createColumnFilters(columns) {
+function createColumnFilters(columns: Column[]) {
   let searcheableColumns = columns.filter(c => {
     return !isEmpty(c.filter) || !isEmpty(c.filterFunction);
   });
 
   return searcheableColumns.map(c => {
-    let regex = createRegex(c.filter);
+    let regex = createRegex(c.filter!)!;
 
-    return row => {
-      let value = get(row, c.prop);
+    return (row: THeadRow) => {
+      let value = get(row, c.prop!) as string;
       let passesRegex = true;
 
       if (!isEmpty(c.filter)) {
@@ -21,7 +25,7 @@ function createColumnFilters(columns) {
 
       let passesCustom = true;
 
-      if (!isEmpty(c.filterFunction)) {
+      if (c.filterFunction && c.filterUsing) {
         passesCustom = c.filterFunction(value, c.filterUsing);
       }
 
@@ -30,7 +34,7 @@ function createColumnFilters(columns) {
   });
 }
 
-export default function filterData(data, columns, globalFilter, filterFunction, filterUsing) {
+export default function filterData(data: TableData[], columns: Column[], globalFilter: string, filterFunction?: FilterFunction, filterUsing?: string) {
   if (isEmpty(data)) {
     return [];
   }
@@ -47,20 +51,20 @@ export default function filterData(data, columns, globalFilter, filterFunction, 
   return data.filter(row => {
     let passesGeneral = true;
 
-    if (!isEmpty(globalRegex)) {
+    if (globalRegex) {
       passesGeneral = columns.some(c => {
-        return globalRegex.test(get(row, c.prop));
+        return globalRegex!.test(get(row, c.prop!) as string);
       });
     }
 
     let passesColumn = true;
 
-    if (!isEmpty(columnFilters)) {
-      passesColumn = columnFilters.every(fn => fn(row));
+    if (columnFilters) {
+      passesColumn = columnFilters.every(fn => fn(row as any));
     }
 
     let passesCustom = true;
-    if (!isEmpty(filterFunction)) {
+    if (filterFunction) {
       passesColumn = filterFunction(row, filterUsing);
     }
 

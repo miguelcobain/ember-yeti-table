@@ -1,7 +1,28 @@
 import { action } from '@ember/object';
-import { helper } from '@ember/component/helper';
+import { on } from '@ember/modifier';
 import Component from '@glimmer/component';
+// @ts-expect-error: Ignore import error until types are added
 import { localCopy } from 'tracked-toolbox';
+import type { Theme } from './thead/row/column.gts';
+import type { PaginationActions, PaginationData } from '../yeti-table.gts';
+import { helper } from '@ember/component/helper';
+
+export interface PaginationSignature {
+  Blocks: {
+    default: [];
+  };
+  Element: HTMLDivElement;
+  Args: {
+    theme: Theme;
+    paginationData: PaginationData;
+    paginationActions: PaginationActions;
+    disabled: boolean;
+    pageSizes: number[];
+    showInfo: boolean;
+    showPageSizeSelector: boolean;
+    showButtons: boolean;
+  };
+}
 
 /**
   Simple pagination controls component that is included to help you get started quickly.
@@ -30,9 +51,7 @@ import { localCopy } from 'tracked-toolbox';
 
   @class Pagination
 */
-import { on } from '@ember/modifier';
-
-export default class Pagination extends Component {
+export default class Pagination extends Component<PaginationSignature> {
   <template>
     <div class={{@theme.pagination.controls}} ...attributes>
       {{#if this.showInfo}}
@@ -109,7 +128,7 @@ export default class Pagination extends Component {
    * @type {Number}
    */
   @localCopy('args.pageSizes', [10, 15, 20, 25])
-  pageSizes;
+  pageSizes!: number[];
 
   /**
    * Used to show/hide some textual information about the current page. Defaults to `true`.
@@ -118,7 +137,7 @@ export default class Pagination extends Component {
    * @type {Boolean}
    */
   @localCopy('args.showInfo', true)
-  showInfo;
+  showInfo!: boolean;
 
   /**
    * Used to show/hide the page size selector. Defaults to `true`.
@@ -127,7 +146,7 @@ export default class Pagination extends Component {
    * @type {Boolean}
    */
   @localCopy('args.showPageSizeSelector', true)
-  showPageSizeSelector;
+  showPageSizeSelector!: boolean;
 
   /**
    * Used to show/hide the previous and next page buttons. Defaults to `true`.
@@ -136,10 +155,10 @@ export default class Pagination extends Component {
    * @type {Boolean}
    */
   @localCopy('args.showButtons', true)
-  showButtons;
+  showButtons!: boolean;
 
   @action
-  changePageSize(ev) {
-    this.args.paginationActions.changePageSize(ev.target.value);
+  changePageSize(ev: Event) {
+    this.args.paginationActions.changePageSize((ev.target as HTMLSelectElement).value);
   }
 }
