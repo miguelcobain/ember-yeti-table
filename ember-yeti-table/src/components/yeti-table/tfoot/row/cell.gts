@@ -44,7 +44,7 @@ export default class TFootCell extends Component<TFootCellSignature> {
   index?: number;
 
   get column() {
-    return this.args.columns[this.index ?? 0];
+    return this.args.columns[this.index!];
   }
 
   constructor(owner: unknown, args: TFootCellSignature['Args']) {

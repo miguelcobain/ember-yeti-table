@@ -71,7 +71,7 @@ export default class Pagination extends Component<PaginationSignature> {
           Rows per page:
           <select disabled={{@disabled}} {{on 'change' this.changePageSize}}>
             {{#each this.pageSizes as |pageSize|}}
-              <option value={{pageSize}} selected={{this.isPaginationNumberSelected @paginationData.pageSize pageSize}}>{{pageSize}}</option>
+              <option value={{pageSize}} selected={{this.isPaginationNumberSelected pageSize}}>{{pageSize}}</option>
             {{/each}}
           </select>
         </div>
