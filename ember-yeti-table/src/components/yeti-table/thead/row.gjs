@@ -31,7 +31,7 @@ export default class THeadRow extends Component {
           column=(component
             Column sortable=@sortable sortSequence=@sortSequence onClick=@onColumnClick theme=@theme parent=@parent
           )
-          cell=(component Cell theme=@theme parent=this)
+          cell=(component Cell theme=@theme parent=this columns=@columns)
         )
       }}
     </tr>
@@ -40,27 +40,14 @@ export default class THeadRow extends Component {
   cells = [];
 
   registerCell(cell) {
-    let column;
-
-    if (cell.prop) {
-      column = this.args.columns.findBy('prop', cell.prop);
-      cell.column = column;
-    } else {
-      let index = this.cells.length;
-      column = this.args.columns[index];
-
-      return column;
-    }
-
+    let index = this.cells.length;
     this.cells.push(cell);
-
-    return column;
+    return index;
   }
 
   unregisterCell(cell) {
     let cells = this.cells;
     let index = cells.indexOf(cell);
-
     cells.splice(index, 1);
   }
 }
