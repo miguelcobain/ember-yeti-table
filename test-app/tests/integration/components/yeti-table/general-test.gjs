@@ -280,6 +280,105 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
     assert.dom('td').exists({ count: 5 * 3 + 3 });
   });
 
+  module('renders additional header row using thead::row::cell component', function () {
+    test('map header cells to columns implicitly using index', async function (assert) {
+      await render(<template>
+        <YetiTable @data={{testParams.data}} as |table|>
+
+          <table.thead as |head|>
+            <head.row as |row|>
+              <row.column @prop='firstName'>
+                First name
+              </row.column>
+              <row.column @prop='lastName'>
+                Last name
+              </row.column>
+              <row.column @prop='points'>
+                Points
+              </row.column>
+            </head.row>
+            <head.row as |row|>
+              <row.cell>
+                <input name="firstName">
+              </row.cell>
+              <row.cell>
+                <input name="lastName">
+              </row.cell>
+              <row.cell>
+                <input name="points">
+              </row.cell>
+            </head.row>
+          </table.thead>
+
+          <table.body />
+        </YetiTable>
+      </template>);
+
+      assert.dom('thead tr').exists({ count: 2 }, 'renders two header rows');
+      assert
+        .dom('thead tr:first-child th:first-child')
+        .hasText('First name', 'renders content of column headers');
+      assert
+        .dom('thead tr:last-child th input[name="firstName"]')
+        .exists({ count: 1 }, 'renders content of additional header row');
+    });
+
+    test('map header cells to columns explicitly using @prop', async function (assert) {
+      testParams.visible = false;
+
+      await render(<template>
+        <YetiTable @data={{testParams.data}} as |table|>
+
+          <table.thead as |head|>
+            <head.row as |row|>
+              <row.column @prop='firstName'>
+                First name
+              </row.column>
+              {{#if testParams.visible}}
+                <row.column @prop='lastName'>
+                  Last name
+                </row.column>
+              {{/if}}
+              <row.column @prop='points'>
+                Points
+              </row.column>
+            </head.row>
+            <head.row as |row|>
+              <row.cell @prop="firstName">
+                <input name="firstName">
+              </row.cell>
+              <row.cell @prop="lastName">
+                <input name="lastName">
+              </row.cell>
+              <row.cell @prop="points">
+                <input name="points">
+              </row.cell>
+            </head.row>
+          </table.thead>
+
+          <table.body />
+        </YetiTable>
+      </template>);
+
+      assert.dom('thead tr').exists({ count: 2 }, 'renders two header rows');
+      assert
+        .dom('thead tr:first-child th')
+        .exists({ count: 2 }, 'only renders two columns');
+      assert
+        .dom('thead tr:last-child th')
+        .exists({ count: 2 }, 'only renders two additional header cells');
+      assert
+        .dom('thead tr:last-child th input[name="firstName"]')
+        .exists({ count: 1 }, 'renders additional header cell for visible first column');
+      assert
+        .dom('thead tr:last-child th input[name="points"]')
+        .exists({ count: 1 }, 'renders additional header cell for visible last column');
+      assert
+        .dom('thead tr:last-child th input[name="lastName"]')
+        .doesNotExist({ count: 1 }, 'does not render additional header cell for invisible second column');
+    });
+  });
+
   test('trClass applies a class to the header tr element', async function (assert) {
     await render(<template>
       <YetiTable @data={{testParams.data}} as |table|>
