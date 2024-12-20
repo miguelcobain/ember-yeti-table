@@ -42,7 +42,9 @@ export default class THeadCell extends Component {
   index;
 
   get column() {
-    return this.args.columns[this.index];
+    return this.args.prop ?
+      this.args.columns.find((column) => column.prop === this.args.prop) :
+      this.args.columns[this.index];
   }
 
   constructor() {
