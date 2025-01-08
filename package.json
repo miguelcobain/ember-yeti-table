@@ -1,8 +1,11 @@
 {
   "name": "workspace-root",
-  "version": "2.0.1",
+  "version": "0.0.0",
   "private": true,
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:miguelcobain/ember-yeti-table.git"
+  },
   "license": "MIT",
   "author": "",
   "scripts": {
