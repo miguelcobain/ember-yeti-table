@@ -1,3 +1,9 @@
+# v2.0.1
+
+#### 🐛 Bugfixes
+
+- relax ember-source peer dependency to `>= 4.0.0` to suppport Ember v6 [#470](https://github.com/miguelcobain/ember-yeti-table/pull/470)
+
 # v2.0.0
 
 #### 🚨 Breaking Changes
