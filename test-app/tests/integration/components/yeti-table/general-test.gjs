@@ -376,6 +376,27 @@ module('Integration | Component | yeti-table (general)', function (hooks) {
       assert
         .dom('thead tr:last-child th input[name="lastName"]')
         .doesNotExist({ count: 1 }, 'does not render additional header cell for invisible second column');
+
+      testParams.visible = true;
+
+      await settled();
+
+      assert.dom('thead tr').exists({ count: 2 }, 'renders two header rows');
+      assert
+        .dom('thead tr:first-child th')
+        .exists({ count: 3 }, 'renders three columns');
+      assert
+        .dom('thead tr:last-child th')
+        .exists({ count: 3 }, 'renders three additional header cells');
+      assert
+        .dom('thead tr:last-child th input[name="firstName"]')
+        .exists({ count: 1 }, 'renders additional header cell for visible first column');
+      assert
+        .dom('thead tr:last-child th input[name="lastName"]')
+        .exists({ count: 1 }, 'renders additional header cell for visible second column');
+      assert
+        .dom('thead tr:last-child th input[name="points"]')
+        .exists({ count: 1 }, 'renders additional header cell for visible last column');
     });
   });
 
