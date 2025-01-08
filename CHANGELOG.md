@@ -1,3 +1,9 @@
+# v2.0.2
+
+#### 🐛 Bugfixes
+
+- fix rendering of cells within additional header row [#465](https://github.com/miguelcobain/ember-yeti-table/pull/465)
+
 # v2.0.1
 
 #### 🐛 Bugfixes
