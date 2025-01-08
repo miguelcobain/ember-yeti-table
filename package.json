@@ -30,7 +30,7 @@
   },
   "volta": {
     "node": "18.20.5",
-    "pnpm": "8.15.9"
+    "pnpm": "9.15.3"
   },
   "workspaces": [
     "ember-yeti-table",
