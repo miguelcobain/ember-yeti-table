@@ -28,9 +28,6 @@
       "ember-cli-addon-docs@7.0.1": "patches/ember-cli-addon-docs@7.0.1.patch"
     }
   },
-  "resolutions": {
-    "@embroider/compat": "3.7.1"
-  },
   "volta": {
     "node": "18.20.5",
     "pnpm": "9.15.3"
