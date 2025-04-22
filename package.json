@@ -26,6 +26,10 @@
   "pnpm": {
     "patchedDependencies": {
       "ember-cli-addon-docs@7.0.1": "patches/ember-cli-addon-docs@7.0.1.patch"
+    },
+    "overrides": {
+      "@embroider/addon-shim@^1.5.0 <1.10": "~1.9",
+      "@embroider/macros@^1.8.3 <1.17": "~1.16"
     }
   },
   "volta": {
