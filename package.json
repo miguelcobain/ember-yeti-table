@@ -26,9 +26,6 @@
   "pnpm": {
     "patchedDependencies": {
       "ember-cli-addon-docs@7.0.1": "patches/ember-cli-addon-docs@7.0.1.patch"
-    },
-    "overrides": {
-      "ember-cli-addon-docs>@handlebars/parser": "2.1.0"
     }
   },
   "volta": {
