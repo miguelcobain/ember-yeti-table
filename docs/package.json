@@ -1,0 +1,26 @@
+{
+  "name": "ember-yeti-table-docs",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Yeti Table documentation site powered by VitePress",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^10.4.0",
+    "@glimmer/component": "^2.0.0",
+    "@glimmer/tracking": "^1.1.2",
+    "@types/markdown-it": "^14.1.2",
+    "ember-source": "^6.7.0",
+    "@triptyk/ember-yeti-table": "workspace:*",
+    "ember-yeti-table": "workspace:@triptyk/ember-yeti-table@*",
+    "markdown-it": "^14.1.1",
+    "vite-plugin-ember": "^0.4.0",
+    "vitepress": "^1.6.4",
+    "vue": "^3.5.31"
+  }
+}

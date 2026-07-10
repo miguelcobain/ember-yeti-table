@@ -1,0 +1,97 @@
+/* Minimal Yeti Table demo styles so live previews look reasonable. */
+
+.yeti-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+}
+
+.yeti-table thead th {
+  text-align: left;
+  border-bottom: 2px solid var(--vp-c-divider);
+  padding: 8px 12px;
+  font-weight: 600;
+}
+
+.yeti-table tbody td,
+.yeti-table tfoot td {
+  border-bottom: 1px solid var(--vp-c-divider);
+  padding: 8px 12px;
+}
+
+.yeti-table tbody tr:hover {
+  background: var(--vp-c-bg-soft);
+}
+
+.yeti-table-sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.yeti-table-sortable::after {
+  content: " ⇅";
+  opacity: 0.4;
+  font-size: 0.85em;
+}
+
+.yeti-table-sorted-asc::after {
+  content: " ▲";
+  opacity: 1;
+}
+
+.yeti-table-sorted-desc::after {
+  content: " ▼";
+  opacity: 1;
+}
+
+.yeti-table-pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 8px 0;
+}
+
+.yeti-table-pagination-controls-page-info {
+  margin-right: auto;
+  font-size: 0.9em;
+  color: var(--vp-c-text-2);
+}
+
+.yeti-table-pagination-controls-page-size,
+.yeti-table-pagination-controls-next,
+.yeti-table-pagination-controls-previous {
+  padding: 4px 10px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 6px;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
+  cursor: pointer;
+}
+
+.yeti-table-pagination-controls-next:disabled,
+.yeti-table-pagination-controls-previous:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Inline form controls used inside live demos */
+.docs-flex {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.docs-justify-end {
+  justify-content: flex-end;
+}
+
+.docs-input {
+  padding: 4px 8px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 6px;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
+}

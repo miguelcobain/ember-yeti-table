@@ -1,3 +1,11 @@
 packages:
-  - 'ember-yeti-table'
-  - 'test-app'
+  - .
+  - docs
+autoInstallPeers: false
+onlyBuiltDependencies:
+  - esbuild
+patchedDependencies:
+  ember-lifeline: patches/ember-lifeline.patch
+resolvePeersFromWorkspaceRoot: false
+
+ignoreWorkspaceRootCheck: true

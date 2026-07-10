@@ -1,43 +1,147 @@
 {
-  "name": "ember-yeti-table-root",
-  "version": "0.0.0",
-  "private": true,
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:miguelcobain/ember-yeti-table.git"
-  },
+  "name": "@triptyk/ember-yeti-table",
+  "version": "3.0.2",
+  "description": "Lightweight and flexible tables addon.",
+  "keywords": [
+    "ember-addon",
+    "table",
+    "tables",
+    "datagrid",
+    "yeti"
+  ],
+  "homepage": "https://miguelcobain.github.io/ember-yeti-table",
+  "repository": "https://github.com/miguelcobain/ember-yeti-table",
   "license": "MIT",
-  "author": "",
-  "scripts": {
-    "build": "pnpm --filter ember-yeti-table build",
-    "lint": "pnpm --filter '*' lint",
-    "lint:fix": "pnpm --filter '*' lint:fix",
-    "prepare": "pnpm build",
-    "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
-    "start:addon": "pnpm --filter ember-yeti-table start",
-    "start:test-app": "pnpm --filter test-app start",
-    "test": "pnpm --filter '*' test"
+  "author": "Miguel Andrade <jmandrade0@gmail.com>",
+  "imports": {
+    "#src/*": "./src/*"
   },
-  "devDependencies": {
-    "@babel/core": "^7.23.9",
-    "@babel/plugin-proposal-decorators": "^7.23.9",
-    "concurrently": "^8.2.2"
+  "packageManager": "pnpm@10.11.1",
+  "volta": {
+    "node": "24.13.0",
+    "pnpm": "10.11.1"
   },
-  "pnpm": {
-    "patchedDependencies": {
-      "ember-cli-addon-docs@7.0.1": "patches/ember-cli-addon-docs@7.0.1.patch"
+  "exports": {
+    ".": {
+      "types": "./declarations/index.d.ts",
+      "default": "./dist/index.js"
     },
-    "overrides": {
-      "@embroider/addon-shim@^1.5.0 <1.10": "~1.9",
-      "@embroider/macros@^1.8.3 <1.17": "~1.16"
+    "./addon-main.js": "./addon-main.cjs",
+    "./*.css": "./dist/*.css",
+    "./*": {
+      "types": "./declarations/*.d.ts",
+      "default": "./dist/*.js"
     }
   },
-  "volta": {
-    "node": "18.20.5",
-    "pnpm": "9.15.3"
+  "files": [
+    "addon-main.cjs",
+    "declarations",
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "rollup --config",
+    "format": "prettier . --cache --write",
+    "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\" --prefixColors auto",
+    "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" --prefixColors auto && pnpm run format",
+    "lint:format": "prettier . --cache --check",
+    "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
+    "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix",
+    "lint:publish": "pnpm build && publint run --level error",
+    "lint:types": "ember-tsc --noEmit",
+    "prepack": "rollup --config",
+    "start": "vite dev",
+    "test": "vite build --mode=development --out-dir dist-tests && testem --file testem.cjs ci --port 0",
+    "docs:dev": "pnpm --filter ember-yeti-table-docs dev",
+    "docs:build": "pnpm --filter ember-yeti-table-docs build",
+    "docs:preview": "pnpm --filter ember-yeti-table-docs preview"
   },
-  "workspaces": [
-    "ember-yeti-table",
-    "test-app"
-  ]
+  "dependencies": {
+    "@embroider/addon-shim": "^1.8.9",
+    "decorator-transforms": "^2.2.2",
+    "deepmerge": "^4.3.1",
+    "ember-modifier": "^4.2.2",
+    "ember-resources": "^7.0.7",
+    "reactiveweb": "^1.9.1",
+    "tracked-toolbox": "^2.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/eslint-parser": "^7.25.1",
+    "@babel/plugin-transform-typescript": "^7.25.2",
+    "@babel/runtime": "^7.25.6",
+    "@ember/app-tsconfig": "^1.0.0",
+    "@ember/library-tsconfig": "^1.0.0",
+    "@ember/test-helpers": "^5.2.1",
+    "@ember/test-waiters": "^4.1.1",
+    "@embroider/addon-dev": "^8.1.0",
+    "@embroider/compat": "^4.1.0",
+    "@embroider/core": "^4.1.0",
+    "@embroider/macros": "^1.20.1",
+    "@embroider/vite": "^1.1.5",
+    "@eslint/js": "^9.17.0",
+    "@faker-js/faker": "^10.4.0",
+    "@glimmer/component": "^2.0.0",
+    "@glint/ember-tsc": "^1.0.3",
+    "@glint/template": "^1.6.1",
+    "@glint/tsserver-plugin": "^2.0.0",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@types/qunit": "^2.19.12",
+    "@types/sinon": "^21.0.1",
+    "babel-plugin-ember-template-compilation": "^4.0.0",
+    "concurrently": "^9.0.1",
+    "ember-concurrency": "^5.2.0",
+    "ember-lifeline": "^7.0.0",
+    "ember-page-title": "^9.0.3",
+    "ember-qunit": "^9.0.2",
+    "ember-source": "^6.7.0",
+    "ember-strict-application-resolver": "^0.1.0",
+    "ember-template-lint": "^7.9.0",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-ember": "^12.3.3",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-n": "^17.15.1",
+    "globals": "^16.1.0",
+    "lefthook": "^2.1.6",
+    "lint-staged": "^17.0.4",
+    "prettier": "^3.4.2",
+    "prettier-plugin-ember-template-tag": "^2.0.4",
+    "publint": "^0.3.16",
+    "qunit": "^2.24.1",
+    "qunit-dom": "^3.4.0",
+    "rollup": "^4.22.5",
+    "sinon": "~22.0.0",
+    "testem": "^3.15.1",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.19.1",
+    "vite": "^7.1.9"
+  },
+  "ember": {
+    "edition": "octane"
+  },
+  "ember-addon": {
+    "version": 2,
+    "type": "addon",
+    "main": "addon-main.cjs",
+    "app-js": {
+      "./components/yeti-table.js": "./dist/_app_/components/yeti-table.js",
+      "./components/yeti-table/body.js": "./dist/_app_/components/yeti-table/body.js",
+      "./components/yeti-table/header.js": "./dist/_app_/components/yeti-table/header.js",
+      "./components/yeti-table/pagination.js": "./dist/_app_/components/yeti-table/pagination.js",
+      "./components/yeti-table/table.js": "./dist/_app_/components/yeti-table/table.js",
+      "./components/yeti-table/tbody.js": "./dist/_app_/components/yeti-table/tbody.js",
+      "./components/yeti-table/tbody/row.js": "./dist/_app_/components/yeti-table/tbody/row.js",
+      "./components/yeti-table/tbody/row/cell.js": "./dist/_app_/components/yeti-table/tbody/row/cell.js",
+      "./components/yeti-table/tfoot.js": "./dist/_app_/components/yeti-table/tfoot.js",
+      "./components/yeti-table/tfoot/row.js": "./dist/_app_/components/yeti-table/tfoot/row.js",
+      "./components/yeti-table/tfoot/row/cell.js": "./dist/_app_/components/yeti-table/tfoot/row/cell.js",
+      "./components/yeti-table/thead.js": "./dist/_app_/components/yeti-table/thead.js",
+      "./components/yeti-table/thead/row.js": "./dist/_app_/components/yeti-table/thead/row.js",
+      "./components/yeti-table/thead/row/cell.js": "./dist/_app_/components/yeti-table/thead/row/cell.js",
+      "./components/yeti-table/thead/row/column.js": "./dist/_app_/components/yeti-table/thead/row/column.js"
+    }
+  }
 }

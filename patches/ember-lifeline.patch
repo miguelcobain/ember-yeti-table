@@ -1,0 +1,72 @@
+diff --git a/dist/index.js b/dist/index.js
+index 8dff4b8cca61e630c309d191bfaed8b9b34e8a61..9a9577268d2f3181d207d9e534d3088c24e73bc0 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -9,4 +9,3 @@ import '@ember/runloop';
+ import '@ember/destroyable';
+ import './utils/get-task.js';
+ import '@ember/debug';
+-import 'ember';
+diff --git a/dist/poll-task.js b/dist/poll-task.js
+index 3c55dcfe6c49f711f83d6c93ce6217df29a77b3b..b91e541276e0f8804e9b29e5e14ef2cc13adf8cc 100644
+--- a/dist/poll-task.js
++++ b/dist/poll-task.js
+@@ -1,6 +1,6 @@
+-import Ember from 'ember';
+ import getTask from './utils/get-task.js';
+ import { registerDestructor } from '@ember/destroyable';
++import * as EmberDebug from '@ember/debug';
+ 
+ function indexable(input) {
+   return input;
+@@ -35,7 +35,7 @@ function shouldPoll() {
+     return _shouldPollOverride();
+   }
+ 
+-  return !Ember.testing;
++  return !EmberDebug.isTesting;
+ }
+ /**
+  * Allows for overriding of the polling behavior to explicitly control
+diff --git a/dist/test-support/index.js b/dist/test-support/index.js
+index 717608ea7e31612702adfb80b9ef97e1c699b9b4..f1d4458689a1307cb1b09d94ccaf6df7deff935c 100644
+--- a/dist/test-support/index.js
++++ b/dist/test-support/index.js
+@@ -3,6 +3,5 @@ import '@ember/runloop';
+ import '@ember/debug';
+ import '@ember/test-helpers';
+ import '../poll-task.js';
+-import 'ember';
+ import '../utils/get-task.js';
+ import '@ember/destroyable';
+diff --git a/dist/test-support/poll-task-for.js b/dist/test-support/poll-task-for.js
+index 960ceb0169774c6e43b8e37fff34667fcfbef1f7..ad4cd6200697858169fb8ee66517a4a21b31b605 100644
+--- a/dist/test-support/poll-task-for.js
++++ b/dist/test-support/poll-task-for.js
+@@ -2,7 +2,6 @@ import { join } from '@ember/runloop';
+ import { assert } from '@ember/debug';
+ import { settled } from '@ember/test-helpers';
+ import { getQueuedPollTasks } from '../poll-task.js';
+-import 'ember';
+ import '../utils/get-task.js';
+ import '@ember/destroyable';
+ 
+diff --git a/dist/utils/get-timeout-or-test-fallback.js b/dist/utils/get-timeout-or-test-fallback.js
+index d183bfc0d0208bc99b8c08ac8b386eaf3eda7419..2940f22522a2e08251e6374949e33534a0fade6c 100644
+--- a/dist/utils/get-timeout-or-test-fallback.js
++++ b/dist/utils/get-timeout-or-test-fallback.js
+@@ -1,4 +1,4 @@
+-import Ember from 'ember';
++import * as EmberDebug from '@ember/debug';
+ 
+ /**
+  * @function getTimeoutOrTestFallback
+@@ -16,7 +16,7 @@ function getTimeoutOrTestFallback(timeout, {
+   scaling: 100
+ } // Reducing timer value by 100x in test environment by default
+ ) {
+-  if (Ember.testing) {
++  if (EmberDebug.isTesting) {
+     return testTimeout !== undefined ? testTimeout : timeout / scaling;
+   }
+ 
